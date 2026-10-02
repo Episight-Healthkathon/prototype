@@ -1,6 +1,6 @@
 # EPISIGHT — Technical Architecture (Proposal)
 
-> **Status:** DRAFT v0.2, proposed by Person 1 and pending Phase 0 contract lock with Person 2 and Person 3.
+> **Status:** **v1.0 ACCEPTED** (2026-10-02). Owned by Person 1. Decisions referenced here are locked in [decisions.md](decisions.md).
 > **Date:** 2026-10-01 (v0.2: AI planner made core; decisions moved to [decisions.md](decisions.md))
 > **Sources of truth:** [00_EPISIGHT_PROJECT_CONTEXT.md](00_EPISIGHT_PROJECT_CONTEXT.md), [01_PERSON_1_BACKEND_AGENT.md](01_PERSON_1_BACKEND_AGENT.md), [reference/EPISIGHT_Final_Enhanced_Healthkathon_2026.docx](reference/EPISIGHT_Final_Enhanced_Healthkathon_2026.docx).
 > **Companion docs:** [decisions.md](decisions.md) · [data-contract.md](data-contract.md) · [api-contract.md](api-contract.md) · [development-plan.md](development-plan.md)

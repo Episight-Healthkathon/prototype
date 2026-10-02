@@ -1,7 +1,7 @@
 # EPISIGHT — Person 1 Development Plan (Tracked)
 
 > **Owner:** Person 1 (Backend, Agent & Core Intelligence)
-> **Created:** 2026-10-01 · **Last updated:** 2026-10-01
+> **Created:** 2026-10-01 · **Last updated:** 2026-10-02
 > **Derived from:** [01_PERSON_1_BACKEND_AGENT.md](01_PERSON_1_BACKEND_AGENT.md) phases 0–12 and the context doc's phases 0–5, re-sequenced into milestones that each end in something demonstrable.
 > **Design references:** [architecture.md](architecture.md) · [decisions.md](decisions.md) · [data-contract.md](data-contract.md) · [api-contract.md](api-contract.md)
 
@@ -15,15 +15,16 @@
 - A milestone is done only when every item in its **Exit criteria** is ticked.
 - New work discovered mid-milestone gets a new ID at the end of that milestone. Never renumber.
 - Blocked tasks point at a decision (D-xx, [decisions.md](decisions.md)) or a handoff (HO-xx, below). Decision changes go to `decisions.md`, not into this plan or the architecture doc.
-- Docs and contract changes go through a branch + PR (Phase 0 branch: `phase0/contracts`).
+- Decisions are made by Person 1 as technical owner; Person 2/3 are informed, not asked to approve.
+- Work happens on branches (Phase 0 branch: `phase0/contracts`). Commits are GPG-signed, so commit from your own terminal.
 
 ## Milestone Overview
 
 | Milestone | Scope | Maps to (context doc phase) | Priority | Status |
 |---|---|---|---|---|
-| **M0** | Contract lock | Phase 0 | P0 | `[~]` |
-| **M1** | Backend foundation + read API on fixtures | Phase 1 | P0 | `[ ]` |
-| **M2** | Temporal screening | Phase 1 | P0 | `[ ]` |
+| **M0** | Contract lock | Phase 0 | P0 | `[~]` (D-16, D-18 open) |
+| **M1** | Backend foundation + read API on fixtures | Phase 1 | P0 | `[x]` |
+| **M2** | Temporal screening | Phase 1 | P0 | `[~]` (core done in M1; P3 fixtures pending) |
 | **M3** | Episode reconstruction | Phase 1 | P0 | `[ ]` |
 | **M4** | Evidence ledger + retrieval | Phase 2 | P0 | `[ ]` |
 | **M5** | Agent tools | Phase 2 | P0 | `[ ]` |
@@ -37,7 +38,7 @@
 
 **Integration checkpoints (for Person 2):**
 
-- **CP-1** (end of M0): mock fixtures + generated TS types published. The frontend builds all four screens against them.
+- **CP-1** (early M1, after BE-1.4 + BE-1.11): mock fixtures + generated TS types published. The frontend builds all four screens against them.
 - **CP-2** (end of M1): real `GET /cases`, `/cases/{id}`, `/episodes` served from the fixture dataset.
 - **CP-3** (end of M6): `POST /investigate` + polling `GET /investigation` work for golden cases A–E.
 - **CP-4** (end of M7): brief + evidence detail live. Full four-screen flow runs end-to-end.
@@ -48,58 +49,59 @@
 
 - [x] **BE-0.1** Read sources, inspect repo, reconcile discrepancies → [architecture.md §2](architecture.md)
 - [x] **BE-0.2** Draft architecture, data contract, API contract, and this plan
-- [ ] **BE-0.3** Review [data-contract.md](data-contract.md) with Person 3; get sign-off on D-01, D-02, D-03, D-05, D-08, D-09, D-11, D-12 (all `AGREED-P1`); mark contract `v1 FROZEN`
-- [ ] **BE-0.4** Review [api-contract.md](api-contract.md) with Person 2; get sign-off on D-04, D-12, D-13, D-14, D-20; mark contract `v1 FROZEN`
-- [ ] **BE-0.5** Freeze enums (data-contract §4), including status transition rules
-- [~] **BE-0.6** Revise the boundary to "rules control the safety envelope, AI controls adaptive investigation" ([architecture.md §3, §6, §7.4](architecture.md)); D-07 is `AGREED-P1`, awaiting team sign-off
-- [ ] **BE-0.7** Hand-author mock fixtures for golden cases A–E under `packages/shared-types/fixtures/` (HO-P2-1)
+- [x] **BE-0.3** Lock data decisions and freeze [data-contract.md](data-contract.md) at v1
+- [x] **BE-0.4** Lock API decisions and freeze [api-contract.md](api-contract.md) at v1
+- [x] **BE-0.5** Freeze enums (data-contract §4), including progress transition rules
+- [x] **BE-0.6** Revise the boundary to "rules control the safety envelope, AI controls adaptive investigation" ([architecture.md §3, §6, §7.4](architecture.md)); D-07 locked
+- [-] **BE-0.7** ~~Hand-author mock fixtures~~: moved to BE-1.11 (generated from the Pydantic models instead of hand-written, to avoid doing the work twice)
 - [ ] **BE-0.8** Team agrees on the timebox (D-16) and cuts P1/P2 scope accordingly
 - [x] **BE-0.9** Create [decisions.md](decisions.md) as the single decision log
-- [ ] **BE-0.10** Commit Phase 0 docs on branch `phase0/contracts`; push and open a PR for Person 2/3 review
+- [~] **BE-0.10** Commit Phase 0 docs on branch `phase0/contracts` — ca231d8; push + PR still pending
 - [ ] **BE-0.11** Resolve D-18 (LLM provider, model, API key owner, budget per benchmark run)
 
 **Exit criteria**
-- [ ] Person 2 can build every screen against fixtures without asking shape questions.
-- [ ] Person 3 can generate data the ingest will accept with no one-off parsing.
-- [ ] No entity field or enum is still ambiguous. Every blocking D-xx is closed.
+- [x] Contracts frozen at v1 (shape questions are answered by [api-contract.md](api-contract.md); fixtures follow in BE-1.11).
+- [x] Person 3 has a frozen data contract to generate against ([data-contract.md](data-contract.md)).
+- [ ] No entity field or enum is still ambiguous. Every blocking D-xx is closed. *(remaining: D-16 deadline, D-18 LLM provider/key; neither blocks M1–M5)*
 
 ---
 
 ## M1 — Backend Foundation
 
-- [ ] **BE-1.1** Scaffold repo layout (architecture §5): `.gitignore`, `.editorconfig`, root `README.md` skeleton, `docker-compose.yml` (Postgres dev + test DBs)
-- [ ] **BE-1.2** `apps/api` uv project (Python 3.12 per D-17), ruff, pytest, `Makefile`/task runner (`dev`, `test`, `lint`, `seed`, `reset`)
-- [ ] **BE-1.3** FastAPI app factory, `pydantic-settings` config, `GET /health`, JSON logging with `request_id`, error envelope + exception handlers, CORS for `localhost:3000`
-- [ ] **BE-1.4** `contracts/` Pydantic enums + DTOs; export `openapi.json`; generate TS types into `packages/shared-types` (script + CI drift check)
-- [ ] **BE-1.5** SQLAlchemy models + Alembic initial migration for all tables in data-contract §5
-- [ ] **BE-1.6** Ingest CLI: `episight seed --dataset <dir> --policies <dir>` validates the manifest, schema, FKs, and forbidden fields; idempotent; refuses `data/ground-truth/**`; `episight db reset`
-- [ ] **BE-1.7** Interim dev fixture dataset (golden A–E, hand-authored) in `apps/api/tests/fixtures/dataset/`, so work is not blocked on HO-P3-1
-- [ ] **BE-1.8** Read endpoints E2, E3, E4 (timeline may be naive until M3), E7/E8 returning typed empty results
-- [ ] **BE-1.9** Isolation tests: no `ground[-_]truth` reference in `src/`; no `evaluation` import; forbidden-field rejection
-- [ ] **BE-1.10** Module import-boundary test (domain modules do not import `api`/`db`)
+- [x] **BE-1.1** Scaffold repo layout (architecture §5): `.gitignore`, `.editorconfig`, root `README.md` skeleton, `docker-compose.yml` (Postgres dev + test DBs)
+- [x] **BE-1.2** `apps/api` uv project (Python 3.12 pinned via `.python-version`), ruff, pytest. No Makefile (Windows); the `episight` CLI + README commands cover dev/test/lint/seed/reset
+- [x] **BE-1.3** FastAPI app factory, `pydantic-settings` config, `GET /health`, JSON logging with `request_id`, error envelope + exception handlers, CORS for `localhost:3000`
+- [x] **BE-1.4** `contracts/` Pydantic enums + DTOs; `episight export-contract` writes `openapi.json` + `src/index.ts`; `pnpm generate` writes `src/api.d.ts`; drift caught by `test_contract.py` (no CI yet)
+- [x] **BE-1.5** SQLAlchemy models + Alembic initial migration for all tables in data-contract §5
+- [x] **BE-1.6** Ingest CLI: `episight seed --dataset <dir> --policies <dir>` validates the manifest, schema, FKs, and forbidden fields; idempotent; refuses `data/ground-truth/**`; `episight db reset`
+- [x] **BE-1.7** Interim dev fixture dataset (golden A–E, hand-authored) in `apps/api/tests/fixtures/dataset/`, so work is not blocked on HO-P3-1
+- [x] **BE-1.8** Read endpoints E2, E3, E4 (ANCHOR + CONTEXT roles; RELATED arrives in M3), E7/E8 real queries (empty until M6). E5/E6/E9 return contract errors (503 / `RUN_NOT_FOUND` / `BRIEF_NOT_READY`) until M6/M7
+- [x] **BE-1.9** Isolation tests: no `ground[-_]truth` reference in `src/`; no `evaluation` import; forbidden-field rejection
+- [x] **BE-1.10** Module import-boundary test (domain modules do not import `api`/`db`; `agent/envelope` does not import `llm`)
+- [x] **BE-1.11** Mock fixtures in `packages/shared-types/fixtures/`: real list/detail/timeline for all 6 interim cases + one scripted Golden-A investigation (running, completed, evidence, evidence detail, brief), all validated against the models, with a drift test. B–E investigation fixtures will be regenerated from real engine runs after the vertical slice
 
 **Exit criteria**
-- [ ] `docker compose up -d && make reset seed dev` works from a clean clone.
-- [ ] All baseline endpoints respond with typed data; OpenAPI renders.
-- [ ] CP-2 is delivered to Person 2.
+- [x] Clean-room run (fresh DB volume + fresh venv) following README: `docker compose up -d --wait` → `uv sync` → `episight db upgrade` → `episight seed` → `/health` ok, 6 cases. *(Repeat from a true `git clone` once committed.)*
+- [x] All baseline endpoints respond with typed data; OpenAPI renders at `/api/v1/docs`.
+- [x] CP-1 + CP-2 ready for Person 2 (fixtures/types + real `/cases`, `/cases/{id}`, `/episodes`).
 
 ---
 
 ## M2 — Temporal Screening
 
-- [ ] **BE-2.1** Normalization: dedupe duplicate episode rows; record `MISSING_TIMESTAMP` / `DUPLICATE_EPISODE_ROW` as data-quality issues (never silently dropped)
-- [ ] **BE-2.2** Readmission rule (D-02), versioned `rule_id`
-- [ ] **BE-2.3** Fragmentation rule (D-02), versioned `rule_id`
-- [ ] **BE-2.4** Chain grouping (D-03) + deterministic `case_id`
-- [ ] **BE-2.5** Structured `signal_details` (per-pair matched fields, interval, params)
-- [ ] **BE-2.6** Idempotent case persistence; `episight screen`; E14 dev endpoint
-- [ ] **BE-2.7** Unit tests: inside, at, and outside the threshold; same patient/different provider; same provider/different diagnosis; inpatient/outpatient mismatch; duplicate rows; missing timestamps
+- [x] **BE-2.1** Normalization: dedupe duplicate episode rows; record `MISSING_TIMESTAMP` / `DUPLICATE_EPISODE_ROW` as data-quality issues (never silently dropped)
+- [x] **BE-2.2** Readmission rule (D-02), versioned `rule_id`
+- [x] **BE-2.3** Fragmentation rule (D-02), versioned `rule_id`
+- [x] **BE-2.4** Chain grouping (D-03) + deterministic `case_id`
+- [x] **BE-2.5** Structured `signal_details` (per-pair matched fields, interval, params)
+- [~] **BE-2.6** Idempotent case persistence (via `episight seed`, which re-screens); separate `episight screen` and E14 dropped unless needed (D-16)
+- [x] **BE-2.7** Unit tests: inside, at, and outside the threshold; same patient/different provider; same provider/different diagnosis; inpatient/outpatient mismatch; duplicate rows; missing timestamps
 - [ ] **BE-2.8** Run Person 3's screening fixtures (HO-P3-2)
 
 **Exit criteria**
 - [ ] Person 3's golden screening fixtures pass.
-- [ ] Screening is deterministic (two runs give identical case sets and IDs).
-- [ ] No verdict wording appears anywhere in signal output.
+- [x] Screening is deterministic (two runs give identical case sets and IDs).
+- [x] No verdict wording appears anywhere in signal output.
 
 ---
 
@@ -248,8 +250,8 @@
 
 | ID | From → To | Deliverable | Needed by | Status |
 |---|---|---|---|---|
-| HO-P2-1 | P1 → P2 | Mock fixtures + generated TS types | BE-0.7 (CP-1) | `[ ]` |
-| HO-P2-2 | P1 → P2 | Real read endpoints | BE-1.8 (CP-2) | `[ ]` |
+| HO-P2-1 | P1 → P2 | Mock fixtures + generated TS types | BE-1.11 (CP-1) | `[x]` |
+| HO-P2-2 | P1 → P2 | Real read endpoints | BE-1.8 (CP-2) | `[x]` |
 | HO-P2-3 | P1 → P2 | Investigation start + polling | BE-6.8 (CP-3) | `[ ]` |
 | HO-P2-4 | P1 → P2 | Brief + evidence detail | BE-7.3 (CP-4) | `[ ]` |
 | HO-P3-1 | P3 → P1 | Dataset v0 with golden cases A–E (data-contract format) | BE-1.6 (fixture fallback: BE-1.7) | `[ ]` |
@@ -261,7 +263,7 @@
 
 ## Open Decisions Snapshot
 
-Full log in [decisions.md](decisions.md). M0 exit needs sign-off on the `AGREED-P1` entries (D-01–D-05, D-07–D-09, D-11, D-12, D-19, D-20) plus resolution of **D-16** (deadline) and **D-18** (LLM provider/key).
+Full log in [decisions.md](decisions.md). All decisions are locked except **D-16** (deadline: sizes the P1/P2 scope) and **D-18** (LLM provider, key, budget: needed by BE-6.13, so it does not block M1–M5).
 
 ## Progress Log
 
@@ -269,3 +271,6 @@ Full log in [decisions.md](decisions.md). M0 exit needs sign-off on the `AGREED-
 |---|---|---|
 | 2026-10-01 | BE-0.1, BE-0.2 | Sources reviewed; architecture, data contract, API contract, and plan drafted. No implementation started. |
 | 2026-10-01 | BE-0.6, BE-0.9 | Review feedback applied: the AI planner is core inside a deterministic safety envelope (D-07); status split into three fields (D-04); cases are episode groups (D-03); Case B → `EVIDENCE_PATHS_EXHAUSTED`; `decisions.md` created; docs moved to v0.2. |
+| 2026-10-02 | BE-0.3–BE-0.6, BE-0.10 | Person 2/3 sign-off not required. Decisions locked except D-16/D-18; data and API contracts frozen at v1; architecture v1.0; mock fixtures moved to BE-1.11 (generated from models). |
+| 2026-10-02 | D-16 | Deadline locked at ~48 h; build order: M1 → Golden A vertical slice → D/E → B/C → benchmark → polish. |
+| 2026-10-02 | M1 (BE-1.1–1.11), BE-2.1–2.5, BE-2.7 | Backend foundation done on `m1/foundation`: compose Postgres (:5433), uv project (Python 3.12), FastAPI + error envelope + JSON logging, contract models, migration 0001, ingest/seed with validation, interim dataset (A–E + hard negatives), screening pulled forward from M2, read endpoints, contract export + TS types + fixtures. 124 tests pass; clean-room run verified. Python pinned to 3.12 after the clean-room run exposed a 3.13 OpenAPI drift. |

@@ -1,6 +1,6 @@
 # EPISIGHT — API Contract (Proposal)
 
-> **Status:** DRAFT v0.2 (status split per D-04, episode groups per D-03, planner fields per D-07), owned by Person 1 and reviewed with Person 2. Frozen at the end of Phase 0 (task BE-0.4).
+> **Status:** **v1 FROZEN** (2026-10-02), `X-Contract-Version: 1`. Owned by Person 1. Any change requires a contract-version bump, regenerated TS types and fixtures, and notifying Person 2.
 > **Canonical implementation:** Pydantic models in `apps/api/src/episight/contracts/`. The OpenAPI document at `/api/v1/openapi.json` is generated from them, and TypeScript types in `packages/shared-types` are generated from that. This document is the human-readable summary. If they disagree, raise it; don't guess.
 > Enum values are defined in [data-contract.md §4](data-contract.md). Decisions (D-xx) are in [decisions.md](decisions.md).
 

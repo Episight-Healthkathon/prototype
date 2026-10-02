@@ -1,6 +1,6 @@
 # EPISIGHT — Data Contract (Proposal)
 
-> **Status:** DRAFT v0.2, co-owned by Person 1 (ingest/storage) and Person 3 (dataset/ground truth). Frozen at the end of Phase 0 (task BE-0.3).
+> **Status:** **v1 FROZEN** (2026-10-02). Owned by Person 1. Any change requires a contract-version bump, a note in the Progress Log of [development-plan.md](development-plan.md), and notifying Person 3 (data) / Person 2 (enums).
 > **Scope:** (1) the files Person 3 delivers, (2) how the backend stores them, (3) the internal evidence and state objects the backend creates.
 > Decisions referenced as D-xx live in [decisions.md](decisions.md).
 

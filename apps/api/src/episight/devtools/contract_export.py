@@ -77,7 +77,9 @@ def _dump(path: Path, payload: Any) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
     if isinstance(payload, BaseModel):
         payload = payload.model_dump(mode="json", by_alias=True)
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=False) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False, sort_keys=False) + "\n", encoding="utf-8", newline="\n"
+    )
     return path
 
 
@@ -94,7 +96,7 @@ def _write_ts_aliases(path: Path, spec: dict) -> Path:
         *(f'export type {n} = components["schemas"]["{n}"];' for n in sorted(spec["components"]["schemas"])),
     ]
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
     return path
 
 

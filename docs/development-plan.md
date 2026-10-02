@@ -26,10 +26,10 @@
 | **M1** | Backend foundation + read API on fixtures | Phase 1 | P0 | `[x]` |
 | **M2** | Temporal screening | Phase 1 | P0 | `[~]` (core done in M1; P3 fixtures pending) |
 | **M3** | Episode reconstruction | Phase 1 | P0 | `[x]` |
-| **M4** | Evidence ledger + retrieval | Phase 2 | P0 | `[~]` (retrieval done; ledger drafted, tested in M5/M6 step) |
-| **M5** | Agent tools | Phase 2 | P0 | `[ ]` |
-| **M6** | Case state, safety envelope, AI planner, orchestrator, stopping (core) | Phase 2 | P0 | `[ ]` |
-| **M7** | Reviewer brief + provenance API | Phase 3 | P0 | `[ ]` |
+| **M4** | Evidence ledger + retrieval | Phase 2 | P0 | `[x]` |
+| **M5** | Agent tools | Phase 2 | P0 | `[x]` |
+| **M6** | Case state, safety envelope, AI planner, orchestrator, stopping (core) | Phase 2 | P0 | `[~]` (engine + rule planner done; API runtime and AI planner next) |
+| **M7** | Reviewer brief + provenance API | Phase 3 | P0 | `[~]` (builder + validator done; persistence next) |
 | **M8** | Evaluation integration + ablation | Phase 3–4 | P1 (runner is P0 for golden checks) | `[ ]` |
 | **M9** | Robustness, regression, stabilization | Phase 4–5 | P0/P1 | `[ ]` |
 | **M10** | LLM passage classifier + optional brief paraphrase | — | P1/P2 | `[ ]` |
@@ -121,13 +121,13 @@
 
 ## M4 — Evidence Ledger & Retrieval
 
-- [~] **BE-4.1** Evidence repository: deterministic `evidence_id`, dedupe + `surfaced_in_steps`, provenance validation (dangling `source_id` is rejected), immutability
+- [x] **BE-4.1** Evidence repository: deterministic `evidence_id`, dedupe + `surfaced_in_steps`, provenance validation (dangling `source_id` is rejected), immutability
 - [x] **BE-4.2** Text utilities: Indonesian-aware normalizer/tokenizer, sentence segmentation with char offsets (D-08)
-- [~] **BE-4.3** Clinical note retriever: availability inventory + BM25 over case-scoped sentences (D-09)
+- [x] **BE-4.3** Clinical note retriever: availability inventory + BM25 over case-scoped sentences (D-09)
 - [x] **BE-4.4** Context matcher: lexicon/patterns per context type (emergency, chronic, scheduled, supporting-exam follow-up, clinical justification, risk indicators) with a negation window and stance output (HO-P3-4)
 - [x] **BE-4.5** Policy ingest + BM25 index, version/effective-date metadata, section-level citations (HO-P3-3)
 - [x] **BE-4.6** E7 `GET /cases/{id}/evidence` and E8 `GET /evidence/{id}` with full `source` payload
-- [~] **BE-4.7** Tests: empty retrieval, unavailable note, negated phrase, duplicate hit, excerpt equals literal source substring
+- [x] **BE-4.7** Tests: empty retrieval, unavailable note, negated phrase, duplicate hit, excerpt equals literal source substring
 
 **Exit criteria**
 - [ ] Clinical retrieval surfaces the expected passages on golden cases.
@@ -138,16 +138,16 @@
 
 ## M5 — Agent Tools
 
-- [ ] **BE-5.1** Tool framework: `ToolSpec` (name, reviewer label, input/output models, resolvable requirements, permission scope), `ToolResult` envelope, timeout wrapper, allowlisted registry
-- [ ] **BE-5.2** `get_episode_history`
-- [ ] **BE-5.3** `compare_diagnosis`
-- [ ] **BE-5.4** `compare_procedures` (including planned-vs-performed)
-- [ ] **BE-5.5** `get_provider_context`
-- [ ] **BE-5.6** `retrieve_clinical_evidence`
-- [ ] **BE-5.7** `retrieve_policy`
-- [ ] **BE-5.8** `find_supporting_evidence`
-- [ ] **BE-5.9** `find_exception_evidence`
-- [ ] **BE-5.10** Tests per tool: valid input, missing source, empty retrieval, malformed case, unsupported case type, duplicate evidence; outputs JSON-serializable
+- [x] **BE-5.1** Tool framework: `ToolSpec` (name, reviewer label, input/output models, resolvable requirements, permission scope), `ToolResult` envelope, timeout wrapper, allowlisted registry
+- [x] **BE-5.2** `get_episode_history`
+- [x] **BE-5.3** `compare_diagnosis`
+- [x] **BE-5.4** `compare_procedures` (including planned-vs-performed)
+- [x] **BE-5.5** `get_provider_context`
+- [x] **BE-5.6** `retrieve_clinical_evidence`
+- [x] **BE-5.7** `retrieve_policy`
+- [x] **BE-5.8** `find_supporting_evidence`
+- [x] **BE-5.9** `find_exception_evidence`
+- [x] **BE-5.10** Tests per tool: valid input, missing source, empty retrieval, malformed case, unsupported case type, duplicate evidence; outputs JSON-serializable
 
 **Exit criteria**
 - [ ] Every tool is typed in and out, reports failure explicitly, and never invents records.
@@ -156,23 +156,23 @@
 
 ## M6 — Case State, Orchestrator & Stopping (core)
 
-- [ ] **BE-6.1** Versioned requirement catalog per signal type (architecture §7.1)
-- [ ] **BE-6.2** `CaseState` initializer from screening + reconstruction
-- [ ] **BE-6.3** Pure state reducer: `ToolResult` → requirement transitions, evidence partitions, known facts, unresolved questions, spawned requirements
-- [ ] **BE-6.4** Conflict detection (architecture §7.4)
-- [ ] **BE-6.5** Rule planner (deterministic fallback and CI mode): fixed priority order, full-coverage searches, repeat guard, reviewer-facing `reason`
-- [ ] **BE-6.6** Stopping policy S1–S7 (architecture §7.5), fully unit-tested per rule
-- [ ] **BE-6.7** Orchestrator loop: per-step persistence of action + state snapshot, max steps, run timeout, bounded retry, failure → explicit state (D-13)
+- [x] **BE-6.1** Versioned requirement catalog per signal type (architecture §7.1)
+- [x] **BE-6.2** `CaseState` initializer from screening + reconstruction
+- [x] **BE-6.3** Pure state reducer: `ToolResult` → requirement transitions, evidence partitions, known facts, unresolved questions, spawned requirements
+- [x] **BE-6.4** Conflict detection (architecture §7.4)
+- [x] **BE-6.5** Rule planner (deterministic fallback and CI mode): fixed priority order, full-coverage searches, repeat guard, reviewer-facing `reason`
+- [x] **BE-6.6** Stopping policy S1–S7 (architecture §7.5), fully unit-tested per rule
+- [x] **BE-6.7** Orchestrator loop: per-step persistence of action + state snapshot, max steps, run timeout, bounded retry, failure → explicit state (D-13)
 - [ ] **BE-6.8** Async runtime: E5 (202 + 409 guards), E6 polling view, stale-run recovery on startup
-- [ ] **BE-6.9** Golden behavior tests A–E assert the outcome, stop reason, key requirement states, and that the trails differ across cases (D-01, D-05)
-- [ ] **BE-6.10** Modes `RULES_ONLY`, `RULES_RETRIEVAL`, `FULL_RULE_PLANNER`, `FULL` (architecture §11)
-- [ ] **BE-6.11** Safety envelope: allowed-action generator with scope bounds + requirement dependency graph + coverage tracking (architecture §7.1, §7.3)
-- [ ] **BE-6.12** Action validator V1–V9, including the bounded re-ask and rule-planner fallback path (architecture §7.4)
+- [x] **BE-6.9** Golden behavior tests A–E assert the outcome, stop reason, key requirement states, and that the trails differ across cases (D-01, D-05)
+- [x] **BE-6.10** Modes `RULES_ONLY`, `RULES_RETRIEVAL`, `FULL_RULE_PLANNER`, `FULL` (architecture §11)
+- [x] **BE-6.11** Safety envelope: allowed-action generator with scope bounds + requirement dependency graph + coverage tracking (architecture §7.1, §7.3)
+- [x] **BE-6.12** Action validator V1–V9, including the bounded re-ask and rule-planner fallback path (architecture §7.4)
 - [ ] **BE-6.13** `llm/` adapter: Anthropic SDK client, per-step structured-output schema (`action_id` enum = allowed set), refusal/timeout/error → fallback, key from env only (D-18)
 - [ ] **BE-6.14** AI planner: versioned system prompt + state serializer (no ground truth), output → proposal, `planner_note`/`priority_ranking`/`skip` handling
 - [ ] **BE-6.15** Record/replay of planner calls (`planner_recordings`), with a replay mode that fails on a miss (D-21)
 - [ ] **BE-6.16** Planner telemetry in the trail and runner output (`planner_source`, validation errors, latency)
-- [ ] **BE-6.17** Envelope adversarial tests: the planner returns a disallowed tool, a non-open requirement, out-of-scope episodes, a duplicate call, a material skip, or a premature "no further action", and each one is rejected and falls back
+- [~] **BE-6.17** Envelope adversarial tests: the planner returns a disallowed tool, a non-open requirement, out-of-scope episodes, a duplicate call, a material skip, or a premature "no further action", and each one is rejected and falls back
 
 **Exit criteria**
 - [ ] A: context surfaced via notes · B: `HUMAN_REVIEW_REQUIRED` / `EVIDENCE_PATHS_EXHAUSTED`, gaps `NOT_FOUND` · C: scheduled context + schedule consistency · D: `EVIDENCE_UNAVAILABLE` · E: `EVIDENCE_CONFLICTING`. These pass in `FULL_RULE_PLANNER` **and** in `FULL` (live and replay).
@@ -186,8 +186,8 @@
 
 ## M7 — Reviewer Brief & Provenance
 
-- [ ] **BE-7.1** Deterministic brief builder from persisted state (api-contract §4.6)
-- [ ] **BE-7.2** Brief validator: evidence-backed material statements, banned phrases (EN + ID), gap completeness, conflict completeness; failure → `HUMAN_REVIEW_REQUIRED` + marked fallback
+- [x] **BE-7.1** Deterministic brief builder from persisted state (api-contract §4.6)
+- [x] **BE-7.2** Brief validator: evidence-backed material statements, banned phrases (EN + ID), gap completeness, conflict completeness; failure → `HUMAN_REVIEW_REQUIRED` + marked fallback
 - [ ] **BE-7.3** Persist brief; regenerate from state (the regenerated brief is identical); E9
 - [ ] **BE-7.4** Trail in E6 includes all actions; E13 run history
 - [ ] **BE-7.5** (P1) Review actions E11/E12 (D-14)
@@ -275,3 +275,4 @@ Full log in [decisions.md](decisions.md). All decisions are locked except **D-16
 | 2026-10-02 | D-16 | Deadline locked at ~48 h; build order: M1 → Golden A vertical slice → D/E → B/C → benchmark → polish. |
 | 2026-10-02 | M1 (BE-1.1–1.11), BE-2.1–2.5, BE-2.7 | Backend foundation done on `m1/foundation`: compose Postgres (:5433), uv project (Python 3.12), FastAPI + error envelope + JSON logging, contract models, migration 0001, ingest/seed with validation, interim dataset (A–E + hard negatives), screening pulled forward from M2, read endpoints, contract export + TS types + fixtures. 124 tests pass; clean-room run verified. Python pinned to 3.12 after the clean-room run exposed a 3.13 OpenAPI drift. |
 | 2026-10-02 | BE-3.1–3.4, BE-4.2, 4.4–4.6 | Reconstruction (ANCHOR/RELATED/CONTEXT, ICD-10 category relatedness, chronic-class codes) wired into the timeline; retrieval: sentence offsets, pure-Python BM25, context matcher with per-lexicon negation scope, policy index. Ledger/tools/state drafted, not yet wired or tested. 178 tests pass. |
+| 2026-10-02 | M4, M5, BE-6.1–6.7, 6.9–6.12, 7.1–7.2 | Engine runs end-to-end in-process: 8 tools, provenance-checked ledger, reducer with coverage rule + dependency graph, envelope (allowed actions, V1–V9, S1–S8), rule planner, orchestrator, template brief + guardrail validator. All five golden cases produce their expected outcome on the interim data; 300 tests pass (incl. adversarial validator cases and random-planner termination). Rule planner shares a tool sequence for A and D (by design); sequence adaptivity is the AI planner's job. |

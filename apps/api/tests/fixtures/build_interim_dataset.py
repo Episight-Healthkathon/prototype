@@ -428,7 +428,7 @@ policy_sections = [
 
 
 def write_jsonl(path: Path, rows: list[dict]) -> None:
-    path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8")
+    path.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8", newline="\n")
 
 
 def main() -> None:
@@ -451,11 +451,12 @@ def main() -> None:
         "contract_version": "data-contract/1",
         "counts": {k: len(v) for k, v in tables.items()},
     }
-    (DATASET_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    (DATASET_DIR / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
     write_jsonl(POLICY_DIR / "policy_sections.jsonl", policy_sections)
     (POLICY_DIR / "manifest.json").write_text(
         json.dumps({"corpus_version": "pc-0-interim", "contract_version": "data-contract/1"}, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     print(f"wrote {DATASET_DIR} and {POLICY_DIR}")
 

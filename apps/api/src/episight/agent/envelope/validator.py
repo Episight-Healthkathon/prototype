@@ -6,9 +6,10 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
+from episight.agent.context import CaseContext
 from episight.agent.envelope.allowed import AllowedAction, is_repeat
 from episight.agent.state import InvestigationState
-from episight.contracts.enums import NoteType, RequirementKey, RequirementState
+from episight.contracts.enums import Availability, NoteType, RequirementKey, RequirementState
 
 NO_FURTHER_USEFUL_ACTION = "NO_FURTHER_USEFUL_ACTION"
 
@@ -54,7 +55,9 @@ class ValidationOutcome:
         return self.decision is not None
 
 
-def validate(raw: Any, allowed: list[AllowedAction], st: InvestigationState) -> ValidationOutcome:
+def validate(
+    raw: Any, allowed: list[AllowedAction], st: InvestigationState, ctx: CaseContext | None = None
+) -> ValidationOutcome:
     # V1 — schema
     try:
         data = json.loads(raw) if isinstance(raw, str) else raw
@@ -146,6 +149,13 @@ def validate(raw: Any, allowed: list[AllowedAction], st: InvestigationState) -> 
         tool_input = type(action.default_input).model_validate(merged)
     except ValidationError as exc:
         errors.append(f"V5: tool input invalid ({str(exc)[:200]})")
+
+    # V5 — a narrowed note search must still select at least one unread, readable document
+    if tool_input is not None and ctx is not None and update and action.bounds.note_types_allowed:
+        req = st.requirements[action.requirement_key]
+        notes = ctx.notes_for(tool_input.episode_ids, getattr(tool_input, "note_types", None))
+        if not any(n.availability == Availability.AVAILABLE and n.note_id not in req.searched for n in notes):
+            errors.append("V5: narrowed scope selects no unread readable document")
 
     # V6 — no repeat of an identical earlier call
     if tool_input is not None and is_repeat(st, action.tool_name, tool_input):

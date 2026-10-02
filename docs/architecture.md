@@ -255,7 +255,7 @@ On failure: one re-ask that includes the validator's errors. If it fails again, 
 
 **Rule planner (fallback and CI):** fixed priority order (structural → document inventory → context requirements by signal-specific order → risk indicators → policy), always searching full coverage in one call. Fully deterministic.
 
-**Model and API notes** (D-18): Claude via the Anthropic Python SDK. Current models (Claude Opus 5.5 / Sonnet 5.5) reject forced `tool_choice` and sampling parameters such as `temperature`, so the planner uses **structured outputs** (`output_config.format`) for its decision, and effort (`low` for a per-step planner) is the latency and cost control. Refusal (`stop_reason = "refusal"`) is handled as a planner failure and goes to fallback.
+**Model and API notes** (D-18): Claude via the Anthropic Python SDK by default; an OpenAI adapter is also available (same prompt, schema and validation). Current models (Claude Opus 5.5 / Sonnet 5.5) reject forced `tool_choice` and sampling parameters such as `temperature`, so the planner uses **structured outputs** (`output_config.format`) for its decision, and effort (`low` for a per-step planner) is the latency and cost control. Refusal (`stop_reason = "refusal"`) is handled as a planner failure and goes to fallback.
 
 ### 7.5 Conflict detection (deterministic)
 

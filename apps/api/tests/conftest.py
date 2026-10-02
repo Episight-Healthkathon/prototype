@@ -10,6 +10,9 @@ DATASET_DIR = FIXTURES / "dataset" / "v0-interim"
 POLICY_DIR = FIXTURES / "policies" / "pc-0-interim"
 SHARED_TYPES = REPO_ROOT / "packages" / "shared-types"
 
+# Tests never call a paid model, even when a developer has an API key in their environment or .env.
+os.environ["EPISIGHT_LLM_PROVIDER"] = "none"
+
 TEST_DATABASE_URL = os.environ.get(
     "EPISIGHT_TEST_DATABASE_URL", "postgresql+psycopg://episight:episight@localhost:5433/episight_test"
 )

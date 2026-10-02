@@ -239,3 +239,14 @@ def test_any_allowed_choice_order_terminates_with_a_valid_brief(seed, patient_id
 
 def test_unused_tool_outcome_type_is_constructible():
     assert ToolOutcome(status=ToolStatus.EMPTY).candidates == []
+
+
+def test_narrowed_scope_without_readable_documents_is_rejected():
+    ctx, st = fresh("PAT-000003")  # repeat episode has procedure + discharge notes, no triage note
+    for key in (K.EPISODE_RELATEDNESS, K.CLINICAL_DOCUMENT_AVAILABILITY):
+        st.requirements[key].state = S.FOUND
+    st.related_known = True
+    allowed = compute_allowed(st, ctx)
+    a = _action(allowed, K.EMERGENCY_CONTEXT)
+    out = validate({"action_id": a.action_id, "scope": {"note_types": ["TRIAGE"]}}, allowed, st, ctx)
+    assert not out.ok and any("no unread readable document" in e for e in out.errors)

@@ -26,7 +26,7 @@
 | D-15 | Auth | LOCKED |
 | D-16 | Deadline / timebox: ~48 h, vertical slice first | LOCKED |
 | D-17 | Python version | LOCKED |
-| D-18 | LLM provider and model | **OPEN** |
+| D-18 | LLM provider and model | LOCKED (key provisioning pending) |
 | D-19 | No model training / fine-tuning | LOCKED |
 | D-20 | Async runtime is a prototype constraint | LOCKED |
 | D-21 | Regression determinism via record/replay | LOCKED |
@@ -127,9 +127,13 @@ Locked 2026-10-02 unless noted.
 - **Decision:** Python 3.12 via `uv`. 3.11 is also supported.
 
 ### D-18 — LLM provider and model
-- **Status:** **OPEN** · **Owners:** Team (needs API access and budget)
-- **Decision:** Claude via the official `anthropic` Python SDK, model `claude-opus-5-5` at `low` effort for the per-step planner. Structured outputs for the decision object (forced `tool_choice` and `temperature` are not supported on current models). Refusals go to rule fallback. The key comes only from the `ANTHROPIC_API_KEY` env var. Moving to a cheaper or faster model (e.g., `claude-sonnet-5-5`) is a team cost/latency decision, to be measured on the benchmark first.
-- **Open questions:** Who provides the key? What is the budget per benchmark run?
+- **Status:** LOCKED (implementation) · key provisioning still pending · **Owners:** P1 (implementation), Team (key and budget) · **Date:** 2026-10-02
+- **Decision:** Two adapters behind one vendor-neutral planner:
+  - **Anthropic** (default when `ANTHROPIC_API_KEY` is set): official `anthropic` SDK, `claude-opus-5-5`, effort `low`, structured outputs (`output_config.format`), server-side refusal fallback (`fallbacks: "default"`, beta `server-side-fallback-2026-07-01`).
+  - **OpenAI / ChatGPT** (used when only `OPENAI_API_KEY` is set, or `EPISIGHT_LLM_PROVIDER=openai`): official `openai` SDK, default `gpt-4o`, `response_format` strict JSON schema.
+  - `EPISIGHT_LLM_MODEL` overrides the model. Keys come only from the environment.
+- **Reason:** The team may get access to either vendor. Prompt, schema, validation, fallback and recording are shared, so only the request/response layer differs.
+- **Consequences:** Pick one provider and keep it for the benchmark: recordings and results are tied to the model. Without a key, FULL mode runs entirely on the rule fallback. Open: who provides the key, budget per benchmark run.
 
 ### D-19 — No model training / fine-tuning
 - **Status:** LOCKED · **Owners:** Team · **Date:** 2026-10-01

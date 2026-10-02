@@ -482,7 +482,8 @@ def _search_notes(
                     exception_type=context.value if key != K.RISK_INDICATORS_IN_NOTES else None,
                 )
             )
-    status = ToolStatus.OK if candidates else (ToolStatus.EMPTY if available else ToolStatus.UNAVAILABLE)
+    # UNAVAILABLE only when matching documents exist but none can be read; an empty filter is just EMPTY.
+    status = ToolStatus.OK if candidates else (ToolStatus.UNAVAILABLE if notes and not available else ToolStatus.EMPTY)
     return ToolOutcome(
         status=status,
         candidates=candidates,

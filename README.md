@@ -62,7 +62,25 @@ cd packages/shared-types && pnpm install && pnpm generate   # src/api.d.ts
 
 A test fails if the committed artifacts drift from the backend models.
 
+## AI planner (optional key)
+
+`FULL` mode (the default for `POST /cases/{id}/investigate`) uses an AI planner to choose the next
+investigation step. The deterministic safety envelope still controls everything else (D-07). Put one key in
+`apps/api/.env` (see `.env.example`) and restart the API:
+
+| Variable | Effect |
+|---|---|
+| `ANTHROPIC_API_KEY` | Anthropic, model `claude-opus-5-5` at low effort (with server-side refusal fallback) |
+| `OPENAI_API_KEY` | OpenAI (ChatGPT), model `gpt-4o` |
+| `EPISIGHT_LLM_PROVIDER` | `auto` (default: Anthropic first, then OpenAI), `anthropic`, `openai`, or `none` |
+| `EPISIGHT_LLM_MODEL` | Override the model name for the chosen provider |
+
+Without a key, or when the model errors, refuses, times out, or proposes an invalid action twice, that step
+falls back to the rule planner (`planner.source = RULE_FALLBACK` in the trail). Every live call is recorded in
+`planner_recordings`. `EPISIGHT_LLM_REPLAY=replay` reproduces runs from recordings without calling a model.
+The test suite always runs with `EPISIGHT_LLM_PROVIDER=none`, so it never calls a paid API.
+
 ## Configuration
 
 Environment variables (or `apps/api/.env`, see `.env.example`): `EPISIGHT_DATABASE_URL`,
-`EPISIGHT_CORS_ORIGINS`, `EPISIGHT_LOG_LEVEL`. The AI planner (M6) reads `ANTHROPIC_API_KEY`, which must never be committed.
+`EPISIGHT_CORS_ORIGINS`, `EPISIGHT_LOG_LEVEL`, plus the AI planner variables above. Keys must never be committed.

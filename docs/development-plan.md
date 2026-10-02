@@ -28,7 +28,7 @@
 | **M3** | Episode reconstruction | Phase 1 | P0 | `[x]` |
 | **M4** | Evidence ledger + retrieval | Phase 2 | P0 | `[x]` |
 | **M5** | Agent tools | Phase 2 | P0 | `[x]` |
-| **M6** | Case state, safety envelope, AI planner, orchestrator, stopping (core) | Phase 2 | P0 | `[~]` (engine, rule planner, API runtime done; AI planner next) |
+| **M6** | Case state, safety envelope, AI planner, orchestrator, stopping (core) | Phase 2 | P0 | `[x]` (live-model check pending a key) |
 | **M7** | Reviewer brief + provenance API | Phase 3 | P0 | `[~]` (done except P1 review actions / meta enums) |
 | **M8** | Evaluation integration + ablation | Phase 3–4 | P1 (runner is P0 for golden checks) | `[ ]` |
 | **M9** | Robustness, regression, stabilization | Phase 4–5 | P0/P1 | `[ ]` |
@@ -57,7 +57,7 @@
 - [ ] **BE-0.8** Team agrees on the timebox (D-16) and cuts P1/P2 scope accordingly
 - [x] **BE-0.9** Create [decisions.md](decisions.md) as the single decision log
 - [~] **BE-0.10** Commit Phase 0 docs on branch `phase0/contracts` — ca231d8; push + PR still pending
-- [ ] **BE-0.11** Resolve D-18 (LLM provider, model, API key owner, budget per benchmark run)
+- [~] **BE-0.11** Resolve D-18: providers implemented (Anthropic default + OpenAI adapter); API key owner and budget still open
 
 **Exit criteria**
 - [x] Contracts frozen at v1 (shape questions are answered by [api-contract.md](api-contract.md); fixtures follow in BE-1.11).
@@ -168,11 +168,11 @@
 - [x] **BE-6.10** Modes `RULES_ONLY`, `RULES_RETRIEVAL`, `FULL_RULE_PLANNER`, `FULL` (architecture §11)
 - [x] **BE-6.11** Safety envelope: allowed-action generator with scope bounds + requirement dependency graph + coverage tracking (architecture §7.1, §7.3)
 - [x] **BE-6.12** Action validator V1–V9, including the bounded re-ask and rule-planner fallback path (architecture §7.4)
-- [ ] **BE-6.13** `llm/` adapter: Anthropic SDK client, per-step structured-output schema (`action_id` enum = allowed set), refusal/timeout/error → fallback, key from env only (D-18)
-- [ ] **BE-6.14** AI planner: versioned system prompt + state serializer (no ground truth), output → proposal, `planner_note`/`priority_ranking`/`skip` handling
-- [ ] **BE-6.15** Record/replay of planner calls (`planner_recordings`), with a replay mode that fails on a miss (D-21)
-- [ ] **BE-6.16** Planner telemetry in the trail and runner output (`planner_source`, validation errors, latency)
-- [~] **BE-6.17** Envelope adversarial tests: the planner returns a disallowed tool, a non-open requirement, out-of-scope episodes, a duplicate call, a material skip, or a premature "no further action", and each one is rejected and falls back
+- [x] **BE-6.13** `llm/` adapter: Anthropic SDK client, per-step structured-output schema (`action_id` enum = allowed set), refusal/timeout/error → fallback, key from env only (D-18)
+- [x] **BE-6.14** AI planner: versioned system prompt + state serializer (no ground truth), output → proposal, `planner_note`/`priority_ranking`/`skip` handling
+- [x] **BE-6.15** Record/replay of planner calls (`planner_recordings`), with a replay mode that fails on a miss (D-21)
+- [x] **BE-6.16** Planner telemetry in the trail and runner output (`planner_source`, validation errors, latency)
+- [x] **BE-6.17** Envelope adversarial tests: the planner returns a disallowed tool, a non-open requirement, out-of-scope episodes, a duplicate call, a material skip, or a premature "no further action", and each one is rejected and falls back
 
 **Exit criteria**
 - [ ] A: context surfaced via notes · B: `HUMAN_REVIEW_REQUIRED` / `EVIDENCE_PATHS_EXHAUSTED`, gaps `NOT_FOUND` · C: scheduled context + schedule consistency · D: `EVIDENCE_UNAVAILABLE` · E: `EVIDENCE_CONFLICTING`. These pass in `FULL_RULE_PLANNER` **and** in `FULL` (live and replay).
@@ -277,3 +277,4 @@ Full log in [decisions.md](decisions.md). All decisions are locked except **D-16
 | 2026-10-02 | BE-3.1–3.4, BE-4.2, 4.4–4.6 | Reconstruction (ANCHOR/RELATED/CONTEXT, ICD-10 category relatedness, chronic-class codes) wired into the timeline; retrieval: sentence offsets, pure-Python BM25, context matcher with per-lexicon negation scope, policy index. Ledger/tools/state drafted, not yet wired or tested. 178 tests pass. |
 | 2026-10-02 | M4, M5, BE-6.1–6.7, 6.9–6.12, 7.1–7.2 | Engine runs end-to-end in-process: 8 tools, provenance-checked ledger, reducer with coverage rule + dependency graph, envelope (allowed actions, V1–V9, S1–S8), rule planner, orchestrator, template brief + guardrail validator. All five golden cases produce their expected outcome on the interim data; 300 tests pass (incl. adversarial validator cases and random-planner termination). Rule planner shares a tool sequence for A and D (by design); sequence adaptivity is the AI planner's job. |
 | 2026-10-02 | BE-6.8, BE-7.3, 7.4, 7.7 | Engine wired to DB and API: background runs with per-step persistence (state snapshots, append-only actions, evidence ledger rows, brief), start guards (409 in progress / already completed, rerun), run history (E13), startup recovery of interrupted runs, queued-run view. Mock fixtures now come from real engine runs for all 6 cases. Found and fixed: DB rows carried `signal_type` as a string. 394 tests pass; live server smoke test passed. |
+| 2026-10-02 | BE-6.13–6.17, BE-0.11 (partial) | AI planner: vendor-neutral prompt + per-step strict JSON schema, envelope validation with one re-ask, rule fallback on any failure, record/replay (DB store for the API, JSON-dir store for batch). Adapters: Anthropic (`claude-opus-5-5`, effort low, structured outputs, server-side refusal fallback) and OpenAI (`gpt-4o`, strict json_schema). Added V5 guard: a narrowed note search must select an unread readable document. Tests never call a paid API. 433 tests pass. Live-model check waits for a key. |

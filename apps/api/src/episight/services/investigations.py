@@ -62,12 +62,14 @@ def code_version() -> str | None:
         return None
 
 
-def planner_for(mode: InvestigationMode) -> Planner:
-    """FULL uses the AI planner when configured; until then every step is decided by the rule fallback."""
+def planner_for(mode: InvestigationMode, session: Session | None = None) -> Planner:
+    """FULL uses the AI planner when an LLM is configured, otherwise the rule fallback decides every step."""
     if mode == InvestigationMode.FULL:
         from episight.llm.planner import llm_planner_or_none
+        from episight.services.recording_store import DbRecordingStore
 
-        return llm_planner_or_none() or RulePlanner(source=PlannerSource.RULE_FALLBACK)
+        store = DbRecordingStore(session) if session is not None else None
+        return llm_planner_or_none(store=store) or RulePlanner(source=PlannerSource.RULE_FALLBACK)
     return RulePlanner()
 
 
@@ -129,7 +131,7 @@ def execute_run(run_id: str, database_url: str | None = None) -> None:
         run_investigation(
             ctx,
             run_id=run_id,
-            planner=planner_for(mode),
+            planner=planner_for(mode, session),
             mode=mode,
             max_steps=run.max_steps,
             recorder=DbRecorder(session, run_id),

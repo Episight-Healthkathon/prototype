@@ -228,7 +228,7 @@ def test_payload_is_built_from_state_only_and_is_run_independent():
     payload = json.dumps(build_user_payload(st, ctx, compute_allowed(st, ctx)))
     assert "RUN-" not in payload
     assert "ground_truth" not in payload.lower() and "ground-truth" not in payload.lower()
-    assert PROMPT_VERSION == "planner-1"
+    assert PROMPT_VERSION == "planner-2"
 
 
 # --- configuration & adapters ------------------------------------------------------------------------

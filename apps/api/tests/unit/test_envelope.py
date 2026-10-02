@@ -250,3 +250,23 @@ def test_narrowed_scope_without_readable_documents_is_rejected():
     a = _action(allowed, K.EMERGENCY_CONTEXT)
     out = validate({"action_id": a.action_id, "scope": {"note_types": ["TRIAGE"]}}, allowed, st, ctx)
     assert not out.ok and any("no unread readable document" in e for e in out.errors)
+
+
+def test_budget_guard_stops_offering_optional_questions_when_steps_are_tight():
+    ctx, st = fresh()
+    keys = {a.requirement_key for a in compute_allowed(st, ctx)}
+    assert K.PROVIDER_CONTEXT in keys
+    st.step = st.max_steps - len(st.open_material())
+    assert K.PROVIDER_CONTEXT not in {a.requirement_key for a in compute_allowed(st, ctx)}
+
+
+def test_optional_questions_left_open_are_marked_skipped_when_the_run_stops():
+    class NeverSkips:
+        def decide(self, st, ctx, allowed):
+            action = next((a for a in allowed if a.requirement_key != K.PROVIDER_CONTEXT), allowed[0])
+            return Decision(action=action, tool_input=action.default_input, source=PlannerSource.LLM)
+
+    result = run("PAT-000001", planner=NeverSkips())
+    provider = result.state.requirements[K.PROVIDER_CONTEXT]
+    assert provider.state == S.SKIPPED and "stopped" in provider.explanation
+    assert K.PROVIDER_CONTEXT not in {g.key for g in result.brief.remaining_gaps}

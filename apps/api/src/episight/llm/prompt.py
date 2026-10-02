@@ -14,7 +14,7 @@ from episight.agent.envelope.validator import NO_FURTHER_USEFUL_ACTION
 from episight.agent.state import InvestigationState
 from episight.contracts.enums import NoteType, RequirementKey, RequirementState
 
-PROMPT_VERSION = "planner-1"
+PROMPT_VERSION = "planner-2"
 EXCERPT_CHARS = 200
 
 SYSTEM_PROMPT = """You are the investigation planner of EPISIGHT, an evidence-first investigation copilot for \
@@ -27,10 +27,16 @@ to choose the most useful next action from the allowed list.
 How to choose:
 - Pick exactly one action_id from allowed_actions. Use "NO_FURTHER_USEFUL_ACTION" only when no material \
 requirement is open.
-- Prefer the action most likely to resolve the open evidence gaps that matter for this specific case. Look for \
-evidence on both sides: indicators supporting the risk signal and context that could legitimately explain it \
-(emergency, chronic condition, scheduled or staged procedure, supporting-examination follow-up, clinical \
-justification).
+- Every step costs time and budget, and remaining_steps is limited. Aim to finish in as few steps as possible: \
+every material requirement must still be resolved, so spend steps only on actions that move a material question.
+- Requirements with material=false are optional. Skip them (with a short reason) unless the case data suggests \
+they could change the review, for example a provider or class-of-care change between episodes.
+- Order matters. First check where decisive evidence is most likely, using the episode list and the document \
+types each episode has: for repeated care, the notes of the repeat episode usually decide emergency, \
+scheduled-care and justification questions, and sources that disagree end the investigation early with a conflict.
+- Look for evidence on both sides: indicators supporting the risk signal and context that could legitimately \
+explain it (emergency, chronic condition, scheduled or staged procedure, supporting-examination follow-up, \
+clinical justification).
 - For note searches you may narrow the scope (a subset of the action's episode_ids and/or specific note_types) \
 only when the action says narrowing_allowed is true; otherwise set scope to null. A narrowed search leaves the \
 question open until every available document has been read, so narrow only when it targets the most likely source.

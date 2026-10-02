@@ -123,10 +123,16 @@ def compute_allowed(st: InvestigationState, ctx: CaseContext) -> list[AllowedAct
     permitted = permitted_tools(st.mode)
     order = {k: i for i, k in enumerate(priority_order(ctx.signal_type))}
     remaining = st.max_steps - st.step
-    narrowing_allowed = remaining > len(st.open_material())
+    open_material = len(st.open_material())
+    narrowing_allowed = remaining > open_material
+    # Budget guard: when the remaining steps are only enough for the open material questions, optional
+    # (non-material) questions are no longer offered, whatever the planner prefers.
+    budget_tight = remaining <= open_material
     actions: list[AllowedAction] = []
     for req in sorted(st.requirements.values(), key=lambda r: order.get(r.key, 99)):
         if req.state != RequirementState.OPEN:
+            continue
+        if budget_tight and not req.material:
             continue
         if any(
             p in st.requirements and st.requirements[p].state == RequirementState.OPEN for p in req.spec.prerequisites

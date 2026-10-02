@@ -30,7 +30,7 @@ from episight.contracts.api import (
     PlannerInfo,
     SkippedRequirement,
 )
-from episight.contracts.enums import InvestigationMode, ProgressStatus, ToolStatus
+from episight.contracts.enums import InvestigationMode, ProgressStatus, RequirementState, ToolStatus
 from episight.evidence.ledger import ProvenanceError
 
 DEFAULT_MAX_STEPS = 12
@@ -187,6 +187,9 @@ def run_investigation(
             recorder.on_step(st, ctx, action, new_evidence, decision)
 
     st.next_action = None
+    for req in st.requirements.values():
+        if req.state == RequirementState.OPEN and not req.material:
+            apply_skip(st, req.key, "not assessed before the investigation stopped")
     st.progress_status = ProgressStatus.BRIEF_READY
     st.updated_at = now()
     brief, validation = validate_brief(build_brief(st, ctx, now()), st)

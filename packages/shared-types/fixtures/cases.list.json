@@ -1,0 +1,97 @@
+{
+  "items": [
+    {
+      "case_id": "CASE-RA-e84cb8b0",
+      "signal_type": "READMISSION",
+      "patient_id": "PAT-000005",
+      "provider": {
+        "provider_id": "PRV-0002",
+        "name": "RS Sintetis Nusantara 02"
+      },
+      "index_date": "2026-07-01",
+      "min_interval_days": 6,
+      "episode_count": 2,
+      "progress_status": "FLAGGED",
+      "outcome": null,
+      "updated_at": "2026-10-02T09:00:00+07:00"
+    },
+    {
+      "case_id": "CASE-RA-c21f18d3",
+      "signal_type": "READMISSION",
+      "patient_id": "PAT-000004",
+      "provider": {
+        "provider_id": "PRV-0001",
+        "name": "RS Sintetis Nusantara 01"
+      },
+      "index_date": "2026-06-01",
+      "min_interval_days": 10,
+      "episode_count": 2,
+      "progress_status": "FLAGGED",
+      "outcome": null,
+      "updated_at": "2026-10-02T09:00:00+07:00"
+    },
+    {
+      "case_id": "CASE-FR-6c937d70",
+      "signal_type": "FRAGMENTATION",
+      "patient_id": "PAT-000008",
+      "provider": {
+        "provider_id": "PRV-0003",
+        "name": "RS Sintetis Nusantara 03"
+      },
+      "index_date": "2026-05-10",
+      "min_interval_days": 7,
+      "episode_count": 2,
+      "progress_status": "FLAGGED",
+      "outcome": null,
+      "updated_at": "2026-10-02T09:00:00+07:00"
+    },
+    {
+      "case_id": "CASE-RA-f024a4b0",
+      "signal_type": "READMISSION",
+      "patient_id": "PAT-000003",
+      "provider": {
+        "provider_id": "PRV-0003",
+        "name": "RS Sintetis Nusantara 03"
+      },
+      "index_date": "2026-05-04",
+      "min_interval_days": 14,
+      "episode_count": 2,
+      "progress_status": "FLAGGED",
+      "outcome": null,
+      "updated_at": "2026-10-02T09:00:00+07:00"
+    },
+    {
+      "case_id": "CASE-FR-150659fa",
+      "signal_type": "FRAGMENTATION",
+      "patient_id": "PAT-000002",
+      "provider": {
+        "provider_id": "PRV-0002",
+        "name": "RS Sintetis Nusantara 02"
+      },
+      "index_date": "2026-04-02",
+      "min_interval_days": 3,
+      "episode_count": 3,
+      "progress_status": "FLAGGED",
+      "outcome": null,
+      "updated_at": "2026-10-02T09:00:00+07:00"
+    },
+    {
+      "case_id": "CASE-RA-7f7f4e80",
+      "signal_type": "READMISSION",
+      "patient_id": "PAT-000001",
+      "provider": {
+        "provider_id": "PRV-0001",
+        "name": "RS Sintetis Nusantara 01"
+      },
+      "index_date": "2026-03-03",
+      "min_interval_days": 5,
+      "episode_count": 2,
+      "progress_status": "FLAGGED",
+      "outcome": null,
+      "updated_at": "2026-10-02T09:00:00+07:00"
+    }
+  ],
+  "total": 6,
+  "limit": 50,
+  "offset": 0
+}

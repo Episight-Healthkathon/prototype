@@ -1,0 +1,14 @@
+{
+  "dataset_version": "v0-interim",
+  "generator_version": "interim-handwritten-1",
+  "seed": 0,
+  "generated_at": "2026-10-02T00:00:00+07:00",
+  "contract_version": "data-contract/1",
+  "counts": {
+    "patients": 10,
+    "providers": 3,
+    "episodes": 24,
+    "claims": 24,
+    "clinical_notes": 20
+  }
+}

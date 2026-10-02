@@ -1,0 +1,50 @@
+{
+  "case_id": "CASE-FR-6c937d70",
+  "signal_type": "FRAGMENTATION",
+  "patient_id": "PAT-000008",
+  "provider": {
+    "provider_id": "PRV-0003",
+    "name": "RS Sintetis Nusantara 03"
+  },
+  "index_date": "2026-05-10",
+  "min_interval_days": 7,
+  "episode_count": 2,
+  "progress_status": "FLAGGED",
+  "outcome": null,
+  "updated_at": "2026-10-02T09:00:00+07:00",
+  "episode_group_ids": [
+    "EPI-000801",
+    "EPI-000802"
+  ],
+  "primary_pair": {
+    "from_episode_id": "EPI-000801",
+    "to_episode_id": "EPI-000802"
+  },
+  "signal": {
+    "rule_id": "FRAGMENTATION_7D_SAME_PROVIDER_SAME_DX",
+    "rule_version": "1",
+    "description": "Repeated outpatient visit at the same FKRTL with the same primary diagnosis within 7 days",
+    "params": {
+      "threshold_days": 7,
+      "diagnosis_match": "EXACT"
+    },
+    "pairs": [
+      {
+        "from_episode_id": "EPI-000801",
+        "to_episode_id": "EPI-000802",
+        "interval_days": 7,
+        "matched": {
+          "same_patient": true,
+          "same_provider": true,
+          "same_primary_diagnosis": true,
+          "encounter_type": "OUTPATIENT"
+        }
+      }
+    ],
+    "disclaimer": "A risk signal starts an investigation. It is not a finding."
+  },
+  "stop_reason": null,
+  "latest_run": null,
+  "brief_available": false,
+  "data_quality_issues": []
+}

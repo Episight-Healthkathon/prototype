@@ -1,0 +1,194 @@
+{
+  "brief_id": "BRF-EXAMPLE-A-0001",
+  "case_id": "CASE-RA-7f7f4e80",
+  "run_id": "RUN-EXAMPLE-A-0001",
+  "generated_at": "2026-10-02T09:00:12+07:00",
+  "generator_version": "brief-template-1",
+  "progress_status": "BRIEF_READY",
+  "outcome": "EVIDENCE_SUFFICIENT",
+  "stop_reason": "SUFFICIENT_EVIDENCE",
+  "case_summary": [
+    {
+      "statement_id": "S1",
+      "text": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis (I50.0), 5 days after discharge.",
+      "evidence_ids": [
+        "EV-ceb16e043e11",
+        "EV-930fe827ea70"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS",
+        "DIAGNOSIS_CONSISTENCY"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "S2",
+      "text": "Notes document an emergency presentation for the readmission and a pre-existing chronic heart failure.",
+      "evidence_ids": [
+        "EV-31414acbb2c5",
+        "EV-092061291e7c"
+      ],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT",
+        "CHRONIC_CONDITION_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "risk_signal": {
+    "rule_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+    "rule_version": "1",
+    "description": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge",
+    "params": {
+      "threshold_days": 30,
+      "diagnosis_match": "EXACT"
+    },
+    "pairs": [
+      {
+        "from_episode_id": "EPI-000101",
+        "to_episode_id": "EPI-000102",
+        "interval_days": 5,
+        "matched": {
+          "same_patient": true,
+          "same_provider": true,
+          "same_primary_diagnosis": true,
+          "encounter_type": "INPATIENT"
+        }
+      }
+    ],
+    "disclaimer": "A risk signal starts an investigation. It is not a finding."
+  },
+  "episode_timeline": [
+    {
+      "episode_id": "EPI-000101",
+      "label": "Index stay: congestive heart failure",
+      "start_at": "2026-03-03T09:10:00+07:00",
+      "end_at": "2026-03-07T11:00:00+07:00",
+      "interval_from_previous_days": null
+    },
+    {
+      "episode_id": "EPI-000102",
+      "label": "Readmission via emergency department",
+      "start_at": "2026-03-12T21:40:00+07:00",
+      "end_at": "2026-03-16T10:00:00+07:00",
+      "interval_from_previous_days": 5
+    }
+  ],
+  "supporting_risk_evidence": [
+    {
+      "statement_id": "R1",
+      "text": "Same FKRTL and same primary diagnosis within 5 days of discharge.",
+      "evidence_ids": [
+        "EV-ceb16e043e11",
+        "EV-930fe827ea70"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS",
+        "DIAGNOSIS_CONSISTENCY"
+      ],
+      "material": true
+    }
+  ],
+  "explaining_context_evidence": [
+    {
+      "statement_id": "C1",
+      "text": "Triage classified the readmission as red category (emergency).",
+      "evidence_ids": [
+        "EV-31414acbb2c5",
+        "EV-49a8810a46b1"
+      ],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "C2",
+      "text": "Chronic heart failure was documented before the index stay.",
+      "evidence_ids": [
+        "EV-092061291e7c"
+      ],
+      "requirement_keys": [
+        "CHRONIC_CONDITION_CONTEXT"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "C3",
+      "text": "Discharge summary records fluid non-adherence and an upper respiratory infection as triggers.",
+      "evidence_ids": [
+        "EV-dcabc7f726d8"
+      ],
+      "requirement_keys": [
+        "CLINICAL_JUSTIFICATION"
+      ],
+      "material": true
+    }
+  ],
+  "policy_references": [
+    {
+      "evidence_id": "EV-e9080dfdc68c",
+      "policy_id": "POL-INTERIM-READMISI-01",
+      "document_title": "Permenkes No. 26 Tahun 2021 tentang Pedoman INA-CBG (ringkasan interim)",
+      "section": "Readmisi: definisi dan pengecualian",
+      "version": "interim-0",
+      "excerpt": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dalam waktu kurang dari atau sama dengan 30 hari."
+    }
+  ],
+  "remaining_gaps": [
+    {
+      "key": "SCHEDULED_PROCEDURE_CONTEXT",
+      "question": "Is a scheduled or staged procedure documented?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources (4 of 4 documents searched)."
+    },
+    {
+      "key": "RISK_INDICATORS_IN_NOTES",
+      "question": "Do notes indicate premature discharge or unresolved care?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources (4 of 4 documents searched)."
+    }
+  ],
+  "conflicts": [],
+  "uncertainty": [
+    {
+      "statement_id": "U1",
+      "text": "Provider context was not assessed (judged not material: same provider, no class change).",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "PROVIDER_CONTEXT"
+      ],
+      "material": false
+    }
+  ],
+  "suggested_next_review": [
+    {
+      "statement_id": "N1",
+      "text": "Verify that the triage findings support an emergency readmission.",
+      "evidence_ids": [
+        "EV-31414acbb2c5"
+      ],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "review_status": "PENDING_HUMAN_REVIEW",
+  "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+  "traceability": {
+    "material_statements": 7,
+    "with_evidence": 7
+  },
+  "provenance": {
+    "evidence_ids": [
+      "EV-092061291e7c",
+      "EV-31414acbb2c5",
+      "EV-49a8810a46b1",
+      "EV-930fe827ea70",
+      "EV-ceb16e043e11",
+      "EV-dcabc7f726d8",
+      "EV-e9080dfdc68c"
+    ]
+  }
+}

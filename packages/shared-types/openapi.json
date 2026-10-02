@@ -1,0 +1,3402 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EPISIGHT API",
+    "description": "Evidence-first investigation copilot for Episode Integrity (prototype, synthetic data only).",
+    "version": "contract-1"
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Health",
+        "operationId": "health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases": {
+      "get": {
+        "tags": [
+          "cases"
+        ],
+        "summary": "List Cases",
+        "operationId": "list_cases_api_v1_cases_get",
+        "parameters": [
+          {
+            "name": "signal_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/SignalType"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Signal Type"
+            }
+          },
+          {
+            "name": "progress_status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProgressStatus"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Progress Status"
+            }
+          },
+          {
+            "name": "outcome",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Outcome"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Outcome"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "index_date",
+                "-index_date",
+                "min_interval_days",
+                "case_id"
+              ],
+              "type": "string",
+              "default": "-index_date",
+              "title": "Sort"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseList"
+                }
+              }
+            }
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Unprocessable Entity"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}": {
+      "get": {
+        "tags": [
+          "cases"
+        ],
+        "summary": "Get Case",
+        "operationId": "get_case_api_v1_cases__case_id__get",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaseDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/episodes": {
+      "get": {
+        "tags": [
+          "cases"
+        ],
+        "summary": "Get Episodes",
+        "operationId": "get_episodes_api_v1_cases__case_id__episodes_get",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EpisodeTimeline"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/investigate": {
+      "post": {
+        "tags": [
+          "cases"
+        ],
+        "summary": "Start Investigation",
+        "operationId": "start_investigation_api_v1_cases__case_id__investigate_post",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/InvestigateRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvestigateAccepted"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/investigation": {
+      "get": {
+        "tags": [
+          "cases"
+        ],
+        "summary": "Get Investigation",
+        "operationId": "get_investigation_api_v1_cases__case_id__investigation_get",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "run_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvestigationView"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/evidence": {
+      "get": {
+        "tags": [
+          "cases"
+        ],
+        "summary": "List Evidence",
+        "operationId": "list_evidence_api_v1_cases__case_id__evidence_get",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/EvidenceCategory"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Category"
+            }
+          },
+          {
+            "name": "requirement_key",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/RequirementKey"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Requirement Key"
+            }
+          },
+          {
+            "name": "run_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Run Id"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 200,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceList"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cases/{case_id}/brief": {
+      "get": {
+        "tags": [
+          "cases"
+        ],
+        "summary": "Get Brief",
+        "operationId": "get_brief_api_v1_cases__case_id__brief_get",
+        "parameters": [
+          {
+            "name": "case_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Case Id"
+            }
+          },
+          {
+            "name": "run_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvestigationBrief"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/evidence/{evidence_id}": {
+      "get": {
+        "tags": [
+          "evidence"
+        ],
+        "summary": "Get Evidence",
+        "operationId": "get_evidence_api_v1_evidence__evidence_id__get",
+        "parameters": [
+          {
+            "name": "evidence_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Evidence Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionError": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ActionError"
+      },
+      "AdmissionType": {
+        "type": "string",
+        "enum": [
+          "EMERGENCY",
+          "ELECTIVE"
+        ],
+        "title": "AdmissionType"
+      },
+      "ApiError": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ApiErrorBody"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ApiError"
+      },
+      "ApiErrorBody": {
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "details": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Details"
+          },
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message",
+          "request_id"
+        ],
+        "title": "ApiErrorBody"
+      },
+      "Availability": {
+        "type": "string",
+        "enum": [
+          "AVAILABLE",
+          "UNAVAILABLE",
+          "RESTRICTED"
+        ],
+        "title": "Availability"
+      },
+      "BriefStatement": {
+        "properties": {
+          "statement_id": {
+            "type": "string",
+            "title": "Statement Id"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Ids"
+          },
+          "requirement_keys": {
+            "items": {
+              "$ref": "#/components/schemas/RequirementKey"
+            },
+            "type": "array",
+            "title": "Requirement Keys"
+          },
+          "material": {
+            "type": "boolean",
+            "title": "Material"
+          }
+        },
+        "type": "object",
+        "required": [
+          "statement_id",
+          "text",
+          "evidence_ids",
+          "requirement_keys",
+          "material"
+        ],
+        "title": "BriefStatement"
+      },
+      "BriefTimelineItem": {
+        "properties": {
+          "episode_id": {
+            "type": "string",
+            "title": "Episode Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "start_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start At"
+          },
+          "end_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End At"
+          },
+          "interval_from_previous_days": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interval From Previous Days"
+          }
+        },
+        "type": "object",
+        "required": [
+          "episode_id",
+          "label",
+          "start_at",
+          "end_at",
+          "interval_from_previous_days"
+        ],
+        "title": "BriefTimelineItem"
+      },
+      "CaseDetail": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "signal_type": {
+            "$ref": "#/components/schemas/SignalType"
+          },
+          "patient_id": {
+            "type": "string",
+            "title": "Patient Id"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ProviderRef"
+          },
+          "index_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Index Date"
+          },
+          "min_interval_days": {
+            "type": "integer",
+            "title": "Min Interval Days"
+          },
+          "episode_count": {
+            "type": "integer",
+            "title": "Episode Count"
+          },
+          "progress_status": {
+            "$ref": "#/components/schemas/ProgressStatus"
+          },
+          "outcome": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Outcome"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          },
+          "episode_group_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Episode Group Ids"
+          },
+          "primary_pair": {
+            "$ref": "#/components/schemas/EpisodePair"
+          },
+          "signal": {
+            "$ref": "#/components/schemas/RiskSignal"
+          },
+          "stop_reason": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StopReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "latest_run": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "brief_available": {
+            "type": "boolean",
+            "title": "Brief Available"
+          },
+          "data_quality_issues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Data Quality Issues"
+          }
+        },
+        "type": "object",
+        "required": [
+          "case_id",
+          "signal_type",
+          "patient_id",
+          "provider",
+          "index_date",
+          "min_interval_days",
+          "episode_count",
+          "progress_status",
+          "outcome",
+          "updated_at",
+          "episode_group_ids",
+          "primary_pair",
+          "signal",
+          "stop_reason",
+          "latest_run",
+          "brief_available",
+          "data_quality_issues"
+        ],
+        "title": "CaseDetail"
+      },
+      "CaseList": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/CaseSummary"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "limit",
+          "offset"
+        ],
+        "title": "CaseList"
+      },
+      "CaseState": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "signal_type": {
+            "$ref": "#/components/schemas/SignalType"
+          },
+          "related_episode_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Related Episode Ids"
+          },
+          "known_facts": {
+            "items": {
+              "$ref": "#/components/schemas/KnownFact"
+            },
+            "type": "array",
+            "title": "Known Facts"
+          },
+          "supporting_risk_evidence": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Supporting Risk Evidence"
+          },
+          "explaining_context_evidence": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Explaining Context Evidence"
+          },
+          "neutral_evidence": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Neutral Evidence"
+          },
+          "requirements": {
+            "items": {
+              "$ref": "#/components/schemas/Requirement"
+            },
+            "type": "array",
+            "title": "Requirements"
+          },
+          "missing_evidence": {
+            "items": {
+              "$ref": "#/components/schemas/RequirementKey"
+            },
+            "type": "array",
+            "title": "Missing Evidence"
+          },
+          "unresolved_questions": {
+            "items": {
+              "$ref": "#/components/schemas/UnresolvedQuestion"
+            },
+            "type": "array",
+            "title": "Unresolved Questions"
+          },
+          "tools_called": {
+            "items": {
+              "$ref": "#/components/schemas/ToolCallRef"
+            },
+            "type": "array",
+            "title": "Tools Called"
+          },
+          "next_action": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NextAction"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "investigation_step": {
+            "type": "integer",
+            "title": "Investigation Step"
+          },
+          "max_steps": {
+            "type": "integer",
+            "title": "Max Steps"
+          },
+          "progress_status": {
+            "$ref": "#/components/schemas/ProgressStatus"
+          },
+          "outcome": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Outcome"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stop_reason": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StopReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "priority_ranking": {
+            "items": {
+              "$ref": "#/components/schemas/RequirementKey"
+            },
+            "type": "array",
+            "title": "Priority Ranking"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "case_id",
+          "run_id",
+          "signal_type",
+          "related_episode_ids",
+          "known_facts",
+          "supporting_risk_evidence",
+          "explaining_context_evidence",
+          "neutral_evidence",
+          "requirements",
+          "missing_evidence",
+          "unresolved_questions",
+          "tools_called",
+          "next_action",
+          "investigation_step",
+          "max_steps",
+          "progress_status",
+          "outcome",
+          "stop_reason",
+          "priority_ranking",
+          "updated_at"
+        ],
+        "title": "CaseState"
+      },
+      "CaseSummary": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "signal_type": {
+            "$ref": "#/components/schemas/SignalType"
+          },
+          "patient_id": {
+            "type": "string",
+            "title": "Patient Id"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/ProviderRef"
+          },
+          "index_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Index Date"
+          },
+          "min_interval_days": {
+            "type": "integer",
+            "title": "Min Interval Days"
+          },
+          "episode_count": {
+            "type": "integer",
+            "title": "Episode Count"
+          },
+          "progress_status": {
+            "$ref": "#/components/schemas/ProgressStatus"
+          },
+          "outcome": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Outcome"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "case_id",
+          "signal_type",
+          "patient_id",
+          "provider",
+          "index_date",
+          "min_interval_days",
+          "episode_count",
+          "progress_status",
+          "outcome",
+          "updated_at"
+        ],
+        "title": "CaseSummary"
+      },
+      "ClaimRef": {
+        "properties": {
+          "claim_id": {
+            "type": "string",
+            "title": "Claim Id"
+          },
+          "inacbg_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inacbg Code"
+          },
+          "claim_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Claim Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "claim_id",
+          "inacbg_code",
+          "claim_status"
+        ],
+        "title": "ClaimRef"
+      },
+      "CodeRef": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "label"
+        ],
+        "title": "CodeRef"
+      },
+      "Conflict": {
+        "properties": {
+          "key": {
+            "$ref": "#/components/schemas/RequirementKey"
+          },
+          "affirming_evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Affirming Evidence Ids"
+          },
+          "negating_evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Negating Evidence Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "affirming_evidence_ids",
+          "negating_evidence_ids"
+        ],
+        "title": "Conflict"
+      },
+      "Coverage": {
+        "properties": {
+          "in_scope_sources": {
+            "type": "integer",
+            "title": "In Scope Sources"
+          },
+          "searched_sources": {
+            "type": "integer",
+            "title": "Searched Sources"
+          },
+          "unavailable_sources": {
+            "type": "integer",
+            "title": "Unavailable Sources"
+          }
+        },
+        "type": "object",
+        "required": [
+          "in_scope_sources",
+          "searched_sources",
+          "unavailable_sources"
+        ],
+        "title": "Coverage"
+      },
+      "DiagnosisMatch": {
+        "type": "string",
+        "enum": [
+          "EXACT",
+          "CATEGORY"
+        ],
+        "title": "DiagnosisMatch"
+      },
+      "DocumentRef": {
+        "properties": {
+          "note_id": {
+            "type": "string",
+            "title": "Note Id"
+          },
+          "note_type": {
+            "$ref": "#/components/schemas/NoteType"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "availability": {
+            "$ref": "#/components/schemas/Availability"
+          }
+        },
+        "type": "object",
+        "required": [
+          "note_id",
+          "note_type",
+          "title",
+          "availability"
+        ],
+        "title": "DocumentRef"
+      },
+      "EncounterType": {
+        "type": "string",
+        "enum": [
+          "INPATIENT",
+          "OUTPATIENT"
+        ],
+        "title": "EncounterType"
+      },
+      "EpisodePair": {
+        "properties": {
+          "from_episode_id": {
+            "type": "string",
+            "title": "From Episode Id"
+          },
+          "to_episode_id": {
+            "type": "string",
+            "title": "To Episode Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "from_episode_id",
+          "to_episode_id"
+        ],
+        "title": "EpisodePair"
+      },
+      "EpisodeRole": {
+        "type": "string",
+        "enum": [
+          "ANCHOR",
+          "RELATED",
+          "CONTEXT"
+        ],
+        "title": "EpisodeRole"
+      },
+      "EpisodeTimeline": {
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "patient_id": {
+            "type": "string",
+            "title": "Patient Id"
+          },
+          "episodes": {
+            "items": {
+              "$ref": "#/components/schemas/TimelineEpisode"
+            },
+            "type": "array",
+            "title": "Episodes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "case_id",
+          "patient_id",
+          "episodes"
+        ],
+        "title": "EpisodeTimeline"
+      },
+      "ErrorCode": {
+        "type": "string",
+        "enum": [
+          "VALIDATION_ERROR",
+          "CASE_NOT_FOUND",
+          "EVIDENCE_NOT_FOUND",
+          "RUN_NOT_FOUND",
+          "BRIEF_NOT_READY",
+          "INVESTIGATION_IN_PROGRESS",
+          "INVESTIGATION_ALREADY_COMPLETED",
+          "SERVICE_UNAVAILABLE",
+          "INTERNAL_ERROR"
+        ],
+        "title": "ErrorCode"
+      },
+      "Evidence": {
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "title": "Evidence Id"
+          },
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "episode_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Episode Id"
+          },
+          "source_type": {
+            "$ref": "#/components/schemas/SourceType"
+          },
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "source_title": {
+            "type": "string",
+            "title": "Source Title"
+          },
+          "source_excerpt": {
+            "type": "string",
+            "title": "Source Excerpt"
+          },
+          "field_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Field Path"
+          },
+          "char_start": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Char Start"
+          },
+          "char_end": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Char End"
+          },
+          "requirement_key": {
+            "$ref": "#/components/schemas/RequirementKey"
+          },
+          "stance": {
+            "$ref": "#/components/schemas/Stance"
+          },
+          "relevance_category": {
+            "$ref": "#/components/schemas/EvidenceCategory"
+          },
+          "exception_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exception Type"
+          },
+          "retrieved_by_tool": {
+            "$ref": "#/components/schemas/ToolName"
+          },
+          "retrieval_reason": {
+            "type": "string",
+            "title": "Retrieval Reason"
+          },
+          "extraction_method": {
+            "$ref": "#/components/schemas/ExtractionMethod"
+          },
+          "retrieved_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Retrieved At"
+          },
+          "investigation_step": {
+            "type": "integer",
+            "title": "Investigation Step"
+          },
+          "policy_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Policy Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "case_id",
+          "run_id",
+          "episode_id",
+          "source_type",
+          "source_id",
+          "source_title",
+          "source_excerpt",
+          "field_path",
+          "char_start",
+          "char_end",
+          "requirement_key",
+          "stance",
+          "relevance_category",
+          "exception_type",
+          "retrieved_by_tool",
+          "retrieval_reason",
+          "extraction_method",
+          "retrieved_at",
+          "investigation_step",
+          "policy_version"
+        ],
+        "title": "Evidence"
+      },
+      "EvidenceCategory": {
+        "type": "string",
+        "enum": [
+          "SUPPORTING_RISK",
+          "EXPLAINING_CONTEXT",
+          "NEUTRAL"
+        ],
+        "title": "EvidenceCategory"
+      },
+      "EvidenceDetail": {
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "title": "Evidence Id"
+          },
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "episode_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Episode Id"
+          },
+          "source_type": {
+            "$ref": "#/components/schemas/SourceType"
+          },
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "source_title": {
+            "type": "string",
+            "title": "Source Title"
+          },
+          "source_excerpt": {
+            "type": "string",
+            "title": "Source Excerpt"
+          },
+          "field_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Field Path"
+          },
+          "char_start": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Char Start"
+          },
+          "char_end": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Char End"
+          },
+          "requirement_key": {
+            "$ref": "#/components/schemas/RequirementKey"
+          },
+          "stance": {
+            "$ref": "#/components/schemas/Stance"
+          },
+          "relevance_category": {
+            "$ref": "#/components/schemas/EvidenceCategory"
+          },
+          "exception_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exception Type"
+          },
+          "retrieved_by_tool": {
+            "$ref": "#/components/schemas/ToolName"
+          },
+          "retrieval_reason": {
+            "type": "string",
+            "title": "Retrieval Reason"
+          },
+          "extraction_method": {
+            "$ref": "#/components/schemas/ExtractionMethod"
+          },
+          "retrieved_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Retrieved At"
+          },
+          "investigation_step": {
+            "type": "integer",
+            "title": "Investigation Step"
+          },
+          "policy_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Policy Version"
+          },
+          "source": {
+            "$ref": "#/components/schemas/EvidenceSource"
+          }
+        },
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "case_id",
+          "run_id",
+          "episode_id",
+          "source_type",
+          "source_id",
+          "source_title",
+          "source_excerpt",
+          "field_path",
+          "char_start",
+          "char_end",
+          "requirement_key",
+          "stance",
+          "relevance_category",
+          "exception_type",
+          "retrieved_by_tool",
+          "retrieval_reason",
+          "extraction_method",
+          "retrieved_at",
+          "investigation_step",
+          "policy_version",
+          "source"
+        ],
+        "title": "EvidenceDetail"
+      },
+      "EvidenceList": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Evidence"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "limit",
+          "offset"
+        ],
+        "title": "EvidenceList"
+      },
+      "EvidenceSource": {
+        "properties": {
+          "source_type": {
+            "$ref": "#/components/schemas/SourceType"
+          },
+          "source_id": {
+            "type": "string",
+            "title": "Source Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "highlight": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TextHighlight"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "availability": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Availability"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "document_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Title"
+          },
+          "section": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective Date"
+          },
+          "source_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Ref"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "field_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Field Path"
+          },
+          "value": {
+            "anyOf": [
+              {},
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_type",
+          "source_id",
+          "title"
+        ],
+        "title": "EvidenceSource"
+      },
+      "ExtractionMethod": {
+        "type": "string",
+        "enum": [
+          "STRUCTURED_FIELD",
+          "RULE_MATCH",
+          "BM25_RETRIEVAL",
+          "LLM_ASSISTED"
+        ],
+        "title": "ExtractionMethod"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Health": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "degraded"
+            ],
+            "title": "Status"
+          },
+          "db": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "down"
+            ],
+            "title": "Db"
+          },
+          "policy_index": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "empty",
+              "down"
+            ],
+            "title": "Policy Index"
+          },
+          "dataset_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dataset Version"
+          },
+          "corpus_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Corpus Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "db",
+          "policy_index",
+          "dataset_version",
+          "corpus_version"
+        ],
+        "title": "Health"
+      },
+      "InvestigateAccepted": {
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "run_status": {
+            "$ref": "#/components/schemas/RunStatus"
+          },
+          "poll_url": {
+            "type": "string",
+            "title": "Poll Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "run_id",
+          "run_status",
+          "poll_url"
+        ],
+        "title": "InvestigateAccepted"
+      },
+      "InvestigateRequest": {
+        "properties": {
+          "mode": {
+            "$ref": "#/components/schemas/InvestigationMode",
+            "default": "FULL"
+          },
+          "rerun": {
+            "type": "boolean",
+            "title": "Rerun",
+            "default": false
+          },
+          "max_steps": {
+            "type": "integer",
+            "maximum": 30.0,
+            "minimum": 1.0,
+            "title": "Max Steps",
+            "default": 12
+          }
+        },
+        "type": "object",
+        "title": "InvestigateRequest"
+      },
+      "InvestigationAction": {
+        "properties": {
+          "step": {
+            "type": "integer",
+            "title": "Step"
+          },
+          "tool_name": {
+            "$ref": "#/components/schemas/ToolName"
+          },
+          "tool_label": {
+            "type": "string",
+            "title": "Tool Label"
+          },
+          "requirement_key": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RequirementKey"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          },
+          "input_summary": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Input Summary"
+          },
+          "tool_status": {
+            "$ref": "#/components/schemas/ToolStatus"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Ids"
+          },
+          "requirement_updates": {
+            "items": {
+              "$ref": "#/components/schemas/RequirementUpdate"
+            },
+            "type": "array",
+            "title": "Requirement Updates"
+          },
+          "planner": {
+            "$ref": "#/components/schemas/PlannerInfo"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ActionError"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Started At"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "title": "Duration Ms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "step",
+          "tool_name",
+          "tool_label",
+          "requirement_key",
+          "reason",
+          "input_summary",
+          "tool_status",
+          "evidence_ids",
+          "requirement_updates",
+          "planner",
+          "error",
+          "started_at",
+          "duration_ms"
+        ],
+        "title": "InvestigationAction"
+      },
+      "InvestigationBrief": {
+        "properties": {
+          "brief_id": {
+            "type": "string",
+            "title": "Brief Id"
+          },
+          "case_id": {
+            "type": "string",
+            "title": "Case Id"
+          },
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "generated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Generated At"
+          },
+          "generator_version": {
+            "type": "string",
+            "title": "Generator Version"
+          },
+          "progress_status": {
+            "$ref": "#/components/schemas/ProgressStatus"
+          },
+          "outcome": {
+            "$ref": "#/components/schemas/Outcome"
+          },
+          "stop_reason": {
+            "$ref": "#/components/schemas/StopReason"
+          },
+          "case_summary": {
+            "items": {
+              "$ref": "#/components/schemas/BriefStatement"
+            },
+            "type": "array",
+            "title": "Case Summary"
+          },
+          "risk_signal": {
+            "$ref": "#/components/schemas/RiskSignal"
+          },
+          "episode_timeline": {
+            "items": {
+              "$ref": "#/components/schemas/BriefTimelineItem"
+            },
+            "type": "array",
+            "title": "Episode Timeline"
+          },
+          "supporting_risk_evidence": {
+            "items": {
+              "$ref": "#/components/schemas/BriefStatement"
+            },
+            "type": "array",
+            "title": "Supporting Risk Evidence"
+          },
+          "explaining_context_evidence": {
+            "items": {
+              "$ref": "#/components/schemas/BriefStatement"
+            },
+            "type": "array",
+            "title": "Explaining Context Evidence"
+          },
+          "policy_references": {
+            "items": {
+              "$ref": "#/components/schemas/PolicyReference"
+            },
+            "type": "array",
+            "title": "Policy References"
+          },
+          "remaining_gaps": {
+            "items": {
+              "$ref": "#/components/schemas/RemainingGap"
+            },
+            "type": "array",
+            "title": "Remaining Gaps"
+          },
+          "conflicts": {
+            "items": {
+              "$ref": "#/components/schemas/Conflict"
+            },
+            "type": "array",
+            "title": "Conflicts"
+          },
+          "uncertainty": {
+            "items": {
+              "$ref": "#/components/schemas/BriefStatement"
+            },
+            "type": "array",
+            "title": "Uncertainty"
+          },
+          "suggested_next_review": {
+            "items": {
+              "$ref": "#/components/schemas/BriefStatement"
+            },
+            "type": "array",
+            "title": "Suggested Next Review"
+          },
+          "review_status": {
+            "$ref": "#/components/schemas/ReviewStatus"
+          },
+          "human_decision_notice": {
+            "type": "string",
+            "const": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+            "title": "Human Decision Notice",
+            "default": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides."
+          },
+          "traceability": {
+            "$ref": "#/components/schemas/Traceability"
+          },
+          "provenance": {
+            "$ref": "#/components/schemas/Provenance"
+          }
+        },
+        "type": "object",
+        "required": [
+          "brief_id",
+          "case_id",
+          "run_id",
+          "generated_at",
+          "generator_version",
+          "progress_status",
+          "outcome",
+          "stop_reason",
+          "case_summary",
+          "risk_signal",
+          "episode_timeline",
+          "supporting_risk_evidence",
+          "explaining_context_evidence",
+          "policy_references",
+          "remaining_gaps",
+          "conflicts",
+          "uncertainty",
+          "suggested_next_review",
+          "review_status",
+          "traceability",
+          "provenance"
+        ],
+        "title": "InvestigationBrief"
+      },
+      "InvestigationMode": {
+        "type": "string",
+        "enum": [
+          "RULES_ONLY",
+          "RULES_RETRIEVAL",
+          "FULL_RULE_PLANNER",
+          "FULL"
+        ],
+        "title": "InvestigationMode"
+      },
+      "InvestigationView": {
+        "properties": {
+          "run": {
+            "$ref": "#/components/schemas/RunSummary"
+          },
+          "state": {
+            "$ref": "#/components/schemas/CaseState"
+          },
+          "trail": {
+            "items": {
+              "$ref": "#/components/schemas/InvestigationAction"
+            },
+            "type": "array",
+            "title": "Trail"
+          }
+        },
+        "type": "object",
+        "required": [
+          "run",
+          "state",
+          "trail"
+        ],
+        "title": "InvestigationView"
+      },
+      "KnownFact": {
+        "properties": {
+          "fact_id": {
+            "type": "string",
+            "title": "Fact Id"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "fact_id",
+          "text",
+          "evidence_ids"
+        ],
+        "title": "KnownFact"
+      },
+      "NextAction": {
+        "properties": {
+          "tool_name": {
+            "$ref": "#/components/schemas/ToolName"
+          },
+          "tool_label": {
+            "type": "string",
+            "title": "Tool Label"
+          },
+          "requirement_key": {
+            "$ref": "#/components/schemas/RequirementKey"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tool_name",
+          "tool_label",
+          "requirement_key",
+          "reason"
+        ],
+        "title": "NextAction"
+      },
+      "NoteType": {
+        "type": "string",
+        "enum": [
+          "TRIAGE",
+          "ADMISSION",
+          "PROGRESS",
+          "DISCHARGE_SUMMARY",
+          "PROCEDURE_PLAN",
+          "PROCEDURE_REPORT",
+          "OUTPATIENT_VISIT",
+          "SUPPORTING_EXAM_RESULT",
+          "REFERRAL"
+        ],
+        "title": "NoteType"
+      },
+      "Outcome": {
+        "type": "string",
+        "enum": [
+          "EVIDENCE_SUFFICIENT",
+          "EVIDENCE_CONFLICTING",
+          "EVIDENCE_UNAVAILABLE",
+          "HUMAN_REVIEW_REQUIRED"
+        ],
+        "title": "Outcome"
+      },
+      "PairMatch": {
+        "properties": {
+          "same_patient": {
+            "type": "boolean",
+            "title": "Same Patient"
+          },
+          "same_provider": {
+            "type": "boolean",
+            "title": "Same Provider"
+          },
+          "same_primary_diagnosis": {
+            "type": "boolean",
+            "title": "Same Primary Diagnosis"
+          },
+          "encounter_type": {
+            "$ref": "#/components/schemas/EncounterType"
+          }
+        },
+        "type": "object",
+        "required": [
+          "same_patient",
+          "same_provider",
+          "same_primary_diagnosis",
+          "encounter_type"
+        ],
+        "title": "PairMatch"
+      },
+      "PlannerInfo": {
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/PlannerSource"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "priority_ranking": {
+            "items": {
+              "$ref": "#/components/schemas/RequirementKey"
+            },
+            "type": "array",
+            "title": "Priority Ranking"
+          },
+          "skipped_requirements": {
+            "items": {
+              "$ref": "#/components/schemas/SkippedRequirement"
+            },
+            "type": "array",
+            "title": "Skipped Requirements"
+          },
+          "validation_errors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Validation Errors"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "note",
+          "priority_ranking",
+          "skipped_requirements",
+          "validation_errors"
+        ],
+        "title": "PlannerInfo"
+      },
+      "PlannerSource": {
+        "type": "string",
+        "enum": [
+          "LLM",
+          "LLM_RETRY",
+          "RULE_FALLBACK",
+          "RULE"
+        ],
+        "title": "PlannerSource"
+      },
+      "PolicyReference": {
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "title": "Evidence Id"
+          },
+          "policy_id": {
+            "type": "string",
+            "title": "Policy Id"
+          },
+          "document_title": {
+            "type": "string",
+            "title": "Document Title"
+          },
+          "section": {
+            "type": "string",
+            "title": "Section"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "excerpt": {
+            "type": "string",
+            "title": "Excerpt"
+          }
+        },
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "policy_id",
+          "document_title",
+          "section",
+          "version",
+          "excerpt"
+        ],
+        "title": "PolicyReference"
+      },
+      "ProcedureRef": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "performed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Performed At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "label",
+          "performed_at"
+        ],
+        "title": "ProcedureRef"
+      },
+      "ProgressStatus": {
+        "type": "string",
+        "enum": [
+          "FLAGGED",
+          "INVESTIGATING",
+          "BRIEF_READY",
+          "INVESTIGATION_FAILED"
+        ],
+        "title": "ProgressStatus"
+      },
+      "Provenance": {
+        "properties": {
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "evidence_ids"
+        ],
+        "title": "Provenance"
+      },
+      "ProviderRef": {
+        "properties": {
+          "provider_id": {
+            "type": "string",
+            "title": "Provider Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "provider_id",
+          "name"
+        ],
+        "title": "ProviderRef"
+      },
+      "RemainingGap": {
+        "properties": {
+          "key": {
+            "$ref": "#/components/schemas/RequirementKey"
+          },
+          "question": {
+            "type": "string",
+            "title": "Question"
+          },
+          "state": {
+            "$ref": "#/components/schemas/RequirementState"
+          },
+          "explanation": {
+            "type": "string",
+            "title": "Explanation"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "question",
+          "state",
+          "explanation"
+        ],
+        "title": "RemainingGap"
+      },
+      "Requirement": {
+        "properties": {
+          "key": {
+            "$ref": "#/components/schemas/RequirementKey"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "direction": {
+            "$ref": "#/components/schemas/RequirementDirection"
+          },
+          "material": {
+            "type": "boolean",
+            "title": "Material"
+          },
+          "state": {
+            "$ref": "#/components/schemas/RequirementState"
+          },
+          "state_explanation": {
+            "type": "string",
+            "title": "State Explanation"
+          },
+          "coverage": {
+            "$ref": "#/components/schemas/Coverage"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Ids"
+          },
+          "attempted_tools": {
+            "items": {
+              "$ref": "#/components/schemas/ToolName"
+            },
+            "type": "array",
+            "title": "Attempted Tools"
+          },
+          "spawned_by": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RequirementKey"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "label",
+          "direction",
+          "material",
+          "state",
+          "state_explanation",
+          "coverage",
+          "evidence_ids",
+          "attempted_tools",
+          "spawned_by"
+        ],
+        "title": "Requirement"
+      },
+      "RequirementDirection": {
+        "type": "string",
+        "enum": [
+          "RISK",
+          "CONTEXT",
+          "POLICY",
+          "BACKGROUND"
+        ],
+        "title": "RequirementDirection"
+      },
+      "RequirementKey": {
+        "type": "string",
+        "enum": [
+          "EPISODE_RELATEDNESS",
+          "DIAGNOSIS_CONSISTENCY",
+          "PROCEDURE_RELATIONSHIP",
+          "PROVIDER_CONTEXT",
+          "CLINICAL_DOCUMENT_AVAILABILITY",
+          "EMERGENCY_CONTEXT",
+          "CHRONIC_CONDITION_CONTEXT",
+          "SCHEDULED_PROCEDURE_CONTEXT",
+          "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+          "CLINICAL_JUSTIFICATION",
+          "RISK_INDICATORS_IN_NOTES",
+          "APPLICABLE_POLICY",
+          "SCHEDULE_CONSISTENCY"
+        ],
+        "title": "RequirementKey"
+      },
+      "RequirementState": {
+        "type": "string",
+        "enum": [
+          "OPEN",
+          "FOUND",
+          "NOT_FOUND",
+          "CONFLICTING",
+          "UNAVAILABLE",
+          "FAILED",
+          "SKIPPED"
+        ],
+        "title": "RequirementState"
+      },
+      "RequirementUpdate": {
+        "properties": {
+          "key": {
+            "$ref": "#/components/schemas/RequirementKey"
+          },
+          "from": {
+            "$ref": "#/components/schemas/RequirementState"
+          },
+          "to": {
+            "$ref": "#/components/schemas/RequirementState"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "from",
+          "to"
+        ],
+        "title": "RequirementUpdate"
+      },
+      "ReviewStatus": {
+        "type": "string",
+        "enum": [
+          "PENDING_HUMAN_REVIEW",
+          "REVIEWED"
+        ],
+        "title": "ReviewStatus"
+      },
+      "RiskSignal": {
+        "properties": {
+          "rule_id": {
+            "type": "string",
+            "title": "Rule Id"
+          },
+          "rule_version": {
+            "type": "string",
+            "title": "Rule Version"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "params": {
+            "$ref": "#/components/schemas/SignalParams"
+          },
+          "pairs": {
+            "items": {
+              "$ref": "#/components/schemas/SignalPair"
+            },
+            "type": "array",
+            "title": "Pairs"
+          },
+          "disclaimer": {
+            "type": "string",
+            "const": "A risk signal starts an investigation. It is not a finding.",
+            "title": "Disclaimer",
+            "default": "A risk signal starts an investigation. It is not a finding."
+          }
+        },
+        "type": "object",
+        "required": [
+          "rule_id",
+          "rule_version",
+          "description",
+          "params",
+          "pairs"
+        ],
+        "title": "RiskSignal"
+      },
+      "RunStatus": {
+        "type": "string",
+        "enum": [
+          "QUEUED",
+          "RUNNING",
+          "COMPLETED",
+          "FAILED"
+        ],
+        "title": "RunStatus"
+      },
+      "RunSummary": {
+        "properties": {
+          "run_id": {
+            "type": "string",
+            "title": "Run Id"
+          },
+          "mode": {
+            "$ref": "#/components/schemas/InvestigationMode"
+          },
+          "run_status": {
+            "$ref": "#/components/schemas/RunStatus"
+          },
+          "step": {
+            "type": "integer",
+            "title": "Step"
+          },
+          "max_steps": {
+            "type": "integer",
+            "title": "Max Steps"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Started At"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          },
+          "outcome": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Outcome"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stop_reason": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StopReason"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "run_id",
+          "mode",
+          "run_status",
+          "step",
+          "max_steps",
+          "started_at",
+          "finished_at",
+          "outcome",
+          "stop_reason"
+        ],
+        "title": "RunSummary"
+      },
+      "SignalPair": {
+        "properties": {
+          "from_episode_id": {
+            "type": "string",
+            "title": "From Episode Id"
+          },
+          "to_episode_id": {
+            "type": "string",
+            "title": "To Episode Id"
+          },
+          "interval_days": {
+            "type": "integer",
+            "title": "Interval Days"
+          },
+          "matched": {
+            "$ref": "#/components/schemas/PairMatch"
+          }
+        },
+        "type": "object",
+        "required": [
+          "from_episode_id",
+          "to_episode_id",
+          "interval_days",
+          "matched"
+        ],
+        "title": "SignalPair"
+      },
+      "SignalParams": {
+        "properties": {
+          "threshold_days": {
+            "type": "integer",
+            "title": "Threshold Days"
+          },
+          "diagnosis_match": {
+            "$ref": "#/components/schemas/DiagnosisMatch"
+          }
+        },
+        "type": "object",
+        "required": [
+          "threshold_days",
+          "diagnosis_match"
+        ],
+        "title": "SignalParams"
+      },
+      "SignalType": {
+        "type": "string",
+        "enum": [
+          "READMISSION",
+          "FRAGMENTATION"
+        ],
+        "title": "SignalType"
+      },
+      "SkippedRequirement": {
+        "properties": {
+          "key": {
+            "$ref": "#/components/schemas/RequirementKey"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "reason"
+        ],
+        "title": "SkippedRequirement"
+      },
+      "SourceType": {
+        "type": "string",
+        "enum": [
+          "EPISODE_RECORD",
+          "CLAIM_RECORD",
+          "PROVIDER_RECORD",
+          "CLINICAL_NOTE",
+          "POLICY_SECTION",
+          "SCREENING_RULE"
+        ],
+        "title": "SourceType"
+      },
+      "Stance": {
+        "type": "string",
+        "enum": [
+          "AFFIRMS",
+          "NEGATES",
+          "INFORMS"
+        ],
+        "title": "Stance"
+      },
+      "StopReason": {
+        "type": "string",
+        "enum": [
+          "SUFFICIENT_EVIDENCE",
+          "CONFLICTING_EVIDENCE",
+          "REQUIRED_EVIDENCE_UNAVAILABLE",
+          "EVIDENCE_PATHS_EXHAUSTED",
+          "MAX_STEPS_REACHED",
+          "TOOL_FAILURE",
+          "TIMEOUT",
+          "NO_ACTIONABLE_GAP",
+          "INTERRUPTED"
+        ],
+        "title": "StopReason"
+      },
+      "TextHighlight": {
+        "properties": {
+          "char_start": {
+            "type": "integer",
+            "title": "Char Start"
+          },
+          "char_end": {
+            "type": "integer",
+            "title": "Char End"
+          }
+        },
+        "type": "object",
+        "required": [
+          "char_start",
+          "char_end"
+        ],
+        "title": "TextHighlight"
+      },
+      "TimelineEpisode": {
+        "properties": {
+          "episode_id": {
+            "type": "string",
+            "title": "Episode Id"
+          },
+          "role": {
+            "$ref": "#/components/schemas/EpisodeRole"
+          },
+          "encounter_type": {
+            "$ref": "#/components/schemas/EncounterType"
+          },
+          "admission_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdmissionType"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "provider": {
+            "$ref": "#/components/schemas/TimelineProvider"
+          },
+          "start_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start At"
+          },
+          "end_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End At"
+          },
+          "length_of_stay_days": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Length Of Stay Days"
+          },
+          "interval_from_previous_days": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interval From Previous Days"
+          },
+          "primary_diagnosis": {
+            "$ref": "#/components/schemas/CodeRef"
+          },
+          "secondary_diagnoses": {
+            "items": {
+              "$ref": "#/components/schemas/CodeRef"
+            },
+            "type": "array",
+            "title": "Secondary Diagnoses"
+          },
+          "procedures": {
+            "items": {
+              "$ref": "#/components/schemas/ProcedureRef"
+            },
+            "type": "array",
+            "title": "Procedures"
+          },
+          "claim": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ClaimRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "documents": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentRef"
+            },
+            "type": "array",
+            "title": "Documents"
+          },
+          "relation_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Relation Reasons"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "episode_id",
+          "role",
+          "encounter_type",
+          "admission_type",
+          "provider",
+          "start_at",
+          "end_at",
+          "length_of_stay_days",
+          "interval_from_previous_days",
+          "primary_diagnosis",
+          "secondary_diagnoses",
+          "procedures",
+          "claim",
+          "documents",
+          "relation_reasons",
+          "evidence_ids"
+        ],
+        "title": "TimelineEpisode"
+      },
+      "TimelineProvider": {
+        "properties": {
+          "provider_id": {
+            "type": "string",
+            "title": "Provider Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "hospital_class": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hospital Class"
+          }
+        },
+        "type": "object",
+        "required": [
+          "provider_id",
+          "name",
+          "hospital_class"
+        ],
+        "title": "TimelineProvider"
+      },
+      "ToolCallRef": {
+        "properties": {
+          "step": {
+            "type": "integer",
+            "title": "Step"
+          },
+          "tool_name": {
+            "$ref": "#/components/schemas/ToolName"
+          },
+          "tool_status": {
+            "$ref": "#/components/schemas/ToolStatus"
+          }
+        },
+        "type": "object",
+        "required": [
+          "step",
+          "tool_name",
+          "tool_status"
+        ],
+        "title": "ToolCallRef"
+      },
+      "ToolName": {
+        "type": "string",
+        "enum": [
+          "get_episode_history",
+          "compare_diagnosis",
+          "compare_procedures",
+          "get_provider_context",
+          "retrieve_clinical_evidence",
+          "retrieve_policy",
+          "find_supporting_evidence",
+          "find_exception_evidence"
+        ],
+        "title": "ToolName"
+      },
+      "ToolStatus": {
+        "type": "string",
+        "enum": [
+          "OK",
+          "EMPTY",
+          "UNAVAILABLE",
+          "ERROR",
+          "TIMEOUT",
+          "REJECTED"
+        ],
+        "title": "ToolStatus"
+      },
+      "Traceability": {
+        "properties": {
+          "material_statements": {
+            "type": "integer",
+            "title": "Material Statements"
+          },
+          "with_evidence": {
+            "type": "integer",
+            "title": "With Evidence"
+          }
+        },
+        "type": "object",
+        "required": [
+          "material_statements",
+          "with_evidence"
+        ],
+        "title": "Traceability"
+      },
+      "UnresolvedQuestion": {
+        "properties": {
+          "key": {
+            "$ref": "#/components/schemas/RequirementKey"
+          },
+          "question": {
+            "type": "string",
+            "title": "Question"
+          },
+          "state": {
+            "$ref": "#/components/schemas/RequirementState"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "question",
+          "state"
+        ],
+        "title": "UnresolvedQuestion"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

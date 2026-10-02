@@ -1,0 +1,50 @@
+{
+  "case_id": "CASE-RA-e84cb8b0",
+  "signal_type": "READMISSION",
+  "patient_id": "PAT-000005",
+  "provider": {
+    "provider_id": "PRV-0002",
+    "name": "RS Sintetis Nusantara 02"
+  },
+  "index_date": "2026-07-01",
+  "min_interval_days": 6,
+  "episode_count": 2,
+  "progress_status": "FLAGGED",
+  "outcome": null,
+  "updated_at": "2026-10-02T09:00:00+07:00",
+  "episode_group_ids": [
+    "EPI-000501",
+    "EPI-000502"
+  ],
+  "primary_pair": {
+    "from_episode_id": "EPI-000501",
+    "to_episode_id": "EPI-000502"
+  },
+  "signal": {
+    "rule_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+    "rule_version": "1",
+    "description": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge",
+    "params": {
+      "threshold_days": 30,
+      "diagnosis_match": "EXACT"
+    },
+    "pairs": [
+      {
+        "from_episode_id": "EPI-000501",
+        "to_episode_id": "EPI-000502",
+        "interval_days": 6,
+        "matched": {
+          "same_patient": true,
+          "same_provider": true,
+          "same_primary_diagnosis": true,
+          "encounter_type": "INPATIENT"
+        }
+      }
+    ],
+    "disclaimer": "A risk signal starts an investigation. It is not a finding."
+  },
+  "stop_reason": null,
+  "latest_run": null,
+  "brief_available": false,
+  "data_quality_issues": []
+}

@@ -1,0 +1,85 @@
+{
+  "case_id": "CASE-FR-6c937d70",
+  "patient_id": "PAT-000008",
+  "episodes": [
+    {
+      "episode_id": "EPI-000801",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0003",
+        "name": "RS Sintetis Nusantara 03",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-05-10T09:00:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "K29.7",
+        "label": "Gastritis, unspecified"
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000801",
+        "inacbg_code": "Q-5-44-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000801",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Kunjungan poli penyakit dalam",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000802",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0003",
+        "name": "RS Sintetis Nusantara 03",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-05-17T09:00:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": 7,
+      "primary_diagnosis": {
+        "code": "K29.7",
+        "label": "Gastritis, unspecified"
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000802",
+        "inacbg_code": "Q-5-44-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000802",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Kontrol poli penyakit dalam",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_7_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

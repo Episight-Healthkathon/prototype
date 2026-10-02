@@ -1,0 +1,13 @@
+{
+  "name": "@episight/shared-types",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generated EPISIGHT API Contract v1 types and mock fixtures. Do not edit generated files by hand.",
+  "types": "src/api.d.ts",
+  "scripts": {
+    "generate": "openapi-typescript openapi.json -o src/api.d.ts"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.4.0"
+  }
+}

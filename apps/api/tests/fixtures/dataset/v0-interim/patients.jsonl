@@ -1,0 +1,10 @@
+{"patient_id": "PAT-000001", "birth_year": 1962, "sex": "M", "chronic_conditions": ["I50.0", "I10"]}
+{"patient_id": "PAT-000002", "birth_year": 1988, "sex": "F", "chronic_conditions": []}
+{"patient_id": "PAT-000003", "birth_year": 1957, "sex": "M", "chronic_conditions": ["I25.1"]}
+{"patient_id": "PAT-000004", "birth_year": 1971, "sex": "F", "chronic_conditions": []}
+{"patient_id": "PAT-000005", "birth_year": 1979, "sex": "F", "chronic_conditions": []}
+{"patient_id": "PAT-000006", "birth_year": 1950, "sex": "M", "chronic_conditions": ["I50.0"]}
+{"patient_id": "PAT-000007", "birth_year": 1966, "sex": "F", "chronic_conditions": ["I50.0"]}
+{"patient_id": "PAT-000008", "birth_year": 1993, "sex": "M", "chronic_conditions": []}
+{"patient_id": "PAT-000009", "birth_year": 2001, "sex": "F", "chronic_conditions": []}
+{"patient_id": "PAT-000010", "birth_year": 1984, "sex": "M", "chronic_conditions": []}

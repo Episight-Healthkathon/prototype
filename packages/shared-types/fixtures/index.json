@@ -1,0 +1,42 @@
+{
+  "contract_version": "1",
+  "dataset_version": "v0-interim",
+  "generated_by": "uv run episight export-contract (apps/api)",
+  "cases_list": "cases.list.json",
+  "cases": {
+    "CASE-RA-7f7f4e80": {
+      "detail": "cases/CASE-RA-7f7f4e80.detail.json",
+      "episodes": "cases/CASE-RA-7f7f4e80.episodes.json"
+    },
+    "CASE-FR-150659fa": {
+      "detail": "cases/CASE-FR-150659fa.detail.json",
+      "episodes": "cases/CASE-FR-150659fa.episodes.json"
+    },
+    "CASE-RA-f024a4b0": {
+      "detail": "cases/CASE-RA-f024a4b0.detail.json",
+      "episodes": "cases/CASE-RA-f024a4b0.episodes.json"
+    },
+    "CASE-FR-6c937d70": {
+      "detail": "cases/CASE-FR-6c937d70.detail.json",
+      "episodes": "cases/CASE-FR-6c937d70.episodes.json"
+    },
+    "CASE-RA-c21f18d3": {
+      "detail": "cases/CASE-RA-c21f18d3.detail.json",
+      "episodes": "cases/CASE-RA-c21f18d3.episodes.json"
+    },
+    "CASE-RA-e84cb8b0": {
+      "detail": "cases/CASE-RA-e84cb8b0.detail.json",
+      "episodes": "cases/CASE-RA-e84cb8b0.episodes.json"
+    }
+  },
+  "scripted_investigation_example": {
+    "note": "Scripted example in the exact contract shape; replaced by real engine output after the Golden Case A vertical slice. Investigation/brief fixtures for other cases follow from real runs.",
+    "files": [
+      "cases/CASE-RA-7f7f4e80.investigation.running.json",
+      "cases/CASE-RA-7f7f4e80.investigation.completed.json",
+      "cases/CASE-RA-7f7f4e80.evidence.json",
+      "cases/CASE-RA-7f7f4e80.brief.json",
+      "evidence/EV-31414acbb2c5.json"
+    ]
+  }
+}

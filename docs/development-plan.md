@@ -30,7 +30,7 @@
 | **M5** | Agent tools | Phase 2 | P0 | `[x]` |
 | **M6** | Case state, safety envelope, AI planner, orchestrator, stopping (core) | Phase 2 | P0 | `[x]` (live-model check pending a key) |
 | **M7** | Reviewer brief + provenance API | Phase 3 | P0 | `[~]` (done except P1 review actions / meta enums) |
-| **M8** | Evaluation integration + ablation | Phase 3–4 | P1 (runner is P0 for golden checks) | `[ ]` |
+| **M8** | Evaluation integration + ablation | Phase 3–4 | P1 (runner is P0 for golden checks) | `[~]` (runner done; needs Person 3 harness + dataset) |
 | **M9** | Robustness, regression, stabilization | Phase 4–5 | P0/P1 | `[ ]` |
 | **M10** | LLM passage classifier + optional brief paraphrase | — | P1/P2 | `[ ]` |
 
@@ -111,7 +111,7 @@
 - [x] **BE-3.2** Reconstruction service: candidate window around anchors, chronological sort, intervals, `role`, `relation_reasons`, preserved source IDs
 - [x] **BE-3.3** Full `EpisodeTimeline` DTO for E4
 - [x] **BE-3.4** Tests: 2 related; 3+ related; similar-but-unrelated; same dx/wrong provider; missing procedure; out-of-order timestamps
-- [ ] **BE-3.5** Expose `reconstructed_episode_ids` for the Episode Recall metric
+- [x] **BE-3.5** Expose `reconstructed_episode_ids` for the Episode Recall metric
 
 **Exit criteria**
 - [ ] Golden cases reconstruct the expected episode sets.
@@ -203,9 +203,9 @@
 
 ## M8 — Evaluation Integration & Ablation
 
-- [ ] **BE-8.1** `episight batch --mode --cases --out` producing runner output (data-contract §6), including the screening block and version header
+- [x] **BE-8.1** `episight batch --mode --cases --out` producing runner output (data-contract §6), including the screening block and version header
 - [ ] **BE-8.2** Agree on the output schema with Person 3's harness; run the harness on golden A–E
-- [ ] **BE-8.3** (P1) Ablation runs: `RULES_ONLY` / `RULES_RETRIEVAL` / `FULL_RULE_PLANNER` / `FULL` on the full benchmark; `FULL` repeated live to report variance
+- [x] **BE-8.3** (P1) Ablation runs: `RULES_ONLY` / `RULES_RETRIEVAL` / `FULL_RULE_PLANNER` / `FULL` on the full benchmark; `FULL` repeated live to report variance
 - [ ] **BE-8.4** Failure analysis with Person 3; log defects as new `BE-9.x` tasks
 - [ ] **BE-8.5** (P1) 20+ case benchmark runs within an acceptable time (target < 60 s total in deterministic mode)
 - [ ] **BE-8.6** Record the regression baseline in `evaluation/` (with dataset/corpus/code versions)
@@ -259,7 +259,7 @@
 | HO-P3-3 | P3 → P1 | Policy corpus v0 (curated Permenkes 26/2021 sections) | BE-4.5 | `[ ]` |
 | HO-P3-4 | P3 → P1 | Clinical notes with varied phrasing/negations + context lexicon review | BE-4.4 | `[ ]` |
 | HO-P3-5 | P3 → P1 | Ground-truth schema + expected golden behavior | BE-6.9, BE-8.2 | `[ ]` |
-| HO-P1-P3 | P1 → P3 | Runner output for harness | BE-8.1 | `[ ]` |
+| HO-P1-P3 | P1 → P3 | Runner output for harness | BE-8.1 | `[x]` |
 
 ## Open Decisions Snapshot
 
@@ -279,3 +279,4 @@ Full log in [decisions.md](decisions.md). All decisions are locked except **D-16
 | 2026-10-02 | BE-6.8, BE-7.3, 7.4, 7.7 | Engine wired to DB and API: background runs with per-step persistence (state snapshots, append-only actions, evidence ledger rows, brief), start guards (409 in progress / already completed, rerun), run history (E13), startup recovery of interrupted runs, queued-run view. Mock fixtures now come from real engine runs for all 6 cases. Found and fixed: DB rows carried `signal_type` as a string. 394 tests pass; live server smoke test passed. |
 | 2026-10-02 | BE-6.13–6.17, BE-0.11 (partial) | AI planner: vendor-neutral prompt + per-step strict JSON schema, envelope validation with one re-ask, rule fallback on any failure, record/replay (DB store for the API, JSON-dir store for batch). Adapters: Anthropic (`claude-opus-5-5`, effort low, structured outputs, server-side refusal fallback) and OpenAI (`gpt-4o`, strict json_schema). Added V5 guard: a narrowed note search must select an unread readable document. Tests never call a paid API. 433 tests pass. Live-model check waits for a key. |
 | 2026-10-02 | BE-6.14 (tuning) | First live runs with OpenAI `gpt-4o-mini`: all five golden outcomes correct, 100% AI decisions, but 1–2 more steps than the rule planner (never skipped provider context; B and C hit 12/12). Fixes: envelope budget guard (optional questions not offered when remaining steps only cover open material ones; leftover optional questions marked SKIPPED at stop) and prompt `planner-2` (step cost, optional questions, order by most decisive source). Re-run: all five correct, steps equal to the rule planner (10/11/11/10/5), ~1.5 s per step, 2 single retries accepted. 435 tests pass. |
+| 2026-10-02 | BE-8.1, BE-8.3, BE-3.5 | Batch runner `episight batch`: all four ablation modes from dataset files (no DB), Data Contract §6 JSON + CSV + summary.md, repeats for AI-planner variance, per-repeat recordings with replay. First live ablation on interim data (FULL = OpenAI gpt-4o-mini): avg steps RULES_ONLY 4.0 (all EVIDENCE_UNAVAILABLE / NO_ACTIONABLE_GAP), RULES_RETRIEVAL 11.3, FULL_RULE_PLANNER 9.7, FULL 9.7 (58 AI steps, 0 fallbacks); same outcomes for the last three modes; ~15 s per FULL case. 448 tests pass. |

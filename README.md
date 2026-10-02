@@ -62,6 +62,25 @@ cd packages/shared-types && pnpm install && pnpm generate   # src/api.d.ts
 
 A test fails if the committed artifacts drift from the backend models.
 
+## Batch runs for evaluation (Person 3)
+
+Runs every screened case through the engine from dataset files. No database or Docker is needed.
+
+```bash
+cd apps/api
+uv run episight batch --out ../../evaluation/runs/<name>   --dataset ../../data/synthetic/<version> --policies ../../data/policies/<version>   --mode all --recordings ../../evaluation/runs/<name>/recordings
+```
+
+| Option | Meaning |
+|---|---|
+| `--mode` | `RULES_ONLY`, `RULES_RETRIEVAL`, `FULL_RULE_PLANNER`, `FULL`, or `all` (repeatable) |
+| `--repeats N` | Repeat `FULL` runs to measure AI-planner variance (`run_index` per case) |
+| `--case CASE_ID` | Only these cases (repeatable) |
+| `--recordings DIR` | Store AI planner responses (one `rep-<i>/` folder per repeat). Re-running with the same folder reuses them; `EPISIGHT_LLM_REPLAY=replay` forbids live calls |
+
+Output per mode: `<MODE>.json` (Data Contract §6), `<MODE>.csv`, plus `summary.md` comparing the modes.
+The runner never reads ground truth. The evaluation harness joins the output on `anchor_episode_ids`.
+
 ## AI planner (optional key)
 
 `FULL` mode (the default for `POST /cases/{id}/investigate`) uses an AI planner to choose the next

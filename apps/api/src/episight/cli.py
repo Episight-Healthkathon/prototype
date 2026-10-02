@@ -73,6 +73,44 @@ def seed(
         typer.echo(f"  data-quality: {issue}")
 
 
+@app.command()
+def batch(
+    out: Path = typer.Option(..., help="Output directory for <MODE>.json/.csv and summary.md."),
+    dataset: Path = typer.Option(DEFAULT_DATASET, help="Dataset directory (Data Contract v1 §2)."),
+    policies: Path = typer.Option(DEFAULT_POLICIES, help="Policy corpus directory."),
+    mode: list[str] = typer.Option(["all"], help="RULES_ONLY, RULES_RETRIEVAL, FULL_RULE_PLANNER, FULL or all."),
+    case: list[str] = typer.Option([], help="Only these case ids (repeatable)."),
+    repeats: int = typer.Option(1, min=1, help="Repeat FULL runs to measure AI-planner variance."),
+    max_steps: int = typer.Option(12, min=1, max=30),
+    recordings: Path | None = typer.Option(
+        None, help="Directory for AI planner recordings (one subfolder per repeat)."
+    ),
+) -> None:
+    """Run every screened case in the selected modes and write runner output for evaluation (no DB needed)."""
+    from episight.batch import ALL_MODES, run_batch
+    from episight.contracts.enums import InvestigationMode
+    from episight.ingest.loader import IngestError
+
+    modes = ALL_MODES if [m.lower() for m in mode] == ["all"] else [InvestigationMode(m.upper()) for m in mode]
+    try:
+        written = run_batch(
+            dataset,
+            policies,
+            out,
+            modes,
+            case_ids=case or None,
+            repeats=repeats,
+            max_steps=max_steps,
+            recordings=recordings,
+            progress=lambda msg: typer.echo(f"  {msg}"),
+        )
+    except (IngestError, ValueError) as exc:
+        typer.secho(str(exc), fg=typer.colors.RED, err=True)
+        raise typer.Exit(1) from exc
+    for path in written.values():
+        typer.echo(f"wrote {path}")
+
+
 @app.command("export-contract")
 def export_contract(
     out: Path = typer.Option(REPO_ROOT / "packages" / "shared-types", help="shared-types package directory."),

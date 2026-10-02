@@ -263,3 +263,5 @@ Produced by `episight batch --mode <MODE> --out <file>.json`: one object per cas
 ```
 
 The `screening` block lets Person 3 compute screening recall and false positives against ground-truth rows whose `expected_signal_type` is null.
+
+**As implemented (runner v1, additive to the shape above):** `header.config` (mode, max_steps, catalog version, tool timeout, repeats, AI planner provider/model/prompt version) with `config_hash`; per case `run_index` (for `--repeats`), `planner.rule_steps`, and `brief_validation {passed, violations}`. Command: `uv run episight batch` (see README).

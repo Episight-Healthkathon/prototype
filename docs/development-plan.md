@@ -1,0 +1,271 @@
+# EPISIGHT — Person 1 Development Plan (Tracked)
+
+> **Owner:** Person 1 (Backend, Agent & Core Intelligence)
+> **Created:** 2026-10-01 · **Last updated:** 2026-10-01
+> **Derived from:** [01_PERSON_1_BACKEND_AGENT.md](01_PERSON_1_BACKEND_AGENT.md) phases 0–12 and the context doc's phases 0–5, re-sequenced into milestones that each end in something demonstrable.
+> **Design references:** [architecture.md](architecture.md) · [decisions.md](decisions.md) · [data-contract.md](data-contract.md) · [api-contract.md](api-contract.md)
+
+---
+
+## How to Track Progress
+
+- **Status markers:** `[ ]` todo · `[~]` in progress · `[x]` done · `[!]` blocked (add a reason) · `[-]` dropped (add a reason).
+- **Task IDs** (`BE-<milestone>.<n>`) are stable. Reference them in branch names (`be/6.5-rule-planner`), commit messages, and PR titles.
+- When a task is done, tick it, add the PR/commit reference after it (`— #12` or `— abc1234`), and add a line to the [Progress Log](#progress-log).
+- A milestone is done only when every item in its **Exit criteria** is ticked.
+- New work discovered mid-milestone gets a new ID at the end of that milestone. Never renumber.
+- Blocked tasks point at a decision (D-xx, [decisions.md](decisions.md)) or a handoff (HO-xx, below). Decision changes go to `decisions.md`, not into this plan or the architecture doc.
+- Docs and contract changes go through a branch + PR (Phase 0 branch: `phase0/contracts`).
+
+## Milestone Overview
+
+| Milestone | Scope | Maps to (context doc phase) | Priority | Status |
+|---|---|---|---|---|
+| **M0** | Contract lock | Phase 0 | P0 | `[~]` |
+| **M1** | Backend foundation + read API on fixtures | Phase 1 | P0 | `[ ]` |
+| **M2** | Temporal screening | Phase 1 | P0 | `[ ]` |
+| **M3** | Episode reconstruction | Phase 1 | P0 | `[ ]` |
+| **M4** | Evidence ledger + retrieval | Phase 2 | P0 | `[ ]` |
+| **M5** | Agent tools | Phase 2 | P0 | `[ ]` |
+| **M6** | Case state, safety envelope, AI planner, orchestrator, stopping (core) | Phase 2 | P0 | `[ ]` |
+| **M7** | Reviewer brief + provenance API | Phase 3 | P0 | `[ ]` |
+| **M8** | Evaluation integration + ablation | Phase 3–4 | P1 (runner is P0 for golden checks) | `[ ]` |
+| **M9** | Robustness, regression, stabilization | Phase 4–5 | P0/P1 | `[ ]` |
+| **M10** | LLM passage classifier + optional brief paraphrase | — | P1/P2 | `[ ]` |
+
+**Critical path:** M0 → M1 → M2 → M3 → M4/M5 (partly parallel) → M6 → M7 → M8 → M9. M1–M5 build the deterministic backbone first. The AI planner (M6) is built on top of the safety envelope, and the rule planner lands before it so every later milestone has a working fallback. M10 comes only after M9's golden baseline is green.
+
+**Integration checkpoints (for Person 2):**
+
+- **CP-1** (end of M0): mock fixtures + generated TS types published. The frontend builds all four screens against them.
+- **CP-2** (end of M1): real `GET /cases`, `/cases/{id}`, `/episodes` served from the fixture dataset.
+- **CP-3** (end of M6): `POST /investigate` + polling `GET /investigation` work for golden cases A–E.
+- **CP-4** (end of M7): brief + evidence detail live. Full four-screen flow runs end-to-end.
+
+---
+
+## M0 — Contract Lock
+
+- [x] **BE-0.1** Read sources, inspect repo, reconcile discrepancies → [architecture.md §2](architecture.md)
+- [x] **BE-0.2** Draft architecture, data contract, API contract, and this plan
+- [ ] **BE-0.3** Review [data-contract.md](data-contract.md) with Person 3; get sign-off on D-01, D-02, D-03, D-05, D-08, D-09, D-11, D-12 (all `AGREED-P1`); mark contract `v1 FROZEN`
+- [ ] **BE-0.4** Review [api-contract.md](api-contract.md) with Person 2; get sign-off on D-04, D-12, D-13, D-14, D-20; mark contract `v1 FROZEN`
+- [ ] **BE-0.5** Freeze enums (data-contract §4), including status transition rules
+- [~] **BE-0.6** Revise the boundary to "rules control the safety envelope, AI controls adaptive investigation" ([architecture.md §3, §6, §7.4](architecture.md)); D-07 is `AGREED-P1`, awaiting team sign-off
+- [ ] **BE-0.7** Hand-author mock fixtures for golden cases A–E under `packages/shared-types/fixtures/` (HO-P2-1)
+- [ ] **BE-0.8** Team agrees on the timebox (D-16) and cuts P1/P2 scope accordingly
+- [x] **BE-0.9** Create [decisions.md](decisions.md) as the single decision log
+- [ ] **BE-0.10** Commit Phase 0 docs on branch `phase0/contracts`; push and open a PR for Person 2/3 review
+- [ ] **BE-0.11** Resolve D-18 (LLM provider, model, API key owner, budget per benchmark run)
+
+**Exit criteria**
+- [ ] Person 2 can build every screen against fixtures without asking shape questions.
+- [ ] Person 3 can generate data the ingest will accept with no one-off parsing.
+- [ ] No entity field or enum is still ambiguous. Every blocking D-xx is closed.
+
+---
+
+## M1 — Backend Foundation
+
+- [ ] **BE-1.1** Scaffold repo layout (architecture §5): `.gitignore`, `.editorconfig`, root `README.md` skeleton, `docker-compose.yml` (Postgres dev + test DBs)
+- [ ] **BE-1.2** `apps/api` uv project (Python 3.12 per D-17), ruff, pytest, `Makefile`/task runner (`dev`, `test`, `lint`, `seed`, `reset`)
+- [ ] **BE-1.3** FastAPI app factory, `pydantic-settings` config, `GET /health`, JSON logging with `request_id`, error envelope + exception handlers, CORS for `localhost:3000`
+- [ ] **BE-1.4** `contracts/` Pydantic enums + DTOs; export `openapi.json`; generate TS types into `packages/shared-types` (script + CI drift check)
+- [ ] **BE-1.5** SQLAlchemy models + Alembic initial migration for all tables in data-contract §5
+- [ ] **BE-1.6** Ingest CLI: `episight seed --dataset <dir> --policies <dir>` validates the manifest, schema, FKs, and forbidden fields; idempotent; refuses `data/ground-truth/**`; `episight db reset`
+- [ ] **BE-1.7** Interim dev fixture dataset (golden A–E, hand-authored) in `apps/api/tests/fixtures/dataset/`, so work is not blocked on HO-P3-1
+- [ ] **BE-1.8** Read endpoints E2, E3, E4 (timeline may be naive until M3), E7/E8 returning typed empty results
+- [ ] **BE-1.9** Isolation tests: no `ground[-_]truth` reference in `src/`; no `evaluation` import; forbidden-field rejection
+- [ ] **BE-1.10** Module import-boundary test (domain modules do not import `api`/`db`)
+
+**Exit criteria**
+- [ ] `docker compose up -d && make reset seed dev` works from a clean clone.
+- [ ] All baseline endpoints respond with typed data; OpenAPI renders.
+- [ ] CP-2 is delivered to Person 2.
+
+---
+
+## M2 — Temporal Screening
+
+- [ ] **BE-2.1** Normalization: dedupe duplicate episode rows; record `MISSING_TIMESTAMP` / `DUPLICATE_EPISODE_ROW` as data-quality issues (never silently dropped)
+- [ ] **BE-2.2** Readmission rule (D-02), versioned `rule_id`
+- [ ] **BE-2.3** Fragmentation rule (D-02), versioned `rule_id`
+- [ ] **BE-2.4** Chain grouping (D-03) + deterministic `case_id`
+- [ ] **BE-2.5** Structured `signal_details` (per-pair matched fields, interval, params)
+- [ ] **BE-2.6** Idempotent case persistence; `episight screen`; E14 dev endpoint
+- [ ] **BE-2.7** Unit tests: inside, at, and outside the threshold; same patient/different provider; same provider/different diagnosis; inpatient/outpatient mismatch; duplicate rows; missing timestamps
+- [ ] **BE-2.8** Run Person 3's screening fixtures (HO-P3-2)
+
+**Exit criteria**
+- [ ] Person 3's golden screening fixtures pass.
+- [ ] Screening is deterministic (two runs give identical case sets and IDs).
+- [ ] No verdict wording appears anywhere in signal output.
+
+---
+
+## M3 — Episode Reconstruction
+
+- [ ] **BE-3.1** `EpisodeGraph` domain abstraction (patient → episodes → provider/dx/px/claim/notes/evidence), with no NetworkX types leaking out
+- [ ] **BE-3.2** Reconstruction service: candidate window around anchors, chronological sort, intervals, `role`, `relation_reasons`, preserved source IDs
+- [ ] **BE-3.3** Full `EpisodeTimeline` DTO for E4
+- [ ] **BE-3.4** Tests: 2 related; 3+ related; similar-but-unrelated; same dx/wrong provider; missing procedure; out-of-order timestamps
+- [ ] **BE-3.5** Expose `reconstructed_episode_ids` for the Episode Recall metric
+
+**Exit criteria**
+- [ ] Golden cases reconstruct the expected episode sets.
+- [ ] The timeline response is stable (contract test).
+
+---
+
+## M4 — Evidence Ledger & Retrieval
+
+- [ ] **BE-4.1** Evidence repository: deterministic `evidence_id`, dedupe + `surfaced_in_steps`, provenance validation (dangling `source_id` is rejected), immutability
+- [ ] **BE-4.2** Text utilities: Indonesian-aware normalizer/tokenizer, sentence segmentation with char offsets (D-08)
+- [ ] **BE-4.3** Clinical note retriever: availability inventory + BM25 over case-scoped sentences (D-09)
+- [ ] **BE-4.4** Context matcher: lexicon/patterns per context type (emergency, chronic, scheduled, supporting-exam follow-up, clinical justification, risk indicators) with a negation window and stance output (HO-P3-4)
+- [ ] **BE-4.5** Policy ingest + BM25 index, version/effective-date metadata, section-level citations (HO-P3-3)
+- [ ] **BE-4.6** E7 `GET /cases/{id}/evidence` and E8 `GET /evidence/{id}` with full `source` payload
+- [ ] **BE-4.7** Tests: empty retrieval, unavailable note, negated phrase, duplicate hit, excerpt equals literal source substring
+
+**Exit criteria**
+- [ ] Clinical retrieval surfaces the expected passages on golden cases.
+- [ ] Policy retrieval returns sourceable, versioned sections.
+- [ ] 100% of ledger items resolve to a stored source.
+
+---
+
+## M5 — Agent Tools
+
+- [ ] **BE-5.1** Tool framework: `ToolSpec` (name, reviewer label, input/output models, resolvable requirements, permission scope), `ToolResult` envelope, timeout wrapper, allowlisted registry
+- [ ] **BE-5.2** `get_episode_history`
+- [ ] **BE-5.3** `compare_diagnosis`
+- [ ] **BE-5.4** `compare_procedures` (including planned-vs-performed)
+- [ ] **BE-5.5** `get_provider_context`
+- [ ] **BE-5.6** `retrieve_clinical_evidence`
+- [ ] **BE-5.7** `retrieve_policy`
+- [ ] **BE-5.8** `find_supporting_evidence`
+- [ ] **BE-5.9** `find_exception_evidence`
+- [ ] **BE-5.10** Tests per tool: valid input, missing source, empty retrieval, malformed case, unsupported case type, duplicate evidence; outputs JSON-serializable
+
+**Exit criteria**
+- [ ] Every tool is typed in and out, reports failure explicitly, and never invents records.
+
+---
+
+## M6 — Case State, Orchestrator & Stopping (core)
+
+- [ ] **BE-6.1** Versioned requirement catalog per signal type (architecture §7.1)
+- [ ] **BE-6.2** `CaseState` initializer from screening + reconstruction
+- [ ] **BE-6.3** Pure state reducer: `ToolResult` → requirement transitions, evidence partitions, known facts, unresolved questions, spawned requirements
+- [ ] **BE-6.4** Conflict detection (architecture §7.4)
+- [ ] **BE-6.5** Rule planner (deterministic fallback and CI mode): fixed priority order, full-coverage searches, repeat guard, reviewer-facing `reason`
+- [ ] **BE-6.6** Stopping policy S1–S7 (architecture §7.5), fully unit-tested per rule
+- [ ] **BE-6.7** Orchestrator loop: per-step persistence of action + state snapshot, max steps, run timeout, bounded retry, failure → explicit state (D-13)
+- [ ] **BE-6.8** Async runtime: E5 (202 + 409 guards), E6 polling view, stale-run recovery on startup
+- [ ] **BE-6.9** Golden behavior tests A–E assert the outcome, stop reason, key requirement states, and that the trails differ across cases (D-01, D-05)
+- [ ] **BE-6.10** Modes `RULES_ONLY`, `RULES_RETRIEVAL`, `FULL_RULE_PLANNER`, `FULL` (architecture §11)
+- [ ] **BE-6.11** Safety envelope: allowed-action generator with scope bounds + requirement dependency graph + coverage tracking (architecture §7.1, §7.3)
+- [ ] **BE-6.12** Action validator V1–V9, including the bounded re-ask and rule-planner fallback path (architecture §7.4)
+- [ ] **BE-6.13** `llm/` adapter: Anthropic SDK client, per-step structured-output schema (`action_id` enum = allowed set), refusal/timeout/error → fallback, key from env only (D-18)
+- [ ] **BE-6.14** AI planner: versioned system prompt + state serializer (no ground truth), output → proposal, `planner_note`/`priority_ranking`/`skip` handling
+- [ ] **BE-6.15** Record/replay of planner calls (`planner_recordings`), with a replay mode that fails on a miss (D-21)
+- [ ] **BE-6.16** Planner telemetry in the trail and runner output (`planner_source`, validation errors, latency)
+- [ ] **BE-6.17** Envelope adversarial tests: the planner returns a disallowed tool, a non-open requirement, out-of-scope episodes, a duplicate call, a material skip, or a premature "no further action", and each one is rejected and falls back
+
+**Exit criteria**
+- [ ] A: context surfaced via notes · B: `HUMAN_REVIEW_REQUIRED` / `EVIDENCE_PATHS_EXHAUSTED`, gaps `NOT_FOUND` · C: scheduled context + schedule consistency · D: `EVIDENCE_UNAVAILABLE` · E: `EVIDENCE_CONFLICTING`. These pass in `FULL_RULE_PLANNER` **and** in `FULL` (live and replay).
+- [ ] The AI planner visibly adapts: across A–E, trails differ in order and scope, driven by state.
+- [ ] With the LLM disabled or failing, every run still completes through the fallback.
+- [ ] No infinite loops (a property test with random tool outcomes always terminates ≤ `max_steps`).
+- [ ] `missing` is never converted to `false`/legitimate, and `conflicting` is never collapsed.
+- [ ] CP-3 is delivered to Person 2.
+
+---
+
+## M7 — Reviewer Brief & Provenance
+
+- [ ] **BE-7.1** Deterministic brief builder from persisted state (api-contract §4.6)
+- [ ] **BE-7.2** Brief validator: evidence-backed material statements, banned phrases (EN + ID), gap completeness, conflict completeness; failure → `HUMAN_REVIEW_REQUIRED` + marked fallback
+- [ ] **BE-7.3** Persist brief; regenerate from state (the regenerated brief is identical); E9
+- [ ] **BE-7.4** Trail in E6 includes all actions; E13 run history
+- [ ] **BE-7.5** (P1) Review actions E11/E12 (D-14)
+- [ ] **BE-7.6** (P1) E10 `/meta/enums` with reviewer-facing labels
+- [ ] **BE-7.7** Contract tests: fixtures regenerated from real models; TS types in sync
+
+**Exit criteria**
+- [ ] Traceability = 100% of material statements on golden cases.
+- [ ] No brief can contain verdict or payment language (tested).
+- [ ] CP-4: the four-screen flow runs end-to-end with Person 2.
+
+---
+
+## M8 — Evaluation Integration & Ablation
+
+- [ ] **BE-8.1** `episight batch --mode --cases --out` producing runner output (data-contract §6), including the screening block and version header
+- [ ] **BE-8.2** Agree on the output schema with Person 3's harness; run the harness on golden A–E
+- [ ] **BE-8.3** (P1) Ablation runs: `RULES_ONLY` / `RULES_RETRIEVAL` / `FULL_RULE_PLANNER` / `FULL` on the full benchmark; `FULL` repeated live to report variance
+- [ ] **BE-8.4** Failure analysis with Person 3; log defects as new `BE-9.x` tasks
+- [ ] **BE-8.5** (P1) 20+ case benchmark runs within an acceptable time (target < 60 s total in deterministic mode)
+- [ ] **BE-8.6** Record the regression baseline in `evaluation/` (with dataset/corpus/code versions)
+
+**Exit criteria**
+- [ ] Batch runs need no manual steps and are reproducible (same inputs → same output apart from timings).
+
+---
+
+## M9 — Robustness, Regression & Stabilization
+
+- [ ] **BE-9.1** Failure tests: DB unavailable (503), empty retrieval, malformed note, policy corpus missing, tool exception, invalid structured output, timeout, max steps, repeated evidence, conflicting evidence
+- [ ] **BE-9.2** Golden regression suite in CI (or `make regress`), which fails on any golden-case behavior change
+- [ ] **BE-9.3** Determinism check: run the golden set twice and diff (excluding timings)
+- [ ] **BE-9.4** README setup validated from a clean clone on a second machine or by a teammate
+- [ ] **BE-9.5** Governance pass with Person 3 (no real data, no verdict endpoints, ground truth unreachable)
+
+**Exit criteria (= Person 1 Definition of Done, 01 doc)**
+- [ ] Backend starts from documented commands; DB recreate + seed works.
+- [ ] Screening is deterministic and tested; reconstruction matches golden cases.
+- [ ] State is explicit and inspectable; tools are chosen from gaps; dual evidence is surfaced.
+- [ ] Missing and conflicting evidence are represented correctly; stopping is bounded.
+- [ ] The brief is structured and source-backed; provenance is queryable.
+- [ ] The batch evaluation runs unattended; all golden cases behave as expected.
+
+---
+
+## M10 — LLM Passage Classifier & Brief Paraphrase (P1/P2, after M9 baseline)
+
+> The AI planner moved to M6 (D-07). M10 covers only the remaining optional LLM uses.
+
+- [-] **BE-10.1** ~~`llm/` adapter~~: moved to BE-6.13 (D-07)
+- [ ] **BE-10.2** LLM passage classifier: returns verbatim span + stance; span string-matched against the source; bounded retry; rule fallback
+- [-] **BE-10.3** ~~LLM planner tie-break~~: superseded by the AI planner in M6 (D-07)
+- [ ] **BE-10.4** Extend record/replay (BE-6.15) to classifier calls
+- [ ] **BE-10.5** Classifier on/off ablation within `FULL`; keep only if metrics improve (proposal §13)
+- [ ] **BE-10.6** (P2) Optional LLM paraphrase of brief statements, with evidence IDs preserved and validated; template fallback
+
+---
+
+## Cross-Team Handoffs
+
+| ID | From → To | Deliverable | Needed by | Status |
+|---|---|---|---|---|
+| HO-P2-1 | P1 → P2 | Mock fixtures + generated TS types | BE-0.7 (CP-1) | `[ ]` |
+| HO-P2-2 | P1 → P2 | Real read endpoints | BE-1.8 (CP-2) | `[ ]` |
+| HO-P2-3 | P1 → P2 | Investigation start + polling | BE-6.8 (CP-3) | `[ ]` |
+| HO-P2-4 | P1 → P2 | Brief + evidence detail | BE-7.3 (CP-4) | `[ ]` |
+| HO-P3-1 | P3 → P1 | Dataset v0 with golden cases A–E (data-contract format) | BE-1.6 (fixture fallback: BE-1.7) | `[ ]` |
+| HO-P3-2 | P3 → P1 | Screening rule fixtures (edge cases) | BE-2.8 | `[ ]` |
+| HO-P3-3 | P3 → P1 | Policy corpus v0 (curated Permenkes 26/2021 sections) | BE-4.5 | `[ ]` |
+| HO-P3-4 | P3 → P1 | Clinical notes with varied phrasing/negations + context lexicon review | BE-4.4 | `[ ]` |
+| HO-P3-5 | P3 → P1 | Ground-truth schema + expected golden behavior | BE-6.9, BE-8.2 | `[ ]` |
+| HO-P1-P3 | P1 → P3 | Runner output for harness | BE-8.1 | `[ ]` |
+
+## Open Decisions Snapshot
+
+Full log in [decisions.md](decisions.md). M0 exit needs sign-off on the `AGREED-P1` entries (D-01–D-05, D-07–D-09, D-11, D-12, D-19, D-20) plus resolution of **D-16** (deadline) and **D-18** (LLM provider/key).
+
+## Progress Log
+
+| Date | Task(s) | Note |
+|---|---|---|
+| 2026-10-01 | BE-0.1, BE-0.2 | Sources reviewed; architecture, data contract, API contract, and plan drafted. No implementation started. |
+| 2026-10-01 | BE-0.6, BE-0.9 | Review feedback applied: the AI planner is core inside a deterministic safety envelope (D-07); status split into three fields (D-04); cases are episode groups (D-03); Case B → `EVIDENCE_PATHS_EXHAUSTED`; `decisions.md` created; docs moved to v0.2. |

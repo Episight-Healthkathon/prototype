@@ -31,7 +31,7 @@
 | **M6** | Case state, safety envelope, AI planner, orchestrator, stopping (core) | Phase 2 | P0 | `[x]` (live-model check pending a key) |
 | **M7** | Reviewer brief + provenance API | Phase 3 | P0 | `[~]` (done except P1 review actions / meta enums) |
 | **M8** | Evaluation integration + ablation | Phase 3–4 | P1 (runner is P0 for golden checks) | `[~]` (runner done; needs Person 3 harness + dataset) |
-| **M9** | Robustness, regression, stabilization | Phase 4–5 | P0/P1 | `[ ]` |
+| **M9** | Robustness, regression, stabilization | Phase 4–5 | P0/P1 | `[~]` (clean-clone check from GitHub pending) |
 | **M10** | LLM passage classifier + optional brief paraphrase | — | P1/P2 | `[ ]` |
 
 **Critical path:** M0 → M1 → M2 → M3 → M4/M5 (partly parallel) → M6 → M7 → M8 → M9. M1–M5 build the deterministic backbone first. The AI planner (M6) is built on top of the safety envelope, and the rule planner lands before it so every later milestone has a working fallback. M10 comes only after M9's golden baseline is green.
@@ -217,11 +217,11 @@
 
 ## M9 — Robustness, Regression & Stabilization
 
-- [ ] **BE-9.1** Failure tests: DB unavailable (503), empty retrieval, malformed note, policy corpus missing, tool exception, invalid structured output, timeout, max steps, repeated evidence, conflicting evidence
-- [ ] **BE-9.2** Golden regression suite in CI (or `make regress`), which fails on any golden-case behavior change
-- [ ] **BE-9.3** Determinism check: run the golden set twice and diff (excluding timings)
+- [x] **BE-9.1** Failure tests: DB unavailable (503), empty retrieval, malformed note, policy corpus missing, tool exception, invalid structured output, timeout, max steps, repeated evidence, conflicting evidence
+- [x] **BE-9.2** Golden regression suite in CI (or `make regress`), which fails on any golden-case behavior change
+- [x] **BE-9.3** Determinism check: run the golden set twice and diff (excluding timings)
 - [ ] **BE-9.4** README setup validated from a clean clone on a second machine or by a teammate
-- [ ] **BE-9.5** Governance pass with Person 3 (no real data, no verdict endpoints, ground truth unreachable)
+- [x] **BE-9.5** Governance pass with Person 3 (no real data, no verdict endpoints, ground truth unreachable)
 
 **Exit criteria (= Person 1 Definition of Done, 01 doc)**
 - [ ] Backend starts from documented commands; DB recreate + seed works.
@@ -280,3 +280,4 @@ Full log in [decisions.md](decisions.md). All decisions are locked except **D-16
 | 2026-10-02 | BE-6.13–6.17, BE-0.11 (partial) | AI planner: vendor-neutral prompt + per-step strict JSON schema, envelope validation with one re-ask, rule fallback on any failure, record/replay (DB store for the API, JSON-dir store for batch). Adapters: Anthropic (`claude-opus-5-5`, effort low, structured outputs, server-side refusal fallback) and OpenAI (`gpt-4o`, strict json_schema). Added V5 guard: a narrowed note search must select an unread readable document. Tests never call a paid API. 433 tests pass. Live-model check waits for a key. |
 | 2026-10-02 | BE-6.14 (tuning) | First live runs with OpenAI `gpt-4o-mini`: all five golden outcomes correct, 100% AI decisions, but 1–2 more steps than the rule planner (never skipped provider context; B and C hit 12/12). Fixes: envelope budget guard (optional questions not offered when remaining steps only cover open material ones; leftover optional questions marked SKIPPED at stop) and prompt `planner-2` (step cost, optional questions, order by most decisive source). Re-run: all five correct, steps equal to the rule planner (10/11/11/10/5), ~1.5 s per step, 2 single retries accepted. 435 tests pass. |
 | 2026-10-02 | BE-8.1, BE-8.3, BE-3.5 | Batch runner `episight batch`: all four ablation modes from dataset files (no DB), Data Contract §6 JSON + CSV + summary.md, repeats for AI-planner variance, per-repeat recordings with replay. First live ablation on interim data (FULL = OpenAI gpt-4o-mini): avg steps RULES_ONLY 4.0 (all EVIDENCE_UNAVAILABLE / NO_ACTIONABLE_GAP), RULES_RETRIEVAL 11.3, FULL_RULE_PLANNER 9.7, FULL 9.7 (58 AI steps, 0 fallbacks); same outcomes for the last three modes; ~15 s per FULL case. 448 tests pass. |
+| 2026-10-02 | BE-9.1, 9.2, 9.3, 9.5 | Robustness: found and fixed a hung tool blocking every later tool (single shared worker); now one worker per call, abandoned on timeout. New failure tests: hung tool, run timeout (S2), malformed note text, repeated evidence dedupe, database outage (health 503 + error envelope), API surface without decision authority. CI workflow (lint + full suite with PostgreSQL, no paid model). 463 tests pass. |

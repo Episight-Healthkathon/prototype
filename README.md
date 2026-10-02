@@ -53,6 +53,15 @@ uv run pytest            # unit + API tests (API tests use the episight_test dat
 uv run ruff check src tests alembic
 ```
 
+Golden regression only (fast; run after any engine, retrieval or prompt change):
+
+```bash
+uv run pytest tests/unit/test_golden_engine.py tests/unit/test_llm_planner.py tests/api/test_investigation_api.py
+```
+
+CI (`.github/workflows/backend.yml`) runs lint and the full suite with PostgreSQL on every push or PR that
+touches the backend. It never calls a paid model.
+
 ## Contract artifacts for the frontend
 
 ```bash

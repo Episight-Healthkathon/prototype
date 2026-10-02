@@ -77,10 +77,10 @@ def _reason(st: InvestigationState, decision: Decision) -> str:
     return f"{req.spec.label} (requirement {req.key.value} is open)"
 
 
-def _run_tool(
-    executor: ThreadPoolExecutor, decision: Decision, ctx: CaseContext, st: InvestigationState, timeout_s: float
-) -> ToolOutcome:
+def _run_tool(decision: Decision, ctx: CaseContext, st: InvestigationState, timeout_s: float) -> ToolOutcome:
     tool = TOOLS[decision.action.tool_name]
+    # One worker per call: a hung tool is abandoned on timeout and cannot block the tools that follow it.
+    executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix=f"tool-{tool.name.value}")
     future = executor.submit(tool.fn, ctx, st, decision.tool_input)
     try:
         return future.result(timeout=timeout_s)
@@ -92,6 +92,8 @@ def _run_tool(
         return ToolOutcome(status=ToolStatus.ERROR, error=ActionError(code="PROVENANCE", message=str(exc)))
     except Exception as exc:  # noqa: BLE001 — a tool failure is represented, never hidden or replaced
         return ToolOutcome(status=ToolStatus.ERROR, error=ActionError(code="TOOL_ERROR", message=str(exc)[:300]))
+    finally:
+        executor.shutdown(wait=False, cancel_futures=True)
 
 
 def run_investigation(
@@ -113,78 +115,77 @@ def run_investigation(
     st = InvestigationState.new(ctx, run_id, mode, max_steps, now())
     recorder.on_state(st, ctx)
 
-    with ThreadPoolExecutor(max_workers=1) as executor:
-        while True:
-            allowed = compute_allowed(st, ctx)
-            verdict = evaluate(st, len(allowed), clock() - started, run_timeout_s)
-            if verdict is not None:
-                st.outcome, st.stop_reason = verdict
+    while True:
+        allowed = compute_allowed(st, ctx)
+        verdict = evaluate(st, len(allowed), clock() - started, run_timeout_s)
+        if verdict is not None:
+            st.outcome, st.stop_reason = verdict
+            break
+
+        decision = planner.decide(st, ctx, allowed)
+        skip_updates = [u for k, r in decision.skips if (u := apply_skip(st, k, r)) is not None]
+        st.priority_ranking = decision.priority_ranking
+        if decision.action is None:
+            if not skip_updates:
+                # Nothing left that the planner considers useful: with no action taken, the stopping
+                # rules always resolve (S4-S6 if nothing material is open, otherwise S7/S8).
+                st.outcome, st.stop_reason = evaluate(st, 0, clock() - started, run_timeout_s)
                 break
+            continue
 
-            decision = planner.decide(st, ctx, allowed)
-            skip_updates = [u for k, r in decision.skips if (u := apply_skip(st, k, r)) is not None]
-            st.priority_ranking = decision.priority_ranking
-            if decision.action is None:
-                if not skip_updates:
-                    # Nothing left that the planner considers useful: with no action taken, the stopping
-                    # rules always resolve (S4-S6 if nothing material is open, otherwise S7/S8).
-                    st.outcome, st.stop_reason = evaluate(st, 0, clock() - started, run_timeout_s)
-                    break
-                continue
+        tool = TOOLS[decision.action.tool_name]
+        reason = _reason(st, decision)
+        st.next_action = NextAction(
+            tool_name=tool.name,
+            tool_label=tool.label,
+            requirement_key=decision.action.requirement_key,
+            reason=reason,
+        )
+        st.updated_at = now()
+        recorder.on_state(st, ctx)
 
-            tool = TOOLS[decision.action.tool_name]
-            reason = _reason(st, decision)
-            st.next_action = NextAction(
-                tool_name=tool.name,
-                tool_label=tool.label,
-                requirement_key=decision.action.requirement_key,
-                reason=reason,
-            )
-            st.updated_at = now()
-            recorder.on_state(st, ctx)
+        st.step += 1
+        step_started_at = now()
+        t0 = clock()
+        outcome = _run_tool(decision, ctx, st, tool_timeout_s)
+        duration_ms = int((clock() - t0) * 1000)
+        updates, new_evidence = apply_outcome(
+            st,
+            ctx,
+            requirement=decision.action.requirement_key,
+            tool=tool.name,
+            signature=call_signature(tool.name, decision.tool_input),
+            outcome=outcome,
+            reason=reason,
+            step=st.step,
+            now=step_started_at,
+        )
 
-            st.step += 1
-            step_started_at = now()
-            t0 = clock()
-            outcome = _run_tool(executor, decision, ctx, st, tool_timeout_s)
-            duration_ms = int((clock() - t0) * 1000)
-            updates, new_evidence = apply_outcome(
-                st,
-                ctx,
-                requirement=decision.action.requirement_key,
-                tool=tool.name,
-                signature=call_signature(tool.name, decision.tool_input),
-                outcome=outcome,
-                reason=reason,
-                step=st.step,
-                now=step_started_at,
-            )
-
-            action = InvestigationAction(
-                step=st.step,
-                tool_name=tool.name,
-                tool_label=tool.label,
-                requirement_key=decision.action.requirement_key,
-                reason=reason,
-                input_summary=decision.tool_input.model_dump(mode="json"),
-                tool_status=outcome.status,
-                evidence_ids=[e.evidence_id for e in new_evidence],
-                requirement_updates=[*skip_updates, *updates],
-                planner=PlannerInfo(
-                    source=decision.source,
-                    note=decision.note,
-                    priority_ranking=decision.priority_ranking,
-                    skipped_requirements=[SkippedRequirement(key=k, reason=r) for k, r in decision.skips],
-                    validation_errors=decision.validation_errors,
-                ),
-                error=outcome.error,
-                started_at=step_started_at,
-                duration_ms=duration_ms,
-            )
-            st.trail.append(action)
-            st.next_action = None
-            st.updated_at = now()
-            recorder.on_step(st, ctx, action, new_evidence, decision)
+        action = InvestigationAction(
+            step=st.step,
+            tool_name=tool.name,
+            tool_label=tool.label,
+            requirement_key=decision.action.requirement_key,
+            reason=reason,
+            input_summary=decision.tool_input.model_dump(mode="json"),
+            tool_status=outcome.status,
+            evidence_ids=[e.evidence_id for e in new_evidence],
+            requirement_updates=[*skip_updates, *updates],
+            planner=PlannerInfo(
+                source=decision.source,
+                note=decision.note,
+                priority_ranking=decision.priority_ranking,
+                skipped_requirements=[SkippedRequirement(key=k, reason=r) for k, r in decision.skips],
+                validation_errors=decision.validation_errors,
+            ),
+            error=outcome.error,
+            started_at=step_started_at,
+            duration_ms=duration_ms,
+        )
+        st.trail.append(action)
+        st.next_action = None
+        st.updated_at = now()
+        recorder.on_step(st, ctx, action, new_evidence, decision)
 
     st.next_action = None
     for req in st.requirements.values():

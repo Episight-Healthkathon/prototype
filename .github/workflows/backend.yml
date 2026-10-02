@@ -1,0 +1,40 @@
+# Backend CI: lint + full test suite (unit, golden regression, API against PostgreSQL).
+# Never calls a paid model: EPISIGHT_LLM_PROVIDER=none.
+name: backend
+
+on:
+  push:
+    paths: ["apps/api/**", "packages/shared-types/**", ".github/workflows/backend.yml"]
+  pull_request:
+    paths: ["apps/api/**", "packages/shared-types/**", ".github/workflows/backend.yml"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: episight
+          POSTGRES_PASSWORD: episight
+          POSTGRES_DB: episight_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U episight -d episight_test"
+          --health-interval 2s --health-timeout 3s --health-retries 30
+    env:
+      EPISIGHT_TEST_DATABASE_URL: postgresql+psycopg://episight:episight@localhost:5432/episight_test
+      EPISIGHT_DATABASE_URL: postgresql+psycopg://episight:episight@localhost:5432/episight_test
+      EPISIGHT_LLM_PROVIDER: none
+    defaults:
+      run:
+        working-directory: apps/api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Install
+        run: uv sync --frozen
+      - name: Lint
+        run: uv run ruff check src tests alembic
+      - name: Tests
+        run: uv run pytest -q

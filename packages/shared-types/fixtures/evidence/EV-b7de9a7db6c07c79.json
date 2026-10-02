@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-b7de9a7db6c07c79",
+  "case_id": "CASE-FR-150659fa",
+  "run_id": "RUN-FIXTURE-FR-150659fa",
+  "episode_id": "EPI-000203",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000203",
+  "source_title": "Kontrol poli penyakit dalam - EPI-000203",
+  "source_excerpt": "Tidak ada pemeriksaan penunjang yang dijadwalkan.",
+  "field_path": null,
+  "char_start": 73,
+  "char_end": 122,
+  "requirement_key": "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+  "stance": "NEGATES",
+  "relevance_category": "SUPPORTING_RISK",
+  "exception_type": "SUPPORTING_EXAM_FOLLOWUP",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Was the repeat visit a consultation of supporting-examination results? (requirement SUPPORTING_EXAM_FOLLOWUP_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 6,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000203",
+    "title": "Kontrol poli penyakit dalam - EPI-000203",
+    "text": "Kontrol poli penyakit dalam. Keluhan serupa dengan kunjungan sebelumnya. Tidak ada pemeriksaan penunjang yang dijadwalkan. Terapi dilanjutkan, edukasi diet.",
+    "highlight": {
+      "char_start": 73,
+      "char_end": 122
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

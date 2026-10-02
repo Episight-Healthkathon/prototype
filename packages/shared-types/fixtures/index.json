@@ -1,42 +1,120 @@
 {
   "contract_version": "1",
   "dataset_version": "v0-interim",
+  "corpus_version": "pc-0-interim",
   "generated_by": "uv run episight export-contract (apps/api)",
+  "investigation_mode": "FULL_RULE_PLANNER",
+  "note": "Detail and episodes show cases before investigation (FLAGGED). Investigation, evidence and brief files are real engine output on the interim dataset.",
   "cases_list": "cases.list.json",
   "cases": {
-    "CASE-RA-7f7f4e80": {
-      "detail": "cases/CASE-RA-7f7f4e80.detail.json",
-      "episodes": "cases/CASE-RA-7f7f4e80.episodes.json"
-    },
-    "CASE-FR-150659fa": {
-      "detail": "cases/CASE-FR-150659fa.detail.json",
-      "episodes": "cases/CASE-FR-150659fa.episodes.json"
-    },
-    "CASE-RA-f024a4b0": {
-      "detail": "cases/CASE-RA-f024a4b0.detail.json",
-      "episodes": "cases/CASE-RA-f024a4b0.episodes.json"
-    },
-    "CASE-FR-6c937d70": {
-      "detail": "cases/CASE-FR-6c937d70.detail.json",
-      "episodes": "cases/CASE-FR-6c937d70.episodes.json"
+    "CASE-RA-e84cb8b0": {
+      "detail": "cases/CASE-RA-e84cb8b0.detail.json",
+      "episodes": "cases/CASE-RA-e84cb8b0.episodes.json",
+      "investigation_running": "cases/CASE-RA-e84cb8b0.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-e84cb8b0.investigation.completed.json",
+      "evidence": "cases/CASE-RA-e84cb8b0.evidence.json",
+      "brief": "cases/CASE-RA-e84cb8b0.brief.json",
+      "evidence_details": [
+        "evidence/EV-6933c34ff6c15df7.json",
+        "evidence/EV-921a595ff68e45f5.json",
+        "evidence/EV-0a33244b11e82e8b.json",
+        "evidence/EV-43fb74c4270d20b0.json",
+        "evidence/EV-4448640f35f56ed3.json",
+        "evidence/EV-a61ac21c827c5034.json"
+      ]
     },
     "CASE-RA-c21f18d3": {
       "detail": "cases/CASE-RA-c21f18d3.detail.json",
-      "episodes": "cases/CASE-RA-c21f18d3.episodes.json"
+      "episodes": "cases/CASE-RA-c21f18d3.episodes.json",
+      "investigation_running": "cases/CASE-RA-c21f18d3.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-c21f18d3.investigation.completed.json",
+      "evidence": "cases/CASE-RA-c21f18d3.evidence.json",
+      "brief": "cases/CASE-RA-c21f18d3.brief.json",
+      "evidence_details": [
+        "evidence/EV-3a07cd72e7b59aff.json",
+        "evidence/EV-07c75f09f41594b7.json",
+        "evidence/EV-f62185458bb9a068.json"
+      ]
     },
-    "CASE-RA-e84cb8b0": {
-      "detail": "cases/CASE-RA-e84cb8b0.detail.json",
-      "episodes": "cases/CASE-RA-e84cb8b0.episodes.json"
+    "CASE-FR-6c937d70": {
+      "detail": "cases/CASE-FR-6c937d70.detail.json",
+      "episodes": "cases/CASE-FR-6c937d70.episodes.json",
+      "investigation_running": "cases/CASE-FR-6c937d70.investigation.running.json",
+      "investigation_completed": "cases/CASE-FR-6c937d70.investigation.completed.json",
+      "evidence": "cases/CASE-FR-6c937d70.evidence.json",
+      "brief": "cases/CASE-FR-6c937d70.brief.json",
+      "evidence_details": [
+        "evidence/EV-09516a85733e5952.json",
+        "evidence/EV-d561e0925eb11fe1.json",
+        "evidence/EV-684dc0a677b63e7b.json",
+        "evidence/EV-95fa881a251c27cd.json",
+        "evidence/EV-071f4fa5319433f1.json"
+      ]
+    },
+    "CASE-RA-f024a4b0": {
+      "detail": "cases/CASE-RA-f024a4b0.detail.json",
+      "episodes": "cases/CASE-RA-f024a4b0.episodes.json",
+      "investigation_running": "cases/CASE-RA-f024a4b0.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-f024a4b0.investigation.completed.json",
+      "evidence": "cases/CASE-RA-f024a4b0.evidence.json",
+      "brief": "cases/CASE-RA-f024a4b0.brief.json",
+      "evidence_details": [
+        "evidence/EV-30d919d7212a93ed.json",
+        "evidence/EV-5a535b73b9187ea1.json",
+        "evidence/EV-92e73d8d57575de4.json",
+        "evidence/EV-ea45512787afce13.json",
+        "evidence/EV-01dab2617d35cbd7.json",
+        "evidence/EV-42ee32da401f9f19.json",
+        "evidence/EV-4f83efda9be869a2.json",
+        "evidence/EV-8eecef3cfc4b2f42.json",
+        "evidence/EV-b1be8faf5bcbebf2.json",
+        "evidence/EV-0d511bb53ade0969.json",
+        "evidence/EV-aa46b3a7058650ae.json",
+        "evidence/EV-7defd08c52d81bcf.json",
+        "evidence/EV-ddae72e2c758a8b3.json"
+      ]
+    },
+    "CASE-FR-150659fa": {
+      "detail": "cases/CASE-FR-150659fa.detail.json",
+      "episodes": "cases/CASE-FR-150659fa.episodes.json",
+      "investigation_running": "cases/CASE-FR-150659fa.investigation.running.json",
+      "investigation_completed": "cases/CASE-FR-150659fa.investigation.completed.json",
+      "evidence": "cases/CASE-FR-150659fa.evidence.json",
+      "brief": "cases/CASE-FR-150659fa.brief.json",
+      "evidence_details": [
+        "evidence/EV-e571803b0cd9ca23.json",
+        "evidence/EV-f30d550269729f42.json",
+        "evidence/EV-7527b29154299d37.json",
+        "evidence/EV-7a12d3f78919481a.json",
+        "evidence/EV-f83b3a5850340f6a.json",
+        "evidence/EV-b7de9a7db6c07c79.json",
+        "evidence/EV-3521731a93c3ab87.json",
+        "evidence/EV-d8eb4b2db7cf0fb4.json"
+      ]
+    },
+    "CASE-RA-7f7f4e80": {
+      "detail": "cases/CASE-RA-7f7f4e80.detail.json",
+      "episodes": "cases/CASE-RA-7f7f4e80.episodes.json",
+      "investigation_running": "cases/CASE-RA-7f7f4e80.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-7f7f4e80.investigation.completed.json",
+      "evidence": "cases/CASE-RA-7f7f4e80.evidence.json",
+      "brief": "cases/CASE-RA-7f7f4e80.brief.json",
+      "evidence_details": [
+        "evidence/EV-62d6329b21d8444b.json",
+        "evidence/EV-b43f2e44379204cc.json",
+        "evidence/EV-31ae37ebc2897ff4.json",
+        "evidence/EV-8deba0260b844aec.json",
+        "evidence/EV-438b476894e171ff.json",
+        "evidence/EV-6d1bd7aeaad3dc2e.json",
+        "evidence/EV-f41f87f35f5153c6.json",
+        "evidence/EV-a64976d99f877380.json",
+        "evidence/EV-4ebb8ce03c62967f.json",
+        "evidence/EV-578df7f73c7ccbaf.json",
+        "evidence/EV-90c6ffe216d4ac8f.json",
+        "evidence/EV-c19553abce829794.json",
+        "evidence/EV-31eb8e5f46c4bb2e.json",
+        "evidence/EV-fc14aefd1c1c3ec7.json"
+      ]
     }
-  },
-  "scripted_investigation_example": {
-    "note": "Scripted example in the exact contract shape; replaced by real engine output after the Golden Case A vertical slice. Investigation/brief fixtures for other cases follow from real runs.",
-    "files": [
-      "cases/CASE-RA-7f7f4e80.investigation.running.json",
-      "cases/CASE-RA-7f7f4e80.investigation.completed.json",
-      "cases/CASE-RA-7f7f4e80.evidence.json",
-      "cases/CASE-RA-7f7f4e80.brief.json",
-      "evidence/EV-31414acbb2c5.json"
-    ]
   }
 }

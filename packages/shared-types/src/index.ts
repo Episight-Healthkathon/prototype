@@ -61,6 +61,7 @@ export type RequirementState = components["schemas"]["RequirementState"];
 export type RequirementUpdate = components["schemas"]["RequirementUpdate"];
 export type ReviewStatus = components["schemas"]["ReviewStatus"];
 export type RiskSignal = components["schemas"]["RiskSignal"];
+export type RunList = components["schemas"]["RunList"];
 export type RunStatus = components["schemas"]["RunStatus"];
 export type RunSummary = components["schemas"]["RunSummary"];
 export type SignalPair = components["schemas"]["SignalPair"];

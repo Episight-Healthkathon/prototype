@@ -1,8 +1,8 @@
 {
-  "brief_id": "BRF-EXAMPLE-A-0001",
+  "brief_id": "BRF-FIXTURE-RA-7f7f4e80",
   "case_id": "CASE-RA-7f7f4e80",
-  "run_id": "RUN-EXAMPLE-A-0001",
-  "generated_at": "2026-10-02T09:00:12+07:00",
+  "run_id": "RUN-FIXTURE-RA-7f7f4e80",
+  "generated_at": "2026-10-02T09:00:00+07:00",
   "generator_version": "brief-template-1",
   "progress_status": "BRIEF_READY",
   "outcome": "EVIDENCE_SUFFICIENT",
@@ -10,27 +10,27 @@
   "case_summary": [
     {
       "statement_id": "S1",
-      "text": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis (I50.0), 5 days after discharge.",
+      "text": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge: 2 episodes (5 d) at RS Sintetis Nusantara 01.",
       "evidence_ids": [
-        "EV-ceb16e043e11",
-        "EV-930fe827ea70"
+        "EV-b43f2e44379204cc"
       ],
       "requirement_keys": [
-        "EPISODE_RELATEDNESS",
-        "DIAGNOSIS_CONSISTENCY"
+        "EPISODE_RELATEDNESS"
       ],
       "material": true
     },
     {
       "statement_id": "S2",
-      "text": "Notes document an emergency presentation for the readmission and a pre-existing chronic heart failure.",
+      "text": "Explaining context documented: emergency context, chronic condition, clinical justification.",
       "evidence_ids": [
-        "EV-31414acbb2c5",
-        "EV-092061291e7c"
+        "EV-f41f87f35f5153c6",
+        "EV-a64976d99f877380",
+        "EV-4ebb8ce03c62967f"
       ],
       "requirement_keys": [
         "EMERGENCY_CONTEXT",
-        "CHRONIC_CONDITION_CONTEXT"
+        "CHRONIC_CONDITION_CONTEXT",
+        "CLINICAL_JUSTIFICATION"
       ],
       "material": true
     }
@@ -60,15 +60,22 @@
   },
   "episode_timeline": [
     {
-      "episode_id": "EPI-000101",
-      "label": "Index stay: congestive heart failure",
-      "start_at": "2026-03-03T09:10:00+07:00",
-      "end_at": "2026-03-07T11:00:00+07:00",
+      "episode_id": "EPI-000103",
+      "label": "Related outpatient visit: Congestive heart failure",
+      "start_at": "2026-02-20T09:30:00+07:00",
+      "end_at": null,
       "interval_from_previous_days": null
     },
     {
+      "episode_id": "EPI-000101",
+      "label": "Index inpatient stay: Congestive heart failure",
+      "start_at": "2026-03-03T09:10:00+07:00",
+      "end_at": "2026-03-07T11:00:00+07:00",
+      "interval_from_previous_days": 11
+    },
+    {
       "episode_id": "EPI-000102",
-      "label": "Readmission via emergency department",
+      "label": "Repeat inpatient stay: Congestive heart failure",
       "start_at": "2026-03-12T21:40:00+07:00",
       "end_at": "2026-03-16T10:00:00+07:00",
       "interval_from_previous_days": 5
@@ -76,14 +83,23 @@
   ],
   "supporting_risk_evidence": [
     {
-      "statement_id": "R1",
-      "text": "Same FKRTL and same primary diagnosis within 5 days of discharge.",
+      "statement_id": "R5",
+      "text": "Episode chain: “EPI-000102 started 5 day(s) after discharge of EPI-000101; same patient, same FKRTL, same primary diagnosis” (READMISSION_30D_SAME_PROVIDER_SAME_DX)",
       "evidence_ids": [
-        "EV-ceb16e043e11",
-        "EV-930fe827ea70"
+        "EV-b43f2e44379204cc"
       ],
       "requirement_keys": [
-        "EPISODE_RELATEDNESS",
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "R6",
+      "text": "Diagnosis: “I50.0 (EPI-000101) vs I50.0 (EPI-000102)” (EPI-000102)",
+      "evidence_ids": [
+        "EV-31ae37ebc2897ff4"
+      ],
+      "requirement_keys": [
         "DIAGNOSIS_CONSISTENCY"
       ],
       "material": true
@@ -91,11 +107,12 @@
   ],
   "explaining_context_evidence": [
     {
-      "statement_id": "C1",
-      "text": "Triage classified the readmission as red category (emergency).",
+      "statement_id": "C7",
+      "text": "Emergency context: “Triase IGD.” (NOTE-000102); “Kategori triase: merah (gawat darurat).” (NOTE-000102); “Dirawat ulang melalui IGD dengan acute decompensated heart failure dan edema paru akut.” (NOTE-000103)",
       "evidence_ids": [
-        "EV-31414acbb2c5",
-        "EV-49a8810a46b1"
+        "EV-f41f87f35f5153c6",
+        "EV-6d1bd7aeaad3dc2e",
+        "EV-438b476894e171ff"
       ],
       "requirement_keys": [
         "EMERGENCY_CONTEXT"
@@ -103,10 +120,10 @@
       "material": true
     },
     {
-      "statement_id": "C2",
-      "text": "Chronic heart failure was documented before the index stay.",
+      "statement_id": "C8",
+      "text": "Chronic condition: “Pasien dengan gagal jantung kronik (CHF) dan hipertensi, keluhan sesak saat aktivitas sedang.” (NOTE-000100)",
       "evidence_ids": [
-        "EV-092061291e7c"
+        "EV-a64976d99f877380"
       ],
       "requirement_keys": [
         "CHRONIC_CONDITION_CONTEXT"
@@ -114,10 +131,13 @@
       "material": true
     },
     {
-      "statement_id": "C3",
-      "text": "Discharge summary records fluid non-adherence and an upper respiratory infection as triggers.",
+      "statement_id": "C9",
+      "text": "Clinical justification: “Pasien datang diantar keluarga dengan sesak napas memberat sejak 6 jam sebelum masuk rumah sakit, tidak bisa berbaring.” (NOTE-000102); “Dicurigai edema paru akut.” (NOTE-000102); “Dirawat ulang melalui IGD dengan acute decompensated heart failure dan edema paru akut.” (NOTE-000103) (+1 more)",
       "evidence_ids": [
-        "EV-dcabc7f726d8"
+        "EV-4ebb8ce03c62967f",
+        "EV-c19553abce829794",
+        "EV-578df7f73c7ccbaf",
+        "EV-90c6ffe216d4ac8f"
       ],
       "requirement_keys": [
         "CLINICAL_JUSTIFICATION"
@@ -127,33 +147,47 @@
   ],
   "policy_references": [
     {
-      "evidence_id": "EV-e9080dfdc68c",
+      "evidence_id": "EV-fc14aefd1c1c3ec7",
       "policy_id": "POL-INTERIM-READMISI-01",
       "document_title": "Permenkes No. 26 Tahun 2021 tentang Pedoman INA-CBG (ringkasan interim)",
       "section": "Readmisi: definisi dan pengecualian",
       "version": "interim-0",
       "excerpt": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dalam waktu kurang dari atau sama dengan 30 hari."
+    },
+    {
+      "evidence_id": "EV-31eb8e5f46c4bb2e",
+      "policy_id": "POL-INTERIM-FRAGMENTASI-01",
+      "document_title": "Permenkes No. 26 Tahun 2021 tentang Pedoman INA-CBG (ringkasan interim)",
+      "section": "Fragmentasi: definisi dan pengecualian",
+      "version": "interim-0",
+      "excerpt": "Fragmentasi adalah kunjungan rawat jalan berulang di FKRTL yang sama pada diagnosis yang sama dalam waktu kurang dari atau sama dengan 7 hari."
     }
   ],
   "remaining_gaps": [
     {
+      "key": "PROCEDURE_RELATIONSHIP",
+      "question": "Are procedures repeated or related across episodes?",
+      "state": "NOT_FOUND",
+      "explanation": "No repeated or related therapeutic procedure (routine diagnostics excluded)."
+    },
+    {
       "key": "SCHEDULED_PROCEDURE_CONTEXT",
       "question": "Is a scheduled or staged procedure documented?",
       "state": "NOT_FOUND",
-      "explanation": "Not found in available sources (4 of 4 documents searched)."
+      "explanation": "Not found in available sources; read all 3 available document(s)."
     },
     {
       "key": "RISK_INDICATORS_IN_NOTES",
-      "question": "Do notes indicate premature discharge or unresolved care?",
+      "question": "Do notes indicate premature discharge, unresolved complaints or repeats without indication?",
       "state": "NOT_FOUND",
-      "explanation": "Not found in available sources (4 of 4 documents searched)."
+      "explanation": "Not found in available sources; read all 3 available document(s)."
     }
   ],
   "conflicts": [],
   "uncertainty": [
     {
-      "statement_id": "U1",
-      "text": "Provider context was not assessed (judged not material: same provider, no class change).",
+      "statement_id": "U3",
+      "text": "Provider context not assessed: same provider and class of care across episodes, no referral.",
       "evidence_ids": [],
       "requirement_keys": [
         "PROVIDER_CONTEXT"
@@ -163,13 +197,22 @@
   ],
   "suggested_next_review": [
     {
-      "statement_id": "N1",
-      "text": "Verify that the triage findings support an emergency readmission.",
+      "statement_id": "N4",
+      "text": "Verify the documented emergency context, chronic condition, clinical justification against the source records.",
       "evidence_ids": [
-        "EV-31414acbb2c5"
+        "EV-f41f87f35f5153c6",
+        "EV-6d1bd7aeaad3dc2e",
+        "EV-438b476894e171ff",
+        "EV-a64976d99f877380",
+        "EV-4ebb8ce03c62967f",
+        "EV-c19553abce829794",
+        "EV-578df7f73c7ccbaf",
+        "EV-90c6ffe216d4ac8f"
       ],
       "requirement_keys": [
-        "EMERGENCY_CONTEXT"
+        "EMERGENCY_CONTEXT",
+        "CHRONIC_CONDITION_CONTEXT",
+        "CLINICAL_JUSTIFICATION"
       ],
       "material": true
     }
@@ -177,18 +220,23 @@
   "review_status": "PENDING_HUMAN_REVIEW",
   "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
   "traceability": {
-    "material_statements": 7,
-    "with_evidence": 7
+    "material_statements": 8,
+    "with_evidence": 8
   },
   "provenance": {
     "evidence_ids": [
-      "EV-092061291e7c",
-      "EV-31414acbb2c5",
-      "EV-49a8810a46b1",
-      "EV-930fe827ea70",
-      "EV-ceb16e043e11",
-      "EV-dcabc7f726d8",
-      "EV-e9080dfdc68c"
+      "EV-31ae37ebc2897ff4",
+      "EV-31eb8e5f46c4bb2e",
+      "EV-438b476894e171ff",
+      "EV-4ebb8ce03c62967f",
+      "EV-578df7f73c7ccbaf",
+      "EV-6d1bd7aeaad3dc2e",
+      "EV-90c6ffe216d4ac8f",
+      "EV-a64976d99f877380",
+      "EV-b43f2e44379204cc",
+      "EV-c19553abce829794",
+      "EV-f41f87f35f5153c6",
+      "EV-fc14aefd1c1c3ec7"
     ]
   }
 }

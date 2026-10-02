@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-0a33244b11e82e8b",
+  "case_id": "CASE-RA-e84cb8b0",
+  "run_id": "RUN-FIXTURE-RA-e84cb8b0",
+  "episode_id": "EPI-000502",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000503",
+  "source_title": "Ringkasan pulang - EPI-000502",
+  "source_excerpt": "Pasien masuk secara elektif sesuai jadwal untuk evaluasi lanjutan infeksi saluran kemih berulang dan pemberian antibiotik terencana.",
+  "field_path": null,
+  "char_start": 18,
+  "char_end": 150,
+  "requirement_key": "EMERGENCY_CONTEXT",
+  "stance": "NEGATES",
+  "relevance_category": "SUPPORTING_RISK",
+  "exception_type": "EMERGENCY",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 5,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000503",
+    "title": "Ringkasan pulang - EPI-000502",
+    "text": "Ringkasan pulang. Pasien masuk secara elektif sesuai jadwal untuk evaluasi lanjutan infeksi saluran kemih berulang dan pemberian antibiotik terencana. Tidak ada kondisi gawat darurat saat masuk.",
+    "highlight": {
+      "char_start": 18,
+      "char_end": 150
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

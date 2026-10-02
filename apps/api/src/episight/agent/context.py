@@ -47,6 +47,7 @@ class CaseContext:
     notes_by_episode: dict[str, list[ClinicalNote]] = field(init=False)
 
     def __post_init__(self) -> None:
+        self.signal_type = SignalType(self.signal_type)  # rows from the DB carry plain strings
         self.reconstruction = reconstruct(self.group_ids, self.episodes.values(), self.threshold_days)
         self.group_ids = self.reconstruction.anchor_ids  # chronological
         by_episode: dict[str, list[ClinicalNote]] = defaultdict(list)

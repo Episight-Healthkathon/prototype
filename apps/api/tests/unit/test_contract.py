@@ -7,7 +7,7 @@ import pytest
 from episight.contracts import api as dto
 from episight.contracts import enums
 from episight.devtools.contract_export import export
-from tests.conftest import DATASET_DIR, SHARED_TYPES
+from tests.conftest import DATASET_DIR, POLICY_DIR, SHARED_TYPES
 
 FIXTURE_MODELS = {
     "cases.list.json": dto.CaseList,
@@ -30,7 +30,7 @@ def _model_for(name: str):
 
 
 def test_export_is_deterministic_and_matches_committed_artifacts(tmp_path):
-    export(tmp_path, DATASET_DIR)
+    export(tmp_path, DATASET_DIR, POLICY_DIR)
     generated = sorted(p.relative_to(tmp_path) for p in tmp_path.rglob("*.json"))
     committed = sorted(p.relative_to(SHARED_TYPES) for p in (SHARED_TYPES / "fixtures").rglob("*.json"))
     assert [p for p in generated if p.parts[0] == "fixtures"] == committed

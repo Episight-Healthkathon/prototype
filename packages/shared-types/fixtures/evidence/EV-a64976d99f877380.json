@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-a64976d99f877380",
+  "case_id": "CASE-RA-7f7f4e80",
+  "run_id": "RUN-FIXTURE-RA-7f7f4e80",
+  "episode_id": "EPI-000103",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000100",
+  "source_title": "Kunjungan poli jantung - EPI-000103",
+  "source_excerpt": "Pasien dengan gagal jantung kronik (CHF) dan hipertensi, keluhan sesak saat aktivitas sedang.",
+  "field_path": null,
+  "char_start": 22,
+  "char_end": 115,
+  "requirement_key": "CHRONIC_CONDITION_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "CHRONIC",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is a relevant chronic condition documented? (requirement CHRONIC_CONDITION_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 7,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000100",
+    "title": "Kunjungan poli jantung - EPI-000103",
+    "text": "Kontrol poli jantung. Pasien dengan gagal jantung kronik (CHF) dan hipertensi, keluhan sesak saat aktivitas sedang. Edema tungkai minimal. Terapi furosemide dan ramipril dilanjutkan. Kontrol 1 bulan.",
+    "highlight": {
+      "char_start": 22,
+      "char_end": 115
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

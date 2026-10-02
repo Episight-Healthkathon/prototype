@@ -23,8 +23,8 @@ def dataset():
 
 
 @pytest.fixture(scope="session")
-def seeded_db(dataset):
-    """Migrated + seeded test database. Skips DB tests when PostgreSQL is not running."""
+def migrated_db():
+    """Migrated test database. Skips DB tests when PostgreSQL is not running."""
     from sqlalchemy import create_engine, text
     from sqlalchemy.exc import OperationalError
 
@@ -37,24 +37,33 @@ def seeded_db(dataset):
         pytest.skip("test database unavailable; run `docker compose up -d` from the repo root")
 
     from episight.cli import _alembic_config
-    from episight.db.session import make_session
-    from episight.ingest.loader import load_policies
-    from episight.ingest.seed import seed
 
     cfg = _alembic_config(TEST_DATABASE_URL)
     command.downgrade(cfg, "base")
     command.upgrade(cfg, "head")
-    with make_session(TEST_DATABASE_URL) as session:
-        seed(session, dataset, load_policies(POLICY_DIR), str(DATASET_DIR), str(POLICY_DIR))
     return TEST_DATABASE_URL
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
+def seeded_db(migrated_db, dataset):
+    """Freshly seeded data for each test module, so modules that start investigations stay independent."""
+    from episight.db.session import make_session
+    from episight.ingest.loader import load_policies
+    from episight.ingest.seed import seed
+
+    with make_session(migrated_db) as session:
+        seed(session, dataset, load_policies(POLICY_DIR), str(DATASET_DIR), str(POLICY_DIR))
+    return migrated_db
+
+
+@pytest.fixture(scope="module")
 def client(seeded_db):
     from fastapi.testclient import TestClient
 
+    from episight.api.routers.cases import get_run_executor
     from episight.db.session import get_session, make_session
     from episight.main import create_app
+    from episight.services.investigations import execute_run
 
     app = create_app()
 
@@ -66,5 +75,6 @@ def client(seeded_db):
             session.close()
 
     app.dependency_overrides[get_session] = _session
+    app.dependency_overrides[get_run_executor] = lambda: lambda run_id: execute_run(run_id, seeded_db)
     with TestClient(app) as c:
         yield c

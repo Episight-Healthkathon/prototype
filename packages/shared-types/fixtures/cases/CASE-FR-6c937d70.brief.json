@@ -1,0 +1,200 @@
+{
+  "brief_id": "BRF-FIXTURE-FR-6c937d70",
+  "case_id": "CASE-FR-6c937d70",
+  "run_id": "RUN-FIXTURE-FR-6c937d70",
+  "generated_at": "2026-10-02T09:00:00+07:00",
+  "generator_version": "brief-template-1",
+  "progress_status": "BRIEF_READY",
+  "outcome": "EVIDENCE_SUFFICIENT",
+  "stop_reason": "SUFFICIENT_EVIDENCE",
+  "case_summary": [
+    {
+      "statement_id": "S1",
+      "text": "Repeated outpatient visit at the same FKRTL with the same primary diagnosis within 7 days: 2 episodes (7 d) at RS Sintetis Nusantara 03.",
+      "evidence_ids": [
+        "EV-09516a85733e5952"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "S2",
+      "text": "Explaining context documented: supporting-examination follow-up.",
+      "evidence_ids": [
+        "EV-684dc0a677b63e7b"
+      ],
+      "requirement_keys": [
+        "SUPPORTING_EXAM_FOLLOWUP_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "risk_signal": {
+    "rule_id": "FRAGMENTATION_7D_SAME_PROVIDER_SAME_DX",
+    "rule_version": "1",
+    "description": "Repeated outpatient visit at the same FKRTL with the same primary diagnosis within 7 days",
+    "params": {
+      "threshold_days": 7,
+      "diagnosis_match": "EXACT"
+    },
+    "pairs": [
+      {
+        "from_episode_id": "EPI-000801",
+        "to_episode_id": "EPI-000802",
+        "interval_days": 7,
+        "matched": {
+          "same_patient": true,
+          "same_provider": true,
+          "same_primary_diagnosis": true,
+          "encounter_type": "OUTPATIENT"
+        }
+      }
+    ],
+    "disclaimer": "A risk signal starts an investigation. It is not a finding."
+  },
+  "episode_timeline": [
+    {
+      "episode_id": "EPI-000801",
+      "label": "Index outpatient visit: Gastritis, unspecified",
+      "start_at": "2026-05-10T09:00:00+07:00",
+      "end_at": null,
+      "interval_from_previous_days": null
+    },
+    {
+      "episode_id": "EPI-000802",
+      "label": "Repeat outpatient visit: Gastritis, unspecified",
+      "start_at": "2026-05-17T09:00:00+07:00",
+      "end_at": null,
+      "interval_from_previous_days": 7
+    }
+  ],
+  "supporting_risk_evidence": [
+    {
+      "statement_id": "R5",
+      "text": "Episode chain: “EPI-000802 started 7 day(s) after the previous visit of EPI-000801; same patient, same FKRTL, same primary diagnosis” (FRAGMENTATION_7D_SAME_PROVIDER_SAME_DX)",
+      "evidence_ids": [
+        "EV-09516a85733e5952"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "R6",
+      "text": "Diagnosis: “K29.7 (EPI-000801) vs K29.7 (EPI-000802)” (EPI-000802)",
+      "evidence_ids": [
+        "EV-d561e0925eb11fe1"
+      ],
+      "requirement_keys": [
+        "DIAGNOSIS_CONSISTENCY"
+      ],
+      "material": true
+    }
+  ],
+  "explaining_context_evidence": [
+    {
+      "statement_id": "C7",
+      "text": "Supporting-examination follow-up: “Kontrol poli penyakit dalam membawa hasil endoskopi saluran cerna atas yang dilakukan di luar: gastritis erosif ringan.” (NOTE-000802); “Terapi disesuaikan berdasarkan hasil pemeriksaan penunjang.” (NOTE-000802)",
+      "evidence_ids": [
+        "EV-684dc0a677b63e7b",
+        "EV-95fa881a251c27cd"
+      ],
+      "requirement_keys": [
+        "SUPPORTING_EXAM_FOLLOWUP_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "policy_references": [
+    {
+      "evidence_id": "EV-071f4fa5319433f1",
+      "policy_id": "POL-INTERIM-FRAGMENTASI-01",
+      "document_title": "Permenkes No. 26 Tahun 2021 tentang Pedoman INA-CBG (ringkasan interim)",
+      "section": "Fragmentasi: definisi dan pengecualian",
+      "version": "interim-0",
+      "excerpt": "Fragmentasi adalah kunjungan rawat jalan berulang di FKRTL yang sama pada diagnosis yang sama dalam waktu kurang dari atau sama dengan 7 hari."
+    }
+  ],
+  "remaining_gaps": [
+    {
+      "key": "PROCEDURE_RELATIONSHIP",
+      "question": "Are procedures repeated or related across episodes?",
+      "state": "NOT_FOUND",
+      "explanation": "No procedures recorded in the anchor episodes."
+    },
+    {
+      "key": "SCHEDULED_PROCEDURE_CONTEXT",
+      "question": "Is a scheduled or staged procedure documented?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 2 available document(s)."
+    },
+    {
+      "key": "CHRONIC_CONDITION_CONTEXT",
+      "question": "Is a relevant chronic condition documented?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 2 available document(s)."
+    },
+    {
+      "key": "EMERGENCY_CONTEXT",
+      "question": "Is there documented emergency context for the repeated care?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 1 available document(s)."
+    },
+    {
+      "key": "CLINICAL_JUSTIFICATION",
+      "question": "Is there a documented clinical justification for the repeated care?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 1 available document(s)."
+    },
+    {
+      "key": "RISK_INDICATORS_IN_NOTES",
+      "question": "Do notes indicate premature discharge, unresolved complaints or repeats without indication?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 2 available document(s)."
+    }
+  ],
+  "conflicts": [],
+  "uncertainty": [
+    {
+      "statement_id": "U3",
+      "text": "Provider context not assessed: same provider and class of care across episodes, no referral.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "PROVIDER_CONTEXT"
+      ],
+      "material": false
+    }
+  ],
+  "suggested_next_review": [
+    {
+      "statement_id": "N4",
+      "text": "Verify the documented supporting-examination follow-up against the source records.",
+      "evidence_ids": [
+        "EV-684dc0a677b63e7b",
+        "EV-95fa881a251c27cd"
+      ],
+      "requirement_keys": [
+        "SUPPORTING_EXAM_FOLLOWUP_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "review_status": "PENDING_HUMAN_REVIEW",
+  "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+  "traceability": {
+    "material_statements": 6,
+    "with_evidence": 6
+  },
+  "provenance": {
+    "evidence_ids": [
+      "EV-071f4fa5319433f1",
+      "EV-09516a85733e5952",
+      "EV-684dc0a677b63e7b",
+      "EV-95fa881a251c27cd",
+      "EV-d561e0925eb11fe1"
+    ]
+  }
+}

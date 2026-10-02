@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-4ebb8ce03c62967f",
+  "case_id": "CASE-RA-7f7f4e80",
+  "run_id": "RUN-FIXTURE-RA-7f7f4e80",
+  "episode_id": "EPI-000102",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000102",
+  "source_title": "Catatan triase IGD - EPI-000102",
+  "source_excerpt": "Pasien datang diantar keluarga dengan sesak napas memberat sejak 6 jam sebelum masuk rumah sakit, tidak bisa berbaring.",
+  "field_path": null,
+  "char_start": 12,
+  "char_end": 131,
+  "requirement_key": "CLINICAL_JUSTIFICATION",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "CLINICAL_JUSTIFICATION",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is there a documented clinical justification for the repeated care? (requirement CLINICAL_JUSTIFICATION is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 8,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000102",
+    "title": "Catatan triase IGD - EPI-000102",
+    "text": "Triase IGD. Pasien datang diantar keluarga dengan sesak napas memberat sejak 6 jam sebelum masuk rumah sakit, tidak bisa berbaring. SpO2 86% udara ruang, TD 170/100 mmHg, RR 32x/menit, ronki basah kedua lapang paru. Kategori triase: merah (gawat darurat). Dicurigai edema paru akut.",
+    "highlight": {
+      "char_start": 12,
+      "char_end": 131
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

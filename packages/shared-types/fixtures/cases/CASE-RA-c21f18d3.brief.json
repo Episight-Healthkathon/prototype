@@ -1,0 +1,248 @@
+{
+  "brief_id": "BRF-FIXTURE-RA-c21f18d3",
+  "case_id": "CASE-RA-c21f18d3",
+  "run_id": "RUN-FIXTURE-RA-c21f18d3",
+  "generated_at": "2026-10-02T09:00:00+07:00",
+  "generator_version": "brief-template-1",
+  "progress_status": "BRIEF_READY",
+  "outcome": "EVIDENCE_UNAVAILABLE",
+  "stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+  "case_summary": [
+    {
+      "statement_id": "S1",
+      "text": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge: 2 episodes (10 d) at RS Sintetis Nusantara 01.",
+      "evidence_ids": [
+        "EV-3a07cd72e7b59aff"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "S2",
+      "text": "Key context could not be assessed: emergency context, scheduled or staged procedure, chronic condition, clinical justification.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT",
+        "SCHEDULED_PROCEDURE_CONTEXT",
+        "CHRONIC_CONDITION_CONTEXT",
+        "CLINICAL_JUSTIFICATION"
+      ],
+      "material": false
+    }
+  ],
+  "risk_signal": {
+    "rule_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+    "rule_version": "1",
+    "description": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge",
+    "params": {
+      "threshold_days": 30,
+      "diagnosis_match": "EXACT"
+    },
+    "pairs": [
+      {
+        "from_episode_id": "EPI-000401",
+        "to_episode_id": "EPI-000402",
+        "interval_days": 10,
+        "matched": {
+          "same_patient": true,
+          "same_provider": true,
+          "same_primary_diagnosis": true,
+          "encounter_type": "INPATIENT"
+        }
+      }
+    ],
+    "disclaimer": "A risk signal starts an investigation. It is not a finding."
+  },
+  "episode_timeline": [
+    {
+      "episode_id": "EPI-000401",
+      "label": "Index inpatient stay: Pneumonia, unspecified",
+      "start_at": "2026-06-01T14:00:00+07:00",
+      "end_at": "2026-06-05T10:00:00+07:00",
+      "interval_from_previous_days": null
+    },
+    {
+      "episode_id": "EPI-000402",
+      "label": "Repeat inpatient stay: Pneumonia, unspecified",
+      "start_at": "2026-06-15T19:20:00+07:00",
+      "end_at": "2026-06-19T11:00:00+07:00",
+      "interval_from_previous_days": 10
+    }
+  ],
+  "supporting_risk_evidence": [
+    {
+      "statement_id": "R11",
+      "text": "Episode chain: “EPI-000402 started 10 day(s) after discharge of EPI-000401; same patient, same FKRTL, same primary diagnosis” (READMISSION_30D_SAME_PROVIDER_SAME_DX)",
+      "evidence_ids": [
+        "EV-3a07cd72e7b59aff"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "R12",
+      "text": "Diagnosis: “J18.9 (EPI-000401) vs J18.9 (EPI-000402)” (EPI-000402)",
+      "evidence_ids": [
+        "EV-07c75f09f41594b7"
+      ],
+      "requirement_keys": [
+        "DIAGNOSIS_CONSISTENCY"
+      ],
+      "material": true
+    }
+  ],
+  "explaining_context_evidence": [],
+  "policy_references": [
+    {
+      "evidence_id": "EV-f62185458bb9a068",
+      "policy_id": "POL-INTERIM-READMISI-01",
+      "document_title": "Permenkes No. 26 Tahun 2021 tentang Pedoman INA-CBG (ringkasan interim)",
+      "section": "Readmisi: definisi dan pengecualian",
+      "version": "interim-0",
+      "excerpt": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dalam waktu kurang dari atau sama dengan 30 hari."
+    }
+  ],
+  "remaining_gaps": [
+    {
+      "key": "PROCEDURE_RELATIONSHIP",
+      "question": "Are procedures repeated or related across episodes?",
+      "state": "NOT_FOUND",
+      "explanation": "No procedures recorded in the anchor episodes."
+    },
+    {
+      "key": "CLINICAL_DOCUMENT_AVAILABILITY",
+      "question": "Which clinical documents are available?",
+      "state": "UNAVAILABLE",
+      "explanation": "2 of 3 documents cannot be read: NOTE-000402 (TRIAGE, UNAVAILABLE); NOTE-000403 (DISCHARGE_SUMMARY, RESTRICTED)."
+    },
+    {
+      "key": "EMERGENCY_CONTEXT",
+      "question": "Is there documented emergency context for the repeated care?",
+      "state": "UNAVAILABLE",
+      "explanation": "Cannot be assessed: none of the 2 in-scope document(s) can be read."
+    },
+    {
+      "key": "SCHEDULED_PROCEDURE_CONTEXT",
+      "question": "Is a scheduled or staged procedure documented?",
+      "state": "UNAVAILABLE",
+      "explanation": "Not found in the 1 readable document(s); 2 could not be read."
+    },
+    {
+      "key": "CHRONIC_CONDITION_CONTEXT",
+      "question": "Is a relevant chronic condition documented?",
+      "state": "UNAVAILABLE",
+      "explanation": "Not found in the 1 readable document(s); 2 could not be read."
+    },
+    {
+      "key": "CLINICAL_JUSTIFICATION",
+      "question": "Is there a documented clinical justification for the repeated care?",
+      "state": "UNAVAILABLE",
+      "explanation": "Cannot be assessed: none of the 2 in-scope document(s) can be read."
+    },
+    {
+      "key": "RISK_INDICATORS_IN_NOTES",
+      "question": "Do notes indicate premature discharge, unresolved complaints or repeats without indication?",
+      "state": "UNAVAILABLE",
+      "explanation": "Not found in the 1 readable document(s); 2 could not be read."
+    }
+  ],
+  "conflicts": [],
+  "uncertainty": [
+    {
+      "statement_id": "U3",
+      "text": "Which clinical documents are available? 2 of 3 documents cannot be read: NOTE-000402 (TRIAGE, UNAVAILABLE); NOTE-000403 (DISCHARGE_SUMMARY, RESTRICTED).",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "CLINICAL_DOCUMENT_AVAILABILITY"
+      ],
+      "material": false
+    },
+    {
+      "statement_id": "U4",
+      "text": "Is there documented emergency context for the repeated care? Cannot be assessed: none of the 2 in-scope document(s) can be read.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT"
+      ],
+      "material": false
+    },
+    {
+      "statement_id": "U5",
+      "text": "Is a scheduled or staged procedure documented? Not found in the 1 readable document(s); 2 could not be read.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "SCHEDULED_PROCEDURE_CONTEXT"
+      ],
+      "material": false
+    },
+    {
+      "statement_id": "U6",
+      "text": "Is a relevant chronic condition documented? Not found in the 1 readable document(s); 2 could not be read.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "CHRONIC_CONDITION_CONTEXT"
+      ],
+      "material": false
+    },
+    {
+      "statement_id": "U7",
+      "text": "Is there a documented clinical justification for the repeated care? Cannot be assessed: none of the 2 in-scope document(s) can be read.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "CLINICAL_JUSTIFICATION"
+      ],
+      "material": false
+    },
+    {
+      "statement_id": "U8",
+      "text": "Do notes indicate premature discharge, unresolved complaints or repeats without indication? Not found in the 1 readable document(s); 2 could not be read.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "RISK_INDICATORS_IN_NOTES"
+      ],
+      "material": false
+    },
+    {
+      "statement_id": "U9",
+      "text": "Provider context not assessed: same provider and class of care across episodes, no referral.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "PROVIDER_CONTEXT"
+      ],
+      "material": false
+    }
+  ],
+  "suggested_next_review": [
+    {
+      "statement_id": "N10",
+      "text": "Request the unavailable documents from the provider before deciding.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "CLINICAL_DOCUMENT_AVAILABILITY",
+        "EMERGENCY_CONTEXT",
+        "SCHEDULED_PROCEDURE_CONTEXT",
+        "CHRONIC_CONDITION_CONTEXT",
+        "CLINICAL_JUSTIFICATION",
+        "RISK_INDICATORS_IN_NOTES"
+      ],
+      "material": false
+    }
+  ],
+  "review_status": "PENDING_HUMAN_REVIEW",
+  "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+  "traceability": {
+    "material_statements": 3,
+    "with_evidence": 3
+  },
+  "provenance": {
+    "evidence_ids": [
+      "EV-07c75f09f41594b7",
+      "EV-3a07cd72e7b59aff",
+      "EV-f62185458bb9a068"
+    ]
+  }
+}

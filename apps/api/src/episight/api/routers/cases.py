@@ -1,7 +1,8 @@
 from collections import defaultdict
+from collections.abc import Callable
 from typing import Annotated, Literal
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, BackgroundTasks, Depends, Query
 from sqlalchemy import Select, func, or_, select
 from sqlalchemy.orm import Session
 
@@ -17,6 +18,7 @@ from episight.contracts.api import (
     InvestigateRequest,
     InvestigationBrief,
     InvestigationView,
+    RunList,
 )
 from episight.contracts.enums import ErrorCode, EvidenceCategory, Outcome, ProgressStatus, RequirementKey, SignalType
 from episight.db import convert
@@ -33,6 +35,7 @@ from episight.db.models import (
 from episight.db.session import get_session
 from episight.episodes.timeline import build_timeline
 from episight.screening.rules import RULES_BY_SIGNAL
+from episight.services import investigations
 
 router = APIRouter(prefix="/cases", tags=["cases"])
 SessionDep = Annotated[Session, Depends(get_session)]
@@ -129,6 +132,14 @@ def get_episodes(case_id: str, session: SessionDep) -> EpisodeTimeline:
     )
 
 
+RunExecutor = Callable[[str], None]
+
+
+def get_run_executor() -> RunExecutor:
+    """Dependency so tests can point background runs at their own database."""
+    return investigations.execute_run
+
+
 @router.post(
     "/{case_id}/investigate",
     response_model=InvestigateAccepted,
@@ -136,21 +147,31 @@ def get_episodes(case_id: str, session: SessionDep) -> EpisodeTimeline:
     responses={404: _ERR, 409: _ERR, 503: _ERR},
 )
 def start_investigation(
-    case_id: str, session: SessionDep, body: InvestigateRequest | None = None
+    case_id: str,
+    session: SessionDep,
+    background: BackgroundTasks,
+    executor: Annotated[RunExecutor, Depends(get_run_executor)],
+    body: InvestigateRequest | None = None,
 ) -> InvestigateAccepted:
-    _get_case(session, case_id)
-    # The investigation engine lands in M6. Until then the endpoint answers honestly instead of faking a run.
-    raise ApiException(503, ErrorCode.SERVICE_UNAVAILABLE, "Investigation engine not available yet")
+    case = _get_case(session, case_id)
+    run = investigations.start_run(session, case, body or InvestigateRequest())
+    background.add_task(executor, run.run_id)
+    return InvestigateAccepted(
+        run_id=run.run_id,
+        run_status=run.run_status,
+        poll_url=f"/api/v1/cases/{case.case_id}/investigation?run_id={run.run_id}",
+    )
 
 
 @router.get("/{case_id}/investigation", response_model=InvestigationView, responses={404: _ERR, 503: _ERR})
 def get_investigation(case_id: str, session: SessionDep, run_id: str | None = None) -> InvestigationView:
-    case = _get_case(session, case_id)
-    raise not_found(
-        ErrorCode.RUN_NOT_FOUND,
-        f"No investigation run {'with id ' + run_id if run_id else 'yet'} for case {case.case_id}",
-        case_id=case.case_id,
-    )
+    return investigations.get_view(session, _get_case(session, case_id), run_id)
+
+
+@router.get("/{case_id}/runs", response_model=RunList, responses={404: _ERR, 503: _ERR})
+def list_runs(case_id: str, session: SessionDep) -> RunList:
+    runs = investigations.list_runs(session, _get_case(session, case_id))
+    return RunList(items=[views.run_summary(r) for r in runs], total=len(runs), limit=len(runs), offset=0)
 
 
 @router.get("/{case_id}/evidence", response_model=EvidenceList, responses={404: _ERR, 503: _ERR})

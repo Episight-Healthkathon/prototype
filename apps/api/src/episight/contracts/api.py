@@ -142,6 +142,13 @@ class RunSummary(_Dto):
     stop_reason: StopReason | None
 
 
+class RunList(_Dto):
+    items: list[RunSummary]
+    total: int
+    limit: int
+    offset: int
+
+
 class CaseDetail(CaseSummary):
     episode_group_ids: list[str]
     primary_pair: EpisodePair

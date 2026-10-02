@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-8eecef3cfc4b2f42",
+  "case_id": "CASE-RA-f024a4b0",
+  "run_id": "RUN-FIXTURE-RA-f024a4b0",
+  "episode_id": "EPI-000301",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000302",
+  "source_title": "Rencana PCI bertahap - EPI-000301",
+  "source_excerpt": "Rencana tindakan: PCI bertahap.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 31,
+  "requirement_key": "SCHEDULED_PROCEDURE_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "SCHEDULED_PROCEDURE",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is a scheduled or staged procedure documented? (requirement SCHEDULED_PROCEDURE_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 6,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000302",
+    "title": "Rencana PCI bertahap - EPI-000301",
+    "text": "Rencana tindakan: PCI bertahap. Tahap kedua pemasangan stent pada LAD (ICD-9-CM 36.06) dijadwalkan tanggal 20 Mei 2026. Tindakan tidak dilakukan pada episode yang sama karena batas volume kontras dan perlindungan fungsi ginjal.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 31
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

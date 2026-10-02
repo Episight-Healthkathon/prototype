@@ -1,6 +1,7 @@
 import logging
 import time
 import uuid
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,6 +17,24 @@ API_PREFIX = "/api/v1"
 log = logging.getLogger("episight.request")
 
 
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    # D-20: runs live in this process; any left active by a previous process were interrupted.
+    from sqlalchemy.exc import SQLAlchemyError
+
+    from episight.db.session import make_session
+    from episight.services.investigations import recover_interrupted_runs
+
+    try:
+        with make_session() as session:
+            recovered = recover_interrupted_runs(session)
+        if recovered:
+            log.warning("marked interrupted runs as failed", extra={"fields": {"run_ids": recovered}})
+    except SQLAlchemyError:
+        log.warning("startup run recovery skipped: database unavailable")
+    yield
+
+
 def create_app() -> FastAPI:
     settings = get_settings()
     configure_logging(settings.log_level)
@@ -27,6 +46,7 @@ def create_app() -> FastAPI:
         openapi_url=f"{API_PREFIX}/openapi.json",
         docs_url=f"{API_PREFIX}/docs",
         redoc_url=None,
+        lifespan=lifespan,
     )
     app.add_middleware(
         CORSMiddleware,

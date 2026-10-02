@@ -77,13 +77,13 @@ def seed(
 def export_contract(
     out: Path = typer.Option(REPO_ROOT / "packages" / "shared-types", help="shared-types package directory."),
     dataset: Path = typer.Option(DEFAULT_DATASET),
+    policies: Path = typer.Option(DEFAULT_POLICIES),
 ) -> None:
-    """Write openapi.json and deterministic mock fixtures for the frontend."""
+    """Write openapi.json, TS aliases and deterministic mock fixtures (real engine output) for the frontend."""
     from episight.devtools.contract_export import export
 
-    written = export(out, dataset)
-    for path in written:
-        typer.echo(f"wrote {path.relative_to(REPO_ROOT)}")
+    written = export(out, dataset, policies)
+    typer.echo(f"wrote {len(written)} files under {out.relative_to(REPO_ROOT)}")
 
 
 if __name__ == "__main__":

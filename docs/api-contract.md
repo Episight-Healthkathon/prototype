@@ -201,6 +201,17 @@ interface EvidenceDetail extends Evidence {
 
 `200 InvestigationBrief` (§4.6), or `409 BRIEF_NOT_READY`.
 
+### E13 `GET /cases/{case_id}/runs`
+
+`200 { items: RunSummary[], total, limit, offset }`, newest first. Every run of the case stays readable through E6 with `?run_id=`.
+
+### Runtime notes (E5/E6)
+
+- E5 returns `202` immediately, and the run executes in the background (D-20). Poll E6 about every 1 s.
+- While a run is `QUEUED`, E6 already returns a valid view: the initial state with all questions `OPEN` at step 0.
+- `progress_status` and `outcome` on the case update when the run completes. A failed or interrupted run shows `progress_status = INVESTIGATION_FAILED` and `run.run_status = FAILED`.
+- In `FULL` mode, `planner.source` shows `RULE_FALLBACK` for every step until an AI planner is configured (D-18).
+
 ### E11 `POST /cases/{case_id}/reviews` (P1)
 
 Request `{ "action": "MARK_REVIEWED" | "ADD_NOTE" | "REQUEST_MORE_EVIDENCE", "note": "…", "reviewer_label": "Reviewer 1" }` → `201 ReviewAction`. No other actions exist; approve, reject, and fraud actions are not representable.

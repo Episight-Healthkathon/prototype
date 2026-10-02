@@ -1,7 +1,7 @@
 {
   "run": {
-    "run_id": "RUN-EXAMPLE-A-0001",
-    "mode": "FULL",
+    "run_id": "RUN-FIXTURE-RA-7f7f4e80",
+    "mode": "FULL_RULE_PLANNER",
     "run_status": "RUNNING",
     "step": 5,
     "max_steps": 12,
@@ -12,7 +12,7 @@
   },
   "state": {
     "case_id": "CASE-RA-7f7f4e80",
-    "run_id": "RUN-EXAMPLE-A-0001",
+    "run_id": "RUN-FIXTURE-RA-7f7f4e80",
     "signal_type": "READMISSION",
     "related_episode_ids": [
       "EPI-000103",
@@ -21,43 +21,44 @@
     ],
     "known_facts": [
       {
-        "fact_id": "F1",
-        "text": "Readmitted 5 days after discharge at the same FKRTL (PRV-0001)",
+        "fact_id": "F-EPISODE_RELATEDNESS",
+        "text": "2 anchor episodes chained (5 d); 1 related and 0 context episode(s) within 90 days.",
         "evidence_ids": [
-          "EV-ceb16e043e11"
+          "EV-b43f2e44379204cc",
+          "EV-62d6329b21d8444b"
         ]
       },
       {
-        "fact_id": "F2",
-        "text": "I50.0 (EPI-000101) = I50.0 (EPI-000102)",
+        "fact_id": "F-DIAGNOSIS_CONSISTENCY",
+        "text": "Same primary diagnosis (I50.0); chronic-class code.",
         "evidence_ids": [
-          "EV-930fe827ea70"
+          "EV-31ae37ebc2897ff4",
+          "EV-8deba0260b844aec"
         ]
       },
       {
-        "fact_id": "F3",
-        "text": "Kategori triase: merah (gawat darurat)",
+        "fact_id": "F-EMERGENCY_CONTEXT",
+        "text": "Documented (read all 2 available document(s)).",
         "evidence_ids": [
-          "EV-31414acbb2c5"
-        ]
-      },
-      {
-        "fact_id": "F4",
-        "text": "Dirawat ulang melalui IGD dengan acute decompensated heart failure",
-        "evidence_ids": [
-          "EV-49a8810a46b1"
+          "EV-f41f87f35f5153c6",
+          "EV-6d1bd7aeaad3dc2e",
+          "EV-438b476894e171ff"
         ]
       }
     ],
     "supporting_risk_evidence": [
-      "EV-ceb16e043e11",
-      "EV-930fe827ea70"
+      "EV-b43f2e44379204cc",
+      "EV-31ae37ebc2897ff4"
     ],
     "explaining_context_evidence": [
-      "EV-31414acbb2c5",
-      "EV-49a8810a46b1"
+      "EV-f41f87f35f5153c6",
+      "EV-6d1bd7aeaad3dc2e",
+      "EV-438b476894e171ff"
     ],
-    "neutral_evidence": [],
+    "neutral_evidence": [
+      "EV-62d6329b21d8444b",
+      "EV-8deba0260b844aec"
+    ],
     "requirements": [
       {
         "key": "EPISODE_RELATEDNESS",
@@ -65,14 +66,15 @@
         "direction": "RISK",
         "material": true,
         "state": "FOUND",
-        "state_explanation": "Two inpatient stays, 5 days apart, same FKRTL.",
+        "state_explanation": "2 anchor episodes chained (5 d); 1 related and 0 context episode(s) within 90 days.",
         "coverage": {
-          "in_scope_sources": 2,
-          "searched_sources": 2,
+          "in_scope_sources": 1,
+          "searched_sources": 1,
           "unavailable_sources": 0
         },
         "evidence_ids": [
-          "EV-ceb16e043e11"
+          "EV-b43f2e44379204cc",
+          "EV-62d6329b21d8444b"
         ],
         "attempted_tools": [
           "get_episode_history"
@@ -85,14 +87,15 @@
         "direction": "RISK",
         "material": true,
         "state": "FOUND",
-        "state_explanation": "Same primary diagnosis I50.0 (chronic class).",
+        "state_explanation": "Same primary diagnosis (I50.0); chronic-class code.",
         "coverage": {
-          "in_scope_sources": 2,
-          "searched_sources": 2,
+          "in_scope_sources": 1,
+          "searched_sources": 1,
           "unavailable_sources": 0
         },
         "evidence_ids": [
-          "EV-930fe827ea70"
+          "EV-31ae37ebc2897ff4",
+          "EV-8deba0260b844aec"
         ],
         "attempted_tools": [
           "compare_diagnosis"
@@ -101,14 +104,14 @@
       },
       {
         "key": "PROCEDURE_RELATIONSHIP",
-        "label": "Are procedures repeated or related?",
+        "label": "Are procedures repeated or related across episodes?",
         "direction": "RISK",
         "material": true,
         "state": "NOT_FOUND",
-        "state_explanation": "Only routine ECG/X-ray; no repeated therapeutic procedure.",
+        "state_explanation": "No repeated or related therapeutic procedure (routine diagnostics excluded).",
         "coverage": {
-          "in_scope_sources": 2,
-          "searched_sources": 2,
+          "in_scope_sources": 1,
+          "searched_sources": 1,
           "unavailable_sources": 0
         },
         "evidence_ids": [],
@@ -123,10 +126,10 @@
         "direction": "BACKGROUND",
         "material": false,
         "state": "SKIPPED",
-        "state_explanation": "Same provider, no class change on either claim",
+        "state_explanation": "Skipped as not material: same provider and class of care across episodes, no referral",
         "coverage": {
           "in_scope_sources": 1,
-          "searched_sources": 0,
+          "searched_sources": 1,
           "unavailable_sources": 0
         },
         "evidence_ids": [],
@@ -141,8 +144,8 @@
         "state": "FOUND",
         "state_explanation": "4 documents registered, all available.",
         "coverage": {
-          "in_scope_sources": 4,
-          "searched_sources": 4,
+          "in_scope_sources": 1,
+          "searched_sources": 1,
           "unavailable_sources": 0
         },
         "evidence_ids": [],
@@ -153,19 +156,20 @@
       },
       {
         "key": "EMERGENCY_CONTEXT",
-        "label": "Is there documented emergency context?",
+        "label": "Is there documented emergency context for the repeated care?",
         "direction": "CONTEXT",
         "material": true,
         "state": "FOUND",
-        "state_explanation": "Emergency presentation documented in triage and discharge summary.",
+        "state_explanation": "Documented (read all 2 available document(s)).",
         "coverage": {
-          "in_scope_sources": 4,
+          "in_scope_sources": 2,
           "searched_sources": 2,
           "unavailable_sources": 0
         },
         "evidence_ids": [
-          "EV-31414acbb2c5",
-          "EV-49a8810a46b1"
+          "EV-f41f87f35f5153c6",
+          "EV-6d1bd7aeaad3dc2e",
+          "EV-438b476894e171ff"
         ],
         "attempted_tools": [
           "find_exception_evidence"
@@ -173,14 +177,14 @@
         "spawned_by": null
       },
       {
-        "key": "CHRONIC_CONDITION_CONTEXT",
-        "label": "Is a chronic condition documented as relevant?",
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "label": "Is a scheduled or staged procedure documented?",
         "direction": "CONTEXT",
         "material": true,
         "state": "OPEN",
         "state_explanation": "Not assessed yet.",
         "coverage": {
-          "in_scope_sources": 4,
+          "in_scope_sources": 3,
           "searched_sources": 0,
           "unavailable_sources": 0
         },
@@ -189,8 +193,8 @@
         "spawned_by": null
       },
       {
-        "key": "SCHEDULED_PROCEDURE_CONTEXT",
-        "label": "Is a scheduled or staged procedure documented?",
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "label": "Is a relevant chronic condition documented?",
         "direction": "CONTEXT",
         "material": true,
         "state": "OPEN",
@@ -206,13 +210,13 @@
       },
       {
         "key": "CLINICAL_JUSTIFICATION",
-        "label": "Is there a documented clinical justification?",
+        "label": "Is there a documented clinical justification for the repeated care?",
         "direction": "CONTEXT",
         "material": true,
         "state": "OPEN",
         "state_explanation": "Not assessed yet.",
         "coverage": {
-          "in_scope_sources": 4,
+          "in_scope_sources": 2,
           "searched_sources": 0,
           "unavailable_sources": 0
         },
@@ -222,13 +226,13 @@
       },
       {
         "key": "RISK_INDICATORS_IN_NOTES",
-        "label": "Do notes indicate premature discharge or unresolved care?",
+        "label": "Do notes indicate premature discharge, unresolved complaints or repeats without indication?",
         "direction": "RISK",
         "material": true,
         "state": "OPEN",
         "state_explanation": "Not assessed yet.",
         "coverage": {
-          "in_scope_sources": 4,
+          "in_scope_sources": 3,
           "searched_sources": 0,
           "unavailable_sources": 0
         },
@@ -244,7 +248,7 @@
         "state": "OPEN",
         "state_explanation": "Not assessed yet.",
         "coverage": {
-          "in_scope_sources": 2,
+          "in_scope_sources": 1,
           "searched_sources": 0,
           "unavailable_sources": 0
         },
@@ -256,23 +260,23 @@
     "missing_evidence": [],
     "unresolved_questions": [
       {
-        "key": "CHRONIC_CONDITION_CONTEXT",
-        "question": "Is a chronic condition documented as relevant?",
-        "state": "OPEN"
-      },
-      {
         "key": "SCHEDULED_PROCEDURE_CONTEXT",
         "question": "Is a scheduled or staged procedure documented?",
         "state": "OPEN"
       },
       {
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "question": "Is a relevant chronic condition documented?",
+        "state": "OPEN"
+      },
+      {
         "key": "CLINICAL_JUSTIFICATION",
-        "question": "Is there a documented clinical justification?",
+        "question": "Is there a documented clinical justification for the repeated care?",
         "state": "OPEN"
       },
       {
         "key": "RISK_INDICATORS_IN_NOTES",
-        "question": "Do notes indicate premature discharge or unresolved care?",
+        "question": "Do notes indicate premature discharge, unresolved complaints or repeats without indication?",
         "state": "OPEN"
       },
       {
@@ -308,24 +312,20 @@
         "tool_status": "OK"
       }
     ],
-    "next_action": {
-      "tool_name": "find_exception_evidence",
-      "tool_label": "Searching notes for explaining context",
-      "requirement_key": "CHRONIC_CONDITION_CONTEXT",
-      "reason": "Requirement CHRONIC_CONDITION_CONTEXT is still open"
-    },
+    "next_action": null,
     "investigation_step": 5,
     "max_steps": 12,
     "progress_status": "INVESTIGATING",
     "outcome": null,
     "stop_reason": null,
     "priority_ranking": [
-      "CHRONIC_CONDITION_CONTEXT",
+      "EMERGENCY_CONTEXT",
       "SCHEDULED_PROCEDURE_CONTEXT",
+      "CHRONIC_CONDITION_CONTEXT",
       "CLINICAL_JUSTIFICATION",
       "RISK_INDICATORS_IN_NOTES"
     ],
-    "updated_at": "2026-10-02T09:00:05+07:00"
+    "updated_at": "2026-10-02T09:00:00+07:00"
   },
   "trail": [
     {
@@ -335,14 +335,12 @@
       "requirement_key": "EPISODE_RELATEDNESS",
       "reason": "Are the episodes actually related? (requirement EPISODE_RELATEDNESS is open)",
       "input_summary": {
-        "episode_group_ids": [
-          "EPI-000101",
-          "EPI-000102"
-        ]
+        "window_days": 90
       },
       "tool_status": "OK",
       "evidence_ids": [
-        "EV-ceb16e043e11"
+        "EV-b43f2e44379204cc",
+        "EV-62d6329b21d8444b"
       ],
       "requirement_updates": [
         {
@@ -357,25 +355,25 @@
         }
       ],
       "planner": {
-        "source": "LLM",
-        "note": "Start by confirming the episode chain.",
+        "source": "RULE",
+        "note": null,
         "priority_ranking": [
+          "EPISODE_RELATEDNESS",
           "DIAGNOSIS_CONSISTENCY",
           "PROCEDURE_RELATIONSHIP",
-          "CLINICAL_DOCUMENT_AVAILABILITY",
-          "EMERGENCY_CONTEXT"
+          "APPLICABLE_POLICY"
         ],
         "skipped_requirements": [
           {
             "key": "PROVIDER_CONTEXT",
-            "reason": "Same provider, no class change on either claim"
+            "reason": "same provider and class of care across episodes, no referral"
           }
         ],
         "validation_errors": []
       },
       "error": null,
-      "started_at": "2026-10-02T09:00:01+07:00",
-      "duration_ms": 135
+      "started_at": "2026-10-02T09:00:00+07:00",
+      "duration_ms": 1
     },
     {
       "step": 2,
@@ -391,7 +389,8 @@
       },
       "tool_status": "OK",
       "evidence_ids": [
-        "EV-930fe827ea70"
+        "EV-31ae37ebc2897ff4",
+        "EV-8deba0260b844aec"
       ],
       "requirement_updates": [
         {
@@ -401,32 +400,33 @@
         }
       ],
       "planner": {
-        "source": "LLM",
+        "source": "RULE",
         "note": null,
         "priority_ranking": [
+          "DIAGNOSIS_CONSISTENCY",
           "PROCEDURE_RELATIONSHIP",
           "CLINICAL_DOCUMENT_AVAILABILITY",
-          "EMERGENCY_CONTEXT",
-          "CHRONIC_CONDITION_CONTEXT"
+          "APPLICABLE_POLICY"
         ],
         "skipped_requirements": [],
         "validation_errors": []
       },
       "error": null,
-      "started_at": "2026-10-02T09:00:02+07:00",
-      "duration_ms": 150
+      "started_at": "2026-10-02T09:00:00+07:00",
+      "duration_ms": 1
     },
     {
       "step": 3,
       "tool_name": "compare_procedures",
       "tool_label": "Comparing procedures",
       "requirement_key": "PROCEDURE_RELATIONSHIP",
-      "reason": "Are procedures repeated or related? (requirement PROCEDURE_RELATIONSHIP is open)",
+      "reason": "Are procedures repeated or related across episodes? (requirement PROCEDURE_RELATIONSHIP is open)",
       "input_summary": {
         "episode_ids": [
           "EPI-000101",
           "EPI-000102"
-        ]
+        ],
+        "check_plan": false
       },
       "tool_status": "EMPTY",
       "evidence_ids": [],
@@ -438,22 +438,19 @@
         }
       ],
       "planner": {
-        "source": "RULE_FALLBACK",
+        "source": "RULE",
         "note": null,
         "priority_ranking": [
+          "PROCEDURE_RELATIONSHIP",
           "CLINICAL_DOCUMENT_AVAILABILITY",
-          "EMERGENCY_CONTEXT",
-          "CHRONIC_CONDITION_CONTEXT",
-          "SCHEDULED_PROCEDURE_CONTEXT"
+          "APPLICABLE_POLICY"
         ],
         "skipped_requirements": [],
-        "validation_errors": [
-          "V6: duplicate of an earlier identical call"
-        ]
+        "validation_errors": []
       },
       "error": null,
-      "started_at": "2026-10-02T09:00:03+07:00",
-      "duration_ms": 165
+      "started_at": "2026-10-02T09:00:00+07:00",
+      "duration_ms": 1
     },
     {
       "step": 4,
@@ -466,7 +463,9 @@
           "EPI-000103",
           "EPI-000101",
           "EPI-000102"
-        ]
+        ],
+        "note_types": null,
+        "query": null
       },
       "tool_status": "OK",
       "evidence_ids": [],
@@ -478,41 +477,37 @@
         }
       ],
       "planner": {
-        "source": "LLM",
+        "source": "RULE",
         "note": null,
         "priority_ranking": [
-          "EMERGENCY_CONTEXT",
-          "CHRONIC_CONDITION_CONTEXT",
-          "SCHEDULED_PROCEDURE_CONTEXT",
-          "CLINICAL_JUSTIFICATION"
+          "CLINICAL_DOCUMENT_AVAILABILITY",
+          "APPLICABLE_POLICY"
         ],
         "skipped_requirements": [],
         "validation_errors": []
       },
       "error": null,
-      "started_at": "2026-10-02T09:00:04+07:00",
-      "duration_ms": 180
+      "started_at": "2026-10-02T09:00:00+07:00",
+      "duration_ms": 1
     },
     {
       "step": 5,
       "tool_name": "find_exception_evidence",
       "tool_label": "Searching notes for explaining context",
       "requirement_key": "EMERGENCY_CONTEXT",
-      "reason": "Is there documented emergency context? (requirement EMERGENCY_CONTEXT is open)",
+      "reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
       "input_summary": {
         "context_type": "EMERGENCY",
         "episode_ids": [
           "EPI-000102"
         ],
-        "note_types": [
-          "TRIAGE",
-          "DISCHARGE_SUMMARY"
-        ]
+        "note_types": null
       },
       "tool_status": "OK",
       "evidence_ids": [
-        "EV-31414acbb2c5",
-        "EV-49a8810a46b1"
+        "EV-f41f87f35f5153c6",
+        "EV-6d1bd7aeaad3dc2e",
+        "EV-438b476894e171ff"
       ],
       "requirement_updates": [
         {
@@ -522,11 +517,12 @@
         }
       ],
       "planner": {
-        "source": "LLM",
-        "note": "Readmission 5 days after discharge, arriving at night: emergency presentation is the most likely explanation, so check triage of episode 2 first.",
+        "source": "RULE",
+        "note": null,
         "priority_ranking": [
-          "CHRONIC_CONDITION_CONTEXT",
+          "EMERGENCY_CONTEXT",
           "SCHEDULED_PROCEDURE_CONTEXT",
+          "CHRONIC_CONDITION_CONTEXT",
           "CLINICAL_JUSTIFICATION",
           "RISK_INDICATORS_IN_NOTES"
         ],
@@ -534,8 +530,8 @@
         "validation_errors": []
       },
       "error": null,
-      "started_at": "2026-10-02T09:00:05+07:00",
-      "duration_ms": 195
+      "started_at": "2026-10-02T09:00:00+07:00",
+      "duration_ms": 0
     }
   ]
 }

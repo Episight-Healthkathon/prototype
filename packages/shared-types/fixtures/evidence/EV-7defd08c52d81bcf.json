@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-7defd08c52d81bcf",
+  "case_id": "CASE-RA-f024a4b0",
+  "run_id": "RUN-FIXTURE-RA-f024a4b0",
+  "episode_id": null,
+  "source_type": "POLICY_SECTION",
+  "source_id": "POL-INTERIM-READMISI-01",
+  "source_title": "Permenkes No. 26 Tahun 2021 tentang Pedoman INA-CBG (ringkasan interim): Readmisi: definisi dan pengecualian",
+  "source_excerpt": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dalam waktu kurang dari atau sama dengan 30 hari.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 147,
+  "requirement_key": "APPLICABLE_POLICY",
+  "stance": "INFORMS",
+  "relevance_category": "NEUTRAL",
+  "exception_type": null,
+  "retrieved_by_tool": "retrieve_policy",
+  "retrieval_reason": "Which policy rules apply? (requirement APPLICABLE_POLICY is open)",
+  "extraction_method": "BM25_RETRIEVAL",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 11,
+  "policy_version": "interim-0",
+  "source": {
+    "source_type": "POLICY_SECTION",
+    "source_id": "POL-INTERIM-READMISI-01",
+    "title": "Permenkes No. 26 Tahun 2021 tentang Pedoman INA-CBG (ringkasan interim): Readmisi: definisi dan pengecualian",
+    "text": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dalam waktu kurang dari atau sama dengan 30 hari. Pengecualian meliputi kasus kegawatdaruratan, penyakit kronis, prosedur terjadwal sesuai indikasi medis yang tidak dapat dilakukan dalam satu episode, atau kunjungan pada FKRTL berbeda atau kelas yang lebih tinggi.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 147
+    },
+    "availability": null,
+    "document_title": "Permenkes No. 26 Tahun 2021 tentang Pedoman INA-CBG (ringkasan interim)",
+    "section": "Readmisi: definisi dan pengecualian",
+    "version": "interim-0",
+    "effective_date": null,
+    "source_ref": "INTERIM PLACEHOLDER: parafrase dari proposal EPISIGHT bagian 3 (sumber: Permenkes 26/2021). Ganti dengan korpus kurasi Person 3.",
+    "source_url": "https://jdih.kemkes.go.id/documents/peraturan-menteri-kesehatan-nomor-26-tahun-2021",
+    "field_path": null,
+    "value": null
+  }
+}

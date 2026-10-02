@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-578df7f73c7ccbaf",
+  "case_id": "CASE-RA-7f7f4e80",
+  "run_id": "RUN-FIXTURE-RA-7f7f4e80",
+  "episode_id": "EPI-000102",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000103",
+  "source_title": "Ringkasan pulang - EPI-000102",
+  "source_excerpt": "Dirawat ulang melalui IGD dengan acute decompensated heart failure dan edema paru akut.",
+  "field_path": null,
+  "char_start": 18,
+  "char_end": 105,
+  "requirement_key": "CLINICAL_JUSTIFICATION",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "CLINICAL_JUSTIFICATION",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is there a documented clinical justification for the repeated care? (requirement CLINICAL_JUSTIFICATION is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 8,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000103",
+    "title": "Ringkasan pulang - EPI-000102",
+    "text": "Ringkasan pulang. Dirawat ulang melalui IGD dengan acute decompensated heart failure dan edema paru akut. Pemicu: ketidakpatuhan pembatasan cairan dan infeksi saluran napas atas. Mendapat oksigen, furosemide IV, dan nitrat. Pulang dalam kondisi stabil.",
+    "highlight": {
+      "char_start": 18,
+      "char_end": 105
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

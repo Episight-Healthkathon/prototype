@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-95fa881a251c27cd",
+  "case_id": "CASE-FR-6c937d70",
+  "run_id": "RUN-FIXTURE-FR-6c937d70",
+  "episode_id": "EPI-000802",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000802",
+  "source_title": "Kontrol poli penyakit dalam - EPI-000802",
+  "source_excerpt": "Terapi disesuaikan berdasarkan hasil pemeriksaan penunjang.",
+  "field_path": null,
+  "char_start": 120,
+  "char_end": 179,
+  "requirement_key": "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "SUPPORTING_EXAM_FOLLOWUP",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Was the repeat visit a consultation of supporting-examination results? (requirement SUPPORTING_EXAM_FOLLOWUP_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 6,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000802",
+    "title": "Kontrol poli penyakit dalam - EPI-000802",
+    "text": "Kontrol poli penyakit dalam membawa hasil endoskopi saluran cerna atas yang dilakukan di luar: gastritis erosif ringan. Terapi disesuaikan berdasarkan hasil pemeriksaan penunjang.",
+    "highlight": {
+      "char_start": 120,
+      "char_end": 179
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

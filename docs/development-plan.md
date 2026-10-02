@@ -28,8 +28,8 @@
 | **M3** | Episode reconstruction | Phase 1 | P0 | `[x]` |
 | **M4** | Evidence ledger + retrieval | Phase 2 | P0 | `[x]` |
 | **M5** | Agent tools | Phase 2 | P0 | `[x]` |
-| **M6** | Case state, safety envelope, AI planner, orchestrator, stopping (core) | Phase 2 | P0 | `[~]` (engine + rule planner done; API runtime and AI planner next) |
-| **M7** | Reviewer brief + provenance API | Phase 3 | P0 | `[~]` (builder + validator done; persistence next) |
+| **M6** | Case state, safety envelope, AI planner, orchestrator, stopping (core) | Phase 2 | P0 | `[~]` (engine, rule planner, API runtime done; AI planner next) |
+| **M7** | Reviewer brief + provenance API | Phase 3 | P0 | `[~]` (done except P1 review actions / meta enums) |
 | **M8** | Evaluation integration + ablation | Phase 3–4 | P1 (runner is P0 for golden checks) | `[ ]` |
 | **M9** | Robustness, regression, stabilization | Phase 4–5 | P0/P1 | `[ ]` |
 | **M10** | LLM passage classifier + optional brief paraphrase | — | P1/P2 | `[ ]` |
@@ -163,7 +163,7 @@
 - [x] **BE-6.5** Rule planner (deterministic fallback and CI mode): fixed priority order, full-coverage searches, repeat guard, reviewer-facing `reason`
 - [x] **BE-6.6** Stopping policy S1–S7 (architecture §7.5), fully unit-tested per rule
 - [x] **BE-6.7** Orchestrator loop: per-step persistence of action + state snapshot, max steps, run timeout, bounded retry, failure → explicit state (D-13)
-- [ ] **BE-6.8** Async runtime: E5 (202 + 409 guards), E6 polling view, stale-run recovery on startup
+- [x] **BE-6.8** Async runtime: E5 (202 + 409 guards), E6 polling view, stale-run recovery on startup
 - [x] **BE-6.9** Golden behavior tests A–E assert the outcome, stop reason, key requirement states, and that the trails differ across cases (D-01, D-05)
 - [x] **BE-6.10** Modes `RULES_ONLY`, `RULES_RETRIEVAL`, `FULL_RULE_PLANNER`, `FULL` (architecture §11)
 - [x] **BE-6.11** Safety envelope: allowed-action generator with scope bounds + requirement dependency graph + coverage tracking (architecture §7.1, §7.3)
@@ -188,11 +188,11 @@
 
 - [x] **BE-7.1** Deterministic brief builder from persisted state (api-contract §4.6)
 - [x] **BE-7.2** Brief validator: evidence-backed material statements, banned phrases (EN + ID), gap completeness, conflict completeness; failure → `HUMAN_REVIEW_REQUIRED` + marked fallback
-- [ ] **BE-7.3** Persist brief; regenerate from state (the regenerated brief is identical); E9
-- [ ] **BE-7.4** Trail in E6 includes all actions; E13 run history
+- [x] **BE-7.3** Persist brief; regenerate from state (the regenerated brief is identical); E9
+- [x] **BE-7.4** Trail in E6 includes all actions; E13 run history
 - [ ] **BE-7.5** (P1) Review actions E11/E12 (D-14)
 - [ ] **BE-7.6** (P1) E10 `/meta/enums` with reviewer-facing labels
-- [ ] **BE-7.7** Contract tests: fixtures regenerated from real models; TS types in sync
+- [x] **BE-7.7** Contract tests: fixtures regenerated from real models; TS types in sync
 
 **Exit criteria**
 - [ ] Traceability = 100% of material statements on golden cases.
@@ -252,8 +252,8 @@
 |---|---|---|---|---|
 | HO-P2-1 | P1 → P2 | Mock fixtures + generated TS types | BE-1.11 (CP-1) | `[x]` |
 | HO-P2-2 | P1 → P2 | Real read endpoints | BE-1.8 (CP-2) | `[x]` |
-| HO-P2-3 | P1 → P2 | Investigation start + polling | BE-6.8 (CP-3) | `[ ]` |
-| HO-P2-4 | P1 → P2 | Brief + evidence detail | BE-7.3 (CP-4) | `[ ]` |
+| HO-P2-3 | P1 → P2 | Investigation start + polling | BE-6.8 (CP-3) | `[x]` |
+| HO-P2-4 | P1 → P2 | Brief + evidence detail | BE-7.3 (CP-4) | `[x]` |
 | HO-P3-1 | P3 → P1 | Dataset v0 with golden cases A–E (data-contract format) | BE-1.6 (fixture fallback: BE-1.7) | `[ ]` |
 | HO-P3-2 | P3 → P1 | Screening rule fixtures (edge cases) | BE-2.8 | `[ ]` |
 | HO-P3-3 | P3 → P1 | Policy corpus v0 (curated Permenkes 26/2021 sections) | BE-4.5 | `[ ]` |
@@ -276,3 +276,4 @@ Full log in [decisions.md](decisions.md). All decisions are locked except **D-16
 | 2026-10-02 | M1 (BE-1.1–1.11), BE-2.1–2.5, BE-2.7 | Backend foundation done on `m1/foundation`: compose Postgres (:5433), uv project (Python 3.12), FastAPI + error envelope + JSON logging, contract models, migration 0001, ingest/seed with validation, interim dataset (A–E + hard negatives), screening pulled forward from M2, read endpoints, contract export + TS types + fixtures. 124 tests pass; clean-room run verified. Python pinned to 3.12 after the clean-room run exposed a 3.13 OpenAPI drift. |
 | 2026-10-02 | BE-3.1–3.4, BE-4.2, 4.4–4.6 | Reconstruction (ANCHOR/RELATED/CONTEXT, ICD-10 category relatedness, chronic-class codes) wired into the timeline; retrieval: sentence offsets, pure-Python BM25, context matcher with per-lexicon negation scope, policy index. Ledger/tools/state drafted, not yet wired or tested. 178 tests pass. |
 | 2026-10-02 | M4, M5, BE-6.1–6.7, 6.9–6.12, 7.1–7.2 | Engine runs end-to-end in-process: 8 tools, provenance-checked ledger, reducer with coverage rule + dependency graph, envelope (allowed actions, V1–V9, S1–S8), rule planner, orchestrator, template brief + guardrail validator. All five golden cases produce their expected outcome on the interim data; 300 tests pass (incl. adversarial validator cases and random-planner termination). Rule planner shares a tool sequence for A and D (by design); sequence adaptivity is the AI planner's job. |
+| 2026-10-02 | BE-6.8, BE-7.3, 7.4, 7.7 | Engine wired to DB and API: background runs with per-step persistence (state snapshots, append-only actions, evidence ledger rows, brief), start guards (409 in progress / already completed, rerun), run history (E13), startup recovery of interrupted runs, queued-run view. Mock fixtures now come from real engine runs for all 6 cases. Found and fixed: DB rows carried `signal_type` as a string. 394 tests pass; live server smoke test passed. |

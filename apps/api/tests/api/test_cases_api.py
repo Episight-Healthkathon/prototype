@@ -89,9 +89,8 @@ def test_invalid_query_returns_validation_envelope(client):
     assert r.json()["error"]["code"] == "VALIDATION_ERROR"
 
 
-def test_not_yet_available_endpoints_answer_honestly(client):
+def test_endpoints_before_any_investigation_answer_honestly(client):
     case_id = _case_id(client, GOLDEN_A)
-    assert client.post(f"/api/v1/cases/{case_id}/investigate").json()["error"]["code"] == "SERVICE_UNAVAILABLE"
     assert client.get(f"/api/v1/cases/{case_id}/investigation").json()["error"]["code"] == "RUN_NOT_FOUND"
     assert client.get(f"/api/v1/cases/{case_id}/brief").status_code == 409
     assert EvidenceList.model_validate(client.get(f"/api/v1/cases/{case_id}/evidence").json()).total == 0

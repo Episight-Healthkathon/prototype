@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-4f83efda9be869a2",
+  "case_id": "CASE-RA-f024a4b0",
+  "run_id": "RUN-FIXTURE-RA-f024a4b0",
+  "episode_id": "EPI-000302",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000304",
+  "source_title": "Laporan PCI - EPI-000302",
+  "source_excerpt": "Laporan tindakan: PCI dengan pemasangan stent non-drug-eluting pada LAD proksimal sesuai rencana tahap kedua.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 109,
+  "requirement_key": "SCHEDULED_PROCEDURE_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "SCHEDULED_PROCEDURE",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is a scheduled or staged procedure documented? (requirement SCHEDULED_PROCEDURE_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 6,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000304",
+    "title": "Laporan PCI - EPI-000302",
+    "text": "Laporan tindakan: PCI dengan pemasangan stent non-drug-eluting pada LAD proksimal sesuai rencana tahap kedua. Hasil aliran TIMI 3, tanpa komplikasi.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 109
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

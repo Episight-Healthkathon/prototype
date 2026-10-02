@@ -105,6 +105,7 @@ def test_state_transitions_differ_across_cases():
 def test_runs_are_deterministic():
     a, b = run("PAT-000003"), run("PAT-000003")
     assert a.brief.model_dump() == b.brief.model_dump()
+
     # Timings are wall-clock; everything else must be identical.
     def trail(r):
         return [x.model_dump(exclude={"duration_ms"}) for x in r.state.trail]

@@ -25,8 +25,8 @@
 | **M0** | Contract lock | Phase 0 | P0 | `[~]` (D-16, D-18 open) |
 | **M1** | Backend foundation + read API on fixtures | Phase 1 | P0 | `[x]` |
 | **M2** | Temporal screening | Phase 1 | P0 | `[~]` (core done in M1; P3 fixtures pending) |
-| **M3** | Episode reconstruction | Phase 1 | P0 | `[ ]` |
-| **M4** | Evidence ledger + retrieval | Phase 2 | P0 | `[ ]` |
+| **M3** | Episode reconstruction | Phase 1 | P0 | `[x]` |
+| **M4** | Evidence ledger + retrieval | Phase 2 | P0 | `[~]` (retrieval done; ledger drafted, tested in M5/M6 step) |
 | **M5** | Agent tools | Phase 2 | P0 | `[ ]` |
 | **M6** | Case state, safety envelope, AI planner, orchestrator, stopping (core) | Phase 2 | P0 | `[ ]` |
 | **M7** | Reviewer brief + provenance API | Phase 3 | P0 | `[ ]` |
@@ -107,10 +107,10 @@
 
 ## M3 — Episode Reconstruction
 
-- [ ] **BE-3.1** `EpisodeGraph` domain abstraction (patient → episodes → provider/dx/px/claim/notes/evidence), with no NetworkX types leaking out
-- [ ] **BE-3.2** Reconstruction service: candidate window around anchors, chronological sort, intervals, `role`, `relation_reasons`, preserved source IDs
-- [ ] **BE-3.3** Full `EpisodeTimeline` DTO for E4
-- [ ] **BE-3.4** Tests: 2 related; 3+ related; similar-but-unrelated; same dx/wrong provider; missing procedure; out-of-order timestamps
+- [x] **BE-3.1** `EpisodeGraph` domain abstraction (patient → episodes → provider/dx/px/claim/notes/evidence), with no NetworkX types leaking out
+- [x] **BE-3.2** Reconstruction service: candidate window around anchors, chronological sort, intervals, `role`, `relation_reasons`, preserved source IDs
+- [x] **BE-3.3** Full `EpisodeTimeline` DTO for E4
+- [x] **BE-3.4** Tests: 2 related; 3+ related; similar-but-unrelated; same dx/wrong provider; missing procedure; out-of-order timestamps
 - [ ] **BE-3.5** Expose `reconstructed_episode_ids` for the Episode Recall metric
 
 **Exit criteria**
@@ -121,13 +121,13 @@
 
 ## M4 — Evidence Ledger & Retrieval
 
-- [ ] **BE-4.1** Evidence repository: deterministic `evidence_id`, dedupe + `surfaced_in_steps`, provenance validation (dangling `source_id` is rejected), immutability
-- [ ] **BE-4.2** Text utilities: Indonesian-aware normalizer/tokenizer, sentence segmentation with char offsets (D-08)
-- [ ] **BE-4.3** Clinical note retriever: availability inventory + BM25 over case-scoped sentences (D-09)
-- [ ] **BE-4.4** Context matcher: lexicon/patterns per context type (emergency, chronic, scheduled, supporting-exam follow-up, clinical justification, risk indicators) with a negation window and stance output (HO-P3-4)
-- [ ] **BE-4.5** Policy ingest + BM25 index, version/effective-date metadata, section-level citations (HO-P3-3)
-- [ ] **BE-4.6** E7 `GET /cases/{id}/evidence` and E8 `GET /evidence/{id}` with full `source` payload
-- [ ] **BE-4.7** Tests: empty retrieval, unavailable note, negated phrase, duplicate hit, excerpt equals literal source substring
+- [~] **BE-4.1** Evidence repository: deterministic `evidence_id`, dedupe + `surfaced_in_steps`, provenance validation (dangling `source_id` is rejected), immutability
+- [x] **BE-4.2** Text utilities: Indonesian-aware normalizer/tokenizer, sentence segmentation with char offsets (D-08)
+- [~] **BE-4.3** Clinical note retriever: availability inventory + BM25 over case-scoped sentences (D-09)
+- [x] **BE-4.4** Context matcher: lexicon/patterns per context type (emergency, chronic, scheduled, supporting-exam follow-up, clinical justification, risk indicators) with a negation window and stance output (HO-P3-4)
+- [x] **BE-4.5** Policy ingest + BM25 index, version/effective-date metadata, section-level citations (HO-P3-3)
+- [x] **BE-4.6** E7 `GET /cases/{id}/evidence` and E8 `GET /evidence/{id}` with full `source` payload
+- [~] **BE-4.7** Tests: empty retrieval, unavailable note, negated phrase, duplicate hit, excerpt equals literal source substring
 
 **Exit criteria**
 - [ ] Clinical retrieval surfaces the expected passages on golden cases.
@@ -274,3 +274,4 @@ Full log in [decisions.md](decisions.md). All decisions are locked except **D-16
 | 2026-10-02 | BE-0.3–BE-0.6, BE-0.10 | Person 2/3 sign-off not required. Decisions locked except D-16/D-18; data and API contracts frozen at v1; architecture v1.0; mock fixtures moved to BE-1.11 (generated from models). |
 | 2026-10-02 | D-16 | Deadline locked at ~48 h; build order: M1 → Golden A vertical slice → D/E → B/C → benchmark → polish. |
 | 2026-10-02 | M1 (BE-1.1–1.11), BE-2.1–2.5, BE-2.7 | Backend foundation done on `m1/foundation`: compose Postgres (:5433), uv project (Python 3.12), FastAPI + error envelope + JSON logging, contract models, migration 0001, ingest/seed with validation, interim dataset (A–E + hard negatives), screening pulled forward from M2, read endpoints, contract export + TS types + fixtures. 124 tests pass; clean-room run verified. Python pinned to 3.12 after the clean-room run exposed a 3.13 OpenAPI drift. |
+| 2026-10-02 | BE-3.1–3.4, BE-4.2, 4.4–4.6 | Reconstruction (ANCHOR/RELATED/CONTEXT, ICD-10 category relatedness, chronic-class codes) wired into the timeline; retrieval: sentence offsets, pure-Python BM25, context matcher with per-lexicon negation scope, policy index. Ledger/tools/state drafted, not yet wired or tested. 178 tests pass. |

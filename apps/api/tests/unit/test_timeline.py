@@ -24,7 +24,7 @@ def _timeline(dataset, patient_id):
 def test_readmission_timeline_orders_episodes_and_marks_roles(dataset):
     tl = _timeline(dataset, "PAT-000001")
     assert [(e.episode_id, e.role.value) for e in tl.episodes] == [
-        ("EPI-000103", "CONTEXT"),
+        ("EPI-000103", "RELATED"),
         ("EPI-000101", "ANCHOR"),
         ("EPI-000102", "ANCHOR"),
     ]

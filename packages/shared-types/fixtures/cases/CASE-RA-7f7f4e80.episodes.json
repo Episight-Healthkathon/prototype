@@ -4,7 +4,7 @@
   "episodes": [
     {
       "episode_id": "EPI-000103",
-      "role": "CONTEXT",
+      "role": "RELATED",
       "encounter_type": "OUTPATIENT",
       "admission_type": null,
       "provider": {
@@ -42,8 +42,9 @@
       ],
       "relation_reasons": [
         "SAME_PATIENT",
+        "SAME_PRIMARY_DIAGNOSIS",
         "SAME_PROVIDER",
-        "SAME_PRIMARY_DIAGNOSIS"
+        "WITHIN_90_DAYS"
       ],
       "evidence_ids": []
     },

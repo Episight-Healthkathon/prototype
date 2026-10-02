@@ -1,11 +1,6 @@
-"""Episode timeline for a case (API E4).
-
-M1 scope: the case's episode group (ANCHOR) plus nearby same-patient history (CONTEXT).
-Relatedness analysis beyond the screening group (RELATED) arrives with episode reconstruction (M3).
-"""
+"""Episode timeline for a case (API E4): anchors, related episodes and nearby context, chronological."""
 
 from collections.abc import Iterable, Mapping, Sequence
-from datetime import timedelta
 
 from episight.contracts.api import (
     ClaimRef,
@@ -17,10 +12,9 @@ from episight.contracts.api import (
     TimelineProvider,
 )
 from episight.contracts.data import Claim, ClinicalNote, Episode, Provider
-from episight.contracts.enums import EncounterType, EpisodeRole
+from episight.contracts.enums import EncounterType
 from episight.episodes.codes import diagnosis_label, procedure_label
-
-CONTEXT_WINDOW = timedelta(days=90)
+from episight.episodes.reconstruction import reconstruct
 
 
 def _end_or_start(ep: Episode):
@@ -41,35 +35,13 @@ def build_timeline(
 ) -> EpisodeTimeline:
     episodes = [e for e in patient_episodes if e.start_at is not None]
     by_id = {e.episode_id: e for e in episodes}
-    group = sorted((by_id[i] for i in episode_group_ids if i in by_id), key=lambda e: (e.start_at, e.episode_id))
-    group_ids = {e.episode_id for e in group}
-
-    window_start = group[0].start_at - CONTEXT_WINDOW
-    window_end = max(_end_or_start(e) for e in group) + CONTEXT_WINDOW
-    context = [e for e in episodes if e.episode_id not in group_ids and window_start <= e.start_at <= window_end]
-
-    ordered = sorted(group + context, key=lambda e: (e.start_at, e.episode_id))
-    index = group[0]
+    rec = reconstruct(episode_group_ids, episodes, threshold_days)
     evidence_ids_by_episode = evidence_ids_by_episode or {}
 
     items: list[TimelineEpisode] = []
-    previous_anchor: Episode | None = None
     previous: Episode | None = None
-    for ep in ordered:
-        is_anchor = ep.episode_id in group_ids
-        if is_anchor:
-            if previous_anchor is None:
-                reasons = ["INDEX_EPISODE"]
-            else:
-                reasons = ["SAME_PATIENT", "SAME_PROVIDER", "SAME_PRIMARY_DIAGNOSIS", f"WITHIN_{threshold_days}_DAYS"]
-            previous_anchor = ep
-        else:
-            reasons = ["SAME_PATIENT"]
-            if ep.provider_id == index.provider_id:
-                reasons.append("SAME_PROVIDER")
-            if ep.primary_diagnosis == index.primary_diagnosis:
-                reasons.append("SAME_PRIMARY_DIAGNOSIS")
-
+    for episode_id in rec.ordered_ids:
+        ep = by_id[episode_id]
         interval = None
         if previous is not None:
             interval = (ep.start_at.date() - _end_or_start(previous).date()).days
@@ -82,7 +54,7 @@ def build_timeline(
         items.append(
             TimelineEpisode(
                 episode_id=ep.episode_id,
-                role=EpisodeRole.ANCHOR if is_anchor else EpisodeRole.CONTEXT,
+                role=rec.roles[episode_id],
                 encounter_type=ep.encounter_type,
                 admission_type=ep.admission_type,
                 provider=TimelineProvider(
@@ -111,7 +83,7 @@ def build_timeline(
                     DocumentRef(note_id=n.note_id, note_type=n.note_type, title=n.title, availability=n.availability)
                     for n in sorted(notes_by_episode.get(ep.episode_id, []), key=lambda n: (n.authored_at, n.note_id))
                 ],
-                relation_reasons=reasons,
+                relation_reasons=list(rec.reasons[episode_id]),
                 evidence_ids=list(evidence_ids_by_episode.get(ep.episode_id, [])),
             )
         )

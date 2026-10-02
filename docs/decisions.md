@@ -30,6 +30,7 @@
 | D-19 | No model training / fine-tuning | LOCKED |
 | D-20 | Async runtime is a prototype constraint | LOCKED |
 | D-21 | Regression determinism via record/replay | LOCKED |
+| D-22 | Evidence ID includes run and requirement | LOCKED |
 
 Locked 2026-10-02 unless noted.
 
@@ -141,3 +142,9 @@ Locked 2026-10-02 unless noted.
 ### D-21 — Regression determinism via record/replay
 - **Status:** LOCKED · **Owners:** P1, P3 · **Date:** 2026-10-02
 - **Decision:** Planner requests/responses are recorded, keyed by `hash(model, prompt_version, payload)`. Regression and CI replay them, and a replay miss fails loudly. Golden assertions are behavioral. The live benchmark runs repeat `FULL` to report variance.
+
+### D-22 — Evidence ID includes run and requirement
+- **Status:** LOCKED · **Owners:** P1 (inform P3) · **Date:** 2026-10-02 · **Amends:** Data Contract v1 §5.2 (`evidence_id` derivation only)
+- **Decision:** `evidence_id = "EV-" + sha256(case_id | run_id | requirement_key | source_type | source_id | char_start | char_end | field_path)[:16]`.
+- **Reason:** The v1 formula collides when a case is re-run, and when one source span is evidence for two requirements (e.g. "Dirawat ulang melalui IGD..." answers both emergency context and clinical justification).
+- **Consequences:** No field, enum or status changes. IDs stay deterministic within a run. Evaluation should match evidence by `(source_type, source_id, requirement_key)`, not by `evidence_id`.

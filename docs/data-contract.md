@@ -192,7 +192,7 @@ Legend: **R** = required, O = optional/nullable.
 
 | Field | Notes |
 |---|---|
-| `evidence_id` | Deterministic: `EV-` + hash(`case_id`, `source_type`, `source_id`, `char_start`, `char_end`, `field_path`). Re-surfacing the same evidence dedupes and appends the step to `surfaced_in_steps` |
+| `evidence_id` | Deterministic: `EV-` + hash(`case_id`, `run_id`, `requirement_key`, `source_type`, `source_id`, `char_start`, `char_end`, `field_path`) (amended by D-22). Re-surfacing the same evidence dedupes and appends the step to `surfaced_in_steps`. Evaluation matches evidence by `(source_type, source_id, requirement_key)` |
 | `case_id`, `run_id` | |
 | `episode_id` | Nullable for policy evidence |
 | `source_type`, `source_id` | Must resolve to a stored record; validation rejects dangling references |

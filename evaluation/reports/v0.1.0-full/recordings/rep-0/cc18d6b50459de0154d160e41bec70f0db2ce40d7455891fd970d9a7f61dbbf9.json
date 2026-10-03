@@ -1,0 +1,161 @@
+{
+  "model": "gpt-4o-mini-2024-07-18",
+  "prompt_version": "planner-2",
+  "request": {
+    "provider": "openai",
+    "user": "{\"case\": {\"signal_type\": \"READMISSION\", \"rule\": \"Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge\", \"intervals_days\": [6], \"episodes\": [{\"episode_id\": \"EPI-000011\", \"role\": \"ANCHOR\", \"encounter_type\": \"INPATIENT\", \"start\": \"2026-07-01\", \"end\": \"2026-07-04\", \"primary_diagnosis\": \"N39.0\", \"procedures\": [], \"documents\": [{\"note_type\": \"DISCHARGE_SUMMARY\", \"availability\": \"AVAILABLE\"}]}, {\"episode_id\": \"EPI-000012\", \"role\": \"ANCHOR\", \"encounter_type\": \"INPATIENT\", \"start\": \"2026-07-10\", \"end\": \"2026-07-14\", \"primary_diagnosis\": \"N39.0\", \"procedures\": [], \"documents\": [{\"note_type\": \"TRIAGE\", \"availability\": \"AVAILABLE\"}, {\"note_type\": \"DISCHARGE_SUMMARY\", \"availability\": \"AVAILABLE\"}]}]}, \"requirements\": [{\"key\": \"EPISODE_RELATEDNESS\", \"question\": \"Are the episodes actually related?\", \"material\": true, \"direction\": \"RISK\", \"state\": \"OPEN\", \"explanation\": \"Not assessed yet.\"}, {\"key\": \"DIAGNOSIS_CONSISTENCY\", \"question\": \"Are the diagnoses consistent across episodes?\", \"material\": true, \"direction\": \"RISK\", \"state\": \"OPEN\", \"explanation\": \"Not assessed yet.\"}, {\"key\": \"PROCEDURE_RELATIONSHIP\", \"question\": \"Are procedures repeated or related across episodes?\", \"material\": true, \"direction\": \"RISK\", \"state\": \"OPEN\", \"explanation\": \"Not assessed yet.\"}, {\"key\": \"PROVIDER_CONTEXT\", \"question\": \"Does provider context (class, referral) matter?\", \"material\": false, \"direction\": \"BACKGROUND\", \"state\": \"OPEN\", \"explanation\": \"Not assessed yet.\"}, {\"key\": \"CLINICAL_DOCUMENT_AVAILABILITY\", \"question\": \"Which clinical documents are available?\", \"material\": true, \"direction\": \"BACKGROUND\", \"state\": \"OPEN\", \"explanation\": \"Not assessed yet.\"}, {\"key\": \"EMERGENCY_CONTEXT\", \"question\": \"Is there documented emergency context for the repeated care?\", \"material\": true, \"direction\": \"CONTEXT\", \"state\": \"OPEN\", \"explanation\": \"Not assessed yet.\", \"coverage\": {\"available\": 2, \"read\": 0, \"unreadable\": 0}}, {\"key\": \"SCHEDULED_PROCEDURE_CONTEXT\", \"question\": \"Is a scheduled or staged procedure documented?\", \"material\": true, \"direction\": \"CONTEXT\", \"state\": \"OPEN\", \"explanation\": \"Not assessed yet.\", \"coverage\": {\"available\": 3, \"read\": 0, \"unreadable\": 0}}, {\"key\": \"CHRONIC_CONDITION_CONTEXT\", \"question\": \"Is a relevant chronic condition documented?\", \"material\": true, \"direction\": \"CONTEXT\", \"state\": \"OPEN\", \"explanation\": \"Not assessed yet.\", \"coverage\": {\"available\": 3, \"read\": 0, \"unreadable\": 0}}, {\"key\": \"CLINICAL_JUSTIFICATION\", \"question\": \"Is there a documented clinical justification for the repeated care?\", \"material\": true, \"direction\": \"CONTEXT\", \"state\": \"OPEN\", \"explanation\": \"Not assessed yet.\", \"coverage\": {\"available\": 2, \"read\": 0, \"unreadable\": 0}}, {\"key\": \"RISK_INDICATORS_IN_NOTES\", \"question\": \"Do notes indicate premature discharge, unresolved complaints or repeats without indication?\", \"material\": true, \"direction\": \"RISK\", \"state\": \"OPEN\", \"explanation\": \"Not assessed yet.\", \"coverage\": {\"available\": 3, \"read\": 0, \"unreadable\": 0}}, {\"key\": \"APPLICABLE_POLICY\", \"question\": \"Which policy rules apply?\", \"material\": true, \"direction\": \"POLICY\", \"state\": \"OPEN\", \"explanation\": \"Not assessed yet.\"}], \"evidence\": [], \"trail\": [], \"allowed_actions\": [{\"action_id\": \"A1\", \"requirement_key\": \"EPISODE_RELATEDNESS\", \"tool\": \"get_episode_history\", \"default_input\": {\"window_days\": 90}, \"narrowing_allowed\": false, \"episode_ids\": [], \"query_allowed\": false}, {\"action_id\": \"A2\", \"requirement_key\": \"DIAGNOSIS_CONSISTENCY\", \"tool\": \"compare_diagnosis\", \"default_input\": {\"episode_ids\": [\"EPI-000011\", \"EPI-000012\"]}, \"narrowing_allowed\": false, \"episode_ids\": [\"EPI-000011\", \"EPI-000012\"], \"query_allowed\": false}, {\"action_id\": \"A3\", \"requirement_key\": \"PROCEDURE_RELATIONSHIP\", \"tool\": \"compare_procedures\", \"default_input\": {\"episode_ids\": [\"EPI-000011\", \"EPI-000012\"], \"check_plan\": false}, \"narrowing_allowed\": false, \"episode_ids\": [\"EPI-000011\", \"EPI-000012\"], \"query_allowed\": false}, {\"action_id\": \"A4\", \"requirement_key\": \"PROVIDER_CONTEXT\", \"tool\": \"get_provider_context\", \"default_input\": {\"provider_id\": \"PRV-0002\", \"episode_ids\": [\"EPI-000011\", \"EPI-000012\"]}, \"narrowing_allowed\": false, \"episode_ids\": [\"EPI-000011\", \"EPI-000012\"], \"query_allowed\": false}, {\"action_id\": \"A5\", \"requirement_key\": \"APPLICABLE_POLICY\", \"tool\": \"retrieve_policy\", \"default_input\": {\"signal_type\": \"READMISSION\", \"topics\": [\"READMISSION\"], \"query\": \"readmisi rawat inap berulang FKRTL diagnosis utama sama 30 hari pengecualian\"}, \"narrowing_allowed\": false, \"episode_ids\": [], \"query_allowed\": true}], \"remaining_steps\": 12}",
+    "schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "action_id": {
+          "type": "string",
+          "enum": [
+            "A1",
+            "A2",
+            "A3",
+            "A4",
+            "A5",
+            "NO_FURTHER_USEFUL_ACTION"
+          ]
+        },
+        "scope": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "episode_ids": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "EPI-000011",
+                          "EPI-000012"
+                        ]
+                      }
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "note_types": {
+                  "anyOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "TRIAGE",
+                          "ADMISSION",
+                          "PROGRESS",
+                          "DISCHARGE_SUMMARY",
+                          "PROCEDURE_PLAN",
+                          "PROCEDURE_REPORT",
+                          "OUTPATIENT_VISIT",
+                          "SUPPORTING_EXAM_RESULT",
+                          "REFERRAL"
+                        ]
+                      }
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "query": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "episode_ids",
+                "note_types",
+                "query"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "priority_ranking": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "EPISODE_RELATEDNESS",
+              "DIAGNOSIS_CONSISTENCY",
+              "PROCEDURE_RELATIONSHIP",
+              "PROVIDER_CONTEXT",
+              "CLINICAL_DOCUMENT_AVAILABILITY",
+              "EMERGENCY_CONTEXT",
+              "SCHEDULED_PROCEDURE_CONTEXT",
+              "CHRONIC_CONDITION_CONTEXT",
+              "CLINICAL_JUSTIFICATION",
+              "RISK_INDICATORS_IN_NOTES",
+              "APPLICABLE_POLICY"
+            ]
+          }
+        },
+        "skip": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "requirement_key": {
+                "type": "string",
+                "enum": [
+                  "EPISODE_RELATEDNESS",
+                  "DIAGNOSIS_CONSISTENCY",
+                  "PROCEDURE_RELATIONSHIP",
+                  "PROVIDER_CONTEXT",
+                  "CLINICAL_DOCUMENT_AVAILABILITY",
+                  "EMERGENCY_CONTEXT",
+                  "CHRONIC_CONDITION_CONTEXT",
+                  "SCHEDULED_PROCEDURE_CONTEXT",
+                  "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+                  "CLINICAL_JUSTIFICATION",
+                  "RISK_INDICATORS_IN_NOTES",
+                  "APPLICABLE_POLICY",
+                  "SCHEDULE_CONSISTENCY"
+                ]
+              },
+              "reason": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "requirement_key",
+              "reason"
+            ]
+          }
+        },
+        "planner_note": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "action_id",
+        "scope",
+        "priority_ranking",
+        "skip",
+        "planner_note"
+      ]
+    }
+  },
+  "response": {
+    "text": "{\"action_id\":\"A2\",\"scope\":null,\"priority_ranking\":[],\"skip\":[],\"planner_note\":\"Checking diagnosis consistency across the two inpatient episodes is critical for relatedness assessment.\"}",
+    "model": "gpt-4o-mini-2024-07-18"
+  }
+}

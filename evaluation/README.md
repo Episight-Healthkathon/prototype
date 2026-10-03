@@ -41,4 +41,17 @@ Without a key, FULL falls back to the rule planner every step (`fallback_steps` 
 it is not an AI-planner result. To re-score later without calling the model, set
 `EPISIGHT_LLM_REPLAY=replay`.
 
+### Reproduce the committed FULL report without a key
+
+`reports/v0.1.0-full/recordings/` holds the model responses from that run (one folder per repeat).
+Replay answers only from them, so no valid key is needed and the 60 FULL runs come out identical:
+
+```bash
+cd apps/api
+EPISIGHT_LLM_PROVIDER=openai EPISIGHT_LLM_MODEL=gpt-4o-mini OPENAI_API_KEY=replay EPISIGHT_LLM_REPLAY=replay \
+  uv run episight batch --out ../../evaluation/runs/full-replay --dataset ../../data/synthetic/v0.1.0 \
+  --policies ../../data/policies/pc-0.1.0 --mode FULL --repeats 3 \
+  --recordings ../../evaluation/reports/v0.1.0-full/recordings
+```
+
 Baseline machine: AMD64 Family 25 (Windows 11), Python 3.12 via uv. `elapsed_ms` depends on the machine.

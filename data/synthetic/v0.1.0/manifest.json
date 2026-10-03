@@ -1,0 +1,21 @@
+{
+  "dataset_version": "v0.1.0",
+  "generator_version": "gen-0.1.0",
+  "seed": 20261004,
+  "generated_at": "2026-10-04T00:00:00+07:00",
+  "contract_version": "data-contract/1",
+  "counts": {
+    "patients": 40,
+    "providers": 6,
+    "episodes": 80,
+    "claims": 80,
+    "clinical_notes": 96
+  },
+  "files": {
+    "patients.jsonl": "sha256:73ff43b042d519fba27454d7dde98129bbc5d8863726b928751be0868cec545a",
+    "providers.jsonl": "sha256:9e24881f95ffae280d15e2dc485c6c4ff2ccbd0f710c26195cccf5fe4e93c226",
+    "episodes.jsonl": "sha256:d4a4e0d7e4c3f86c173a56765ba2e9007ca15ae436a0039113bc611faa57fff2",
+    "claims.jsonl": "sha256:99ea06d338d5c787ea90d26711a74420cfd3ad443312e3e79f97120f67d20a4e",
+    "clinical_notes.jsonl": "sha256:2e887ddc86941b321e0c05c0f235c611402ffcd42eff2e5e7de220bb12af8f1c"
+  }
+}

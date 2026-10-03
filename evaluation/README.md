@@ -6,6 +6,7 @@
 | `METRICS.md` | Metric formulas and edge cases |
 | `run_regression.sh` | Regenerate (freshness check) → batch (3 deterministic modes) → score → fail if a golden case fails |
 | `reports/v0.1.0-baseline/` | Committed baseline report (diff against it with `--baseline`) |
+| `reports/v0.1.0-full/` | All four modes incl. FULL (OpenAI `gpt-4o-mini`, 3 repeats) |
 | `FINDINGS.md` | Benchmark findings reported to Person 1 |
 | `runs/` | Scratch run output (git-ignored) |
 

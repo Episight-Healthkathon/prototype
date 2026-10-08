@@ -1,0 +1,593 @@
+{
+  "gt_id": "GT-B",
+  "golden_case": "B",
+  "case_id": "CASE-FR-83f41f66",
+  "checks": {
+    "brief_valid": true,
+    "literal_provenance": true,
+    "policy_metadata": true,
+    "source_records_unchanged": true,
+    "prompt_has_no_label_fields": true,
+    "human_review_notice": true,
+    "timeline_covers_expected_episodes": true,
+    "signal_matches_label": true,
+    "material_statements_traceable": true,
+    "tool_calls_succeeded": true,
+    "no_model_calls": true
+  },
+  "outcome": "HUMAN_REVIEW_REQUIRED",
+  "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+  "timeline": {
+    "case_id": "CASE-FR-83f41f66",
+    "patient_id": "PAT-000002",
+    "episodes": [
+      {
+        "episode_id": "EPI-000004",
+        "role": "ANCHOR",
+        "encounter_type": "OUTPATIENT",
+        "admission_type": null,
+        "provider": {
+          "provider_id": "PRV-0002",
+          "name": "RS Sintetis Nusantara 02",
+          "hospital_class": "C"
+        },
+        "start_at": "2026-04-06T08:30:00+07:00",
+        "end_at": null,
+        "length_of_stay_days": null,
+        "interval_from_previous_days": null,
+        "primary_diagnosis": {
+          "code": "K30",
+          "label": null
+        },
+        "secondary_diagnoses": [],
+        "procedures": [],
+        "claim": {
+          "claim_id": "CLM-000004",
+          "inacbg_code": "Q-5-44-0",
+          "claim_status": "SUBMITTED"
+        },
+        "documents": [
+          {
+            "note_id": "NOTE-000006",
+            "note_type": "OUTPATIENT_VISIT",
+            "title": "Kunjungan poli penyakit dalam",
+            "availability": "AVAILABLE"
+          }
+        ],
+        "relation_reasons": [
+          "INDEX_EPISODE"
+        ],
+        "evidence_ids": []
+      },
+      {
+        "episode_id": "EPI-000005",
+        "role": "ANCHOR",
+        "encounter_type": "OUTPATIENT",
+        "admission_type": null,
+        "provider": {
+          "provider_id": "PRV-0002",
+          "name": "RS Sintetis Nusantara 02",
+          "hospital_class": "C"
+        },
+        "start_at": "2026-04-09T09:15:00+07:00",
+        "end_at": null,
+        "length_of_stay_days": null,
+        "interval_from_previous_days": 3,
+        "primary_diagnosis": {
+          "code": "K30",
+          "label": null
+        },
+        "secondary_diagnoses": [],
+        "procedures": [],
+        "claim": {
+          "claim_id": "CLM-000005",
+          "inacbg_code": "Q-5-44-0",
+          "claim_status": "SUBMITTED"
+        },
+        "documents": [
+          {
+            "note_id": "NOTE-000007",
+            "note_type": "OUTPATIENT_VISIT",
+            "title": "Kunjungan ulang poli penyakit dalam",
+            "availability": "AVAILABLE"
+          }
+        ],
+        "relation_reasons": [
+          "SAME_PATIENT",
+          "SAME_PROVIDER",
+          "SAME_PRIMARY_DIAGNOSIS",
+          "WITHIN_7_DAYS"
+        ],
+        "evidence_ids": []
+      },
+      {
+        "episode_id": "EPI-000006",
+        "role": "ANCHOR",
+        "encounter_type": "OUTPATIENT",
+        "admission_type": null,
+        "provider": {
+          "provider_id": "PRV-0002",
+          "name": "RS Sintetis Nusantara 02",
+          "hospital_class": "C"
+        },
+        "start_at": "2026-04-13T10:00:00+07:00",
+        "end_at": null,
+        "length_of_stay_days": null,
+        "interval_from_previous_days": 4,
+        "primary_diagnosis": {
+          "code": "K30",
+          "label": null
+        },
+        "secondary_diagnoses": [],
+        "procedures": [],
+        "claim": {
+          "claim_id": "CLM-000006",
+          "inacbg_code": "Q-5-44-0",
+          "claim_status": "SUBMITTED"
+        },
+        "documents": [
+          {
+            "note_id": "NOTE-000008",
+            "note_type": "OUTPATIENT_VISIT",
+            "title": "Kunjungan poli penyakit dalam",
+            "availability": "AVAILABLE"
+          }
+        ],
+        "relation_reasons": [
+          "SAME_PATIENT",
+          "SAME_PROVIDER",
+          "SAME_PRIMARY_DIAGNOSIS",
+          "WITHIN_7_DAYS"
+        ],
+        "evidence_ids": []
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "evidence_id": "EV-9c180b281be4f5aa",
+      "case_id": "CASE-FR-83f41f66",
+      "run_id": "RUN-QA-CASE-FR-83f41f66",
+      "episode_id": "EPI-000005",
+      "source_type": "SCREENING_RULE",
+      "source_id": "FRAGMENTATION_7D_SAME_PROVIDER_SAME_DX",
+      "source_title": "Screening rule FRAGMENTATION_7D_SAME_PROVIDER_SAME_DX v1",
+      "source_excerpt": "EPI-000005 started 3 day(s) after the previous visit of EPI-000004; same patient, same FKRTL, same primary diagnosis",
+      "field_path": "pairs[EPI-000004->EPI-000005]",
+      "char_start": null,
+      "char_end": null,
+      "requirement_key": "EPISODE_RELATEDNESS",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "get_episode_history",
+      "retrieval_reason": "Are the episodes actually related? (requirement EPISODE_RELATEDNESS is open)",
+      "extraction_method": "STRUCTURED_FIELD",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 1,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-3a7cecde78ec45bf",
+      "case_id": "CASE-FR-83f41f66",
+      "run_id": "RUN-QA-CASE-FR-83f41f66",
+      "episode_id": "EPI-000006",
+      "source_type": "SCREENING_RULE",
+      "source_id": "FRAGMENTATION_7D_SAME_PROVIDER_SAME_DX",
+      "source_title": "Screening rule FRAGMENTATION_7D_SAME_PROVIDER_SAME_DX v1",
+      "source_excerpt": "EPI-000006 started 4 day(s) after the previous visit of EPI-000005; same patient, same FKRTL, same primary diagnosis",
+      "field_path": "pairs[EPI-000005->EPI-000006]",
+      "char_start": null,
+      "char_end": null,
+      "requirement_key": "EPISODE_RELATEDNESS",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "get_episode_history",
+      "retrieval_reason": "Are the episodes actually related? (requirement EPISODE_RELATEDNESS is open)",
+      "extraction_method": "STRUCTURED_FIELD",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 1,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-10677a297db05891",
+      "case_id": "CASE-FR-83f41f66",
+      "run_id": "RUN-QA-CASE-FR-83f41f66",
+      "episode_id": "EPI-000005",
+      "source_type": "EPISODE_RECORD",
+      "source_id": "EPI-000005",
+      "source_title": "Episode record EPI-000005",
+      "source_excerpt": "K30 (EPI-000004) vs K30 (EPI-000005)",
+      "field_path": "episodes.primary_diagnosis",
+      "char_start": null,
+      "char_end": null,
+      "requirement_key": "DIAGNOSIS_CONSISTENCY",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "compare_diagnosis",
+      "retrieval_reason": "Are the diagnoses consistent across episodes? (requirement DIAGNOSIS_CONSISTENCY is open)",
+      "extraction_method": "STRUCTURED_FIELD",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 2,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-98e1c26bd9a33d23",
+      "case_id": "CASE-FR-83f41f66",
+      "run_id": "RUN-QA-CASE-FR-83f41f66",
+      "episode_id": "EPI-000006",
+      "source_type": "EPISODE_RECORD",
+      "source_id": "EPI-000006",
+      "source_title": "Episode record EPI-000006",
+      "source_excerpt": "K30 (EPI-000005) vs K30 (EPI-000006)",
+      "field_path": "episodes.primary_diagnosis",
+      "char_start": null,
+      "char_end": null,
+      "requirement_key": "DIAGNOSIS_CONSISTENCY",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "compare_diagnosis",
+      "retrieval_reason": "Are the diagnoses consistent across episodes? (requirement DIAGNOSIS_CONSISTENCY is open)",
+      "extraction_method": "STRUCTURED_FIELD",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 2,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-f0018babf67aa156",
+      "case_id": "CASE-FR-83f41f66",
+      "run_id": "RUN-QA-CASE-FR-83f41f66",
+      "episode_id": "EPI-000005",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000007",
+      "source_title": "Kunjungan ulang poli penyakit dalam - EPI-000005",
+      "source_excerpt": "Keluhan kembung dan nyeri ulu hati belum membaik.",
+      "field_path": null,
+      "char_start": 37,
+      "char_end": 86,
+      "requirement_key": "RISK_INDICATORS_IN_NOTES",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "find_supporting_evidence",
+      "retrieval_reason": "Do notes indicate premature discharge, unresolved complaints or repeats without indication? (requirement RISK_INDICATORS_IN_NOTES is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 10,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-a85a1bf47c5ad71c",
+      "case_id": "CASE-FR-83f41f66",
+      "run_id": "RUN-QA-CASE-FR-83f41f66",
+      "episode_id": "EPI-000006",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000008",
+      "source_title": "Kunjungan poli penyakit dalam - EPI-000006",
+      "source_excerpt": "Keluhan masih ada, pasien meminta resep ulang.",
+      "field_path": null,
+      "char_start": 31,
+      "char_end": 77,
+      "requirement_key": "RISK_INDICATORS_IN_NOTES",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "find_supporting_evidence",
+      "retrieval_reason": "Do notes indicate premature discharge, unresolved complaints or repeats without indication? (requirement RISK_INDICATORS_IN_NOTES is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 10,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-3af0c0d8d8a1cdc1",
+      "case_id": "CASE-FR-83f41f66",
+      "run_id": "RUN-QA-CASE-FR-83f41f66",
+      "episode_id": null,
+      "source_type": "POLICY_SECTION",
+      "source_id": "POL-PMK26-2021-FRAGMENTASI-01",
+      "source_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan: Fragmentasi: definisi",
+      "source_excerpt": "Fragmentasi adalah kunjungan rawat jalan berulang di FKRTL yang sama pada kasus dengan diagnosis yang sama dari episode rawat jalan sebelumnya dalam waktu kurang atau sama dengan 7 hari.",
+      "field_path": null,
+      "char_start": 0,
+      "char_end": 186,
+      "requirement_key": "APPLICABLE_POLICY",
+      "stance": "INFORMS",
+      "relevance_category": "NEUTRAL",
+      "exception_type": null,
+      "retrieved_by_tool": "retrieve_policy",
+      "retrieval_reason": "Which policy rules apply? (requirement APPLICABLE_POLICY is open)",
+      "extraction_method": "BM25_RETRIEVAL",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 11,
+      "policy_version": "Permenkes 26/2021"
+    },
+    {
+      "evidence_id": "EV-ce2d57dcd65989f4",
+      "case_id": "CASE-FR-83f41f66",
+      "run_id": "RUN-QA-CASE-FR-83f41f66",
+      "episode_id": null,
+      "source_type": "POLICY_SECTION",
+      "source_id": "POL-PMK26-2021-FRAGMENTASI-02",
+      "source_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan: Fragmentasi: pengecualian",
+      "source_excerpt": "Kondisi yang dikecualikan dari fragmentasi adalah sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. rangkaian tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. konsultasi hasil pemeriksaan penunjang yang tidak dapat dilakukan dalam satu episode.",
+      "field_path": null,
+      "char_start": 0,
+      "char_end": 404,
+      "requirement_key": "APPLICABLE_POLICY",
+      "stance": "INFORMS",
+      "relevance_category": "NEUTRAL",
+      "exception_type": null,
+      "retrieved_by_tool": "retrieve_policy",
+      "retrieval_reason": "Which policy rules apply? (requirement APPLICABLE_POLICY is open)",
+      "extraction_method": "BM25_RETRIEVAL",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 11,
+      "policy_version": "Permenkes 26/2021"
+    }
+  ],
+  "brief": {
+    "brief_id": "BRF-QA-CASE-FR-83f41f66",
+    "case_id": "CASE-FR-83f41f66",
+    "run_id": "RUN-QA-CASE-FR-83f41f66",
+    "generated_at": "2026-10-08T00:00:00Z",
+    "generator_version": "brief-template-1",
+    "progress_status": "BRIEF_READY",
+    "outcome": "HUMAN_REVIEW_REQUIRED",
+    "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+    "case_summary": [
+      {
+        "statement_id": "S1",
+        "text": "Repeated outpatient visit at the same FKRTL with the same primary diagnosis within 7 days: 3 episodes (3 d, 4 d) at RS Sintetis Nusantara 02.",
+        "evidence_ids": [
+          "EV-9c180b281be4f5aa",
+          "EV-3a7cecde78ec45bf"
+        ],
+        "requirement_keys": [
+          "EPISODE_RELATEDNESS"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "S2",
+        "text": "No explaining context was found in the available sources; the risk signal remains unresolved.",
+        "evidence_ids": [
+          "EV-9c180b281be4f5aa",
+          "EV-3a7cecde78ec45bf",
+          "EV-10677a297db05891",
+          "EV-98e1c26bd9a33d23",
+          "EV-f0018babf67aa156",
+          "EV-a85a1bf47c5ad71c"
+        ],
+        "requirement_keys": [
+          "SCHEDULED_PROCEDURE_CONTEXT",
+          "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+          "CHRONIC_CONDITION_CONTEXT",
+          "EMERGENCY_CONTEXT",
+          "CLINICAL_JUSTIFICATION"
+        ],
+        "material": true
+      }
+    ],
+    "risk_signal": {
+      "rule_id": "FRAGMENTATION_7D_SAME_PROVIDER_SAME_DX",
+      "rule_version": "1",
+      "description": "Repeated outpatient visit at the same FKRTL with the same primary diagnosis within 7 days",
+      "params": {
+        "threshold_days": 7,
+        "diagnosis_match": "EXACT"
+      },
+      "pairs": [
+        {
+          "from_episode_id": "EPI-000004",
+          "to_episode_id": "EPI-000005",
+          "interval_days": 3,
+          "matched": {
+            "same_patient": true,
+            "same_provider": true,
+            "same_primary_diagnosis": true,
+            "encounter_type": "OUTPATIENT"
+          }
+        },
+        {
+          "from_episode_id": "EPI-000005",
+          "to_episode_id": "EPI-000006",
+          "interval_days": 4,
+          "matched": {
+            "same_patient": true,
+            "same_provider": true,
+            "same_primary_diagnosis": true,
+            "encounter_type": "OUTPATIENT"
+          }
+        }
+      ],
+      "disclaimer": "A risk signal starts an investigation. It is not a finding."
+    },
+    "episode_timeline": [
+      {
+        "episode_id": "EPI-000004",
+        "label": "Index outpatient visit: K30",
+        "start_at": "2026-04-06T08:30:00+07:00",
+        "end_at": null,
+        "interval_from_previous_days": null
+      },
+      {
+        "episode_id": "EPI-000005",
+        "label": "Repeat outpatient visit: K30",
+        "start_at": "2026-04-09T09:15:00+07:00",
+        "end_at": null,
+        "interval_from_previous_days": 3
+      },
+      {
+        "episode_id": "EPI-000006",
+        "label": "Repeat outpatient visit: K30",
+        "start_at": "2026-04-13T10:00:00+07:00",
+        "end_at": null,
+        "interval_from_previous_days": 4
+      }
+    ],
+    "supporting_risk_evidence": [
+      {
+        "statement_id": "R5",
+        "text": "Episode chain: “EPI-000005 started 3 day(s) after the previous visit of EPI-000004; same patient, same FKRTL, same primary diagnosis” (FRAGMENTATION_7D_SAME_PROVIDER_SAME_DX); “EPI-000006 started 4 day(s) after the previous visit of EPI-000005; same patient, same FKRTL, same primary diagnosis” (FRAGMENTATION_7D_SAME_PROVIDER_SAME_DX)",
+        "evidence_ids": [
+          "EV-9c180b281be4f5aa",
+          "EV-3a7cecde78ec45bf"
+        ],
+        "requirement_keys": [
+          "EPISODE_RELATEDNESS"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "R6",
+        "text": "Diagnosis: “K30 (EPI-000004) vs K30 (EPI-000005)” (EPI-000005); “K30 (EPI-000005) vs K30 (EPI-000006)” (EPI-000006)",
+        "evidence_ids": [
+          "EV-10677a297db05891",
+          "EV-98e1c26bd9a33d23"
+        ],
+        "requirement_keys": [
+          "DIAGNOSIS_CONSISTENCY"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "R7",
+        "text": "Risk indicators in notes: “Keluhan kembung dan nyeri ulu hati belum membaik.” (NOTE-000007); “Keluhan masih ada, pasien meminta resep ulang.” (NOTE-000008)",
+        "evidence_ids": [
+          "EV-f0018babf67aa156",
+          "EV-a85a1bf47c5ad71c"
+        ],
+        "requirement_keys": [
+          "RISK_INDICATORS_IN_NOTES"
+        ],
+        "material": true
+      }
+    ],
+    "explaining_context_evidence": [],
+    "policy_references": [
+      {
+        "evidence_id": "EV-3af0c0d8d8a1cdc1",
+        "policy_id": "POL-PMK26-2021-FRAGMENTASI-01",
+        "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+        "section": "Fragmentasi: definisi",
+        "version": "Permenkes 26/2021",
+        "excerpt": "Fragmentasi adalah kunjungan rawat jalan berulang di FKRTL yang sama pada kasus dengan diagnosis yang sama dari episode rawat jalan sebelumnya dalam waktu kurang atau sama dengan 7 hari."
+      },
+      {
+        "evidence_id": "EV-ce2d57dcd65989f4",
+        "policy_id": "POL-PMK26-2021-FRAGMENTASI-02",
+        "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+        "section": "Fragmentasi: pengecualian",
+        "version": "Permenkes 26/2021",
+        "excerpt": "Kondisi yang dikecualikan dari fragmentasi adalah sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. rangkaian tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. konsultasi hasil pemeriksaan penunjang yang tidak dapat dilakukan dalam satu episode."
+      }
+    ],
+    "remaining_gaps": [
+      {
+        "key": "PROCEDURE_RELATIONSHIP",
+        "question": "Are procedures repeated or related across episodes?",
+        "state": "NOT_FOUND",
+        "explanation": "No procedures recorded in the anchor episodes."
+      },
+      {
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "question": "Is a scheduled or staged procedure documented?",
+        "state": "NOT_FOUND",
+        "explanation": "Not found in available sources; read all 3 available document(s)."
+      },
+      {
+        "key": "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+        "question": "Was the repeat visit a consultation of supporting-examination results?",
+        "state": "NOT_FOUND",
+        "explanation": "Not found in available sources; read all 2 available document(s)."
+      },
+      {
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "question": "Is a relevant chronic condition documented?",
+        "state": "NOT_FOUND",
+        "explanation": "Not found in available sources; read all 3 available document(s)."
+      },
+      {
+        "key": "EMERGENCY_CONTEXT",
+        "question": "Is there documented emergency context for the repeated care?",
+        "state": "NOT_FOUND",
+        "explanation": "Not found in available sources; read all 2 available document(s)."
+      },
+      {
+        "key": "CLINICAL_JUSTIFICATION",
+        "question": "Is there a documented clinical justification for the repeated care?",
+        "state": "NOT_FOUND",
+        "explanation": "Not found in available sources; read all 2 available document(s)."
+      }
+    ],
+    "conflicts": [],
+    "uncertainty": [
+      {
+        "statement_id": "U3",
+        "text": "Provider context not assessed: same provider and class of care across episodes, no referral.",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "PROVIDER_CONTEXT"
+        ],
+        "material": false
+      }
+    ],
+    "suggested_next_review": [
+      {
+        "statement_id": "N4",
+        "text": "Request a clinical justification for the repeated care from the provider.",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "SCHEDULED_PROCEDURE_CONTEXT",
+          "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+          "CHRONIC_CONDITION_CONTEXT",
+          "EMERGENCY_CONTEXT",
+          "CLINICAL_JUSTIFICATION"
+        ],
+        "material": false
+      }
+    ],
+    "review_status": "PENDING_HUMAN_REVIEW",
+    "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+    "traceability": {
+      "material_statements": 5,
+      "with_evidence": 5
+    },
+    "provenance": {
+      "evidence_ids": [
+        "EV-10677a297db05891",
+        "EV-3a7cecde78ec45bf",
+        "EV-3af0c0d8d8a1cdc1",
+        "EV-98e1c26bd9a33d23",
+        "EV-9c180b281be4f5aa",
+        "EV-a85a1bf47c5ad71c",
+        "EV-ce2d57dcd65989f4",
+        "EV-f0018babf67aa156"
+      ]
+    }
+  },
+  "requirement_states": {
+    "EPISODE_RELATEDNESS": "FOUND",
+    "DIAGNOSIS_CONSISTENCY": "FOUND",
+    "PROCEDURE_RELATIONSHIP": "NOT_FOUND",
+    "PROVIDER_CONTEXT": "SKIPPED",
+    "CLINICAL_DOCUMENT_AVAILABILITY": "FOUND",
+    "SCHEDULED_PROCEDURE_CONTEXT": "NOT_FOUND",
+    "SUPPORTING_EXAM_FOLLOWUP_CONTEXT": "NOT_FOUND",
+    "CHRONIC_CONDITION_CONTEXT": "NOT_FOUND",
+    "EMERGENCY_CONTEXT": "NOT_FOUND",
+    "CLINICAL_JUSTIFICATION": "NOT_FOUND",
+    "RISK_INDICATORS_IN_NOTES": "FOUND",
+    "APPLICABLE_POLICY": "FOUND"
+  },
+  "signal_type": "FRAGMENTATION",
+  "anchor_episode_ids": [
+    "EPI-000004",
+    "EPI-000005",
+    "EPI-000006"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "definition": "METRICS.md scores surfaced FOUND context, not adjudicated exceptions.",
+  "contradictions": [
+    {
+      "gt_id": "GT-B06",
+      "found_but_not_labelled": [
+        "SCHEDULED_PROCEDURE_CONTEXT"
+      ]
+    }
+  ],
+  "historical_labels_changed": false,
+  "resolution": "v0.1.0-labels-1 adds the surfaced scheduled context to GT-B06. Historical labels and scores are retained."
+}

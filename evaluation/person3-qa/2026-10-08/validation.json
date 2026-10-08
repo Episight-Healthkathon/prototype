@@ -1,0 +1,55 @@
+{
+  "tests": {
+    "command": "uv run --project apps/api pytest -q -p no:cacheprovider apps/api/tests/unit data/generator/tests evaluation/tests",
+    "passed": 501,
+    "failed": 0,
+    "scope": "backend unit + generator + evaluation; excludes HTTP/DB integration"
+  },
+  "lint": {
+    "backend": "passed",
+    "new_evaluation_scripts": "passed (E,F,I,B,UP; E501 excluded)"
+  },
+  "official_generator_byte_comparison": {
+    "passed": true,
+    "files": [
+      "data/synthetic/v0.1.0/claims.jsonl",
+      "data/synthetic/v0.1.0/clinical_notes.jsonl",
+      "data/synthetic/v0.1.0/episodes.jsonl",
+      "data/synthetic/v0.1.0/manifest.json",
+      "data/synthetic/v0.1.0/patients.jsonl",
+      "data/synthetic/v0.1.0/providers.jsonl",
+      "data/policies/pc-0.1.1/manifest.json",
+      "data/policies/pc-0.1.1/policy_sections.jsonl",
+      "data/ground-truth/v0.1.0/cases.jsonl",
+      "data/ground-truth/v0.1.0/README.md"
+    ]
+  },
+  "deterministic_regression": {
+    "modes": [
+      "FULL_RULE_PLANNER",
+      "RULES_ONLY",
+      "RULES_RETRIEVAL"
+    ],
+    "new_failures": [],
+    "passed": true
+  },
+  "full_replay": {
+    "runs": 60,
+    "semantic_differences": 0,
+    "model_calls": 0
+  },
+  "challenge": {
+    "correct": 36,
+    "total": 40,
+    "unsafe_closures": 0,
+    "known_gaps": [
+      "P11",
+      "P17",
+      "P23",
+      "P28"
+    ]
+  },
+  "frontend_e2e": "not run",
+  "http_postgresql_integration": "not run; local Docker daemon unavailable",
+  "consolidated_analytical_report_stage_5": "skipped by user request"
+}

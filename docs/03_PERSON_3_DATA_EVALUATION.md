@@ -5,7 +5,7 @@
 
 ---
 
-## 0. Status Update — 2026-10-02 (read this first)
+## 0. Status Update (latest acceptance: 2026-10-08, §0.12)
 
 > Updated by Person 1. The backend is complete for P0 and merged to `main`: ingest/validation, screening, investigation engine (rule planner + AI planner), brief, and a **batch runner** that produces the evaluation input. This section lists what exists, what changed in your tasks, the rules your dataset must respect, and what to do next. The original plan below is kept and annotated (**Updated** markers).
 > References: [data-contract.md](data-contract.md) (v1 frozen) · [decisions.md](decisions.md) · [architecture.md](architecture.md) §7 · [development-plan.md](development-plan.md)
@@ -164,7 +164,42 @@ Open: FULL (AI planner) run with a key and `--repeats 3`; verbatim policy check;
 - Still open: fresh FULL recordings for this backend/corpus, broader paraphrase validation,
   governance and frontend E2E QA. The matcher remains a lexical prototype, not a clinical adjudicator.
 
+### 0.11 Fresh FULL benchmark — 2026-10-08
+
+- Completed on backend `90e914f`, corpus `pc-0.1.1`, dataset/labels unchanged:
+  `evaluation/reports/v0.1.0-pc-0.1.1-full/`.
+- OpenAI `gpt-4o-mini`, prompt `planner-2`, 20 cases × 3 repeats: 60/60 correct
+  outcomes and stop reasons, A–E 5/5 per repeat, coverage 100%, zero unsafe closures.
+- No unstable outcomes; GT-B09 passes all repeats. All 60 runs replay exactly
+  except timing fields. Raw outputs and 625 recordings are in `replay_bundle.zip`.
+- Duration 18 minutes 41 seconds, mean FULL latency 18.6 seconds. No API errors;
+  17 validation retries and one rule fallback with a correct outcome.
+- FULL matches FULL_RULE_PLANNER's quality on this dataset. Exception precision
+  remains 90.91% under the existing GT-B06 interpretation; no labels were changed.
+- Fresh FULL benchmark/recordings are now complete. Broader paraphrase validation,
+  governance and frontend E2E QA remain open; see the report's `VALIDATION.md`.
+
 ---
+
+### 0.12 Non-frontend acceptance and handoff — 2026-10-08
+
+The user requested stages 1–4 and 6, skipping stage 5 (a new consolidated analytical report).
+These stages are complete for backend/CLI handoff; see [PERSON_3_HANDOFF.md](PERSON_3_HANDOFF.md).
+
+- 40 reproducible wording/scope/availability/conflict challenges: 36/40 correct clinical expectations,
+  zero unsafe closures. P11/P17/P23/P28 remain documented conservative human-review gaps.
+- Fixed three newly exposed unsafe matches: historical emergency, hypothetical emergency and
+  multiword negation. Original dataset and original ground truth remain unchanged.
+- GT-B06 label inconsistency corrected only in `data/ground-truth/v0.1.0-labels-1/`; historical
+  scores are preserved. Improved amended-label precision is not an engine improvement.
+- Governance, provenance, source immutability and complete CLI golden pipeline checks pass.
+- All deterministic modes pass regression; all 60 historical FULL recordings replay identically
+  after the matcher fix (excluding timing). No new model calls were made.
+- 501 backend unit/generator/evaluation tests and backend lint pass. Durable artifacts:
+  `evaluation/person3-qa/2026-10-08/`; CI now runs offline acceptance too.
+- UI/domain wording review and HTTP/PostgreSQL/browser E2E remain open for Person 1/2.
+  The old dated checklist below is scoped by this acceptance; stretch items are not mandatory
+  blockers for the non-frontend delivery.
 
 ## 1. Ownership Boundary
 
@@ -724,19 +759,19 @@ Expected:
 
 Verify the actual prototype behavior (backend tests that already enforce an item are noted):
 
-- [ ] Synthetic data only.
-- [ ] Pseudonymous patient IDs.
-- [ ] No real JKN participant data.
-- [ ] No autonomous fraud verdict. *(Brief validator bans decision language; enum and API-surface tests.)*
-- [ ] No autonomous claim rejection. *(Same.)*
-- [ ] No payment decision. *(Same.)*
-- [ ] No record modification by agent. *(Tools are read-only; source tables are written only by ingest.)*
-- [ ] Missing evidence remains explicit. *(Golden D tests.)*
-- [ ] Conflicting evidence remains visible. *(Golden E tests.)*
-- [ ] Human review state exists. *(`review_status`, `human_decision_notice` in every brief.)*
-- [ ] Evidence provenance exists. *(Literal-excerpt provenance check on every evidence item.)*
-- [ ] Policy source/version metadata preserved where available.
-- [ ] Tool failures are not replaced by fabricated answers. *(Failure tests: tool error, hung tool, timeout.)*
+- [x] Synthetic data only. *(Generator, independent challenge authoring and source hashes.)*
+- [x] Pseudonymous patient IDs. *(PAT IDs and schema checks.)*
+- [x] No real JKN participant data. *(Synthetic-only delivery; no external dataset ingested.)*
+- [x] No autonomous fraud verdict. *(Brief validator, enum and API-surface tests.)*
+- [x] No autonomous claim rejection. *(Same.)*
+- [x] No payment decision. *(Same.)*
+- [x] No record modification by agent. *(Per-case source snapshots and file hashes unchanged.)*
+- [x] Missing evidence remains explicit. *(Golden D, availability and brief validator tests.)*
+- [x] Conflicting evidence remains visible. *(Golden E and conflicting challenge cases.)*
+- [x] Human review state exists. *(`PENDING_HUMAN_REVIEW`, notice in every accepted brief.)*
+- [x] Evidence provenance exists. *(Literal offsets and source references checked.)*
+- [x] Policy source/version metadata preserved. *(Verified corpus and per-evidence audit.)*
+- [x] Tool failures are not replaced by fabricated answers. *(Unit failure/timeout tests.)*
 
 If any checkbox fails:
 
@@ -782,17 +817,18 @@ For every golden case:
 ## P0 — Must finish
 
 - [x] Data contract. *(Frozen v1.)*
-- [ ] Synthetic generator.
-- [ ] ~~4~~ 5 golden cases.
-- [ ] Ground truth isolation. *(Keep it under `data/ground-truth/`; backend side enforced.)*
-- [ ] Synthetic clinical notes.
-- [ ] Policy corpus (replacing placeholders).
-- [ ] Screening fixtures.
-- [ ] evidence relevance labels.
-- [ ] metric definitions.
-- [ ] ~~basic evaluation runner~~ **scoring harness** (runner provided).
-- [ ] governance QA.
-- [ ] golden-case E2E QA.
+- [x] Synthetic generator.
+- [x] ~~4~~ 5 golden cases.
+- [x] Ground truth isolation. *(Separate location, ingest refusal, prompt/runtime isolation tests.)*
+- [x] Synthetic clinical notes.
+- [x] Policy corpus (verified pc-0.1.1).
+- [x] Screening fixtures.
+- [x] Evidence relevance labels (official benchmark; wording challenge has a separate scope).
+- [x] Metric definitions and GT-B06 versioned label amendment.
+- [x] ~~basic evaluation runner~~ **scoring harness** (runner provided).
+- [x] Governance QA (backend/CLI).
+- [x] Golden-case end-to-end CLI QA.
+- [ ] Golden-case browser/HTTP E2E QA with Person 1/2.
 
 ## P1 — Strongly recommended
 
@@ -833,16 +869,17 @@ Before merging data/evaluation changes:
 
 # Final Definition of Done — Person 3
 
-- [ ] Synthetic dataset is reproducible.
-- [ ] ~~Four~~ Five golden cases are stable and documented.
-- [ ] 20+ benchmark cases exist, or the limitation is explicitly documented if time prevents it.
-- [ ] Ground truth is hidden from the agent.
-- [ ] Clinical notes are synthetic and useful for retrieval testing.
-- [ ] Policy corpus is sourceable and version-aware where possible.
-- [ ] Screening fixtures cover boundary conditions.
-- [ ] Evidence relevance labels support precision/coverage metrics.
-- [ ] Evaluation runner executes without manual case-by-case intervention. *(Runner provided; harness must chain on it.)*
-- [ ] Aggregate metrics are reproducible.
-- [ ] Missing/conflicting evidence cases behave correctly.
-- [ ] Governance checklist passes.
-- [ ] End-to-end golden-case QA passes.
+- [x] Synthetic dataset is reproducible.
+- [x] ~~Four~~ Five golden cases are stable and documented.
+- [x] 20 official positive cases plus 40 independent wording challenges; scope and four semantic misses documented.
+- [x] Ground truth is hidden from the agent.
+- [x] Clinical notes are synthetic and useful for retrieval testing.
+- [x] Policy corpus is sourceable and version-aware.
+- [x] Screening fixtures cover boundary conditions.
+- [x] Official evidence relevance labels support precision/coverage metrics.
+- [x] Evaluation runner executes without manual case-by-case intervention.
+- [x] Existing aggregate metrics and recordings are reproducible; new analytical report skipped per user.
+- [x] Missing/conflicting evidence cases behave correctly in backend QA.
+- [x] Backend governance checklist passes with documented limitations.
+- [x] End-to-end CLI golden-case QA passes.
+- [ ] HTTP/PostgreSQL and browser golden-case acceptance (Person 1/2).

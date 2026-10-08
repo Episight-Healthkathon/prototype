@@ -6,9 +6,12 @@
 | `METRICS.md` | Metric formulas and edge cases |
 | `run_regression.sh` | Regenerate (freshness check) → batch (3 deterministic modes) → score → fail if a golden case fails |
 | `reports/v0.1.0-pc-0.1.1-backend/` | Current deterministic regression baseline: verified corpus + emergency-care matcher |
+| `reports/v0.1.0-pc-0.1.1-full/` | Fresh FULL benchmark on `90e914f`, verified corpus, 3 repeats, compressed replay bundle |
 | `reports/v0.1.0-baseline/` | Historical deterministic baseline, before Person 1's fixes |
 | `reports/v0.1.0-full/` | All four modes incl. FULL (OpenAI `gpt-4o-mini`, 3 repeats) |
 | `FINDINGS.md` | Benchmark findings reported to Person 1 |
+| `run_person3_qa.py` / `paraphrase_cases.py` | Offline 40-case challenge, label audit, governance and CLI pipeline QA |
+| `person3-qa/2026-10-08/` | Acceptance evidence, golden handoff fixtures and compressed raw QA outputs |
 | `runs/` | Scratch run output (git-ignored) |
 
 ## Deterministic benchmark (no key needed)
@@ -18,6 +21,10 @@ bash evaluation/run_regression.sh my-run       # writes evaluation/runs/my-run/r
 ```
 
 ## AI planner (FULL) benchmark: needs a key
+
+The fresh 2026-10-08 run is `reports/v0.1.0-pc-0.1.1-full/`: 60/60 correct outcomes,
+5/5 golden in every repeat, zero unsafe closures, all 60 runs reproduced from recordings.
+See its `VALIDATION.md` for model health, limitations and keyless replay instructions.
 
 Use `pc-0.1.1` for a new benchmark. The committed `v0.1.0-full` report and recordings describe the
 older backend/corpus and are retained as historical evidence, not a benchmark of the new matcher.
@@ -69,3 +76,19 @@ Missing cases/repeats, screening errors, new case/state failures and falling qua
 Unsafe closures or invalid briefs/tools always fail in full modes. Weak ablation modes may retain
 their documented baseline failures. `--baseline` alone reports differences; add
 `--fail-on-regression` to enforce them. Use a fresh run name when switching modes/corpora.
+
+## Person 3 offline acceptance (no frontend, database or model key)
+
+```bash
+uv run --project apps/api python evaluation/run_person3_qa.py --out evaluation/runs/person3-qa
+uv run --project apps/api pytest -q apps/api/tests/unit data/generator/tests evaluation/tests
+```
+
+This runs the unchanged official dataset and 40 independent wording/scope/availability cases.
+The gate requires complete cases, preserved sources, valid provenance/briefs, ground-truth isolation,
+zero unsafe challenge closures and at most the four documented semantic misses. Clinical accuracy is
+36/40, not 40/40; all four misses require human review. The historical label scores and the corrected
+GT-B06 label metrics are separate. CI runs this acceptance in addition to the original regression.
+
+See [Person 3 handoff](../docs/PERSON_3_HANDOFF.md) for completed work, evidence and remaining owners.
+The requested consolidated four-mode analytical report (stage 5) was skipped; existing reports remain.

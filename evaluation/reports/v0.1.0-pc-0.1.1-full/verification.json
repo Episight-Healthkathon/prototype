@@ -1,0 +1,9 @@
+{
+  "expected_runs": 60,
+  "observed_runs": 60,
+  "screening_anchor_sets_match": true,
+  "independent_label_errors": [],
+  "unstable_outcomes": [],
+  "replay_semantic_differences": [],
+  "replay_comparison": "All case fields except elapsed_ms and brief.generated_at; includes brief content, states and planner provenance"
+}

@@ -162,8 +162,10 @@ _NON_CURRENT_CARE = re.compile(
 def _negated(lower: str, start: int, phrase: str, window_words: int) -> bool:
     if any(phrase.startswith(c + " ") for c in NEGATION_CUES):
         return False  # the phrase itself carries the negation, e.g. "tidak membaik"
-    window = " ".join(lower[:start].split()[-window_words:])
-    return bool(_CUE.search(window))
+    prefix = lower[:start]
+    # Measure distance from the END of a complete cue. A one-word window must still
+    # recognise multiword cues such as "tidak ada komplikasi" / "belum ada perburukan".
+    return any(len(prefix[m.end():].split()) < window_words for m in _CUE.finditer(prefix))
 
 
 def match_context(text: str, context: ContextType) -> list[ContextMatch]:
@@ -172,12 +174,16 @@ def match_context(text: str, context: ContextType) -> list[ContextMatch]:
     out: list[ContextMatch] = []
     for sent in sentences(text):
         lower = sent.text.lower()
+        # Historical/conditional emergency mentions do not document current care.
+        # Apply the same conservative guard to ordinary phrases and active resuscitation.
+        non_current_emergency = context == ContextType.EMERGENCY and bool(_NON_CURRENT_CARE.search(lower))
         affirmed: list[str] = []
         negated: list[str] = []
         for phrase, rx in affirm_patterns:
             for m in rx.finditer(lower):
                 if not _negated(lower, m.start(), phrase, lexicon.negation_window):
-                    affirmed.append(phrase)
+                    if not non_current_emergency:
+                        affirmed.append(phrase)
                 elif lexicon.negation_is_evidence:
                     negated.append(phrase)
         for phrase, rx in negate_patterns:

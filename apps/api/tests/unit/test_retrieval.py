@@ -110,6 +110,30 @@ def test_matches_on_every_interim_note_are_literal_substrings(dataset):
                 assert note.text[m.char_start : m.char_end] == m.excerpt
 
 
+@pytest.mark.parametrize("text", [
+    "Riwayat syok dua tahun lalu. Saat ini kondisi stabil.",
+    "Jika terjadi syok, segera hubungi dokter. Saat ini kondisi stabil.",
+    "Pasien pernah mengalami penurunan kesadaran pada perawatan sebelumnya.",
+    "Edukasi keluarga tentang tanda kegawatdaruratan.",
+])
+def test_historical_and_hypothetical_emergency_phrases_are_not_current_evidence(text):
+    assert _match(text, ContextType.EMERGENCY) == []
+
+
+@pytest.mark.parametrize("text", [
+    "Tidak ada komplikasi. Kondisi stabil.",
+    "Belum ada perburukan pada pasien.",
+    "Belum ada indikasi medis untuk perawatan ulang.",
+])
+def test_complete_negation_cues_apply_even_with_one_word_distance(text):
+    assert _match(text, ContextType.CLINICAL_JUSTIFICATION) == []
+
+
+def test_past_emergency_does_not_hide_current_emergency_in_another_sentence():
+    hits = _match("Riwayat syok dua tahun lalu. Pasien mengalami syok saat tiba hari ini.", ContextType.EMERGENCY)
+    assert len(hits) == 1 and hits[0][0] == Stance.AFFIRMS
+
+
 # --- policy -----------------------------------------------------------------------------------------
 
 

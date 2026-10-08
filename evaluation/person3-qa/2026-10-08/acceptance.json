@@ -1,0 +1,958 @@
+{
+  "checks": {
+    "source_inputs_unchanged": true,
+    "all_runtime_governance_checks": true,
+    "baseline_golden": true,
+    "baseline_outcomes": true,
+    "baseline_screening": true,
+    "baseline_complete": true,
+    "baseline_no_false_positives": true,
+    "challenge_complete": true,
+    "no_unsafe_challenge_closures": true,
+    "amended_labels_consistent": true,
+    "label_amendment_scoped": true,
+    "synthetic_patient_ids": true,
+    "no_label_fields_in_source_tables": true,
+    "ingest_refuses_ground_truth": true,
+    "only_documented_challenge_gaps": true
+  },
+  "passed": true,
+  "baseline": {
+    "screening": {
+      "recall": 1.0,
+      "missed": [],
+      "must_not_flag_violations": [],
+      "false_positive_sets": 0,
+      "flagged_sets": 20
+    },
+    "cases_scored": 20,
+    "expected_runs": 20,
+    "missing_runs": [],
+    "episode_recall": 1.0,
+    "episode_precision": 1.0,
+    "evidence_precision": 1.0,
+    "note_evidence_precision": 1.0,
+    "policy_precision": 1.0,
+    "evidence_coverage": 1.0,
+    "exceptions": {
+      "tp": 10,
+      "fp": 1,
+      "fn": 0,
+      "precision": 0.9090909090909091,
+      "recall": 1.0,
+      "exact_case_accuracy": 0.95
+    },
+    "outcome_accuracy": 1.0,
+    "stop_reason_accuracy": 1.0,
+    "escalation": {
+      "accuracy": 1.0,
+      "unsafe_closures": [],
+      "over_escalations": []
+    },
+    "state_accuracy": 1.0,
+    "traceability": 1.0,
+    "brief_failures": 0,
+    "tool_failures": 0,
+    "avg_steps": 10.05,
+    "avg_elapsed_ms": 5.2,
+    "planner": {
+      "llm_steps": 0,
+      "llm_retry_steps": 0,
+      "fallback_steps": 0,
+      "rule_steps": 201,
+      "validation_rejections": 0
+    },
+    "golden": {
+      "A": true,
+      "B": true,
+      "C": true,
+      "D": true,
+      "E": true
+    },
+    "variance": {
+      "repeats": 1,
+      "unstable_cases": []
+    },
+    "by_scenario_class": {
+      "CONFLICTING_EVIDENCE": {
+        "runs": 2,
+        "expected_runs": 2,
+        "outcome_accuracy": 1.0
+      },
+      "LEGIT_CHRONIC": {
+        "runs": 2,
+        "expected_runs": 2,
+        "outcome_accuracy": 1.0
+      },
+      "LEGIT_EMERGENCY_RETURN": {
+        "runs": 1,
+        "expected_runs": 1,
+        "outcome_accuracy": 1.0
+      },
+      "LEGIT_READMISSION_EMERGENCY": {
+        "runs": 3,
+        "expected_runs": 3,
+        "outcome_accuracy": 1.0
+      },
+      "LEGIT_STAGED_PROCEDURE": {
+        "runs": 2,
+        "expected_runs": 2,
+        "outcome_accuracy": 1.0
+      },
+      "LEGIT_SUPPORTING_EXAM_FOLLOWUP": {
+        "runs": 1,
+        "expected_runs": 1,
+        "outcome_accuracy": 1.0
+      },
+      "MISSING_EVIDENCE": {
+        "runs": 3,
+        "expected_runs": 3,
+        "outcome_accuracy": 1.0
+      },
+      "POTENTIAL_FRAGMENTATION": {
+        "runs": 2,
+        "expected_runs": 2,
+        "outcome_accuracy": 1.0
+      },
+      "POTENTIAL_READMISSION": {
+        "runs": 4,
+        "expected_runs": 4,
+        "outcome_accuracy": 1.0
+      }
+    },
+    "failing_cases": []
+  },
+  "challenge": {
+    "screening": {
+      "recall": 1.0,
+      "missed": [],
+      "must_not_flag_violations": [],
+      "false_positive_sets": 0,
+      "flagged_sets": 40
+    },
+    "cases_scored": 40,
+    "expected_runs": 40,
+    "missing_runs": [],
+    "episode_recall": 1.0,
+    "episode_precision": 1.0,
+    "exceptions": {
+      "tp": 15,
+      "fp": 0,
+      "fn": 3,
+      "precision": 1.0,
+      "recall": 0.8333333333333334,
+      "exact_case_accuracy": 0.925
+    },
+    "outcome_accuracy": 0.9,
+    "stop_reason_accuracy": 0.9,
+    "escalation": {
+      "accuracy": 0.9,
+      "unsafe_closures": [],
+      "over_escalations": [
+        "P11",
+        "P17",
+        "P23",
+        "P28"
+      ]
+    },
+    "state_accuracy": 0.9125,
+    "traceability": 1.0,
+    "brief_failures": 0,
+    "tool_failures": 0,
+    "avg_steps": 9.975,
+    "avg_elapsed_ms": 5.225,
+    "planner": {
+      "llm_steps": 0,
+      "llm_retry_steps": 0,
+      "fallback_steps": 0,
+      "rule_steps": 399,
+      "validation_rejections": 0
+    },
+    "golden": {},
+    "variance": {
+      "repeats": 1,
+      "unstable_cases": []
+    },
+    "by_scenario_class": {
+      "CHRONIC_CONDITION_CONTEXT": {
+        "runs": 6,
+        "expected_runs": 6,
+        "outcome_accuracy": 0.8333333333333334
+      },
+      "CLINICAL_JUSTIFICATION": {
+        "runs": 5,
+        "expected_runs": 5,
+        "outcome_accuracy": 1.0
+      },
+      "EMERGENCY_CONTEXT": {
+        "runs": 17,
+        "expected_runs": 17,
+        "outcome_accuracy": 0.9411764705882353
+      },
+      "SCHEDULED_PROCEDURE_CONTEXT": {
+        "runs": 6,
+        "expected_runs": 6,
+        "outcome_accuracy": 0.8333333333333334
+      },
+      "SUPPORTING_EXAM_FOLLOWUP_CONTEXT": {
+        "runs": 6,
+        "expected_runs": 6,
+        "outcome_accuracy": 0.8333333333333334
+      }
+    },
+    "failing_cases": [
+      "P11",
+      "P17",
+      "P23",
+      "P28"
+    ],
+    "evidence_metric_scope": "Not annotated; assessed separately by literal provenance and brief checks."
+  },
+  "mismatches": [
+    {
+      "id": "P28",
+      "actual_outcome": "HUMAN_REVIEW_REQUIRED",
+      "actual_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+      "expected_outcome": "EVIDENCE_SUFFICIENT",
+      "states": {
+        "SUPPORTING_EXAM_FOLLOWUP_CONTEXT": {
+          "expected": "FOUND",
+          "actual": "NOT_FOUND"
+        }
+      },
+      "known_gap": "Exam follow-up is expressed without the current phrase list."
+    },
+    {
+      "id": "P17",
+      "actual_outcome": "HUMAN_REVIEW_REQUIRED",
+      "actual_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+      "expected_outcome": "EVIDENCE_SUFFICIENT",
+      "states": {
+        "CHRONIC_CONDITION_CONTEXT": {
+          "expected": "FOUND",
+          "actual": "NOT_FOUND"
+        }
+      },
+      "known_gap": "Duration implies chronic context but no chronic lexicon phrase is present."
+    },
+    {
+      "id": "P23",
+      "actual_outcome": "HUMAN_REVIEW_REQUIRED",
+      "actual_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+      "expected_outcome": "EVIDENCE_SUFFICIENT",
+      "states": {
+        "SCHEDULE_CONSISTENCY": {
+          "expected": "FOUND",
+          "actual": "NOT_FOUND"
+        }
+      },
+      "known_gap": "Plan and procedure code occur in separate sentences."
+    },
+    {
+      "id": "P11",
+      "actual_outcome": "HUMAN_REVIEW_REQUIRED",
+      "actual_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+      "expected_outcome": "EVIDENCE_SUFFICIENT",
+      "states": {
+        "EMERGENCY_CONTEXT": {
+          "expected": "FOUND",
+          "actual": "NOT_FOUND"
+        }
+      },
+      "known_gap": "Active resuscitation is worded outside the current phrase patterns."
+    }
+  ],
+  "amended_label_metrics": {
+    "screening": {
+      "recall": 1.0,
+      "missed": [],
+      "must_not_flag_violations": [],
+      "false_positive_sets": 0,
+      "flagged_sets": 20
+    },
+    "cases_scored": 20,
+    "expected_runs": 20,
+    "missing_runs": [],
+    "episode_recall": 1.0,
+    "episode_precision": 1.0,
+    "evidence_precision": 1.0,
+    "note_evidence_precision": 1.0,
+    "policy_precision": 1.0,
+    "evidence_coverage": 1.0,
+    "exceptions": {
+      "tp": 11,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "exact_case_accuracy": 1.0
+    },
+    "outcome_accuracy": 1.0,
+    "stop_reason_accuracy": 1.0,
+    "escalation": {
+      "accuracy": 1.0,
+      "unsafe_closures": [],
+      "over_escalations": []
+    },
+    "state_accuracy": 1.0,
+    "traceability": 1.0,
+    "brief_failures": 0,
+    "tool_failures": 0,
+    "avg_steps": 10.05,
+    "avg_elapsed_ms": 5.2,
+    "planner": {
+      "llm_steps": 0,
+      "llm_retry_steps": 0,
+      "fallback_steps": 0,
+      "rule_steps": 201,
+      "validation_rejections": 0
+    },
+    "golden": {
+      "A": true,
+      "B": true,
+      "C": true,
+      "D": true,
+      "E": true
+    },
+    "variance": {
+      "repeats": 1,
+      "unstable_cases": []
+    },
+    "by_scenario_class": {
+      "CONFLICTING_EVIDENCE": {
+        "runs": 2,
+        "expected_runs": 2,
+        "outcome_accuracy": 1.0
+      },
+      "LEGIT_CHRONIC": {
+        "runs": 2,
+        "expected_runs": 2,
+        "outcome_accuracy": 1.0
+      },
+      "LEGIT_EMERGENCY_RETURN": {
+        "runs": 1,
+        "expected_runs": 1,
+        "outcome_accuracy": 1.0
+      },
+      "LEGIT_READMISSION_EMERGENCY": {
+        "runs": 3,
+        "expected_runs": 3,
+        "outcome_accuracy": 1.0
+      },
+      "LEGIT_STAGED_PROCEDURE": {
+        "runs": 2,
+        "expected_runs": 2,
+        "outcome_accuracy": 1.0
+      },
+      "LEGIT_SUPPORTING_EXAM_FOLLOWUP": {
+        "runs": 1,
+        "expected_runs": 1,
+        "outcome_accuracy": 1.0
+      },
+      "MISSING_EVIDENCE": {
+        "runs": 3,
+        "expected_runs": 3,
+        "outcome_accuracy": 1.0
+      },
+      "POTENTIAL_FRAGMENTATION": {
+        "runs": 2,
+        "expected_runs": 2,
+        "outcome_accuracy": 1.0
+      },
+      "POTENTIAL_READMISSION": {
+        "runs": 4,
+        "expected_runs": 4,
+        "outcome_accuracy": 1.0
+      }
+    },
+    "failing_cases": []
+  },
+  "label_audit": {
+    "definition": "METRICS.md scores surfaced FOUND context, not adjudicated exceptions.",
+    "contradictions": [
+      {
+        "gt_id": "GT-B06",
+        "found_but_not_labelled": [
+          "SCHEDULED_PROCEDURE_CONTEXT"
+        ]
+      }
+    ],
+    "historical_labels_changed": false,
+    "resolution": "v0.1.0-labels-1 adds the surfaced scheduled context to GT-B06. Historical labels and scores are retained."
+  },
+  "metadata": {
+    "generated_at": "2026-10-08T11:13:36.576156+00:00",
+    "code_commit": "90e914f391ae5946a908e9a4c5063b115c682638",
+    "runtime_source_hashes": {
+      "apps/api/src/episight/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/agent/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/agent/catalog.py": "a952b043303a9798bf9f64dcc08f112a51a202ed22eae5b7a6dfc29361b841b1",
+      "apps/api/src/episight/agent/context.py": "e09eab09f76584b593d030e873564e87f10fe43d46d7c858532f35d354d21616",
+      "apps/api/src/episight/agent/envelope/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/agent/envelope/allowed.py": "48c4e147795aede082b06cedd04dbcdc40e510a63e2921149eb21e40e2b7802d",
+      "apps/api/src/episight/agent/envelope/stopping.py": "77b7461876f33255c311a47574259cc62c785968ad028c86376ab87f11f3361a",
+      "apps/api/src/episight/agent/envelope/validator.py": "d30560daebcd240d78c5d7625c171f8b3206f9677724993027423ffa06a11170",
+      "apps/api/src/episight/agent/loading.py": "d24ba0db25261c7a5f936d0c23d49c0bec13229321304b79a964563939a5989b",
+      "apps/api/src/episight/agent/orchestrator.py": "cf6c7140d58a2f70be9eb94a005aa594633dd82bc679672bd2dd30f18a262264",
+      "apps/api/src/episight/agent/planners/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/agent/planners/base.py": "8649369a6e0f454460f4c46b0d037feb228813e93cef9696589d4a25f9c945b9",
+      "apps/api/src/episight/agent/planners/rule_planner.py": "db94b23f30c0bea1e23f59af036b40b854d0945be5ee2bd5f2c0f9e2536cafa1",
+      "apps/api/src/episight/agent/reducer.py": "099957a540031b5170142e792ed732525ec4c430741db4d0ed917d664f0b0275",
+      "apps/api/src/episight/agent/state.py": "b40cd35de5a07daa14b24bfd32caa6eea1a7f6a060e1c2ee7d962e778383b1a0",
+      "apps/api/src/episight/agent/tools.py": "8abe9020217da47b718c2e94707ec6dd57bbf0f389ac911900885e7670ef51c1",
+      "apps/api/src/episight/api/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/api/errors.py": "893b483eb6e78435fe95237fcb2579c723c59cd32d412f3da2ab55e2fc87a14c",
+      "apps/api/src/episight/api/routers/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/api/routers/cases.py": "bb2db60355109e39f092c96013d874cb75845744747879f7e1ace81c18012012",
+      "apps/api/src/episight/api/routers/evidence.py": "814f3d462f82a5c8f1121161b6064e21208a3665c4bbff324fe46dc64bf9b2fa",
+      "apps/api/src/episight/api/routers/health.py": "c13b7c7287d1438b32db17f364e5fe98dc77281b1d9b7e63204f52cc04635124",
+      "apps/api/src/episight/api/views.py": "2f04b276eb2db0cf5c2487390944a30cd9e7e826bdeb4df3c9ae60b6a85338fc",
+      "apps/api/src/episight/batch.py": "37ccb3a6332d6b145be2eecefa7506537a9b775bca8ad2d188c4d4c0a140de9b",
+      "apps/api/src/episight/brief/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/brief/builder.py": "907373b29326bfbe7e8557bb5ce5e7ddcd0acb22cbb0c1d338919e65c99d50a0",
+      "apps/api/src/episight/brief/validator.py": "014554c069ed77ebc6dcac37ea2fb3a346a5baaf3c7f0afbeff4c01f75b1a008",
+      "apps/api/src/episight/cli.py": "9efb41f805177902ed8c5ea52433a57fb56188a3fb06cd7efdbad54cee1c85fe",
+      "apps/api/src/episight/config.py": "67d288cc91bb34aba824f39536737089d8bac16f6f6e0e9a185869b833e2d4f1",
+      "apps/api/src/episight/contracts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/contracts/api.py": "267f5a53e4c4372636c2433598abb4ca80429b7a5327e152a25f408d6bc008a1",
+      "apps/api/src/episight/contracts/data.py": "c89cfff16b4d1a488e51628c55e32b8b963baa669ddcef51b601b9ef1b00e3a9",
+      "apps/api/src/episight/contracts/enums.py": "7f30c669c70da44666529f373766bcc133499fe416136418dabd850ce6100466",
+      "apps/api/src/episight/db/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/db/convert.py": "359d26894ec667cdcebd002cb1233fbc2840eecd674b4a0a02b1a2a0b6aa0802",
+      "apps/api/src/episight/db/models.py": "7da8373436c9b4abcbedb71445a0d843dcce2ed5d01f6d88f020e471c8f9e246",
+      "apps/api/src/episight/db/session.py": "2632340665941f2eeadbcfca49e6e6aea9f84e905aa2b52df697ad52ba5481ca",
+      "apps/api/src/episight/devtools/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/devtools/contract_export.py": "18204889db46fba989ae521379fe0f19f593b5eae66a578f410409ee429e338c",
+      "apps/api/src/episight/episodes/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/episodes/codes.py": "56ba0dc228e8e5baf1e137f660d2ff5a302434b5476d6f18dcffdbabdefebf8d",
+      "apps/api/src/episight/episodes/reconstruction.py": "49fa20294e3723cd19c41ce03b7f1f4b1deddfbf40fd8859c24d818133aac0f1",
+      "apps/api/src/episight/episodes/timeline.py": "2f91341e8a3162eeb3e95a375e29a642879b1c27e953c8c94d8073b6bcfb3bdb",
+      "apps/api/src/episight/evidence/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/evidence/ledger.py": "315cc360d4b8fef5869417e15b29f45c89bb2a9e09433848bdbc7a4856fd1bd9",
+      "apps/api/src/episight/ingest/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/ingest/loader.py": "fb8960e04f4f87fa252a75c17d5162ebcfbc83429063cd8be36681bd2123884c",
+      "apps/api/src/episight/ingest/seed.py": "94dd2c56e7aeba92ea511a672e03e56da440a71f466815364b621b5ceec4792b",
+      "apps/api/src/episight/llm/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/llm/clients.py": "694095e75d544a9e7a32765ab54fb8c9f3e800d80ba724eac2e7faa8c37799c7",
+      "apps/api/src/episight/llm/config.py": "4a2f68ef7af6fb059353b6dbee8cd07284b47999023e6c4d00d1204fc41d89ff",
+      "apps/api/src/episight/llm/planner.py": "aebd13a5685888b1916901f04ba83f115cb7e2c7be7500924832a8711408a540",
+      "apps/api/src/episight/llm/prompt.py": "fbf9ff0e9265ec03c94b94fd53d9e8866f986db21955910282277800b24fd98f",
+      "apps/api/src/episight/llm/recording.py": "efb8e14693be6892a6e6b5ca424b650a53d60956eddc0f612a1a5dbc319dd997",
+      "apps/api/src/episight/log.py": "dad7e26b4b0d49feeab4103d5f6627c3d840f38bd7c6982440edf78d2c7f8968",
+      "apps/api/src/episight/main.py": "88a5f0e068c706f065a7af45fcb1ac3d529666f2ec0ac9fe0226eff303771c6b",
+      "apps/api/src/episight/retrieval/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/retrieval/bm25.py": "82e56187bdc4f42a56802afea3b7b0757f657d82666ce31129c2601a49117536",
+      "apps/api/src/episight/retrieval/context.py": "bce4e3c45756e6ff0a7ee0a0ae384c8f2b8c4d5b2520b7eadb90bfad7646ef9b",
+      "apps/api/src/episight/retrieval/policy.py": "5aa0173f53fb4def2d2011b61f2bcd1a257abc8acc6e8c343b69308e22110792",
+      "apps/api/src/episight/retrieval/text.py": "8dd2e923c9bcf5e9faa27448aa1ecc628b2388a9d44a68cb52d6d192ef0ede06",
+      "apps/api/src/episight/screening/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/screening/rules.py": "5bdef5203293cdec4072d9b2cdc5c19a6d1675a4028edf8012f5d5f6edbaa6e8",
+      "apps/api/src/episight/services/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "apps/api/src/episight/services/context_loader.py": "867ba45d14fd79108bb09eab48c946813e5f8a233ddba5faa668a80eb0880b68",
+      "apps/api/src/episight/services/investigations.py": "ed31277779a1c9b7b7119a04909760047595f466f5527a68a251c5e2ec3f7c18",
+      "apps/api/src/episight/services/recorder.py": "cfc282008914cd3f616402315d95f835ce5236562147a927d0433fbccf9d1e6d",
+      "apps/api/src/episight/services/recording_store.py": "915e630f24a24c96063a12817ad35bb82050117b9ae3651e591ac72d717a0ef2",
+      "data/ground-truth/v0.1.0/cases.jsonl": "493a04b77b6af70905d9d96706c6190d1fd53b2a824b44e838ff30451c59a136",
+      "data/ground-truth/v0.1.0-labels-1/cases.jsonl": "be3bf88618e8cfb538f79cff61b4f3ddf6d892b2cf130e4ea16262bc2bfeb30c",
+      "data/policies/pc-0.1.1/manifest.json": "3ff8a1345255c58618a076fd793f91ee46efb8db140e7a810233dd63ee354b89",
+      "data/policies/pc-0.1.1/policy_sections.jsonl": "380663c4982627a54fe9f1736978a76533c8139a0c939b69cae140ac9b013288",
+      "data/policies/pc-0.1.1/VERIFICATION.md": "3f7e0ebf3bd0254ebcead8a7634327ac6506dbe23b78a6a23468945a0dc3fef4",
+      "data/synthetic/v0.1.0/claims.jsonl": "99ea06d338d5c787ea90d26711a74420cfd3ad443312e3e79f97120f67d20a4e",
+      "data/synthetic/v0.1.0/clinical_notes.jsonl": "2e887ddc86941b321e0c05c0f235c611402ffcd42eff2e5e7de220bb12af8f1c",
+      "data/synthetic/v0.1.0/episodes.jsonl": "d4a4e0d7e4c3f86c173a56765ba2e9007ca15ae436a0039113bc611faa57fff2",
+      "data/synthetic/v0.1.0/manifest.json": "e4ceecfa11eec8f363ff562ee5c4587fc86bda70ac990c1ccf33c325af261a69",
+      "data/synthetic/v0.1.0/patients.jsonl": "73ff43b042d519fba27454d7dde98129bbc5d8863726b928751be0868cec545a",
+      "data/synthetic/v0.1.0/providers.jsonl": "9e24881f95ffae280d15e2dc485c6c4ff2ccbd0f710c26195cccf5fe4e93c226"
+    },
+    "qa_source_hashes": {
+      "evaluation/run_person3_qa.py": "404919c4f97382699716877ca4590439f46daf4c262a54fd52879aacaadb3d21",
+      "evaluation/paraphrase_cases.py": "a4b64dbcc6a92a4534b6c7e59c3c8786dd76b001af476c47aa60ede5ef1899d8",
+      "evaluation/score.py": "746ae87b580c2d64a254fc5701418ba1817b08043807818b67a6396519309bb2"
+    },
+    "runtime_worktree_modified": true,
+    "model_calls": 0,
+    "scope": "CLI/domain pipeline, not HTTP/PostgreSQL or frontend E2E",
+    "variants": [
+      {
+        "id": "P01",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Pasien diterima di UGD dan mendapat penanganan segera.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P02",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Terjadi penurunan kesadaran pada kedatangan kali ini.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P03",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Pasien distabilisasi langsung dalam ruangan resusitasi.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P04",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "The patient was stabilized in the resuscitation area.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P05",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Tidak ada tanda kegawatdaruratan saat kunjungan ini.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P06",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Pasien masuk secara elektif dengan keadaan stabil.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P07",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Pasien diantar ambulans untuk kontrol rutin.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P08",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Jika memburuk, pasien akan ditangani di ruang resusitasi.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P09",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Riwayat syok dua tahun lalu. Saat ini kondisi stabil.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P10",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Jika terjadi syok, segera hubungi dokter. Saat ini kondisi stabil.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P11",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Resusitasi dilakukan segera setelah pasien tiba dengan henti napas.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": "Active resuscitation is worded outside the current phrase patterns."
+      },
+      {
+        "id": "P12",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Pasien mengalami kegawatdaruratan pada perawatan pertama.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": true,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P13",
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "text": "Pasien memiliki penyakit menahun yang memerlukan pemantauan.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P14",
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "text": "Penyakit kronis telah terdokumentasi pada kunjungan sebelumnya.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": true,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P15",
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "text": "Chronic disease follow-up is documented.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P16",
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "text": "Tidak ada penyakit kronis yang tercatat.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P17",
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "text": "Diagnosis gagal ginjal telah berlangsung selama lima tahun.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": "Duration implies chronic context but no chronic lexicon phrase is present."
+      },
+      {
+        "id": "P18",
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "text": "Tindakan ICD-9-CM 36.06 dijadwalkan pada perawatan berikutnya.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": true,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P19",
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "text": "PCI tahap II dengan kode 36.06 merupakan kelanjutan terapi.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": true,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P20",
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "text": "Scheduled procedure 36.06 will be performed at the next admission.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": true,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P21",
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "text": "Tidak ada tindakan 36.06 yang dijadwalkan.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": true,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P22",
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "text": "Rencana tindakan 36.06 dilakukan bertahap.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": true,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.07",
+        "known_gap": null
+      },
+      {
+        "id": "P23",
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "text": "Tindakan dijadwalkan. Kode prosedur adalah 36.06.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": true,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": "Plan and procedure code occur in separate sentences."
+      },
+      {
+        "id": "P24",
+        "key": "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+        "text": "Kunjungan untuk konsultasi hasil laboratorium.",
+        "state": "FOUND",
+        "encounter": "OUTPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P25",
+        "key": "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+        "text": "Pasien membawa hasil endoskopi untuk dibahas bersama dokter.",
+        "state": "FOUND",
+        "encounter": "OUTPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P26",
+        "key": "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+        "text": "Hasil USG dibahas pada kunjungan ulang.",
+        "state": "FOUND",
+        "encounter": "OUTPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P27",
+        "key": "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+        "text": "Pasien tidak membawa hasil pemeriksaan penunjang.",
+        "state": "NOT_FOUND",
+        "encounter": "OUTPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P28",
+        "key": "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+        "text": "Kunjungan ini untuk menelaah temuan pencitraan dari pemeriksaan kemarin.",
+        "state": "FOUND",
+        "encounter": "OUTPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": "Exam follow-up is expressed without the current phrase list."
+      },
+      {
+        "id": "P29",
+        "key": "CLINICAL_JUSTIFICATION",
+        "text": "Perawatan ulang atas indikasi medis yang terdokumentasi.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P30",
+        "key": "CLINICAL_JUSTIFICATION",
+        "text": "Keluhan memberat sehingga memerlukan evaluasi ulang.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P31",
+        "key": "CLINICAL_JUSTIFICATION",
+        "text": "Decompensated heart failure memerlukan penanganan ulang.",
+        "state": "FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P32",
+        "key": "CLINICAL_JUSTIFICATION",
+        "text": "Tidak ada komplikasi. Kondisi stabil.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P33",
+        "key": "CLINICAL_JUSTIFICATION",
+        "text": "Pasien tanpa perburukan. Kondisi stabil.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P34",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Pasien mengalami syok saat tiba.",
+        "state": "CONFLICTING",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": "Tidak ada syok pada pemeriksaan saat tiba.",
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P35",
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "text": "Penyakit kronis terkonfirmasi.",
+        "state": "CONFLICTING",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": "Tidak ada penyakit kronis dalam catatan ini.",
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P36",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "",
+        "state": "UNAVAILABLE",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "UNAVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P37",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "",
+        "state": "UNAVAILABLE",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "RESTRICTED",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P38",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "Tanpa syok dan tanpa penurunan kesadaran.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": false,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P39",
+        "key": "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+        "text": "Konsultasi hasil laboratorium dilakukan pada kunjungan pertama.",
+        "state": "NOT_FOUND",
+        "encounter": "OUTPATIENT",
+        "first_only": true,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      },
+      {
+        "id": "P40",
+        "key": "EMERGENCY_CONTEXT",
+        "text": "UGD dicatat pada episode awal saja.",
+        "state": "NOT_FOUND",
+        "encounter": "INPATIENT",
+        "first_only": true,
+        "other_text": null,
+        "availability": "AVAILABLE",
+        "performed": "36.06",
+        "known_gap": null
+      }
+    ]
+  }
+}

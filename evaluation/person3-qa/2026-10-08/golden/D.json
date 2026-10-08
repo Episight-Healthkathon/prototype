@@ -1,0 +1,486 @@
+{
+  "gt_id": "GT-D",
+  "golden_case": "D",
+  "case_id": "CASE-RA-609280ef",
+  "checks": {
+    "brief_valid": true,
+    "literal_provenance": true,
+    "policy_metadata": true,
+    "source_records_unchanged": true,
+    "prompt_has_no_label_fields": true,
+    "human_review_notice": true,
+    "timeline_covers_expected_episodes": true,
+    "signal_matches_label": true,
+    "material_statements_traceable": true,
+    "tool_calls_succeeded": true,
+    "no_model_calls": true
+  },
+  "outcome": "EVIDENCE_UNAVAILABLE",
+  "stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+  "timeline": {
+    "case_id": "CASE-RA-609280ef",
+    "patient_id": "PAT-000004",
+    "episodes": [
+      {
+        "episode_id": "EPI-000009",
+        "role": "ANCHOR",
+        "encounter_type": "INPATIENT",
+        "admission_type": null,
+        "provider": {
+          "provider_id": "PRV-0001",
+          "name": "RS Sintetis Nusantara 01",
+          "hospital_class": "B"
+        },
+        "start_at": "2026-06-01T14:00:00+07:00",
+        "end_at": "2026-06-05T10:00:00+07:00",
+        "length_of_stay_days": 4,
+        "interval_from_previous_days": null,
+        "primary_diagnosis": {
+          "code": "J18.9",
+          "label": "Pneumonia, unspecified"
+        },
+        "secondary_diagnoses": [],
+        "procedures": [],
+        "claim": {
+          "claim_id": "CLM-000009",
+          "inacbg_code": "J-4-16-I",
+          "claim_status": "SUBMITTED"
+        },
+        "documents": [
+          {
+            "note_id": "NOTE-000014",
+            "note_type": "DISCHARGE_SUMMARY",
+            "title": "Ringkasan pulang",
+            "availability": "AVAILABLE"
+          }
+        ],
+        "relation_reasons": [
+          "INDEX_EPISODE"
+        ],
+        "evidence_ids": []
+      },
+      {
+        "episode_id": "EPI-000010",
+        "role": "ANCHOR",
+        "encounter_type": "INPATIENT",
+        "admission_type": null,
+        "provider": {
+          "provider_id": "PRV-0001",
+          "name": "RS Sintetis Nusantara 01",
+          "hospital_class": "B"
+        },
+        "start_at": "2026-06-16T19:20:00+07:00",
+        "end_at": "2026-06-20T10:00:00+07:00",
+        "length_of_stay_days": 4,
+        "interval_from_previous_days": 11,
+        "primary_diagnosis": {
+          "code": "J18.9",
+          "label": "Pneumonia, unspecified"
+        },
+        "secondary_diagnoses": [],
+        "procedures": [],
+        "claim": {
+          "claim_id": "CLM-000010",
+          "inacbg_code": "J-4-16-I",
+          "claim_status": "SUBMITTED"
+        },
+        "documents": [
+          {
+            "note_id": "NOTE-000015",
+            "note_type": "TRIAGE",
+            "title": "Catatan triase IGD",
+            "availability": "UNAVAILABLE"
+          },
+          {
+            "note_id": "NOTE-000016",
+            "note_type": "PROGRESS",
+            "title": "Catatan perkembangan",
+            "availability": "UNAVAILABLE"
+          },
+          {
+            "note_id": "NOTE-000017",
+            "note_type": "DISCHARGE_SUMMARY",
+            "title": "Ringkasan pulang",
+            "availability": "RESTRICTED"
+          }
+        ],
+        "relation_reasons": [
+          "SAME_PATIENT",
+          "SAME_PROVIDER",
+          "SAME_PRIMARY_DIAGNOSIS",
+          "WITHIN_30_DAYS"
+        ],
+        "evidence_ids": []
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "evidence_id": "EV-2353c7f48bba9609",
+      "case_id": "CASE-RA-609280ef",
+      "run_id": "RUN-QA-CASE-RA-609280ef",
+      "episode_id": "EPI-000010",
+      "source_type": "SCREENING_RULE",
+      "source_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+      "source_title": "Screening rule READMISSION_30D_SAME_PROVIDER_SAME_DX v1",
+      "source_excerpt": "EPI-000010 started 11 day(s) after discharge of EPI-000009; same patient, same FKRTL, same primary diagnosis",
+      "field_path": "pairs[EPI-000009->EPI-000010]",
+      "char_start": null,
+      "char_end": null,
+      "requirement_key": "EPISODE_RELATEDNESS",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "get_episode_history",
+      "retrieval_reason": "Are the episodes actually related? (requirement EPISODE_RELATEDNESS is open)",
+      "extraction_method": "STRUCTURED_FIELD",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 1,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-47435f3a1c5ddc9a",
+      "case_id": "CASE-RA-609280ef",
+      "run_id": "RUN-QA-CASE-RA-609280ef",
+      "episode_id": "EPI-000010",
+      "source_type": "EPISODE_RECORD",
+      "source_id": "EPI-000010",
+      "source_title": "Episode record EPI-000010",
+      "source_excerpt": "J18.9 (EPI-000009) vs J18.9 (EPI-000010)",
+      "field_path": "episodes.primary_diagnosis",
+      "char_start": null,
+      "char_end": null,
+      "requirement_key": "DIAGNOSIS_CONSISTENCY",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "compare_diagnosis",
+      "retrieval_reason": "Are the diagnoses consistent across episodes? (requirement DIAGNOSIS_CONSISTENCY is open)",
+      "extraction_method": "STRUCTURED_FIELD",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 2,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-28f6aee3e4e9c21d",
+      "case_id": "CASE-RA-609280ef",
+      "run_id": "RUN-QA-CASE-RA-609280ef",
+      "episode_id": null,
+      "source_type": "POLICY_SECTION",
+      "source_id": "POL-PMK26-2021-READMISI-01",
+      "source_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan: Readmisi: definisi",
+      "source_excerpt": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dari episode rawat inap sebelumnya dalam waktu kurang atau sama dengan 30 hari.",
+      "field_path": null,
+      "char_start": 0,
+      "char_end": 177,
+      "requirement_key": "APPLICABLE_POLICY",
+      "stance": "INFORMS",
+      "relevance_category": "NEUTRAL",
+      "exception_type": null,
+      "retrieved_by_tool": "retrieve_policy",
+      "retrieval_reason": "Which policy rules apply? (requirement APPLICABLE_POLICY is open)",
+      "extraction_method": "BM25_RETRIEVAL",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 10,
+      "policy_version": "Permenkes 26/2021"
+    },
+    {
+      "evidence_id": "EV-25d7b20f29f417a6",
+      "case_id": "CASE-RA-609280ef",
+      "run_id": "RUN-QA-CASE-RA-609280ef",
+      "episode_id": null,
+      "source_type": "POLICY_SECTION",
+      "source_id": "POL-PMK26-2021-READMISI-02",
+      "source_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan: Readmisi: pengecualian",
+      "source_excerpt": "Kondisi yang dikecualikan dari readmisi yaitu sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. kunjungan pada FKRTL yang berbeda atau kelas FKRTL yang lebih tinggi.",
+      "field_path": null,
+      "char_start": 0,
+      "char_end": 374,
+      "requirement_key": "APPLICABLE_POLICY",
+      "stance": "INFORMS",
+      "relevance_category": "NEUTRAL",
+      "exception_type": null,
+      "retrieved_by_tool": "retrieve_policy",
+      "retrieval_reason": "Which policy rules apply? (requirement APPLICABLE_POLICY is open)",
+      "extraction_method": "BM25_RETRIEVAL",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 10,
+      "policy_version": "Permenkes 26/2021"
+    }
+  ],
+  "brief": {
+    "brief_id": "BRF-QA-CASE-RA-609280ef",
+    "case_id": "CASE-RA-609280ef",
+    "run_id": "RUN-QA-CASE-RA-609280ef",
+    "generated_at": "2026-10-08T00:00:00Z",
+    "generator_version": "brief-template-1",
+    "progress_status": "BRIEF_READY",
+    "outcome": "EVIDENCE_UNAVAILABLE",
+    "stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+    "case_summary": [
+      {
+        "statement_id": "S1",
+        "text": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge: 2 episodes (11 d) at RS Sintetis Nusantara 01.",
+        "evidence_ids": [
+          "EV-2353c7f48bba9609"
+        ],
+        "requirement_keys": [
+          "EPISODE_RELATEDNESS"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "S2",
+        "text": "Key context could not be assessed: emergency context, scheduled or staged procedure, chronic condition, clinical justification.",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "EMERGENCY_CONTEXT",
+          "SCHEDULED_PROCEDURE_CONTEXT",
+          "CHRONIC_CONDITION_CONTEXT",
+          "CLINICAL_JUSTIFICATION"
+        ],
+        "material": false
+      }
+    ],
+    "risk_signal": {
+      "rule_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+      "rule_version": "1",
+      "description": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge",
+      "params": {
+        "threshold_days": 30,
+        "diagnosis_match": "EXACT"
+      },
+      "pairs": [
+        {
+          "from_episode_id": "EPI-000009",
+          "to_episode_id": "EPI-000010",
+          "interval_days": 11,
+          "matched": {
+            "same_patient": true,
+            "same_provider": true,
+            "same_primary_diagnosis": true,
+            "encounter_type": "INPATIENT"
+          }
+        }
+      ],
+      "disclaimer": "A risk signal starts an investigation. It is not a finding."
+    },
+    "episode_timeline": [
+      {
+        "episode_id": "EPI-000009",
+        "label": "Index inpatient stay: Pneumonia, unspecified",
+        "start_at": "2026-06-01T14:00:00+07:00",
+        "end_at": "2026-06-05T10:00:00+07:00",
+        "interval_from_previous_days": null
+      },
+      {
+        "episode_id": "EPI-000010",
+        "label": "Repeat inpatient stay: Pneumonia, unspecified",
+        "start_at": "2026-06-16T19:20:00+07:00",
+        "end_at": "2026-06-20T10:00:00+07:00",
+        "interval_from_previous_days": 11
+      }
+    ],
+    "supporting_risk_evidence": [
+      {
+        "statement_id": "R11",
+        "text": "Episode chain: “EPI-000010 started 11 day(s) after discharge of EPI-000009; same patient, same FKRTL, same primary diagnosis” (READMISSION_30D_SAME_PROVIDER_SAME_DX)",
+        "evidence_ids": [
+          "EV-2353c7f48bba9609"
+        ],
+        "requirement_keys": [
+          "EPISODE_RELATEDNESS"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "R12",
+        "text": "Diagnosis: “J18.9 (EPI-000009) vs J18.9 (EPI-000010)” (EPI-000010)",
+        "evidence_ids": [
+          "EV-47435f3a1c5ddc9a"
+        ],
+        "requirement_keys": [
+          "DIAGNOSIS_CONSISTENCY"
+        ],
+        "material": true
+      }
+    ],
+    "explaining_context_evidence": [],
+    "policy_references": [
+      {
+        "evidence_id": "EV-28f6aee3e4e9c21d",
+        "policy_id": "POL-PMK26-2021-READMISI-01",
+        "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+        "section": "Readmisi: definisi",
+        "version": "Permenkes 26/2021",
+        "excerpt": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dari episode rawat inap sebelumnya dalam waktu kurang atau sama dengan 30 hari."
+      },
+      {
+        "evidence_id": "EV-25d7b20f29f417a6",
+        "policy_id": "POL-PMK26-2021-READMISI-02",
+        "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+        "section": "Readmisi: pengecualian",
+        "version": "Permenkes 26/2021",
+        "excerpt": "Kondisi yang dikecualikan dari readmisi yaitu sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. kunjungan pada FKRTL yang berbeda atau kelas FKRTL yang lebih tinggi."
+      }
+    ],
+    "remaining_gaps": [
+      {
+        "key": "PROCEDURE_RELATIONSHIP",
+        "question": "Are procedures repeated or related across episodes?",
+        "state": "NOT_FOUND",
+        "explanation": "No procedures recorded in the anchor episodes."
+      },
+      {
+        "key": "CLINICAL_DOCUMENT_AVAILABILITY",
+        "question": "Which clinical documents are available?",
+        "state": "UNAVAILABLE",
+        "explanation": "3 of 4 documents cannot be read: NOTE-000015 (TRIAGE, UNAVAILABLE); NOTE-000016 (PROGRESS, UNAVAILABLE); NOTE-000017 (DISCHARGE_SUMMARY, RESTRICTED)."
+      },
+      {
+        "key": "EMERGENCY_CONTEXT",
+        "question": "Is there documented emergency context for the repeated care?",
+        "state": "UNAVAILABLE",
+        "explanation": "Cannot be assessed: none of the 3 in-scope document(s) can be read."
+      },
+      {
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "question": "Is a scheduled or staged procedure documented?",
+        "state": "UNAVAILABLE",
+        "explanation": "Not found in the 1 readable document(s); 3 could not be read."
+      },
+      {
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "question": "Is a relevant chronic condition documented?",
+        "state": "UNAVAILABLE",
+        "explanation": "Not found in the 1 readable document(s); 3 could not be read."
+      },
+      {
+        "key": "CLINICAL_JUSTIFICATION",
+        "question": "Is there a documented clinical justification for the repeated care?",
+        "state": "UNAVAILABLE",
+        "explanation": "Cannot be assessed: none of the 3 in-scope document(s) can be read."
+      },
+      {
+        "key": "RISK_INDICATORS_IN_NOTES",
+        "question": "Do notes indicate premature discharge, unresolved complaints or repeats without indication?",
+        "state": "UNAVAILABLE",
+        "explanation": "Not found in the 1 readable document(s); 3 could not be read."
+      }
+    ],
+    "conflicts": [],
+    "uncertainty": [
+      {
+        "statement_id": "U3",
+        "text": "Which clinical documents are available? 3 of 4 documents cannot be read: NOTE-000015 (TRIAGE, UNAVAILABLE); NOTE-000016 (PROGRESS, UNAVAILABLE); NOTE-000017 (DISCHARGE_SUMMARY, RESTRICTED).",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "CLINICAL_DOCUMENT_AVAILABILITY"
+        ],
+        "material": false
+      },
+      {
+        "statement_id": "U4",
+        "text": "Is there documented emergency context for the repeated care? Cannot be assessed: none of the 3 in-scope document(s) can be read.",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "EMERGENCY_CONTEXT"
+        ],
+        "material": false
+      },
+      {
+        "statement_id": "U5",
+        "text": "Is a scheduled or staged procedure documented? Not found in the 1 readable document(s); 3 could not be read.",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "SCHEDULED_PROCEDURE_CONTEXT"
+        ],
+        "material": false
+      },
+      {
+        "statement_id": "U6",
+        "text": "Is a relevant chronic condition documented? Not found in the 1 readable document(s); 3 could not be read.",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "CHRONIC_CONDITION_CONTEXT"
+        ],
+        "material": false
+      },
+      {
+        "statement_id": "U7",
+        "text": "Is there a documented clinical justification for the repeated care? Cannot be assessed: none of the 3 in-scope document(s) can be read.",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "CLINICAL_JUSTIFICATION"
+        ],
+        "material": false
+      },
+      {
+        "statement_id": "U8",
+        "text": "Do notes indicate premature discharge, unresolved complaints or repeats without indication? Not found in the 1 readable document(s); 3 could not be read.",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "RISK_INDICATORS_IN_NOTES"
+        ],
+        "material": false
+      },
+      {
+        "statement_id": "U9",
+        "text": "Provider context not assessed: same provider and class of care across episodes, no referral.",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "PROVIDER_CONTEXT"
+        ],
+        "material": false
+      }
+    ],
+    "suggested_next_review": [
+      {
+        "statement_id": "N10",
+        "text": "Request the unavailable documents from the provider before deciding.",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "CLINICAL_DOCUMENT_AVAILABILITY",
+          "EMERGENCY_CONTEXT",
+          "SCHEDULED_PROCEDURE_CONTEXT",
+          "CHRONIC_CONDITION_CONTEXT",
+          "CLINICAL_JUSTIFICATION",
+          "RISK_INDICATORS_IN_NOTES"
+        ],
+        "material": false
+      }
+    ],
+    "review_status": "PENDING_HUMAN_REVIEW",
+    "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+    "traceability": {
+      "material_statements": 3,
+      "with_evidence": 3
+    },
+    "provenance": {
+      "evidence_ids": [
+        "EV-2353c7f48bba9609",
+        "EV-25d7b20f29f417a6",
+        "EV-28f6aee3e4e9c21d",
+        "EV-47435f3a1c5ddc9a"
+      ]
+    }
+  },
+  "requirement_states": {
+    "EPISODE_RELATEDNESS": "FOUND",
+    "DIAGNOSIS_CONSISTENCY": "FOUND",
+    "PROCEDURE_RELATIONSHIP": "NOT_FOUND",
+    "PROVIDER_CONTEXT": "SKIPPED",
+    "CLINICAL_DOCUMENT_AVAILABILITY": "UNAVAILABLE",
+    "EMERGENCY_CONTEXT": "UNAVAILABLE",
+    "SCHEDULED_PROCEDURE_CONTEXT": "UNAVAILABLE",
+    "CHRONIC_CONDITION_CONTEXT": "UNAVAILABLE",
+    "CLINICAL_JUSTIFICATION": "UNAVAILABLE",
+    "RISK_INDICATORS_IN_NOTES": "UNAVAILABLE",
+    "APPLICABLE_POLICY": "FOUND"
+  },
+  "signal_type": "READMISSION",
+  "anchor_episode_ids": [
+    "EPI-000009",
+    "EPI-000010"
+  ]
+}

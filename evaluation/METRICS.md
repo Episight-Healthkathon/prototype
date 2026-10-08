@@ -69,3 +69,18 @@ Its default baseline is `reports/v0.1.0-pc-0.1.1-backend/scores.json`, so reintr
 the harness-only value **`IRRELEVANT`** (Phase 8: "should not be retrieved as relevant"). `mandatory`
 marks evidence a competent reviewer needs. Optional relevant items raise precision but are not required
 for coverage.
+
+## Label versions and context challenge
+
+`data/ground-truth/v0.1.0-labels-1/` corrects only GT-B06's `expected_exceptions` to include its
+already-labelled FOUND scheduled context. Procedure consistency remains CONFLICTING and the outcome
+still requires human review. Historical benchmark reports retain the original `v0.1.0` labels and
+90.91% exception precision; corrected-label metrics are recorded separately, never presented as an
+engine improvement. See that label version's README for the exact rationale.
+
+The 40-case `qa-paraphrase-1` suite is a context/outcome challenge with independent expectations.
+It does not annotate every relevant evidence item, so retrieval precision/coverage from that suite
+are not valid quality metrics. QA instead checks literal source offsets, policy metadata, timeline
+scope, valid briefs and safety. Four documented over-escalations remain failing clinical expectations;
+the acceptance gate tolerates only those IDs with their documented safe states while rejecting new
+failures and unsafe closure. Improvements may remove known failures without weakening expectations.

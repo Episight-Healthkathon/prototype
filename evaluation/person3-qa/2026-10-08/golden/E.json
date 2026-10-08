@@ -1,0 +1,504 @@
+{
+  "gt_id": "GT-E",
+  "golden_case": "E",
+  "case_id": "CASE-RA-608764ca",
+  "checks": {
+    "brief_valid": true,
+    "literal_provenance": true,
+    "policy_metadata": true,
+    "source_records_unchanged": true,
+    "prompt_has_no_label_fields": true,
+    "human_review_notice": true,
+    "timeline_covers_expected_episodes": true,
+    "signal_matches_label": true,
+    "material_statements_traceable": true,
+    "tool_calls_succeeded": true,
+    "no_model_calls": true
+  },
+  "outcome": "EVIDENCE_CONFLICTING",
+  "stop_reason": "CONFLICTING_EVIDENCE",
+  "timeline": {
+    "case_id": "CASE-RA-608764ca",
+    "patient_id": "PAT-000005",
+    "episodes": [
+      {
+        "episode_id": "EPI-000011",
+        "role": "ANCHOR",
+        "encounter_type": "INPATIENT",
+        "admission_type": null,
+        "provider": {
+          "provider_id": "PRV-0002",
+          "name": "RS Sintetis Nusantara 02",
+          "hospital_class": "C"
+        },
+        "start_at": "2026-07-01T10:00:00+07:00",
+        "end_at": "2026-07-04T10:00:00+07:00",
+        "length_of_stay_days": 3,
+        "interval_from_previous_days": null,
+        "primary_diagnosis": {
+          "code": "N39.0",
+          "label": "Urinary tract infection, site not specified"
+        },
+        "secondary_diagnoses": [],
+        "procedures": [],
+        "claim": {
+          "claim_id": "CLM-000011",
+          "inacbg_code": "N-4-10-I",
+          "claim_status": "SUBMITTED"
+        },
+        "documents": [
+          {
+            "note_id": "NOTE-000018",
+            "note_type": "DISCHARGE_SUMMARY",
+            "title": "Ringkasan pulang",
+            "availability": "AVAILABLE"
+          }
+        ],
+        "relation_reasons": [
+          "INDEX_EPISODE"
+        ],
+        "evidence_ids": []
+      },
+      {
+        "episode_id": "EPI-000012",
+        "role": "ANCHOR",
+        "encounter_type": "INPATIENT",
+        "admission_type": null,
+        "provider": {
+          "provider_id": "PRV-0002",
+          "name": "RS Sintetis Nusantara 02",
+          "hospital_class": "C"
+        },
+        "start_at": "2026-07-10T23:30:00+07:00",
+        "end_at": "2026-07-14T10:00:00+07:00",
+        "length_of_stay_days": 4,
+        "interval_from_previous_days": 6,
+        "primary_diagnosis": {
+          "code": "N39.0",
+          "label": "Urinary tract infection, site not specified"
+        },
+        "secondary_diagnoses": [],
+        "procedures": [],
+        "claim": {
+          "claim_id": "CLM-000012",
+          "inacbg_code": "N-4-10-I",
+          "claim_status": "SUBMITTED"
+        },
+        "documents": [
+          {
+            "note_id": "NOTE-000019",
+            "note_type": "TRIAGE",
+            "title": "Catatan triase IGD",
+            "availability": "AVAILABLE"
+          },
+          {
+            "note_id": "NOTE-000020",
+            "note_type": "DISCHARGE_SUMMARY",
+            "title": "Ringkasan pulang",
+            "availability": "AVAILABLE"
+          }
+        ],
+        "relation_reasons": [
+          "SAME_PATIENT",
+          "SAME_PROVIDER",
+          "SAME_PRIMARY_DIAGNOSIS",
+          "WITHIN_30_DAYS"
+        ],
+        "evidence_ids": []
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "evidence_id": "EV-ecf2bdcefb9754b6",
+      "case_id": "CASE-RA-608764ca",
+      "run_id": "RUN-QA-CASE-RA-608764ca",
+      "episode_id": "EPI-000012",
+      "source_type": "SCREENING_RULE",
+      "source_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+      "source_title": "Screening rule READMISSION_30D_SAME_PROVIDER_SAME_DX v1",
+      "source_excerpt": "EPI-000012 started 6 day(s) after discharge of EPI-000011; same patient, same FKRTL, same primary diagnosis",
+      "field_path": "pairs[EPI-000011->EPI-000012]",
+      "char_start": null,
+      "char_end": null,
+      "requirement_key": "EPISODE_RELATEDNESS",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "get_episode_history",
+      "retrieval_reason": "Are the episodes actually related? (requirement EPISODE_RELATEDNESS is open)",
+      "extraction_method": "STRUCTURED_FIELD",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 1,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-6fc11d72fc4b8eaa",
+      "case_id": "CASE-RA-608764ca",
+      "run_id": "RUN-QA-CASE-RA-608764ca",
+      "episode_id": "EPI-000012",
+      "source_type": "EPISODE_RECORD",
+      "source_id": "EPI-000012",
+      "source_title": "Episode record EPI-000012",
+      "source_excerpt": "N39.0 (EPI-000011) vs N39.0 (EPI-000012)",
+      "field_path": "episodes.primary_diagnosis",
+      "char_start": null,
+      "char_end": null,
+      "requirement_key": "DIAGNOSIS_CONSISTENCY",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "compare_diagnosis",
+      "retrieval_reason": "Are the diagnoses consistent across episodes? (requirement DIAGNOSIS_CONSISTENCY is open)",
+      "extraction_method": "STRUCTURED_FIELD",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 2,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-fa77e7e0b194750a",
+      "case_id": "CASE-RA-608764ca",
+      "run_id": "RUN-QA-CASE-RA-608764ca",
+      "episode_id": "EPI-000012",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000019",
+      "source_title": "Catatan triase IGD - EPI-000012",
+      "source_excerpt": "Pasien datang ke IGD tengah malam dengan demam 39,6 C, menggigil dan nyeri pinggang kiri.",
+      "field_path": null,
+      "char_start": 0,
+      "char_end": 89,
+      "requirement_key": "EMERGENCY_CONTEXT",
+      "stance": "AFFIRMS",
+      "relevance_category": "EXPLAINING_CONTEXT",
+      "exception_type": "EMERGENCY",
+      "retrieved_by_tool": "find_exception_evidence",
+      "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 5,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-eb21a60c30c220cd",
+      "case_id": "CASE-RA-608764ca",
+      "run_id": "RUN-QA-CASE-RA-608764ca",
+      "episode_id": "EPI-000012",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000019",
+      "source_title": "Catatan triase IGD - EPI-000012",
+      "source_excerpt": "Kategori triase kuning-merah.",
+      "field_path": null,
+      "char_start": 119,
+      "char_end": 148,
+      "requirement_key": "EMERGENCY_CONTEXT",
+      "stance": "AFFIRMS",
+      "relevance_category": "EXPLAINING_CONTEXT",
+      "exception_type": "EMERGENCY",
+      "retrieved_by_tool": "find_exception_evidence",
+      "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 5,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-0c2fd8b97347d758",
+      "case_id": "CASE-RA-608764ca",
+      "run_id": "RUN-QA-CASE-RA-608764ca",
+      "episode_id": "EPI-000012",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000020",
+      "source_title": "Ringkasan pulang - EPI-000012",
+      "source_excerpt": "Pasien menjalani admisi elektif untuk evaluasi infeksi saluran kemih berulang dan pemberian antibiotik intravena.",
+      "field_path": null,
+      "char_start": 18,
+      "char_end": 131,
+      "requirement_key": "EMERGENCY_CONTEXT",
+      "stance": "NEGATES",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": "EMERGENCY",
+      "retrieved_by_tool": "find_exception_evidence",
+      "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 5,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-241730606fd77a1b",
+      "case_id": "CASE-RA-608764ca",
+      "run_id": "RUN-QA-CASE-RA-608764ca",
+      "episode_id": "EPI-000012",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000020",
+      "source_title": "Ringkasan pulang - EPI-000012",
+      "source_excerpt": "Saat masuk tidak dalam kondisi gawat darurat.",
+      "field_path": null,
+      "char_start": 132,
+      "char_end": 177,
+      "requirement_key": "EMERGENCY_CONTEXT",
+      "stance": "NEGATES",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": "EMERGENCY",
+      "retrieved_by_tool": "find_exception_evidence",
+      "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 5,
+      "policy_version": null
+    }
+  ],
+  "brief": {
+    "brief_id": "BRF-QA-CASE-RA-608764ca",
+    "case_id": "CASE-RA-608764ca",
+    "run_id": "RUN-QA-CASE-RA-608764ca",
+    "generated_at": "2026-10-08T00:00:00Z",
+    "generator_version": "brief-template-1",
+    "progress_status": "BRIEF_READY",
+    "outcome": "EVIDENCE_CONFLICTING",
+    "stop_reason": "CONFLICTING_EVIDENCE",
+    "case_summary": [
+      {
+        "statement_id": "S1",
+        "text": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge: 2 episodes (6 d) at RS Sintetis Nusantara 02.",
+        "evidence_ids": [
+          "EV-ecf2bdcefb9754b6"
+        ],
+        "requirement_keys": [
+          "EPISODE_RELATEDNESS"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "S2",
+        "text": "Sources disagree on: emergency context.",
+        "evidence_ids": [
+          "EV-fa77e7e0b194750a",
+          "EV-eb21a60c30c220cd",
+          "EV-0c2fd8b97347d758",
+          "EV-241730606fd77a1b"
+        ],
+        "requirement_keys": [
+          "EMERGENCY_CONTEXT"
+        ],
+        "material": true
+      }
+    ],
+    "risk_signal": {
+      "rule_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+      "rule_version": "1",
+      "description": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge",
+      "params": {
+        "threshold_days": 30,
+        "diagnosis_match": "EXACT"
+      },
+      "pairs": [
+        {
+          "from_episode_id": "EPI-000011",
+          "to_episode_id": "EPI-000012",
+          "interval_days": 6,
+          "matched": {
+            "same_patient": true,
+            "same_provider": true,
+            "same_primary_diagnosis": true,
+            "encounter_type": "INPATIENT"
+          }
+        }
+      ],
+      "disclaimer": "A risk signal starts an investigation. It is not a finding."
+    },
+    "episode_timeline": [
+      {
+        "episode_id": "EPI-000011",
+        "label": "Index inpatient stay: Urinary tract infection, site not specified",
+        "start_at": "2026-07-01T10:00:00+07:00",
+        "end_at": "2026-07-04T10:00:00+07:00",
+        "interval_from_previous_days": null
+      },
+      {
+        "episode_id": "EPI-000012",
+        "label": "Repeat inpatient stay: Urinary tract infection, site not specified",
+        "start_at": "2026-07-10T23:30:00+07:00",
+        "end_at": "2026-07-14T10:00:00+07:00",
+        "interval_from_previous_days": 6
+      }
+    ],
+    "supporting_risk_evidence": [
+      {
+        "statement_id": "R6",
+        "text": "Episode chain: “EPI-000012 started 6 day(s) after discharge of EPI-000011; same patient, same FKRTL, same primary diagnosis” (READMISSION_30D_SAME_PROVIDER_SAME_DX)",
+        "evidence_ids": [
+          "EV-ecf2bdcefb9754b6"
+        ],
+        "requirement_keys": [
+          "EPISODE_RELATEDNESS"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "R7",
+        "text": "Diagnosis: “N39.0 (EPI-000011) vs N39.0 (EPI-000012)” (EPI-000012)",
+        "evidence_ids": [
+          "EV-6fc11d72fc4b8eaa"
+        ],
+        "requirement_keys": [
+          "DIAGNOSIS_CONSISTENCY"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "R8",
+        "text": "Against emergency context: “Pasien menjalani admisi elektif untuk evaluasi infeksi saluran kemih berulang dan pemberian antibiotik intravena.” (NOTE-000020); “Saat masuk tidak dalam kondisi gawat darurat.” (NOTE-000020)",
+        "evidence_ids": [
+          "EV-0c2fd8b97347d758",
+          "EV-241730606fd77a1b"
+        ],
+        "requirement_keys": [
+          "EMERGENCY_CONTEXT"
+        ],
+        "material": true
+      }
+    ],
+    "explaining_context_evidence": [
+      {
+        "statement_id": "C9",
+        "text": "Emergency context: “Pasien datang ke IGD tengah malam dengan demam 39,6 C, menggigil dan nyeri pinggang kiri.” (NOTE-000019); “Kategori triase kuning-merah.” (NOTE-000019)",
+        "evidence_ids": [
+          "EV-fa77e7e0b194750a",
+          "EV-eb21a60c30c220cd"
+        ],
+        "requirement_keys": [
+          "EMERGENCY_CONTEXT"
+        ],
+        "material": true
+      }
+    ],
+    "policy_references": [],
+    "remaining_gaps": [
+      {
+        "key": "PROCEDURE_RELATIONSHIP",
+        "question": "Are procedures repeated or related across episodes?",
+        "state": "NOT_FOUND",
+        "explanation": "No procedures recorded in the anchor episodes."
+      },
+      {
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "question": "Is a scheduled or staged procedure documented?",
+        "state": "OPEN",
+        "explanation": "Not assessed yet."
+      },
+      {
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "question": "Is a relevant chronic condition documented?",
+        "state": "OPEN",
+        "explanation": "Not assessed yet."
+      },
+      {
+        "key": "CLINICAL_JUSTIFICATION",
+        "question": "Is there a documented clinical justification for the repeated care?",
+        "state": "OPEN",
+        "explanation": "Not assessed yet."
+      },
+      {
+        "key": "RISK_INDICATORS_IN_NOTES",
+        "question": "Do notes indicate premature discharge, unresolved complaints or repeats without indication?",
+        "state": "OPEN",
+        "explanation": "Not assessed yet."
+      },
+      {
+        "key": "APPLICABLE_POLICY",
+        "question": "Which policy rules apply?",
+        "state": "OPEN",
+        "explanation": "Not assessed yet."
+      }
+    ],
+    "conflicts": [
+      {
+        "key": "EMERGENCY_CONTEXT",
+        "affirming_evidence_ids": [
+          "EV-fa77e7e0b194750a",
+          "EV-eb21a60c30c220cd"
+        ],
+        "negating_evidence_ids": [
+          "EV-0c2fd8b97347d758",
+          "EV-241730606fd77a1b"
+        ]
+      }
+    ],
+    "uncertainty": [
+      {
+        "statement_id": "U3",
+        "text": "Conflicting sources on emergency context; neither side is assumed correct.",
+        "evidence_ids": [
+          "EV-fa77e7e0b194750a",
+          "EV-eb21a60c30c220cd",
+          "EV-0c2fd8b97347d758",
+          "EV-241730606fd77a1b"
+        ],
+        "requirement_keys": [
+          "EMERGENCY_CONTEXT"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "U4",
+        "text": "Provider context not assessed: same provider and class of care across episodes, no referral.",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "PROVIDER_CONTEXT"
+        ],
+        "material": false
+      }
+    ],
+    "suggested_next_review": [
+      {
+        "statement_id": "N5",
+        "text": "Resolve the disagreement on emergency context with the provider's source records before any judgement.",
+        "evidence_ids": [
+          "EV-fa77e7e0b194750a",
+          "EV-eb21a60c30c220cd",
+          "EV-0c2fd8b97347d758",
+          "EV-241730606fd77a1b"
+        ],
+        "requirement_keys": [
+          "EMERGENCY_CONTEXT"
+        ],
+        "material": true
+      }
+    ],
+    "review_status": "PENDING_HUMAN_REVIEW",
+    "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+    "traceability": {
+      "material_statements": 8,
+      "with_evidence": 8
+    },
+    "provenance": {
+      "evidence_ids": [
+        "EV-0c2fd8b97347d758",
+        "EV-241730606fd77a1b",
+        "EV-6fc11d72fc4b8eaa",
+        "EV-eb21a60c30c220cd",
+        "EV-ecf2bdcefb9754b6",
+        "EV-fa77e7e0b194750a"
+      ]
+    }
+  },
+  "requirement_states": {
+    "EPISODE_RELATEDNESS": "FOUND",
+    "DIAGNOSIS_CONSISTENCY": "FOUND",
+    "PROCEDURE_RELATIONSHIP": "NOT_FOUND",
+    "PROVIDER_CONTEXT": "SKIPPED",
+    "CLINICAL_DOCUMENT_AVAILABILITY": "FOUND",
+    "EMERGENCY_CONTEXT": "CONFLICTING",
+    "SCHEDULED_PROCEDURE_CONTEXT": "OPEN",
+    "CHRONIC_CONDITION_CONTEXT": "OPEN",
+    "CLINICAL_JUSTIFICATION": "OPEN",
+    "RISK_INDICATORS_IN_NOTES": "OPEN",
+    "APPLICABLE_POLICY": "OPEN"
+  },
+  "signal_type": "READMISSION",
+  "anchor_episode_ids": [
+    "EPI-000011",
+    "EPI-000012"
+  ]
+}

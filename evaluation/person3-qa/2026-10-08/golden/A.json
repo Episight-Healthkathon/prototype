@@ -1,0 +1,751 @@
+{
+  "gt_id": "GT-A",
+  "golden_case": "A",
+  "case_id": "CASE-RA-0bbfc334",
+  "checks": {
+    "brief_valid": true,
+    "literal_provenance": true,
+    "policy_metadata": true,
+    "source_records_unchanged": true,
+    "prompt_has_no_label_fields": true,
+    "human_review_notice": true,
+    "timeline_covers_expected_episodes": true,
+    "signal_matches_label": true,
+    "material_statements_traceable": true,
+    "tool_calls_succeeded": true,
+    "no_model_calls": true
+  },
+  "outcome": "EVIDENCE_SUFFICIENT",
+  "stop_reason": "SUFFICIENT_EVIDENCE",
+  "timeline": {
+    "case_id": "CASE-RA-0bbfc334",
+    "patient_id": "PAT-000001",
+    "episodes": [
+      {
+        "episode_id": "EPI-000001",
+        "role": "RELATED",
+        "encounter_type": "OUTPATIENT",
+        "admission_type": null,
+        "provider": {
+          "provider_id": "PRV-0001",
+          "name": "RS Sintetis Nusantara 01",
+          "hospital_class": "B"
+        },
+        "start_at": "2026-02-16T09:30:00+07:00",
+        "end_at": null,
+        "length_of_stay_days": null,
+        "interval_from_previous_days": null,
+        "primary_diagnosis": {
+          "code": "I50.0",
+          "label": "Congestive heart failure"
+        },
+        "secondary_diagnoses": [
+          {
+            "code": "I10",
+            "label": "Essential (primary) hypertension"
+          }
+        ],
+        "procedures": [],
+        "claim": {
+          "claim_id": "CLM-000001",
+          "inacbg_code": "I-4-12-I",
+          "claim_status": "SUBMITTED"
+        },
+        "documents": [
+          {
+            "note_id": "NOTE-000001",
+            "note_type": "OUTPATIENT_VISIT",
+            "title": "Kunjungan poli jantung",
+            "availability": "AVAILABLE"
+          }
+        ],
+        "relation_reasons": [
+          "SAME_PATIENT",
+          "SAME_PRIMARY_DIAGNOSIS",
+          "SAME_PROVIDER",
+          "WITHIN_90_DAYS"
+        ],
+        "evidence_ids": []
+      },
+      {
+        "episode_id": "EPI-000002",
+        "role": "ANCHOR",
+        "encounter_type": "INPATIENT",
+        "admission_type": null,
+        "provider": {
+          "provider_id": "PRV-0001",
+          "name": "RS Sintetis Nusantara 01",
+          "hospital_class": "B"
+        },
+        "start_at": "2026-03-02T09:00:00+07:00",
+        "end_at": "2026-03-06T10:00:00+07:00",
+        "length_of_stay_days": 4,
+        "interval_from_previous_days": 14,
+        "primary_diagnosis": {
+          "code": "I50.0",
+          "label": "Congestive heart failure"
+        },
+        "secondary_diagnoses": [
+          {
+            "code": "I10",
+            "label": "Essential (primary) hypertension"
+          }
+        ],
+        "procedures": [
+          {
+            "code": "89.52",
+            "label": "Electrocardiogram",
+            "performed_at": null
+          },
+          {
+            "code": "87.44",
+            "label": "Routine chest x-ray",
+            "performed_at": null
+          }
+        ],
+        "claim": {
+          "claim_id": "CLM-000002",
+          "inacbg_code": "I-4-12-I",
+          "claim_status": "SUBMITTED"
+        },
+        "documents": [
+          {
+            "note_id": "NOTE-000002",
+            "note_type": "DISCHARGE_SUMMARY",
+            "title": "Ringkasan pulang",
+            "availability": "AVAILABLE"
+          }
+        ],
+        "relation_reasons": [
+          "INDEX_EPISODE"
+        ],
+        "evidence_ids": []
+      },
+      {
+        "episode_id": "EPI-000003",
+        "role": "ANCHOR",
+        "encounter_type": "INPATIENT",
+        "admission_type": null,
+        "provider": {
+          "provider_id": "PRV-0001",
+          "name": "RS Sintetis Nusantara 01",
+          "hospital_class": "B"
+        },
+        "start_at": "2026-03-12T22:10:00+07:00",
+        "end_at": "2026-03-17T10:00:00+07:00",
+        "length_of_stay_days": 5,
+        "interval_from_previous_days": 6,
+        "primary_diagnosis": {
+          "code": "I50.0",
+          "label": "Congestive heart failure"
+        },
+        "secondary_diagnoses": [
+          {
+            "code": "I10",
+            "label": "Essential (primary) hypertension"
+          }
+        ],
+        "procedures": [
+          {
+            "code": "89.52",
+            "label": "Electrocardiogram",
+            "performed_at": null
+          }
+        ],
+        "claim": {
+          "claim_id": "CLM-000003",
+          "inacbg_code": "I-4-12-I",
+          "claim_status": "SUBMITTED"
+        },
+        "documents": [
+          {
+            "note_id": "NOTE-000003",
+            "note_type": "TRIAGE",
+            "title": "Catatan triase IGD",
+            "availability": "AVAILABLE"
+          },
+          {
+            "note_id": "NOTE-000004",
+            "note_type": "PROGRESS",
+            "title": "Catatan perkembangan",
+            "availability": "AVAILABLE"
+          },
+          {
+            "note_id": "NOTE-000005",
+            "note_type": "DISCHARGE_SUMMARY",
+            "title": "Ringkasan pulang",
+            "availability": "AVAILABLE"
+          }
+        ],
+        "relation_reasons": [
+          "SAME_PATIENT",
+          "SAME_PROVIDER",
+          "SAME_PRIMARY_DIAGNOSIS",
+          "WITHIN_30_DAYS"
+        ],
+        "evidence_ids": []
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "evidence_id": "EV-a8de1ca008daf752",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": "EPI-000003",
+      "source_type": "SCREENING_RULE",
+      "source_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+      "source_title": "Screening rule READMISSION_30D_SAME_PROVIDER_SAME_DX v1",
+      "source_excerpt": "EPI-000003 started 6 day(s) after discharge of EPI-000002; same patient, same FKRTL, same primary diagnosis",
+      "field_path": "pairs[EPI-000002->EPI-000003]",
+      "char_start": null,
+      "char_end": null,
+      "requirement_key": "EPISODE_RELATEDNESS",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "get_episode_history",
+      "retrieval_reason": "Are the episodes actually related? (requirement EPISODE_RELATEDNESS is open)",
+      "extraction_method": "STRUCTURED_FIELD",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 1,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-a465b2111b0be98b",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": "EPI-000001",
+      "source_type": "EPISODE_RECORD",
+      "source_id": "EPI-000001",
+      "source_title": "Episode record EPI-000001",
+      "source_excerpt": "Related episode EPI-000001 (outpatient, 2026-02-16): I50.0",
+      "field_path": "episodes.primary_diagnosis",
+      "char_start": null,
+      "char_end": null,
+      "requirement_key": "EPISODE_RELATEDNESS",
+      "stance": "INFORMS",
+      "relevance_category": "NEUTRAL",
+      "exception_type": null,
+      "retrieved_by_tool": "get_episode_history",
+      "retrieval_reason": "Are the episodes actually related? (requirement EPISODE_RELATEDNESS is open)",
+      "extraction_method": "STRUCTURED_FIELD",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 1,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-f9680e8d08b497de",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": "EPI-000003",
+      "source_type": "EPISODE_RECORD",
+      "source_id": "EPI-000003",
+      "source_title": "Episode record EPI-000003",
+      "source_excerpt": "I50.0 (EPI-000002) vs I50.0 (EPI-000003)",
+      "field_path": "episodes.primary_diagnosis",
+      "char_start": null,
+      "char_end": null,
+      "requirement_key": "DIAGNOSIS_CONSISTENCY",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "compare_diagnosis",
+      "retrieval_reason": "Are the diagnoses consistent across episodes? (requirement DIAGNOSIS_CONSISTENCY is open)",
+      "extraction_method": "STRUCTURED_FIELD",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 2,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-a1db63b8945dfd3f",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": "EPI-000002",
+      "source_type": "EPISODE_RECORD",
+      "source_id": "EPI-000002",
+      "source_title": "Episode record EPI-000002",
+      "source_excerpt": "I50.0 (Congestive heart failure) is a chronic-class diagnosis",
+      "field_path": "episodes.primary_diagnosis",
+      "char_start": null,
+      "char_end": null,
+      "requirement_key": "DIAGNOSIS_CONSISTENCY",
+      "stance": "INFORMS",
+      "relevance_category": "NEUTRAL",
+      "exception_type": null,
+      "retrieved_by_tool": "compare_diagnosis",
+      "retrieval_reason": "Are the diagnoses consistent across episodes? (requirement DIAGNOSIS_CONSISTENCY is open)",
+      "extraction_method": "STRUCTURED_FIELD",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 2,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-6186e3cca932d16b",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": "EPI-000003",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000003",
+      "source_title": "Catatan triase IGD - EPI-000003",
+      "source_excerpt": "Pasien diantar keluarga ke Instalasi Gawat Darurat pada malam hari dengan sesak napas hebat sejak sore, harus duduk untuk bernapas.",
+      "field_path": null,
+      "char_start": 0,
+      "char_end": 131,
+      "requirement_key": "EMERGENCY_CONTEXT",
+      "stance": "AFFIRMS",
+      "relevance_category": "EXPLAINING_CONTEXT",
+      "exception_type": "EMERGENCY",
+      "retrieved_by_tool": "find_exception_evidence",
+      "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 5,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-17e8fb42ae7ea4cd",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": "EPI-000003",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000003",
+      "source_title": "Catatan triase IGD - EPI-000003",
+      "source_excerpt": "Kategori triase merah, langsung ditangani di ruang resusitasi.",
+      "field_path": null,
+      "char_start": 250,
+      "char_end": 312,
+      "requirement_key": "EMERGENCY_CONTEXT",
+      "stance": "AFFIRMS",
+      "relevance_category": "EXPLAINING_CONTEXT",
+      "exception_type": "EMERGENCY",
+      "retrieved_by_tool": "find_exception_evidence",
+      "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 5,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-e915df72079b0a31",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": "EPI-000003",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000005",
+      "source_title": "Ringkasan pulang - EPI-000003",
+      "source_excerpt": "Masuk melalui IGD dengan gagal jantung dekompensasi akut disertai edema paru akut.",
+      "field_path": null,
+      "char_start": 18,
+      "char_end": 100,
+      "requirement_key": "EMERGENCY_CONTEXT",
+      "stance": "AFFIRMS",
+      "relevance_category": "EXPLAINING_CONTEXT",
+      "exception_type": "EMERGENCY",
+      "retrieved_by_tool": "find_exception_evidence",
+      "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 5,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-bd96005a045f49b4",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": "EPI-000001",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000001",
+      "source_title": "Kunjungan poli jantung - EPI-000001",
+      "source_excerpt": "Riwayat gagal jantung menahun sejak 2021 disertai hipertensi.",
+      "field_path": null,
+      "char_start": 28,
+      "char_end": 89,
+      "requirement_key": "CHRONIC_CONDITION_CONTEXT",
+      "stance": "AFFIRMS",
+      "relevance_category": "EXPLAINING_CONTEXT",
+      "exception_type": "CHRONIC",
+      "retrieved_by_tool": "find_exception_evidence",
+      "retrieval_reason": "Is a relevant chronic condition documented? (requirement CHRONIC_CONDITION_CONTEXT is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 7,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-8ffbfc06dbd0bb34",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": "EPI-000003",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000005",
+      "source_title": "Ringkasan pulang - EPI-000003",
+      "source_excerpt": "Masuk melalui IGD dengan gagal jantung dekompensasi akut disertai edema paru akut.",
+      "field_path": null,
+      "char_start": 18,
+      "char_end": 100,
+      "requirement_key": "CLINICAL_JUSTIFICATION",
+      "stance": "AFFIRMS",
+      "relevance_category": "EXPLAINING_CONTEXT",
+      "exception_type": "CLINICAL_JUSTIFICATION",
+      "retrieved_by_tool": "find_exception_evidence",
+      "retrieval_reason": "Is there a documented clinical justification for the repeated care? (requirement CLINICAL_JUSTIFICATION is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 8,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-387926271c77e487",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": "EPI-000003",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000005",
+      "source_title": "Ringkasan pulang - EPI-000003",
+      "source_excerpt": "Perburukan dipicu infeksi saluran napas atas dan ketidakpatuhan pembatasan cairan.",
+      "field_path": null,
+      "char_start": 101,
+      "char_end": 183,
+      "requirement_key": "CLINICAL_JUSTIFICATION",
+      "stance": "AFFIRMS",
+      "relevance_category": "EXPLAINING_CONTEXT",
+      "exception_type": "CLINICAL_JUSTIFICATION",
+      "retrieved_by_tool": "find_exception_evidence",
+      "retrieval_reason": "Is there a documented clinical justification for the repeated care? (requirement CLINICAL_JUSTIFICATION is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 8,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-59a943df1cebda20",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": "EPI-000003",
+      "source_type": "CLINICAL_NOTE",
+      "source_id": "NOTE-000004",
+      "source_title": "Catatan perkembangan - EPI-000003",
+      "source_excerpt": "Keluhan serupa dengan perawatan bulan lalu, pencetus kali ini infeksi saluran napas dan asupan cairan berlebih.",
+      "field_path": null,
+      "char_start": 89,
+      "char_end": 200,
+      "requirement_key": "RISK_INDICATORS_IN_NOTES",
+      "stance": "AFFIRMS",
+      "relevance_category": "SUPPORTING_RISK",
+      "exception_type": null,
+      "retrieved_by_tool": "find_supporting_evidence",
+      "retrieval_reason": "Do notes indicate premature discharge, unresolved complaints or repeats without indication? (requirement RISK_INDICATORS_IN_NOTES is open)",
+      "extraction_method": "RULE_MATCH",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 9,
+      "policy_version": null
+    },
+    {
+      "evidence_id": "EV-cec244de674f4eb6",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": null,
+      "source_type": "POLICY_SECTION",
+      "source_id": "POL-PMK26-2021-READMISI-01",
+      "source_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan: Readmisi: definisi",
+      "source_excerpt": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dari episode rawat inap sebelumnya dalam waktu kurang atau sama dengan 30 hari.",
+      "field_path": null,
+      "char_start": 0,
+      "char_end": 177,
+      "requirement_key": "APPLICABLE_POLICY",
+      "stance": "INFORMS",
+      "relevance_category": "NEUTRAL",
+      "exception_type": null,
+      "retrieved_by_tool": "retrieve_policy",
+      "retrieval_reason": "Which policy rules apply? (requirement APPLICABLE_POLICY is open)",
+      "extraction_method": "BM25_RETRIEVAL",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 10,
+      "policy_version": "Permenkes 26/2021"
+    },
+    {
+      "evidence_id": "EV-f20558e546e2c8b0",
+      "case_id": "CASE-RA-0bbfc334",
+      "run_id": "RUN-QA-CASE-RA-0bbfc334",
+      "episode_id": null,
+      "source_type": "POLICY_SECTION",
+      "source_id": "POL-PMK26-2021-READMISI-02",
+      "source_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan: Readmisi: pengecualian",
+      "source_excerpt": "Kondisi yang dikecualikan dari readmisi yaitu sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. kunjungan pada FKRTL yang berbeda atau kelas FKRTL yang lebih tinggi.",
+      "field_path": null,
+      "char_start": 0,
+      "char_end": 374,
+      "requirement_key": "APPLICABLE_POLICY",
+      "stance": "INFORMS",
+      "relevance_category": "NEUTRAL",
+      "exception_type": null,
+      "retrieved_by_tool": "retrieve_policy",
+      "retrieval_reason": "Which policy rules apply? (requirement APPLICABLE_POLICY is open)",
+      "extraction_method": "BM25_RETRIEVAL",
+      "retrieved_at": "2026-10-08T00:00:00Z",
+      "investigation_step": 10,
+      "policy_version": "Permenkes 26/2021"
+    }
+  ],
+  "brief": {
+    "brief_id": "BRF-QA-CASE-RA-0bbfc334",
+    "case_id": "CASE-RA-0bbfc334",
+    "run_id": "RUN-QA-CASE-RA-0bbfc334",
+    "generated_at": "2026-10-08T00:00:00Z",
+    "generator_version": "brief-template-1",
+    "progress_status": "BRIEF_READY",
+    "outcome": "EVIDENCE_SUFFICIENT",
+    "stop_reason": "SUFFICIENT_EVIDENCE",
+    "case_summary": [
+      {
+        "statement_id": "S1",
+        "text": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge: 2 episodes (6 d) at RS Sintetis Nusantara 01.",
+        "evidence_ids": [
+          "EV-a8de1ca008daf752"
+        ],
+        "requirement_keys": [
+          "EPISODE_RELATEDNESS"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "S2",
+        "text": "Explaining context documented: emergency context, chronic condition, clinical justification.",
+        "evidence_ids": [
+          "EV-6186e3cca932d16b",
+          "EV-bd96005a045f49b4",
+          "EV-8ffbfc06dbd0bb34"
+        ],
+        "requirement_keys": [
+          "EMERGENCY_CONTEXT",
+          "CHRONIC_CONDITION_CONTEXT",
+          "CLINICAL_JUSTIFICATION"
+        ],
+        "material": true
+      }
+    ],
+    "risk_signal": {
+      "rule_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+      "rule_version": "1",
+      "description": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge",
+      "params": {
+        "threshold_days": 30,
+        "diagnosis_match": "EXACT"
+      },
+      "pairs": [
+        {
+          "from_episode_id": "EPI-000002",
+          "to_episode_id": "EPI-000003",
+          "interval_days": 6,
+          "matched": {
+            "same_patient": true,
+            "same_provider": true,
+            "same_primary_diagnosis": true,
+            "encounter_type": "INPATIENT"
+          }
+        }
+      ],
+      "disclaimer": "A risk signal starts an investigation. It is not a finding."
+    },
+    "episode_timeline": [
+      {
+        "episode_id": "EPI-000001",
+        "label": "Related outpatient visit: Congestive heart failure",
+        "start_at": "2026-02-16T09:30:00+07:00",
+        "end_at": null,
+        "interval_from_previous_days": null
+      },
+      {
+        "episode_id": "EPI-000002",
+        "label": "Index inpatient stay: Congestive heart failure",
+        "start_at": "2026-03-02T09:00:00+07:00",
+        "end_at": "2026-03-06T10:00:00+07:00",
+        "interval_from_previous_days": 14
+      },
+      {
+        "episode_id": "EPI-000003",
+        "label": "Repeat inpatient stay: Congestive heart failure",
+        "start_at": "2026-03-12T22:10:00+07:00",
+        "end_at": "2026-03-17T10:00:00+07:00",
+        "interval_from_previous_days": 6
+      }
+    ],
+    "supporting_risk_evidence": [
+      {
+        "statement_id": "R5",
+        "text": "Episode chain: “EPI-000003 started 6 day(s) after discharge of EPI-000002; same patient, same FKRTL, same primary diagnosis” (READMISSION_30D_SAME_PROVIDER_SAME_DX)",
+        "evidence_ids": [
+          "EV-a8de1ca008daf752"
+        ],
+        "requirement_keys": [
+          "EPISODE_RELATEDNESS"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "R6",
+        "text": "Diagnosis: “I50.0 (EPI-000002) vs I50.0 (EPI-000003)” (EPI-000003)",
+        "evidence_ids": [
+          "EV-f9680e8d08b497de"
+        ],
+        "requirement_keys": [
+          "DIAGNOSIS_CONSISTENCY"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "R7",
+        "text": "Risk indicators in notes: “Keluhan serupa dengan perawatan bulan lalu, pencetus kali ini infeksi saluran napas dan asupan cairan berlebih.” (NOTE-000004)",
+        "evidence_ids": [
+          "EV-59a943df1cebda20"
+        ],
+        "requirement_keys": [
+          "RISK_INDICATORS_IN_NOTES"
+        ],
+        "material": true
+      }
+    ],
+    "explaining_context_evidence": [
+      {
+        "statement_id": "C8",
+        "text": "Emergency context: “Pasien diantar keluarga ke Instalasi Gawat Darurat pada malam hari dengan sesak napas hebat sejak sore, harus duduk untuk bernapas.” (NOTE-000003); “Kategori triase merah, langsung ditangani di ruang resusitasi.” (NOTE-000003); “Masuk melalui IGD dengan gagal jantung dekompensasi akut disertai edema paru akut.” (NOTE-000005)",
+        "evidence_ids": [
+          "EV-6186e3cca932d16b",
+          "EV-17e8fb42ae7ea4cd",
+          "EV-e915df72079b0a31"
+        ],
+        "requirement_keys": [
+          "EMERGENCY_CONTEXT"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "C9",
+        "text": "Chronic condition: “Riwayat gagal jantung menahun sejak 2021 disertai hipertensi.” (NOTE-000001)",
+        "evidence_ids": [
+          "EV-bd96005a045f49b4"
+        ],
+        "requirement_keys": [
+          "CHRONIC_CONDITION_CONTEXT"
+        ],
+        "material": true
+      },
+      {
+        "statement_id": "C10",
+        "text": "Clinical justification: “Masuk melalui IGD dengan gagal jantung dekompensasi akut disertai edema paru akut.” (NOTE-000005); “Perburukan dipicu infeksi saluran napas atas dan ketidakpatuhan pembatasan cairan.” (NOTE-000005)",
+        "evidence_ids": [
+          "EV-8ffbfc06dbd0bb34",
+          "EV-387926271c77e487"
+        ],
+        "requirement_keys": [
+          "CLINICAL_JUSTIFICATION"
+        ],
+        "material": true
+      }
+    ],
+    "policy_references": [
+      {
+        "evidence_id": "EV-cec244de674f4eb6",
+        "policy_id": "POL-PMK26-2021-READMISI-01",
+        "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+        "section": "Readmisi: definisi",
+        "version": "Permenkes 26/2021",
+        "excerpt": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dari episode rawat inap sebelumnya dalam waktu kurang atau sama dengan 30 hari."
+      },
+      {
+        "evidence_id": "EV-f20558e546e2c8b0",
+        "policy_id": "POL-PMK26-2021-READMISI-02",
+        "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+        "section": "Readmisi: pengecualian",
+        "version": "Permenkes 26/2021",
+        "excerpt": "Kondisi yang dikecualikan dari readmisi yaitu sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. kunjungan pada FKRTL yang berbeda atau kelas FKRTL yang lebih tinggi."
+      }
+    ],
+    "remaining_gaps": [
+      {
+        "key": "PROCEDURE_RELATIONSHIP",
+        "question": "Are procedures repeated or related across episodes?",
+        "state": "NOT_FOUND",
+        "explanation": "No repeated or related therapeutic procedure (routine diagnostics excluded)."
+      },
+      {
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "question": "Is a scheduled or staged procedure documented?",
+        "state": "NOT_FOUND",
+        "explanation": "Not found in available sources; read all 4 available document(s)."
+      }
+    ],
+    "conflicts": [],
+    "uncertainty": [
+      {
+        "statement_id": "U3",
+        "text": "Provider context not assessed: same provider and class of care across episodes, no referral.",
+        "evidence_ids": [],
+        "requirement_keys": [
+          "PROVIDER_CONTEXT"
+        ],
+        "material": false
+      }
+    ],
+    "suggested_next_review": [
+      {
+        "statement_id": "N4",
+        "text": "Verify the documented emergency context, chronic condition, clinical justification against the source records.",
+        "evidence_ids": [
+          "EV-6186e3cca932d16b",
+          "EV-17e8fb42ae7ea4cd",
+          "EV-e915df72079b0a31",
+          "EV-bd96005a045f49b4",
+          "EV-8ffbfc06dbd0bb34",
+          "EV-387926271c77e487"
+        ],
+        "requirement_keys": [
+          "EMERGENCY_CONTEXT",
+          "CHRONIC_CONDITION_CONTEXT",
+          "CLINICAL_JUSTIFICATION"
+        ],
+        "material": true
+      }
+    ],
+    "review_status": "PENDING_HUMAN_REVIEW",
+    "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+    "traceability": {
+      "material_statements": 9,
+      "with_evidence": 9
+    },
+    "provenance": {
+      "evidence_ids": [
+        "EV-17e8fb42ae7ea4cd",
+        "EV-387926271c77e487",
+        "EV-59a943df1cebda20",
+        "EV-6186e3cca932d16b",
+        "EV-8ffbfc06dbd0bb34",
+        "EV-a8de1ca008daf752",
+        "EV-bd96005a045f49b4",
+        "EV-cec244de674f4eb6",
+        "EV-e915df72079b0a31",
+        "EV-f20558e546e2c8b0",
+        "EV-f9680e8d08b497de"
+      ]
+    }
+  },
+  "requirement_states": {
+    "EPISODE_RELATEDNESS": "FOUND",
+    "DIAGNOSIS_CONSISTENCY": "FOUND",
+    "PROCEDURE_RELATIONSHIP": "NOT_FOUND",
+    "PROVIDER_CONTEXT": "SKIPPED",
+    "CLINICAL_DOCUMENT_AVAILABILITY": "FOUND",
+    "EMERGENCY_CONTEXT": "FOUND",
+    "SCHEDULED_PROCEDURE_CONTEXT": "NOT_FOUND",
+    "CHRONIC_CONDITION_CONTEXT": "FOUND",
+    "CLINICAL_JUSTIFICATION": "FOUND",
+    "RISK_INDICATORS_IN_NOTES": "FOUND",
+    "APPLICABLE_POLICY": "FOUND"
+  },
+  "signal_type": "READMISSION",
+  "anchor_episode_ids": [
+    "EPI-000002",
+    "EPI-000003"
+  ]
+}

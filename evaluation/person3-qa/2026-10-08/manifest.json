@@ -1,0 +1,60 @@
+{
+  "files": {
+    "acceptance.json": {
+      "bytes": 34268,
+      "sha256": "9c2b5ca9e4b489564e813bdf75c8715d17dc9e578db9b92fe212a7c8009d6f9e"
+    },
+    "golden/A.json": {
+      "bytes": 28172,
+      "sha256": "430c44c421ee9eb5486a5079760694569eb1e026207d583a140c473fb82f0e1f"
+    },
+    "golden/B.json": {
+      "bytes": 22361,
+      "sha256": "f9506bfb6ac9a40ca0e5a3da55ba64cece8193b0385f96d0027c358ebfd3dfe7"
+    },
+    "golden/C.json": {
+      "bytes": 23681,
+      "sha256": "6f995afaa7b646ab05c8026324d2cd7be0c2c52cb1cdad317f9f5a2fa5e89657"
+    },
+    "golden/D.json": {
+      "bytes": 18354,
+      "sha256": "d6644eced8286f3b2c0614db9c4137115cf2820163ea3ba0f2f072f43d5bc124"
+    },
+    "golden/E.json": {
+      "bytes": 17115,
+      "sha256": "787eb8148377cd622b51cdd381d92853eb62e40b29e41dac9e45f0323726e94b"
+    },
+    "label_audit.json": {
+      "bytes": 399,
+      "sha256": "5a97fff6c57d55889c836d5119811d1556e7f6fccfbc4d47ea534a314006f9ea"
+    },
+    "raw_qa_bundle.zip": {
+      "bytes": 82882,
+      "sha256": "bd032980adbd21e607047b0e32a9890f356028b025c84d54e77427bb53d70181"
+    },
+    "validation.json": {
+      "bytes": 1541,
+      "sha256": "36c96c49767220252a4b678e02a66cda4a98326f7e61a7ef526c30417e50c67a"
+    },
+    "verification_replay.json": {
+      "bytes": 324,
+      "sha256": "65ca6bfb7755716ca446b3d887ad7618803e5152cfd73e95f6918fd1605a7935"
+    }
+  },
+  "archive_members": {
+    "acceptance.json": "9c2b5ca9e4b489564e813bdf75c8715d17dc9e578db9b92fe212a7c8009d6f9e",
+    "baseline.json": "ecf104623897bc13fbec7f70e417f93bfc71f2262a8b0d13adddb4d4969bf6ee",
+    "challenge.json": "47c698b4c423da208945f1690a280c0703071fe8b028d26a6e192839c3a8fdbf",
+    "pipeline_audit.json": "1216677afb07acd9f854218f8be2ced54cb1315561f134d93f83f4489ec7673e",
+    "label_audit.json": "5a97fff6c57d55889c836d5119811d1556e7f6fccfbc4d47ea534a314006f9ea",
+    "evaluation-only/challenge_expectations.json": "cd2632ed245250b20da94ea6d8819b1980a6c71f8d989be6b8519dd4165a7cf7",
+    "dataset/claims.jsonl": "72a0a44ccc53d7fab88dc291b3b213760b62c66cd190ea074f683f8685c2b753",
+    "dataset/clinical_notes.jsonl": "875305c2bee9cc0f13475a406be4dd0c827af117c4d57530e65b92e69e6fc6d2",
+    "dataset/episodes.jsonl": "6985d5f34b86d69cd6287c8d43eaa1463d53d0af331726ba80ec2266c3ec287b",
+    "dataset/manifest.json": "935d1dbc74f5b406d1308030a3f7a997aee11e334272f8d2400ad832ba560af4",
+    "dataset/patients.jsonl": "3bf9c8b60f242cd44c4e4cdf3d2a53f8157398bee59b95d954cdf2db86ea35e0",
+    "dataset/providers.jsonl": "9e24881f95ffae280d15e2dc485c6c4ff2ccbd0f710c26195cccf5fe4e93c226"
+  },
+  "credential_scan": "no API key patterns or env files in delivery",
+  "archive_crc_and_content_verified": true
+}

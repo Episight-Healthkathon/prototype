@@ -1,10 +1,22 @@
 # Benchmark findings for Person 1 — dataset v0.1.0, code 001ee96
 
+**Fresh FULL follow-up — 2026-10-08, backend `90e914f`:**
+`reports/v0.1.0-pc-0.1.1-full/` runs the verified corpus with `gpt-4o-mini`, three
+repeats: 60/60 outcomes and stop reasons correct, golden 5/5 per repeat, coverage
+100%, zero unsafe closures and no unstable outcomes. GT-B09 passes 3/3. All 60
+case objects replay identically except timing fields. The 625 calls had no API
+errors; 17 steps needed a validation retry and one fell back after rejection
+(GT-B13, repeat 1). Mean latency 18.6 s vs 16 ms for FULL_RULE_PLANNER; quality
+metrics remain equal on this dataset, so F-3's lack of demonstrated AI-planner
+advantage still holds. Exception precision is 90.91% under the unchanged GT-B06
+label interpretation. Full details and the replay archive are in the new report.
+
 **2026-10-08 follow-up:** F-2 is fixed by a conservative active-resuscitation-care matcher.
 The new deterministic report is `reports/v0.1.0-pc-0.1.1-backend/`: 20/20 outcomes, A–E 5/5,
 coverage 100%, no unsafe closures in FULL_RULE_PLANNER. Source policy transcription and the
 regression gate were also corrected. The findings below describe the historical benchmark;
-F-1 remains an ablation limitation and F-3 still describes the old AI run, not a fresh FULL run.
+F-1 remains an ablation limitation. The detailed F-3 section describes the old AI
+run; the fresh-run evidence is summarized above.
 
 Source: `evaluation/reports/v0.1.0-baseline/` (deterministic modes) and `evaluation/reports/v0.1.0-full/`
 (all four modes, FULL with OpenAI `gpt-4o-mini`, prompt `planner-2`, 3 repeats). Case JSON: rerun

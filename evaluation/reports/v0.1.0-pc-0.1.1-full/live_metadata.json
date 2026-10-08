@@ -1,0 +1,11 @@
+{
+  "started_at": "2026-10-08T09:55:29.148683+00:00",
+  "finished_at": "2026-10-08T10:14:09.678155+00:00",
+  "wall_seconds": 1120.53,
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "prompt_version": "planner-2",
+  "api_calls": 625,
+  "api_errors": 0,
+  "replay": "off"
+}

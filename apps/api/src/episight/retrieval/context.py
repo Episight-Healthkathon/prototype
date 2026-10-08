@@ -145,6 +145,19 @@ _PATTERNS = {
     for ctx, lex in LEXICONS.items()
 }
 
+# Recognise documented active resuscitation care, rather than transport/location alone. These
+# are lexical evidence candidates for human review, not clinical thresholds or a diagnosis.
+_RESUSCITATION_CARE = re.compile(
+    r"\b(?:ditangani|distabilisasi|dirawat|ditatalaksana)\s+(?:segera\s+|langsung\s+)?"
+    r"(?:di|dalam)\s+(?:ruang|ruangan|unit)\s+resusitasi\b"
+    r"|\b(?:treated|stabilized|resuscitated)\s+(?:immediately\s+)?in\s+(?:the\s+)?"
+    r"resuscitation\s+(?:room|area)\b"
+)
+_NON_CURRENT_CARE = re.compile(
+    r"\b(?:akan|bila|jika|apabila|rencana|edukasi|simulasi|latihan|riwayat|sebelumnya|"
+    r"kemarin|pernah|history|previously|planned|would|will|if|training)\b"
+)
+
 
 def _negated(lower: str, start: int, phrase: str, window_words: int) -> bool:
     if any(phrase.startswith(c + " ") for c in NEGATION_CUES):
@@ -170,6 +183,11 @@ def match_context(text: str, context: ContextType) -> list[ContextMatch]:
         for phrase, rx in negate_patterns:
             if rx.search(lower):
                 negated.append(phrase)
+        if context == ContextType.EMERGENCY and not _NON_CURRENT_CARE.search(lower):
+            for m in _RESUSCITATION_CARE.finditer(lower):
+                phrase = m.group()
+                if not _negated(lower, m.start(), phrase, lexicon.negation_window):
+                    affirmed.append(phrase)
         if affirmed and not any(p in dict(negate_patterns) for p in negated):
             stance, terms = Stance.AFFIRMS, affirmed
         elif negated:

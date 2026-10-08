@@ -76,6 +76,31 @@ def test_unrelated_text_matches_nothing():
     assert _match("Terapi omeprazole dan antasida.", ContextType.EMERGENCY) == []
 
 
+@pytest.mark.parametrize("text", [
+    "Pasien ditangani segera di ruang resusitasi dengan dua jalur infus.",
+    "Pasien distabilisasi dalam ruangan resusitasi setelah penilaian awal.",
+    "Pasien dirawat langsung di unit resusitasi.",
+    "The patient was treated immediately in the resuscitation room.",
+])
+def test_active_resuscitation_care_surfaces_literal_emergency_evidence(text):
+    matches = match_context(text, ContextType.EMERGENCY)
+    assert len(matches) == 1 and matches[0].stance == Stance.AFFIRMS
+    assert text[matches[0].char_start:matches[0].char_end] == matches[0].excerpt == text
+
+
+@pytest.mark.parametrize("text", [
+    "Pasien diantar ambulans untuk kontrol rutin.",
+    "Pasien menunggu keluarga di dekat ruang resusitasi.",
+    "Pasien tidak ditangani di ruang resusitasi.",
+    "Jika memburuk, pasien akan ditangani di ruang resusitasi.",
+    "Riwayat pasien ditangani di ruang resusitasi pada perawatan sebelumnya.",
+    "Simulasi: pasien ditangani di ruang resusitasi oleh peserta latihan.",
+    "The patient will be treated in the resuscitation room if required.",
+])
+def test_transport_location_negation_and_non_current_care_are_not_emergency_evidence(text):
+    assert _match(text, ContextType.EMERGENCY) == []
+
+
 def test_matches_on_every_interim_note_are_literal_substrings(dataset):
     for note in dataset.notes:
         if note.text is None:

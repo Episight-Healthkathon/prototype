@@ -23,3 +23,6 @@ node_modules/
 Thumbs.db
 .vscode/
 .idea/
+
+# Evaluation scratch runs (reports are committed under evaluation/reports)
+evaluation/runs/

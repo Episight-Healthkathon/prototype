@@ -137,6 +137,33 @@ Reproducibility is in `header`: `dataset_version`, `corpus_version`, `code_versi
 
 Average steps: RULES_ONLY 4.0 (cannot assess context → all `EVIDENCE_UNAVAILABLE`), RULES_RETRIEVAL 11.3, FULL_RULE_PLANNER 9.7, FULL (OpenAI `gpt-4o-mini`) 9.7 with 0 fallbacks. The last three modes reached the same outcomes. The AI planner is currently equal to the rule planner on this easy data; your more varied benchmark decides whether it adds value.
 
+### 0.9 Progress — 2026-10-04 (Person 3)
+
+Branch `feat/person3-data-eval`. Done:
+
+- **Dataset v0.1.0** (`data/`): deterministic generator (`data/generator/generate_dataset.py`, seed 20261004) with golden A–E (seed-independent), 15 benchmark cases, 8 must-not-flag screening fixtures (31/7-day boundaries, other provider, other diagnosis, IP→OP, duplicate row, missing date, same ICD-10 category) and 12 noise patients. Generator tests: `data/generator/tests` (11).
+- **Ground truth** `data/ground-truth/v0.1.0/cases.jsonl`: 28 rows with evidence labels (incl. `IRRELEVANT`), exceptions, requirement states, outcome and stop reason.
+- **Policy corpus pc-0.1.0**: four sections (definition + exceptions × readmission/fragmentation) from the proposal's Permenkes 26/2021 definitions. ⚠️ Verbatim check against the JDIH PDF is still open.
+- **Scoring harness** `evaluation/score.py` + `METRICS.md` + tests (12). Regression: `evaluation/run_regression.sh`, CI `.github/workflows/evaluation.yml`.
+- **Baseline** (`evaluation/reports/v0.1.0-baseline/`): FULL_RULE_PLANNER golden 5/5, outcome accuracy 95%, coverage 93%, precision 100%, 0 unsafe closures; RULES_RETRIEVAL 4/5 golden, 1 unsafe closure. Findings for Person 1: `evaluation/FINDINGS.md`.
+
+Open: FULL (AI planner) run with a key and `--repeats 3`; verbatim policy check; governance and E2E QA (Phases 14–16); more paraphrase cases.
+
+### 0.10 Person 1 follow-up — 2026-10-08
+
+- The historical FULL benchmark was completed after §0.9: `evaluation/reports/v0.1.0-full/`,
+  3 repeats, 95% outcome accuracy, recorded model responses. Its corpus/backend remain historical.
+- Policy `pc-0.1.1` is verified against JDIH Kemenkes, PDF page 55; complete source text,
+  effective date and provenance are recorded in `data/policies/pc-0.1.1/VERIFICATION.md`.
+- The backend recognises documented active resuscitation care without relying on transport alone;
+  GT-B09 now passes. No synthetic case or ground-truth label was changed.
+- Scoring keeps missing cases/repeats in the denominator. CI gates missing runs, screening errors,
+  new case/state failures, quality regressions and full-mode unsafe closures/brief failures.
+- New default deterministic baseline: `evaluation/reports/v0.1.0-pc-0.1.1-backend/`,
+  FULL_RULE_PLANNER 20/20 outcomes, A–E 5/5, coverage 100%, no unsafe closure.
+- Still open: fresh FULL recordings for this backend/corpus, broader paraphrase validation,
+  governance and frontend E2E QA. The matcher remains a lexical prototype, not a clinical adjudicator.
+
 ---
 
 ## 1. Ownership Boundary

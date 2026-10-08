@@ -1,0 +1,30 @@
+# Evaluation CI (Person 3): generator + harness tests, dataset freshness, golden regression on the
+# official dataset. Never calls a paid model: EPISIGHT_LLM_PROVIDER=none, deterministic modes only.
+name: evaluation
+
+on:
+  push:
+    paths: ["data/**", "evaluation/**", "apps/api/src/**", ".github/workflows/evaluation.yml"]
+  pull_request:
+    paths: ["data/**", "evaluation/**", "apps/api/src/**", ".github/workflows/evaluation.yml"]
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    env:
+      EPISIGHT_LLM_PROVIDER: none
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Install
+        working-directory: apps/api
+        run: uv sync --frozen
+      - name: Generator and harness tests
+        run: uv run --project apps/api pytest -q -p no:cacheprovider data/generator/tests evaluation/tests
+      - name: Golden regression on official dataset
+        run: PYTHON="uv run --project apps/api python" bash evaluation/run_regression.sh ci
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evaluation-report
+          path: evaluation/runs/ci/

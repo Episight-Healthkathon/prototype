@@ -1,0 +1,3723 @@
+{
+  "ground_truth": "data\\ground-truth\\v0.1.0\\cases.jsonl",
+  "modes": {
+    "FULL_RULE_PLANNER": {
+      "header": {
+        "runner_version": "1",
+        "mode": "FULL_RULE_PLANNER",
+        "dataset_version": "v0.1.0",
+        "corpus_version": "pc-0.1.0",
+        "code_version": "001ee96",
+        "config": {
+          "mode": "FULL_RULE_PLANNER",
+          "max_steps": 12,
+          "catalog_version": "catalog-1",
+          "tool_timeout_s": 10.0,
+          "repeats": 1,
+          "planner": {
+            "provider": "rule"
+          }
+        },
+        "config_hash": "461b7b477ed0aa07",
+        "started_at": "2026-10-03T17:18:45.573615+00:00",
+        "finished_at": "2026-10-03T17:18:46.350387+00:00"
+      },
+      "aggregate": {
+        "screening": {
+          "recall": 1.0,
+          "missed": [],
+          "must_not_flag_violations": [],
+          "false_positive_sets": 0,
+          "flagged_sets": 20
+        },
+        "cases_scored": 20,
+        "episode_recall": 1.0,
+        "episode_precision": 1.0,
+        "evidence_precision": 1.0,
+        "note_evidence_precision": 1.0,
+        "policy_precision": 1.0,
+        "evidence_coverage": 0.9333333333333333,
+        "exceptions": {
+          "tp": 9,
+          "fp": 1,
+          "fn": 1,
+          "precision": 0.9,
+          "recall": 0.9,
+          "exact_case_accuracy": 0.9
+        },
+        "outcome_accuracy": 0.95,
+        "stop_reason_accuracy": 0.95,
+        "escalation": {
+          "accuracy": 0.95,
+          "unsafe_closures": [],
+          "over_escalations": [
+            "GT-B09"
+          ]
+        },
+        "state_accuracy": 0.95,
+        "traceability": 1.0,
+        "brief_failures": 0,
+        "tool_failures": 0,
+        "avg_steps": 10.05,
+        "avg_elapsed_ms": 6.7,
+        "planner": {
+          "llm_steps": 0,
+          "llm_retry_steps": 0,
+          "fallback_steps": 0,
+          "rule_steps": 201,
+          "validation_rejections": 0
+        },
+        "golden": {
+          "A": true,
+          "B": true,
+          "C": true,
+          "D": true,
+          "E": true
+        },
+        "variance": {
+          "repeats": 1,
+          "unstable_cases": []
+        },
+        "by_scenario_class": {
+          "CONFLICTING_EVIDENCE": {
+            "runs": 2,
+            "outcome_accuracy": 1.0
+          },
+          "LEGIT_CHRONIC": {
+            "runs": 2,
+            "outcome_accuracy": 1.0
+          },
+          "LEGIT_EMERGENCY_RETURN": {
+            "runs": 1,
+            "outcome_accuracy": 1.0
+          },
+          "LEGIT_READMISSION_EMERGENCY": {
+            "runs": 3,
+            "outcome_accuracy": 0.6666666666666666
+          },
+          "LEGIT_STAGED_PROCEDURE": {
+            "runs": 2,
+            "outcome_accuracy": 1.0
+          },
+          "LEGIT_SUPPORTING_EXAM_FOLLOWUP": {
+            "runs": 1,
+            "outcome_accuracy": 1.0
+          },
+          "MISSING_EVIDENCE": {
+            "runs": 3,
+            "outcome_accuracy": 1.0
+          },
+          "POTENTIAL_FRAGMENTATION": {
+            "runs": 2,
+            "outcome_accuracy": 1.0
+          },
+          "POTENTIAL_READMISSION": {
+            "runs": 4,
+            "outcome_accuracy": 1.0
+          }
+        },
+        "failing_cases": [
+          "GT-B09"
+        ]
+      },
+      "cases": {
+        "GT-A": [
+          {
+            "gt_id": "GT-A",
+            "case_id": "CASE-RA-0bbfc334",
+            "run_index": 0,
+            "scenario_class": "LEGIT_READMISSION_EMERGENCY",
+            "golden_case": "A",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 7,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "CHRONIC_CONDITION_CONTEXT",
+              "EMERGENCY_CONTEXT"
+            ],
+            "exceptions_found": [
+              "CHRONIC_CONDITION_CONTEXT",
+              "EMERGENCY_CONTEXT"
+            ],
+            "exception_tp": 2,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 15,
+            "step_count": 10,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 10,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B": [
+          {
+            "gt_id": "GT-B",
+            "case_id": "CASE-FR-83f41f66",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_FRAGMENTATION",
+            "golden_case": "B",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 14,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-C": [
+          {
+            "gt_id": "GT-C",
+            "case_id": "CASE-RA-d7840713",
+            "run_index": 0,
+            "scenario_class": "LEGIT_STAGED_PROCEDURE",
+            "golden_case": "C",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 5,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "SCHEDULED_PROCEDURE_CONTEXT"
+            ],
+            "exceptions_found": [
+              "SCHEDULED_PROCEDURE_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-D": [
+          {
+            "gt_id": "GT-D",
+            "case_id": "CASE-RA-609280ef",
+            "run_index": 0,
+            "scenario_class": "MISSING_EVIDENCE",
+            "golden_case": "D",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": null,
+            "policy_precision": 1.0,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_UNAVAILABLE",
+            "stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "expected_stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 10,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 10,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-E": [
+          {
+            "gt_id": "GT-E",
+            "case_id": "CASE-RA-608764ca",
+            "run_index": 0,
+            "scenario_class": "CONFLICTING_EVIDENCE",
+            "golden_case": "E",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": null,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_CONFLICTING",
+            "expected_outcome": "EVIDENCE_CONFLICTING",
+            "stop_reason": "CONFLICTING_EVIDENCE",
+            "expected_stop_reason": "CONFLICTING_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 5,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 5,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B01": [
+          {
+            "gt_id": "GT-B01",
+            "case_id": "CASE-RA-96cfb145",
+            "run_index": 0,
+            "scenario_class": "LEGIT_CHRONIC",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "CHRONIC_CONDITION_CONTEXT"
+            ],
+            "exceptions_found": [
+              "CHRONIC_CONDITION_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 10,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 10,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B02": [
+          {
+            "gt_id": "GT-B02",
+            "case_id": "CASE-FR-0ab8ad0b",
+            "run_index": 0,
+            "scenario_class": "LEGIT_SUPPORTING_EXAM_FOLLOWUP",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 3,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "SUPPORTING_EXAM_FOLLOWUP_CONTEXT"
+            ],
+            "exceptions_found": [
+              "SUPPORTING_EXAM_FOLLOWUP_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 14,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B03": [
+          {
+            "gt_id": "GT-B03",
+            "case_id": "CASE-FR-d1179ea9",
+            "run_index": 0,
+            "scenario_class": "LEGIT_EMERGENCY_RETURN",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 3,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exceptions_found": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 16,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B04": [
+          {
+            "gt_id": "GT-B04",
+            "case_id": "CASE-RA-56f37782",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_READMISSION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 10,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 10,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B05": [
+          {
+            "gt_id": "GT-B05",
+            "case_id": "CASE-FR-570a7ff4",
+            "run_index": 0,
+            "scenario_class": "LEGIT_STAGED_PROCEDURE",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 5,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "SCHEDULED_PROCEDURE_CONTEXT"
+            ],
+            "exceptions_found": [
+              "SCHEDULED_PROCEDURE_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 12,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 12,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B06": [
+          {
+            "gt_id": "GT-B06",
+            "case_id": "CASE-RA-79ad8dec",
+            "run_index": 0,
+            "scenario_class": "CONFLICTING_EVIDENCE",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": null,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [
+              "SCHEDULED_PROCEDURE_CONTEXT"
+            ],
+            "exception_tp": 0,
+            "exception_fp": 1,
+            "exception_fn": 0,
+            "exception_exact": false,
+            "outcome": "EVIDENCE_CONFLICTING",
+            "expected_outcome": "EVIDENCE_CONFLICTING",
+            "stop_reason": "CONFLICTING_EVIDENCE",
+            "expected_stop_reason": "CONFLICTING_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 16,
+            "step_count": 7,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 7,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B07": [
+          {
+            "gt_id": "GT-B07",
+            "case_id": "CASE-FR-2ce8ff66",
+            "run_index": 0,
+            "scenario_class": "MISSING_EVIDENCE",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": null,
+            "policy_precision": 1.0,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_UNAVAILABLE",
+            "stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "expected_stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B08": [
+          {
+            "gt_id": "GT-B08",
+            "case_id": "CASE-RA-1ed0875b",
+            "run_index": 0,
+            "scenario_class": "MISSING_EVIDENCE",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": null,
+            "policy_precision": 1.0,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_UNAVAILABLE",
+            "stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "expected_stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 14,
+            "step_count": 10,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 10,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B09": [
+          {
+            "gt_id": "GT-B09",
+            "case_id": "CASE-RA-6b3ce4c9",
+            "run_index": 0,
+            "scenario_class": "LEGIT_READMISSION_EMERGENCY",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": null,
+            "policy_precision": 1.0,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000042:EMERGENCY_CONTEXT"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 1,
+            "exception_exact": false,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": false,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "EMERGENCY_CONTEXT": [
+                "NOT_FOUND",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 10,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 10,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B10": [
+          {
+            "gt_id": "GT-B10",
+            "case_id": "CASE-RA-49e2e3ed",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_READMISSION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 15,
+            "step_count": 10,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 10,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B11": [
+          {
+            "gt_id": "GT-B11",
+            "case_id": "CASE-RA-2110d2a5",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_READMISSION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": null,
+            "policy_precision": 1.0,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 10,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 10,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B12": [
+          {
+            "gt_id": "GT-B12",
+            "case_id": "CASE-RA-5cea8ff0",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_READMISSION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 16,
+            "step_count": 10,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 10,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B13": [
+          {
+            "gt_id": "GT-B13",
+            "case_id": "CASE-RA-5bfa9633",
+            "run_index": 0,
+            "scenario_class": "LEGIT_READMISSION_EMERGENCY",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 3,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exceptions_found": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 10,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 10,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B14": [
+          {
+            "gt_id": "GT-B14",
+            "case_id": "CASE-FR-f78c5336",
+            "run_index": 0,
+            "scenario_class": "LEGIT_CHRONIC",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 3,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "CHRONIC_CONDITION_CONTEXT"
+            ],
+            "exceptions_found": [
+              "CHRONIC_CONDITION_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 14,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ],
+        "GT-B15": [
+          {
+            "gt_id": "GT-B15",
+            "case_id": "CASE-FR-4cf97d96",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_FRAGMENTATION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": null,
+            "policy_precision": 1.0,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": [
+                "PROVIDER_CONTEXT"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "RULES_ONLY": {
+      "header": {
+        "runner_version": "1",
+        "mode": "RULES_ONLY",
+        "dataset_version": "v0.1.0",
+        "corpus_version": "pc-0.1.0",
+        "code_version": "001ee96",
+        "config": {
+          "mode": "RULES_ONLY",
+          "max_steps": 12,
+          "catalog_version": "catalog-1",
+          "tool_timeout_s": 10.0,
+          "repeats": 1,
+          "planner": {
+            "provider": "rule"
+          }
+        },
+        "config_hash": "84004da4020916bc",
+        "started_at": "2026-10-03T17:18:41.917212+00:00",
+        "finished_at": "2026-10-03T17:18:42.534505+00:00"
+      },
+      "aggregate": {
+        "screening": {
+          "recall": 1.0,
+          "missed": [],
+          "must_not_flag_violations": [],
+          "false_positive_sets": 0,
+          "flagged_sets": 20
+        },
+        "cases_scored": 20,
+        "episode_recall": 1.0,
+        "episode_precision": 1.0,
+        "evidence_precision": null,
+        "note_evidence_precision": null,
+        "policy_precision": null,
+        "evidence_coverage": 0.0,
+        "exceptions": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 10,
+          "precision": null,
+          "recall": 0.0,
+          "exact_case_accuracy": 0.55
+        },
+        "outcome_accuracy": 0.15,
+        "stop_reason_accuracy": 0.0,
+        "escalation": {
+          "accuracy": 0.55,
+          "unsafe_closures": [],
+          "over_escalations": [
+            "GT-A",
+            "GT-B01",
+            "GT-B02",
+            "GT-B03",
+            "GT-B05",
+            "GT-B09",
+            "GT-B13",
+            "GT-B14",
+            "GT-C"
+          ]
+        },
+        "state_accuracy": 0.0,
+        "traceability": 1.0,
+        "brief_failures": 0,
+        "tool_failures": 0,
+        "avg_steps": 4.0,
+        "avg_elapsed_ms": 1.45,
+        "planner": {
+          "llm_steps": 0,
+          "llm_retry_steps": 0,
+          "fallback_steps": 0,
+          "rule_steps": 80,
+          "validation_rejections": 0
+        },
+        "golden": {
+          "A": false,
+          "B": false,
+          "C": false,
+          "D": false,
+          "E": false
+        },
+        "variance": {
+          "repeats": 1,
+          "unstable_cases": []
+        },
+        "by_scenario_class": {
+          "CONFLICTING_EVIDENCE": {
+            "runs": 2,
+            "outcome_accuracy": 0.0
+          },
+          "LEGIT_CHRONIC": {
+            "runs": 2,
+            "outcome_accuracy": 0.0
+          },
+          "LEGIT_EMERGENCY_RETURN": {
+            "runs": 1,
+            "outcome_accuracy": 0.0
+          },
+          "LEGIT_READMISSION_EMERGENCY": {
+            "runs": 3,
+            "outcome_accuracy": 0.0
+          },
+          "LEGIT_STAGED_PROCEDURE": {
+            "runs": 2,
+            "outcome_accuracy": 0.0
+          },
+          "LEGIT_SUPPORTING_EXAM_FOLLOWUP": {
+            "runs": 1,
+            "outcome_accuracy": 0.0
+          },
+          "MISSING_EVIDENCE": {
+            "runs": 3,
+            "outcome_accuracy": 1.0
+          },
+          "POTENTIAL_FRAGMENTATION": {
+            "runs": 2,
+            "outcome_accuracy": 0.0
+          },
+          "POTENTIAL_READMISSION": {
+            "runs": 4,
+            "outcome_accuracy": 0.0
+          }
+        },
+        "failing_cases": [
+          "GT-A",
+          "GT-B",
+          "GT-B01",
+          "GT-B02",
+          "GT-B03",
+          "GT-B04",
+          "GT-B05",
+          "GT-B06",
+          "GT-B07",
+          "GT-B08",
+          "GT-B09",
+          "GT-B10",
+          "GT-B11",
+          "GT-B12",
+          "GT-B13",
+          "GT-B14",
+          "GT-B15",
+          "GT-C",
+          "GT-D",
+          "GT-E"
+        ]
+      },
+      "cases": {
+        "GT-A": [
+          {
+            "gt_id": "GT-A",
+            "case_id": "CASE-RA-0bbfc334",
+            "run_index": 0,
+            "scenario_class": "LEGIT_READMISSION_EMERGENCY",
+            "golden_case": "A",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000001:CHRONIC_CONDITION_CONTEXT",
+              "CLINICAL_NOTE:NOTE-000003:EMERGENCY_CONTEXT",
+              "CLINICAL_NOTE:NOTE-000004:RISK_INDICATORS_IN_NOTES",
+              "CLINICAL_NOTE:NOTE-000005:CLINICAL_JUSTIFICATION"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "CHRONIC_CONDITION_CONTEXT",
+              "EMERGENCY_CONTEXT"
+            ],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 2,
+            "exception_exact": false,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": false,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "EMERGENCY_CONTEXT": [
+                "OPEN",
+                "FOUND"
+              ],
+              "CHRONIC_CONDITION_CONTEXT": [
+                "OPEN",
+                "FOUND"
+              ],
+              "CLINICAL_JUSTIFICATION": [
+                "OPEN",
+                "FOUND"
+              ],
+              "RISK_INDICATORS_IN_NOTES": [
+                "OPEN",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B": [
+          {
+            "gt_id": "GT-B",
+            "case_id": "CASE-FR-83f41f66",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_FRAGMENTATION",
+            "golden_case": "B",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000007:RISK_INDICATORS_IN_NOTES",
+              "CLINICAL_NOTE:NOTE-000008:RISK_INDICATORS_IN_NOTES"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "EMERGENCY_CONTEXT": [
+                "OPEN",
+                "NOT_FOUND"
+              ],
+              "CHRONIC_CONDITION_CONTEXT": [
+                "OPEN",
+                "NOT_FOUND"
+              ],
+              "SCHEDULED_PROCEDURE_CONTEXT": [
+                "OPEN",
+                "NOT_FOUND"
+              ],
+              "SUPPORTING_EXAM_FOLLOWUP_CONTEXT": [
+                "OPEN",
+                "NOT_FOUND"
+              ],
+              "CLINICAL_JUSTIFICATION": [
+                "OPEN",
+                "NOT_FOUND"
+              ],
+              "RISK_INDICATORS_IN_NOTES": [
+                "OPEN",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-C": [
+          {
+            "gt_id": "GT-C",
+            "case_id": "CASE-RA-d7840713",
+            "run_index": 0,
+            "scenario_class": "LEGIT_STAGED_PROCEDURE",
+            "golden_case": "C",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000010:SCHEDULED_PROCEDURE_CONTEXT",
+              "CLINICAL_NOTE:NOTE-000010:SCHEDULE_CONSISTENCY",
+              "EPISODE_RECORD:EPI-000008:SCHEDULE_CONSISTENCY"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "SCHEDULED_PROCEDURE_CONTEXT"
+            ],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 1,
+            "exception_exact": false,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": false,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "SCHEDULED_PROCEDURE_CONTEXT": [
+                "OPEN",
+                "FOUND"
+              ],
+              "SCHEDULE_CONSISTENCY": [
+                null,
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-D": [
+          {
+            "gt_id": "GT-D",
+            "case_id": "CASE-RA-609280ef",
+            "run_index": 0,
+            "scenario_class": "MISSING_EVIDENCE",
+            "golden_case": "D",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_UNAVAILABLE",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "outcome_correct": true,
+            "stop_reason_correct": false,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "CLINICAL_DOCUMENT_AVAILABILITY": [
+                "OPEN",
+                "UNAVAILABLE"
+              ],
+              "EMERGENCY_CONTEXT": [
+                "OPEN",
+                "UNAVAILABLE"
+              ],
+              "CLINICAL_JUSTIFICATION": [
+                "OPEN",
+                "UNAVAILABLE"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-E": [
+          {
+            "gt_id": "GT-E",
+            "case_id": "CASE-RA-608764ca",
+            "run_index": 0,
+            "scenario_class": "CONFLICTING_EVIDENCE",
+            "golden_case": "E",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000019:EMERGENCY_CONTEXT",
+              "CLINICAL_NOTE:NOTE-000020:EMERGENCY_CONTEXT"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_CONFLICTING",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "CONFLICTING_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "EMERGENCY_CONTEXT": [
+                "OPEN",
+                "CONFLICTING"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B01": [
+          {
+            "gt_id": "GT-B01",
+            "case_id": "CASE-RA-96cfb145",
+            "run_index": 0,
+            "scenario_class": "LEGIT_CHRONIC",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000022:CHRONIC_CONDITION_CONTEXT"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "CHRONIC_CONDITION_CONTEXT"
+            ],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 1,
+            "exception_exact": false,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": false,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "CHRONIC_CONDITION_CONTEXT": [
+                "OPEN",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B02": [
+          {
+            "gt_id": "GT-B02",
+            "case_id": "CASE-FR-0ab8ad0b",
+            "run_index": 0,
+            "scenario_class": "LEGIT_SUPPORTING_EXAM_FOLLOWUP",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000025:SUPPORTING_EXAM_FOLLOWUP_CONTEXT"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "SUPPORTING_EXAM_FOLLOWUP_CONTEXT"
+            ],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 1,
+            "exception_exact": false,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": false,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "SUPPORTING_EXAM_FOLLOWUP_CONTEXT": [
+                "OPEN",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B03": [
+          {
+            "gt_id": "GT-B03",
+            "case_id": "CASE-FR-d1179ea9",
+            "run_index": 0,
+            "scenario_class": "LEGIT_EMERGENCY_RETURN",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000027:EMERGENCY_CONTEXT"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 1,
+            "exception_exact": false,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": false,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "EMERGENCY_CONTEXT": [
+                "OPEN",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B04": [
+          {
+            "gt_id": "GT-B04",
+            "case_id": "CASE-RA-56f37782",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_READMISSION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000028:RISK_INDICATORS_IN_NOTES",
+              "CLINICAL_NOTE:NOTE-000029:RISK_INDICATORS_IN_NOTES"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "EMERGENCY_CONTEXT": [
+                "OPEN",
+                "NOT_FOUND"
+              ],
+              "RISK_INDICATORS_IN_NOTES": [
+                "OPEN",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B05": [
+          {
+            "gt_id": "GT-B05",
+            "case_id": "CASE-FR-570a7ff4",
+            "run_index": 0,
+            "scenario_class": "LEGIT_STAGED_PROCEDURE",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000031:SCHEDULED_PROCEDURE_CONTEXT",
+              "CLINICAL_NOTE:NOTE-000031:SCHEDULE_CONSISTENCY",
+              "EPISODE_RECORD:EPI-000022:SCHEDULE_CONSISTENCY"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "SCHEDULED_PROCEDURE_CONTEXT"
+            ],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 1,
+            "exception_exact": false,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": false,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "SCHEDULED_PROCEDURE_CONTEXT": [
+                "OPEN",
+                "FOUND"
+              ],
+              "SCHEDULE_CONSISTENCY": [
+                null,
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B06": [
+          {
+            "gt_id": "GT-B06",
+            "case_id": "CASE-RA-79ad8dec",
+            "run_index": 0,
+            "scenario_class": "CONFLICTING_EVIDENCE",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000033:SCHEDULED_PROCEDURE_CONTEXT",
+              "CLINICAL_NOTE:NOTE-000033:SCHEDULE_CONSISTENCY",
+              "EPISODE_RECORD:EPI-000024:SCHEDULE_CONSISTENCY"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_CONFLICTING",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "CONFLICTING_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "SCHEDULED_PROCEDURE_CONTEXT": [
+                "OPEN",
+                "FOUND"
+              ],
+              "SCHEDULE_CONSISTENCY": [
+                null,
+                "CONFLICTING"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 14,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B07": [
+          {
+            "gt_id": "GT-B07",
+            "case_id": "CASE-FR-2ce8ff66",
+            "run_index": 0,
+            "scenario_class": "MISSING_EVIDENCE",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_UNAVAILABLE",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "outcome_correct": true,
+            "stop_reason_correct": false,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "EMERGENCY_CONTEXT": [
+                "OPEN",
+                "UNAVAILABLE"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B08": [
+          {
+            "gt_id": "GT-B08",
+            "case_id": "CASE-RA-1ed0875b",
+            "run_index": 0,
+            "scenario_class": "MISSING_EVIDENCE",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_UNAVAILABLE",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "outcome_correct": true,
+            "stop_reason_correct": false,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "CLINICAL_DOCUMENT_AVAILABILITY": [
+                "OPEN",
+                "UNAVAILABLE"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B09": [
+          {
+            "gt_id": "GT-B09",
+            "case_id": "CASE-RA-6b3ce4c9",
+            "run_index": 0,
+            "scenario_class": "LEGIT_READMISSION_EMERGENCY",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000042:EMERGENCY_CONTEXT"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 1,
+            "exception_exact": false,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": false,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "EMERGENCY_CONTEXT": [
+                "OPEN",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B10": [
+          {
+            "gt_id": "GT-B10",
+            "case_id": "CASE-RA-49e2e3ed",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_READMISSION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000045:EMERGENCY_CONTEXT",
+              "CLINICAL_NOTE:NOTE-000045:RISK_INDICATORS_IN_NOTES"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "EMERGENCY_CONTEXT": [
+                "OPEN",
+                "NOT_FOUND"
+              ],
+              "RISK_INDICATORS_IN_NOTES": [
+                "OPEN",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B11": [
+          {
+            "gt_id": "GT-B11",
+            "case_id": "CASE-RA-2110d2a5",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_READMISSION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "EMERGENCY_CONTEXT": [
+                "OPEN",
+                "NOT_FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B12": [
+          {
+            "gt_id": "GT-B12",
+            "case_id": "CASE-RA-5cea8ff0",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_READMISSION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000051:RISK_INDICATORS_IN_NOTES",
+              "CLINICAL_NOTE:NOTE-000053:RISK_INDICATORS_IN_NOTES"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "RISK_INDICATORS_IN_NOTES": [
+                "OPEN",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B13": [
+          {
+            "gt_id": "GT-B13",
+            "case_id": "CASE-RA-5bfa9633",
+            "run_index": 0,
+            "scenario_class": "LEGIT_READMISSION_EMERGENCY",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000056:EMERGENCY_CONTEXT"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 1,
+            "exception_exact": false,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": false,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "EMERGENCY_CONTEXT": [
+                "OPEN",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 15,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B14": [
+          {
+            "gt_id": "GT-B14",
+            "case_id": "CASE-FR-f78c5336",
+            "run_index": 0,
+            "scenario_class": "LEGIT_CHRONIC",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000059:CHRONIC_CONDITION_CONTEXT"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "CHRONIC_CONDITION_CONTEXT"
+            ],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 1,
+            "exception_exact": false,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": false,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "CHRONIC_CONDITION_CONTEXT": [
+                "OPEN",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B15": [
+          {
+            "gt_id": "GT-B15",
+            "case_id": "CASE-FR-4cf97d96",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_FRAGMENTATION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 0,
+            "evidence_precision": null,
+            "note_evidence_precision": null,
+            "policy_precision": null,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "NO_ACTIONABLE_GAP",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "SUPPORTING_EXAM_FOLLOWUP_CONTEXT": [
+                "OPEN",
+                "NOT_FOUND"
+              ],
+              "SCHEDULED_PROCEDURE_CONTEXT": [
+                "OPEN",
+                "NOT_FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 4,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 4,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ]
+      }
+    },
+    "RULES_RETRIEVAL": {
+      "header": {
+        "runner_version": "1",
+        "mode": "RULES_RETRIEVAL",
+        "dataset_version": "v0.1.0",
+        "corpus_version": "pc-0.1.0",
+        "code_version": "001ee96",
+        "config": {
+          "mode": "RULES_RETRIEVAL",
+          "max_steps": 12,
+          "catalog_version": "catalog-1",
+          "tool_timeout_s": 10.0,
+          "repeats": 1,
+          "planner": {
+            "provider": "rule"
+          }
+        },
+        "config_hash": "bedae4123d72b51e",
+        "started_at": "2026-10-03T17:18:43.684762+00:00",
+        "finished_at": "2026-10-03T17:18:44.414255+00:00"
+      },
+      "aggregate": {
+        "screening": {
+          "recall": 1.0,
+          "missed": [],
+          "must_not_flag_violations": [],
+          "false_positive_sets": 0,
+          "flagged_sets": 20
+        },
+        "cases_scored": 20,
+        "episode_recall": 1.0,
+        "episode_precision": 1.0,
+        "evidence_precision": 1.0,
+        "note_evidence_precision": 1.0,
+        "policy_precision": 1.0,
+        "evidence_coverage": 0.8,
+        "exceptions": {
+          "tp": 9,
+          "fp": 1,
+          "fn": 1,
+          "precision": 0.9,
+          "recall": 0.9,
+          "exact_case_accuracy": 0.9
+        },
+        "outcome_accuracy": 0.9,
+        "stop_reason_accuracy": 0.9,
+        "escalation": {
+          "accuracy": 0.9,
+          "unsafe_closures": [
+            "GT-B06"
+          ],
+          "over_escalations": [
+            "GT-B09"
+          ]
+        },
+        "state_accuracy": 0.875,
+        "traceability": 1.0,
+        "brief_failures": 0,
+        "tool_failures": 0,
+        "avg_steps": 11.35,
+        "avg_elapsed_ms": 5.25,
+        "planner": {
+          "llm_steps": 0,
+          "llm_retry_steps": 0,
+          "fallback_steps": 0,
+          "rule_steps": 227,
+          "validation_rejections": 0
+        },
+        "golden": {
+          "A": true,
+          "B": true,
+          "C": false,
+          "D": true,
+          "E": true
+        },
+        "variance": {
+          "repeats": 1,
+          "unstable_cases": []
+        },
+        "by_scenario_class": {
+          "CONFLICTING_EVIDENCE": {
+            "runs": 2,
+            "outcome_accuracy": 0.5
+          },
+          "LEGIT_CHRONIC": {
+            "runs": 2,
+            "outcome_accuracy": 1.0
+          },
+          "LEGIT_EMERGENCY_RETURN": {
+            "runs": 1,
+            "outcome_accuracy": 1.0
+          },
+          "LEGIT_READMISSION_EMERGENCY": {
+            "runs": 3,
+            "outcome_accuracy": 0.6666666666666666
+          },
+          "LEGIT_STAGED_PROCEDURE": {
+            "runs": 2,
+            "outcome_accuracy": 1.0
+          },
+          "LEGIT_SUPPORTING_EXAM_FOLLOWUP": {
+            "runs": 1,
+            "outcome_accuracy": 1.0
+          },
+          "MISSING_EVIDENCE": {
+            "runs": 3,
+            "outcome_accuracy": 1.0
+          },
+          "POTENTIAL_FRAGMENTATION": {
+            "runs": 2,
+            "outcome_accuracy": 1.0
+          },
+          "POTENTIAL_READMISSION": {
+            "runs": 4,
+            "outcome_accuracy": 1.0
+          }
+        },
+        "failing_cases": [
+          "GT-B06",
+          "GT-B09"
+        ]
+      },
+      "cases": {
+        "GT-A": [
+          {
+            "gt_id": "GT-A",
+            "case_id": "CASE-RA-0bbfc334",
+            "run_index": 0,
+            "scenario_class": "LEGIT_READMISSION_EMERGENCY",
+            "golden_case": "A",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 7,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "CHRONIC_CONDITION_CONTEXT",
+              "EMERGENCY_CONTEXT"
+            ],
+            "exceptions_found": [
+              "CHRONIC_CONDITION_CONTEXT",
+              "EMERGENCY_CONTEXT"
+            ],
+            "exception_tp": 2,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B": [
+          {
+            "gt_id": "GT-B",
+            "case_id": "CASE-FR-83f41f66",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_FRAGMENTATION",
+            "golden_case": "B",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 12,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 12,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-C": [
+          {
+            "gt_id": "GT-C",
+            "case_id": "CASE-RA-d7840713",
+            "run_index": 0,
+            "scenario_class": "LEGIT_STAGED_PROCEDURE",
+            "golden_case": "C",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 0.3333333333333333,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000010:SCHEDULE_CONSISTENCY",
+              "EPISODE_RECORD:EPI-000008:SCHEDULE_CONSISTENCY"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "SCHEDULED_PROCEDURE_CONTEXT"
+            ],
+            "exceptions_found": [
+              "SCHEDULED_PROCEDURE_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 0.5,
+            "state_mismatches": {
+              "SCHEDULE_CONSISTENCY": [
+                null,
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-D": [
+          {
+            "gt_id": "GT-D",
+            "case_id": "CASE-RA-609280ef",
+            "run_index": 0,
+            "scenario_class": "MISSING_EVIDENCE",
+            "golden_case": "D",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": null,
+            "policy_precision": 1.0,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_UNAVAILABLE",
+            "stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "expected_stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-E": [
+          {
+            "gt_id": "GT-E",
+            "case_id": "CASE-RA-608764ca",
+            "run_index": 0,
+            "scenario_class": "CONFLICTING_EVIDENCE",
+            "golden_case": "E",
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_CONFLICTING",
+            "expected_outcome": "EVIDENCE_CONFLICTING",
+            "stop_reason": "CONFLICTING_EVIDENCE",
+            "expected_stop_reason": "CONFLICTING_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B01": [
+          {
+            "gt_id": "GT-B01",
+            "case_id": "CASE-RA-96cfb145",
+            "run_index": 0,
+            "scenario_class": "LEGIT_CHRONIC",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "CHRONIC_CONDITION_CONTEXT"
+            ],
+            "exceptions_found": [
+              "CHRONIC_CONDITION_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B02": [
+          {
+            "gt_id": "GT-B02",
+            "case_id": "CASE-FR-0ab8ad0b",
+            "run_index": 0,
+            "scenario_class": "LEGIT_SUPPORTING_EXAM_FOLLOWUP",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 3,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "SUPPORTING_EXAM_FOLLOWUP_CONTEXT"
+            ],
+            "exceptions_found": [
+              "SUPPORTING_EXAM_FOLLOWUP_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 12,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 12,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B03": [
+          {
+            "gt_id": "GT-B03",
+            "case_id": "CASE-FR-d1179ea9",
+            "run_index": 0,
+            "scenario_class": "LEGIT_EMERGENCY_RETURN",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 3,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exceptions_found": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 12,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 12,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B04": [
+          {
+            "gt_id": "GT-B04",
+            "case_id": "CASE-RA-56f37782",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_READMISSION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 16,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B05": [
+          {
+            "gt_id": "GT-B05",
+            "case_id": "CASE-FR-570a7ff4",
+            "run_index": 0,
+            "scenario_class": "LEGIT_STAGED_PROCEDURE",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 0.3333333333333333,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000031:SCHEDULE_CONSISTENCY",
+              "EPISODE_RECORD:EPI-000022:SCHEDULE_CONSISTENCY"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "SCHEDULED_PROCEDURE_CONTEXT"
+            ],
+            "exceptions_found": [
+              "SCHEDULED_PROCEDURE_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 0.5,
+            "state_mismatches": {
+              "SCHEDULE_CONSISTENCY": [
+                null,
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 14,
+            "step_count": 12,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 12,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B06": [
+          {
+            "gt_id": "GT-B06",
+            "case_id": "CASE-RA-79ad8dec",
+            "run_index": 0,
+            "scenario_class": "CONFLICTING_EVIDENCE",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 3,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 0.3333333333333333,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000033:SCHEDULE_CONSISTENCY",
+              "EPISODE_RECORD:EPI-000024:SCHEDULE_CONSISTENCY"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [
+              "SCHEDULED_PROCEDURE_CONTEXT"
+            ],
+            "exception_tp": 0,
+            "exception_fp": 1,
+            "exception_fn": 0,
+            "exception_exact": false,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_CONFLICTING",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "CONFLICTING_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": true,
+            "escalated": false,
+            "unsafe_closure": true,
+            "state_accuracy": 0.5,
+            "state_mismatches": {
+              "SCHEDULE_CONSISTENCY": [
+                null,
+                "CONFLICTING"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B07": [
+          {
+            "gt_id": "GT-B07",
+            "case_id": "CASE-FR-2ce8ff66",
+            "run_index": 0,
+            "scenario_class": "MISSING_EVIDENCE",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": null,
+            "policy_precision": 1.0,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_UNAVAILABLE",
+            "stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "expected_stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 15,
+            "step_count": 12,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 12,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B08": [
+          {
+            "gt_id": "GT-B08",
+            "case_id": "CASE-RA-1ed0875b",
+            "run_index": 0,
+            "scenario_class": "MISSING_EVIDENCE",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": null,
+            "policy_precision": 1.0,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_UNAVAILABLE",
+            "expected_outcome": "EVIDENCE_UNAVAILABLE",
+            "stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "expected_stop_reason": "REQUIRED_EVIDENCE_UNAVAILABLE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B09": [
+          {
+            "gt_id": "GT-B09",
+            "case_id": "CASE-RA-6b3ce4c9",
+            "run_index": 0,
+            "scenario_class": "LEGIT_READMISSION_EMERGENCY",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": null,
+            "policy_precision": 1.0,
+            "evidence_coverage": 0.0,
+            "missed_mandatory": [
+              "CLINICAL_NOTE:NOTE-000042:EMERGENCY_CONTEXT"
+            ],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 1,
+            "exception_exact": false,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": false,
+            "stop_reason_correct": false,
+            "should_escalate": false,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 0.0,
+            "state_mismatches": {
+              "EMERGENCY_CONTEXT": [
+                "NOT_FOUND",
+                "FOUND"
+              ]
+            },
+            "golden_pass": false,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 16,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B10": [
+          {
+            "gt_id": "GT-B10",
+            "case_id": "CASE-RA-49e2e3ed",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_READMISSION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B11": [
+          {
+            "gt_id": "GT-B11",
+            "case_id": "CASE-RA-2110d2a5",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_READMISSION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": null,
+            "policy_precision": 1.0,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 14,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B12": [
+          {
+            "gt_id": "GT-B12",
+            "case_id": "CASE-RA-5cea8ff0",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_READMISSION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 4,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B13": [
+          {
+            "gt_id": "GT-B13",
+            "case_id": "CASE-RA-5bfa9633",
+            "run_index": 0,
+            "scenario_class": "LEGIT_READMISSION_EMERGENCY",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 3,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exceptions_found": [
+              "EMERGENCY_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 16,
+            "step_count": 11,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 11,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B14": [
+          {
+            "gt_id": "GT-B14",
+            "case_id": "CASE-FR-f78c5336",
+            "run_index": 0,
+            "scenario_class": "LEGIT_CHRONIC",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 3,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": 1.0,
+            "policy_precision": 1.0,
+            "evidence_coverage": 1.0,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [
+              "CHRONIC_CONDITION_CONTEXT"
+            ],
+            "exceptions_found": [
+              "CHRONIC_CONDITION_CONTEXT"
+            ],
+            "exception_tp": 1,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "EVIDENCE_SUFFICIENT",
+            "expected_outcome": "EVIDENCE_SUFFICIENT",
+            "stop_reason": "SUFFICIENT_EVIDENCE",
+            "expected_stop_reason": "SUFFICIENT_EVIDENCE",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": false,
+            "escalated": false,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 0,
+            "step_count": 12,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 12,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ],
+        "GT-B15": [
+          {
+            "gt_id": "GT-B15",
+            "case_id": "CASE-FR-4cf97d96",
+            "run_index": 0,
+            "scenario_class": "POTENTIAL_FRAGMENTATION",
+            "golden_case": null,
+            "episode_recall": 1.0,
+            "episode_precision": 1.0,
+            "evidence_retrieved": 2,
+            "evidence_precision": 1.0,
+            "note_evidence_precision": null,
+            "policy_precision": 1.0,
+            "evidence_coverage": null,
+            "missed_mandatory": [],
+            "unlabelled_retrieved": [],
+            "exceptions_expected": [],
+            "exceptions_found": [],
+            "exception_tp": 0,
+            "exception_fp": 0,
+            "exception_fn": 0,
+            "exception_exact": true,
+            "outcome": "HUMAN_REVIEW_REQUIRED",
+            "expected_outcome": "HUMAN_REVIEW_REQUIRED",
+            "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "expected_stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+            "outcome_correct": true,
+            "stop_reason_correct": true,
+            "should_escalate": true,
+            "escalated": true,
+            "unsafe_closure": false,
+            "state_accuracy": 1.0,
+            "state_mismatches": {},
+            "golden_pass": true,
+            "traceability": 1.0,
+            "brief_valid": true,
+            "elapsed_ms": 14,
+            "step_count": 12,
+            "tool_failures": 0,
+            "planner": {
+              "llm_steps": 0,
+              "llm_retry_steps": 0,
+              "fallback_steps": 0,
+              "rule_steps": 12,
+              "validation_rejections": 0,
+              "skipped_requirements": []
+            }
+          }
+        ]
+      }
+    }
+  },
+  "regression": null
+}

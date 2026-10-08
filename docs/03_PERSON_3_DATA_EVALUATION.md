@@ -149,6 +149,21 @@ Branch `feat/person3-data-eval`. Done:
 
 Open: FULL (AI planner) run with a key and `--repeats 3`; verbatim policy check; governance and E2E QA (Phases 14–16); more paraphrase cases.
 
+### 0.10 Person 1 follow-up — 2026-10-08
+
+- The historical FULL benchmark was completed after §0.9: `evaluation/reports/v0.1.0-full/`,
+  3 repeats, 95% outcome accuracy, recorded model responses. Its corpus/backend remain historical.
+- Policy `pc-0.1.1` is verified against JDIH Kemenkes, PDF page 55; complete source text,
+  effective date and provenance are recorded in `data/policies/pc-0.1.1/VERIFICATION.md`.
+- The backend recognises documented active resuscitation care without relying on transport alone;
+  GT-B09 now passes. No synthetic case or ground-truth label was changed.
+- Scoring keeps missing cases/repeats in the denominator. CI gates missing runs, screening errors,
+  new case/state failures, quality regressions and full-mode unsafe closures/brief failures.
+- New default deterministic baseline: `evaluation/reports/v0.1.0-pc-0.1.1-backend/`,
+  FULL_RULE_PLANNER 20/20 outcomes, A–E 5/5, coverage 100%, no unsafe closure.
+- Still open: fresh FULL recordings for this backend/corpus, broader paraphrase validation,
+  governance and frontend E2E QA. The matcher remains a lexical prototype, not a clinical adjudicator.
+
 ---
 
 ## 1. Ownership Boundary

@@ -118,14 +118,34 @@ def score_run(run: dict, ground_truth: list[dict]) -> dict:
     positives = [g for g in ground_truth if g["expected_signal_type"]]
     negatives = [g for g in ground_truth if not g["expected_signal_type"]]
     pos_keys = {tuple(sorted(g["anchor_episode_ids"])) for g in positives}
+    # FULL declares its repeat count in the runner header. Older fixtures infer it from observed
+    # indices; deterministic modes always have one run. Never shrink the denominator on a miss.
+    header = run.get("header", {})
+    observed_repeats = max((c.get("run_index", 0) for c in run["cases"]), default=0) + 1
+    repeats = (header.get("config", {}).get("repeats", observed_repeats)
+               if header.get("mode") == "FULL" else
+               1 if header.get("mode") in MODES else observed_repeats)
+    if not isinstance(repeats, int) or isinstance(repeats, bool) or repeats < 1:
+        raise ValueError("repeat count must be a positive integer")
 
     cases: dict[str, list[dict]] = {}
+    missing_runs = []
     for g in positives:
         runs = sorted(by_anchor.get(tuple(sorted(g["anchor_episode_ids"])), []), key=lambda c: c.get("run_index", 0))
+        indices = [c.get("run_index", 0) for c in runs]
+        if len(indices) != len(set(indices)):
+            raise ValueError(f"{g['gt_id']}: duplicate run_index")
+        if any(not isinstance(i, int) or isinstance(i, bool) or i < 0 or i >= repeats for i in indices):
+            raise ValueError(f"{g['gt_id']}: invalid run_index")
+        missing_runs.extend({"gt_id": g["gt_id"], "run_index": i} for i in range(repeats) if i not in indices)
         cases[g["gt_id"]] = [score_case(c, g) for c in runs]
 
     rows = [r for rs in cases.values() for r in rs]
+    expected_runs = len(positives) * repeats
+    missing_ids = {r["gt_id"] for r in missing_runs}
     exc = {k: sum(r[f"exception_{k}"] for r in rows) for k in ("tp", "fp", "fn")}
+    gt_by_id = {g["gt_id"]: g for g in positives}
+    exc["fn"] += sum(len(gt_by_id[r["gt_id"]]["expected_exceptions"]) for r in missing_runs)
     unstable = sorted(gid for gid, rs in cases.items()
                       if len({(r["outcome"], r["stop_reason"]) for r in rs}) > 1)
     by_class: dict[str, list[dict]] = defaultdict(list)
@@ -142,23 +162,28 @@ def score_run(run: dict, ground_truth: list[dict]) -> dict:
             "flagged_sets": len(flagged),
         },
         "cases_scored": len(rows),
-        "episode_recall": mean(r["episode_recall"] for r in rows),
+        "expected_runs": expected_runs,
+        "missing_runs": missing_runs,
+        "episode_recall": ratio(sum(r["episode_recall"] or 0 for r in rows), expected_runs),
         "episode_precision": mean(r["episode_precision"] for r in rows),
         "evidence_precision": mean(r["evidence_precision"] for r in rows),
         "note_evidence_precision": mean(r["note_evidence_precision"] for r in rows),
         "policy_precision": mean(r["policy_precision"] for r in rows),
-        "evidence_coverage": mean(r["evidence_coverage"] for r in rows),
+        "evidence_coverage": ratio(sum(r["evidence_coverage"] or 0 for r in rows),
+                                   sum(any(e["mandatory"] for e in g["expected_evidence"])
+                                       for g in positives) * repeats),
         "exceptions": {**exc, "precision": ratio(exc["tp"], exc["tp"] + exc["fp"]),
                        "recall": ratio(exc["tp"], exc["tp"] + exc["fn"]),
-                       "exact_case_accuracy": mean(float(r["exception_exact"]) for r in rows)},
-        "outcome_accuracy": mean(float(r["outcome_correct"]) for r in rows),
-        "stop_reason_accuracy": mean(float(r["stop_reason_correct"]) for r in rows),
+                       "exact_case_accuracy": ratio(sum(r["exception_exact"] for r in rows), expected_runs)},
+        "outcome_accuracy": ratio(sum(r["outcome_correct"] for r in rows), expected_runs),
+        "stop_reason_accuracy": ratio(sum(r["stop_reason_correct"] for r in rows), expected_runs),
         "escalation": {
-            "accuracy": mean(float(r["escalated"] == r["should_escalate"]) for r in rows),
+            "accuracy": ratio(sum(r["escalated"] == r["should_escalate"] for r in rows), expected_runs),
             "unsafe_closures": sorted({r["gt_id"] for r in rows if r["unsafe_closure"]}),
             "over_escalations": sorted({r["gt_id"] for r in rows if r["escalated"] and not r["should_escalate"]}),
         },
-        "state_accuracy": mean(r["state_accuracy"] for r in rows),
+        "state_accuracy": ratio(sum(r["state_accuracy"] or 0 for r in rows),
+                                sum(bool(g.get("expected_requirement_states")) for g in positives) * repeats),
         "traceability": mean(r["traceability"] for r in rows),
         "brief_failures": sum(1 for r in rows if r["brief_valid"] is False),
         "tool_failures": sum(r["tool_failures"] for r in rows),
@@ -167,13 +192,18 @@ def score_run(run: dict, ground_truth: list[dict]) -> dict:
         "planner": {k: sum(r["planner"].get(k, 0) for r in rows)
                     for k in ("llm_steps", "llm_retry_steps", "fallback_steps", "rule_steps",
                               "validation_rejections")},
-        "golden": {g["golden_case"]: bool(cases[g["gt_id"]]) and all(r["golden_pass"] for r in cases[g["gt_id"]])
+        "golden": {g["golden_case"]: g["gt_id"] not in missing_ids
+                   and all(r["golden_pass"] for r in cases[g["gt_id"]])
                    for g in positives if g.get("golden_case")},
-        "variance": {"repeats": max((r["run_index"] for r in rows), default=0) + 1, "unstable_cases": unstable},
-        "by_scenario_class": {k: {"runs": len(v), "outcome_accuracy": mean(float(r["outcome_correct"]) for r in v)}
-                              for k, v in sorted(by_class.items())},
-        "failing_cases": sorted({r["gt_id"] for r in rows if not (r["outcome_correct"] and r["stop_reason_correct"])}
-                                | {gid for gid, rs in cases.items() if not rs}),
+        "variance": {"repeats": repeats, "unstable_cases": unstable},
+        "by_scenario_class": {k: {"runs": len(by_class[k]),
+                                  "expected_runs": sum(g["scenario_class"] == k for g in positives) * repeats,
+                                  "outcome_accuracy": ratio(sum(r["outcome_correct"] for r in by_class[k]),
+                                      sum(g["scenario_class"] == k for g in positives) * repeats)}
+                              for k in sorted({g["scenario_class"] for g in positives})},
+        "failing_cases": sorted({r["gt_id"] for r in rows
+                                 if not (r["outcome_correct"] and r["stop_reason_correct"])
+                                 or r["state_mismatches"] or r["brief_valid"] is False} | missing_ids),
     }
     return {"header": run.get("header", {}), "aggregate": aggregate, "cases": cases}
 
@@ -185,7 +215,10 @@ COMPARED_METRICS = ("episode_recall", "evidence_precision", "evidence_coverage",
 
 
 def _passing(scored: dict) -> dict[str, bool]:
-    return {gid: bool(rs) and all(r["outcome_correct"] and r["stop_reason_correct"] for r in rs)
+    missing = {r["gt_id"] for r in scored["aggregate"].get("missing_runs", [])}
+    return {gid: bool(rs) and gid not in missing and all(
+                r["outcome_correct"] and r["stop_reason_correct"] and not r.get("state_mismatches")
+                and r.get("brief_valid") is not False for r in rs)
             for gid, rs in scored["cases"].items()}
 
 
@@ -199,11 +232,42 @@ def compare(base: dict, new: dict) -> dict:
                     "new": [r["outcome"] for r in new["cases"].get(gid, [])]}
               for gid in sorted(set(b) | set(n)) if b.get(gid) != n.get(gid)}
     return {
-        "newly_failing": sorted(g for g in n if b.get(g, False) and not n[g]),
+        "newly_failing": sorted(g for g in b if b[g] and not n.get(g, False)),
         "fixed": sorted(g for g in n if not b.get(g, True) and n[g]),
         "status_changes": status,
         "metric_delta": delta,
     }
+
+
+def regression_errors(results: dict, comparisons: dict | None) -> list[str]:
+    """Gate all modes for completeness/regressions, full modes additionally for safe valid briefs.
+
+    Deliberately weak ablation modes may retain their baseline failures, including unsafe closures.
+    FULL/FULL_RULE_PLANNER never get that exemption. Missing data is never an accepted baseline.
+    """
+    errors = []
+    for mode, scored in results.items():
+        a = scored["aggregate"]
+        if a["missing_runs"]:
+            errors.append(f"{mode}: missing expected runs {a['missing_runs']}")
+        s = a["screening"]
+        if s["missed"] or s["false_positive_sets"]:
+            errors.append(f"{mode}: screening misses {s['missed']}, false positives {s['false_positive_sets']}")
+        if mode in ("FULL_RULE_PLANNER", "FULL"):
+            if not all(a["golden"].values()):
+                errors.append(f"{mode}: golden case failure")
+            if a["escalation"]["unsafe_closures"]:
+                errors.append(f"{mode}: unsafe closures {a['escalation']['unsafe_closures']}")
+            if a["brief_failures"] or a["tool_failures"]:
+                errors.append(f"{mode}: brief/tool failures")
+        diff = (comparisons or {}).get(mode)
+        if diff:
+            if diff["newly_failing"]:
+                errors.append(f"{mode}: newly failing {diff['newly_failing']}")
+            for metric, delta in diff["metric_delta"].items():
+                if metric != "avg_steps" and delta is not None and delta < -1e-9:
+                    errors.append(f"{mode}: {metric} decreased by {delta:.6f}")
+    return errors
 
 
 # ---- output ----------------------------------------------------------------------------------------------
@@ -249,6 +313,7 @@ def render_report(results: dict[str, dict], comparisons: dict[str, dict] | None 
     ]
     agg = {m: results[m]["aggregate"] for m in modes}
     lines = [
+        ("Expected / scored runs", lambda a: f"{a.get('expected_runs', a['cases_scored'])} / {a['cases_scored']}"),
         ("Screening recall", lambda a: pct(a["screening"]["recall"])),
         ("Screening false-positive sets", lambda a: str(a["screening"]["false_positive_sets"])),
         ("Episode recall", lambda a: pct(a["episode_recall"])),
@@ -303,6 +368,8 @@ def render_report(results: dict[str, dict], comparisons: dict[str, dict] | None 
         out.append("None.")
     for m in modes:
         s = agg[m]["screening"]
+        if agg[m].get("missing_runs"):
+            out.append(f"- `{m}` missing expected runs: {agg[m]['missing_runs']}")
         if s["missed"] or s["must_not_flag_violations"]:
             out.append(f"- `{m}` screening: missed {s['missed']}, flagged must-not-flag {s['must_not_flag_violations']}")
         if agg[m]["variance"]["unstable_cases"]:
@@ -329,6 +396,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out", type=Path, help="Output directory (default: the run directory).")
     ap.add_argument("--baseline", type=Path, help="A previous scores.json to diff against (regression).")
     ap.add_argument("--fail-on-golden", action="store_true", help="Exit 1 if any golden case fails in any mode.")
+    ap.add_argument("--fail-on-regression", action="store_true",
+                    help="Gate missing runs, screening errors, new failures and full-mode safety.")
+    ap.add_argument("--require-mode", action="append", choices=MODES, default=[],
+                    help="Require this mode's output file (repeatable).")
     args = ap.parse_args(argv)
 
     gt = load_jsonl(args.ground_truth)
@@ -336,10 +407,18 @@ def main(argv: list[str] | None = None) -> int:
     if not files:
         print(f"no <MODE>.json files in {args.run}", file=sys.stderr)
         return 2
+    missing_modes = set(args.require_mode) - {p.stem for p in files}
+    if missing_modes:
+        print(f"missing required modes: {', '.join(sorted(missing_modes))}", file=sys.stderr)
+        return 2
     out_dir = args.out or args.run
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    results = {p.stem: score_run(json.loads(p.read_text(encoding="utf-8")), gt) for p in files}
+    try:
+        results = {p.stem: score_run(json.loads(p.read_text(encoding="utf-8")), gt) for p in files}
+    except ValueError as exc:
+        print(f"invalid runner output: {exc}", file=sys.stderr)
+        return 2
     for mode, scored in results.items():
         write_csv(out_dir / f"per_case_{mode}.csv", scored)
 
@@ -361,6 +440,12 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.fail_on_golden and any(not ok for s in results.values() for ok in s["aggregate"]["golden"].values()):
         return 1
+    if args.fail_on_regression:
+        errors = regression_errors(results, comparisons)
+        if errors:
+            for error in errors:
+                print(error, file=sys.stderr)
+            return 1
     return 0
 
 

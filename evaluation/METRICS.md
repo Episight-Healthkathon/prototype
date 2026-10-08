@@ -8,7 +8,16 @@ Contract §6) and `data/ground-truth/<v>/cases.jsonl` (§3.7). Ground truth is r
 A ground-truth row is joined to runner cases by `anchor_episode_ids`, the sorted episode group (D-03).
 Rows with `expected_signal_type = null` are screening negatives: they must not appear among
 `screening.flagged_anchor_sets`. With `--repeats N`, every repeat (`run_index`) is scored as its own
-run. Aggregates average over all runs.
+run. FULL's declared `header.config.repeats` fixes the expected run count; deterministic modes
+expect one run per positive case. Older FULL outputs infer repeats from observed indices.
+Duplicate or invalid indices are rejected.
+
+Outcome, stop-reason and escalation accuracy divide by **all expected positive runs**, including
+missing cases/repeats as failures. Episode recall, mandatory evidence coverage and requirement-state
+accuracy are macro averages over their eligible expected runs, with missing runs contributing zero.
+Missing exception runs contribute false negatives; exact-match uses every expected run. Precision
+and traceability describe produced evidence/briefs; undefined observations remain excluded. The
+completeness gate must pass before using those conditional metrics.
 
 Evidence is matched on `(source_type, source_id, requirement_key)` (D-22). Several sentences cited from
 one note collapse to one item.
@@ -41,10 +50,18 @@ one note collapse to one item.
 
 ## Regression
 
-`--baseline <old scores.json>` gives, per mode: `newly_failing` (passed outcome + stop reason before,
-fails now), `fixed`, `status_changes`, and deltas for the headline metrics. `--fail-on-golden` makes the
-exit code 1 when any golden case fails. `evaluation/run_regression.sh` chains generation, a freshness
-check, the batch and scoring.
+`--baseline <old scores.json>` gives, per mode: `newly_failing` (complete outcome, stop reason,
+listed requirement states and brief validation passed before but fail now), `fixed`, `status_changes`,
+and deltas for the headline metrics. `--fail-on-golden` fails any incomplete/failing golden case.
+
+`--fail-on-regression` additionally gates missing cases/repeats, screening misses/false positives,
+newly failing cases and decreases in compared quality metrics. FULL and FULL_RULE_PLANNER also
+always fail on unsafe closures, golden failures and brief/tool failures. Deliberately weak ablation
+modes can retain known baseline failures (including RULES_RETRIEVAL's schedule-consistency miss).
+`--require-mode MODE` rejects an absent mode file. Gate failure is exit 1; absent/invalid inputs exit 2.
+
+`evaluation/run_regression.sh` chains generation, freshness, deterministic batch and these gates.
+Its default baseline is `reports/v0.1.0-pc-0.1.1-backend/scores.json`, so reintroducing GT-B09 fails CI.
 
 ## Evidence labels (ground truth)
 

@@ -1,5 +1,11 @@
 # Benchmark findings for Person 1 — dataset v0.1.0, code 001ee96
 
+**2026-10-08 follow-up:** F-2 is fixed by a conservative active-resuscitation-care matcher.
+The new deterministic report is `reports/v0.1.0-pc-0.1.1-backend/`: 20/20 outcomes, A–E 5/5,
+coverage 100%, no unsafe closures in FULL_RULE_PLANNER. Source policy transcription and the
+regression gate were also corrected. The findings below describe the historical benchmark;
+F-1 remains an ablation limitation and F-3 still describes the old AI run, not a fresh FULL run.
+
 Source: `evaluation/reports/v0.1.0-baseline/` (deterministic modes) and `evaluation/reports/v0.1.0-full/`
 (all four modes, FULL with OpenAI `gpt-4o-mini`, prompt `planner-2`, 3 repeats). Case JSON: rerun
 `uv run episight batch --case <CASE_ID> ...` or read `scores.json`.

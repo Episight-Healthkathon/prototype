@@ -1,7 +1,11 @@
 """Golden-case behavior through the real engine (architecture §7.7). Behavioral assertions, not exact trails."""
 
+from dataclasses import replace
+
 import pytest
 
+from episight.agent.orchestrator import run_investigation
+from episight.agent.planners.rule_planner import RulePlanner
 from episight.contracts.enums import (
     EvidenceCategory,
     InvestigationMode,
@@ -11,7 +15,7 @@ from episight.contracts.enums import (
     SourceType,
     StopReason,
 )
-from tests.unit.engine_helpers import run
+from tests.unit.engine_helpers import ctx_for, run
 
 K, S = RequirementKey, RequirementState
 GOLDEN = {
@@ -87,6 +91,31 @@ def test_case_e_keeps_both_sides_of_the_conflict_visible():
         result.state.evidence[e].source_id for e in conflict.affirming_evidence_ids + conflict.negating_evidence_ids
     }
     assert sources == {"NOTE-000502", "NOTE-000503"}
+
+
+@pytest.mark.parametrize("text,expected", [
+    ("Pasien ditangani segera di ruang resusitasi dengan dua jalur infus.", S.FOUND),
+    ("Pasien distabilisasi dalam ruangan resusitasi setelah penilaian awal.", S.FOUND),
+    ("The patient was treated immediately in the resuscitation room.", S.FOUND),
+    ("Pasien diantar ambulans untuk kontrol rutin.", S.NOT_FOUND),
+    ("Jika memburuk, pasien akan ditangani di ruang resusitasi.", S.NOT_FOUND),
+])
+def test_resuscitation_context_through_engine_preserves_scope_and_provenance(text, expected):
+    original = ctx_for("PAT-000001")
+    repeat_ids = set(original.later_ids)
+    notes = {nid: n.model_copy(update={"text": text if n.note_type.value == "TRIAGE" else "Kondisi stabil."})
+             if n.episode_id in repeat_ids else n for nid, n in original.notes.items()}
+    ctx = replace(original, notes=notes)
+    result = run_investigation(ctx, run_id="RUN-RESUSCITATION", planner=RulePlanner())
+    assert states(result)[K.EMERGENCY_CONTEXT] == expected
+    evidence = result.state.evidence_for(K.EMERGENCY_CONTEXT)
+    if expected == S.FOUND:
+        assert evidence and all(e.source_type == SourceType.CLINICAL_NOTE for e in evidence)
+        assert all(e.source_id in notes
+                   and notes[e.source_id].text[e.char_start:e.char_end] == e.source_excerpt for e in evidence)
+    else:
+        assert not evidence
+    assert result.validation.passed
 
 
 def test_state_transitions_differ_across_cases():

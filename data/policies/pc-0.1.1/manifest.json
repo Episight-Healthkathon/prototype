@@ -1,0 +1,13 @@
+{
+  "corpus_version": "pc-0.1.1",
+  "contract_version": "data-contract/1",
+  "sections": 4,
+  "status": "verified-transcription",
+  "verified_at": "2026-10-08",
+  "source_page": 55,
+  "source_url": "https://jdih.kemkes.go.id/storage/documents/pdfs/2021permenkes026.pdf#page=55",
+  "text_normalization": "whitespace-and-line-wraps-only",
+  "files": {
+    "policy_sections.jsonl": "sha256:380663c4982627a54fe9f1736978a76533c8139a0c939b69cae140ac9b013288"
+  }
+}

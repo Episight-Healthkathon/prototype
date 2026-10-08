@@ -11,9 +11,13 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RUN="${1:-regression}"
-BASELINE="${2:-$ROOT/evaluation/reports/v0.1.0-baseline/scores.json}"
+if [[ ! "$RUN" =~ ^[a-zA-Z0-9][a-zA-Z0-9._-]*$ ]]; then
+  echo "run-name must be a simple directory name (no path separators)" >&2
+  exit 2
+fi
+BASELINE="${2:-$ROOT/evaluation/reports/v0.1.0-pc-0.1.1-backend/scores.json}"
 DATASET=v0.1.0
-CORPUS=pc-0.1.0
+CORPUS=pc-0.1.1
 OUT="$ROOT/evaluation/runs/$RUN"
 PY="${PYTHON:-python}"
 UV="${UV:-uv}"
@@ -26,7 +30,8 @@ if ! git diff --quiet -- data/synthetic data/policies data/ground-truth; then
   exit 1
 fi
 
-rm -rf "$OUT"
+# Reuse the named output directory without recursively deleting a computed path.
+mkdir -p "$OUT"
 cd "$ROOT/apps/api"
 for MODE in RULES_ONLY RULES_RETRIEVAL FULL_RULE_PLANNER; do
   $UV run episight batch --out "$OUT" --dataset "$ROOT/data/synthetic/$DATASET" \
@@ -35,7 +40,12 @@ done
 cd "$ROOT"
 
 ARGS=(--run "$OUT" --ground-truth "data/ground-truth/$DATASET/cases.jsonl")
-[[ -f "$BASELINE" ]] && ARGS+=(--baseline "$BASELINE")
+if [[ ! -f "$BASELINE" ]]; then
+  echo "baseline does not exist: $BASELINE" >&2
+  exit 2
+fi
+ARGS+=(--baseline "$BASELINE")
+ARGS+=(--require-mode RULES_ONLY --require-mode RULES_RETRIEVAL --require-mode FULL_RULE_PLANNER --fail-on-regression)
 $PY evaluation/score.py "${ARGS[@]}"
 
 # Golden cases must pass in the deterministic full-pipeline mode.

@@ -122,3 +122,19 @@ def test_policy_sections_carry_topics_and_source(out):
     assert {"READMISSION", "FRAGMENTATION", "EXCEPTION_EMERGENCY", "EXCEPTION_CHRONIC", "EXCEPTION_SCHEDULED",
             "EXCEPTION_SUPPORTING_EXAM"} <= topics
     assert all(r["source_ref"] and r["version"] and "INTERIM" not in r["policy_id"] for r in rows)
+
+
+def test_verified_policy_metadata_and_qualification_are_preserved(out):
+    import hashlib
+
+    p = out["policies"]
+    manifest = json.loads((p / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["status"] == "verified-transcription" and manifest["source_page"] == 55
+    assert manifest["files"]["policy_sections.jsonl"] == "sha256:" + hashlib.sha256(
+        (p / "policy_sections.jsonl").read_bytes()).hexdigest()
+    rows = _read(p / "policy_sections.jsonl")
+    assert all(r["effective_date"] == "2021-08-30" and "2021permenkes026.pdf#page=55" in r["source_url"]
+               for r in rows)
+    frag = next(r for r in rows if r["policy_id"] == gen.POL_FR_EXC)
+    assert "konsultasi hasil pemeriksaan penunjang yang tidak dapat dilakukan dalam satu episode" in frag["text"]
+    assert "sesuai regulasi yang berlaku" in frag["text"]

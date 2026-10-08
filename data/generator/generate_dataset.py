@@ -36,7 +36,7 @@ GENERATOR_VERSION = "gen-0.1.0"
 CONTRACT_VERSION = "data-contract/1"
 DEFAULT_SEED = 20261004
 DEFAULT_VERSION = "v0.1.0"
-CORPUS_VERSION = "pc-0.1.0"
+CORPUS_VERSION = "pc-0.1.1"
 TZ = "+07:00"
 REPO = Path(__file__).resolve().parents[2]
 
@@ -934,31 +934,35 @@ def noise(b: Builder, count: int) -> None:
 
 PMK26_TITLE = ("Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups "
                "(INA-CBG) dalam Pelaksanaan Jaminan Kesehatan")
-PMK26_URL = "https://jdih.kemkes.go.id/documents/peraturan-menteri-kesehatan-nomor-26-tahun-2021"
-PMK26_REF = ("Permenkes No. 26 Tahun 2021, bagian Readmisi dan Fragmentasi (JDIH Kemenkes). Teks adalah ringkasan "
-             "kurasi Person 3 dari definisi operasional pada proposal final EPISIGHT (bagian 3); verifikasi kata per "
-             "kata terhadap dokumen JDIH masih diperlukan sebelum dikutip sebagai teks resmi.")
+PMK26_URL = "https://jdih.kemkes.go.id/storage/documents/pdfs/2021permenkes026.pdf#page=55"
+PMK26_REF = ("Permenkes No. 26 Tahun 2021, Lampiran, halaman 55, bagian E. Readmisi dan Fragmentasi. "
+             "Transkripsi diverifikasi terhadap PDF resmi JDIH Kemenkes pada 2026-10-08; "
+             "hanya spasi dan pemenggalan baris dinormalisasi.")
 
 POLICY_SECTIONS = [
     {"policy_id": POL_RA_DEF, "section": "Readmisi: definisi",
-     "text": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dalam "
-             "waktu kurang dari atau sama dengan 30 hari. Pola ini merupakan sinyal untuk ditinjau, bukan penetapan "
-             "pelanggaran.",
+     "text": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama "
+             "dari episode rawat inap sebelumnya dalam waktu kurang atau sama dengan 30 hari.",
      "topics": ["READMISSION"]},
     {"policy_id": POL_RA_EXC, "section": "Readmisi: pengecualian",
-     "text": "Pengecualian readmisi meliputi kasus kegawatdaruratan, penyakit kronis, dan prosedur terjadwal sesuai "
-             "indikasi medis yang tidak dapat dilakukan dalam satu episode. Kunjungan pada FKRTL yang berbeda atau "
-             "pada kelas rumah sakit yang lebih tinggi juga tidak termasuk readmisi.",
+     "text": "Kondisi yang dikecualikan dari readmisi yaitu sebagai berikut: "
+             "a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; "
+             "b. penyakit kronis; "
+             "c. tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi "
+             "medis dan tidak dapat dilakukan dalam satu episode; atau "
+             "d. kunjungan pada FKRTL yang berbeda atau kelas FKRTL yang lebih tinggi.",
      "topics": ["READMISSION", "EXCEPTION_EMERGENCY", "EXCEPTION_CHRONIC", "EXCEPTION_SCHEDULED"]},
     {"policy_id": POL_FR_DEF, "section": "Fragmentasi: definisi",
-     "text": "Fragmentasi adalah kunjungan rawat jalan berulang di FKRTL yang sama pada diagnosis yang sama dalam "
-             "waktu kurang dari atau sama dengan 7 hari. Pola ini merupakan sinyal untuk ditinjau, bukan penetapan "
-             "pelanggaran.",
+     "text": "Fragmentasi adalah kunjungan rawat jalan berulang di FKRTL yang sama pada kasus dengan diagnosis "
+             "yang sama dari episode rawat jalan sebelumnya dalam waktu kurang atau sama dengan 7 hari.",
      "topics": ["FRAGMENTATION"]},
     {"policy_id": POL_FR_EXC, "section": "Fragmentasi: pengecualian",
-     "text": "Pengecualian fragmentasi meliputi kasus kegawatdaruratan, penyakit kronis, rangkaian prosedur terjadwal "
-             "sesuai indikasi medis yang tidak dapat dilakukan dalam satu episode, dan konsultasi hasil pemeriksaan "
-             "penunjang tertentu.",
+     "text": "Kondisi yang dikecualikan dari fragmentasi adalah sebagai berikut: "
+             "a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; "
+             "b. penyakit kronis; "
+             "c. rangkaian tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai "
+             "indikasi medis dan tidak dapat dilakukan dalam satu episode; atau "
+             "d. konsultasi hasil pemeriksaan penunjang yang tidak dapat dilakukan dalam satu episode.",
      "topics": ["FRAGMENTATION", "EXCEPTION_EMERGENCY", "EXCEPTION_CHRONIC", "EXCEPTION_SCHEDULED",
                 "EXCEPTION_SUPPORTING_EXAM"]},
 ]
@@ -967,7 +971,7 @@ POLICY_SECTIONS = [
 def policy_rows() -> list[dict]:
     return [{"policy_id": s["policy_id"], "document_title": PMK26_TITLE, "section": s["section"], "text": s["text"],
              "source_ref": PMK26_REF, "source_url": PMK26_URL, "version": "Permenkes 26/2021",
-             "effective_date": None, "topics": s["topics"]} for s in POLICY_SECTIONS]
+             "effective_date": "2021-08-30", "topics": s["topics"]} for s in POLICY_SECTIONS]
 
 
 # =====================================================================================================
@@ -1049,7 +1053,10 @@ def write_all(root: Path, version: str, seed: int, noise_patients: int, reset: b
     _write(out["policies"] / "policy_sections.jsonl", _jsonl(sections))
     _write(out["policies"] / "manifest.json", (json.dumps(
         {"corpus_version": CORPUS_VERSION, "contract_version": CONTRACT_VERSION, "sections": len(sections),
-         "status": "curated-pending-verbatim-check"}, indent=2) + "\n").encode("utf-8"))
+         "status": "verified-transcription", "verified_at": "2026-10-08", "source_page": 55,
+         "source_url": PMK26_URL, "text_normalization": "whitespace-and-line-wraps-only",
+         "files": {"policy_sections.jsonl": "sha256:" + hashlib.sha256(_jsonl(sections)).hexdigest()}},
+        indent=2) + "\n").encode("utf-8"))
 
     _write(out["ground_truth"] / "cases.jsonl", _jsonl([t.row() for t in b.truth]))
     _write(out["ground_truth"] / "README.md", ground_truth_readme(b, version, seed).encode("utf-8"))

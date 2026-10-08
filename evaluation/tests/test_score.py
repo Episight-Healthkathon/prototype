@@ -149,10 +149,15 @@ def test_missing_case_is_reported_not_crashed():
     assert s["aggregate"]["screening"]["missed"] == ["GT-B"]
     assert s["cases"]["GT-B"] == []
     assert s["aggregate"]["golden"]["B"] is False
+    assert s["aggregate"]["outcome_accuracy"] == 0.5
+    assert s["aggregate"]["expected_runs"] == 2
+    assert s["aggregate"]["missing_runs"] == [{"gt_id": "GT-B", "run_index": 0}]
 
 
 def test_repeats_are_scored_per_run_and_variance_reported():
     out = run_output()
+    out["header"]["mode"] = "FULL"
+    out["header"]["config"] = {"repeats": 2}
     rep = json.loads(json.dumps(out["cases"][1]))
     rep["run_index"] = 1
     rep["outcome"], rep["stop_reason"] = "HUMAN_REVIEW_REQUIRED", "EVIDENCE_PATHS_EXHAUSTED"
@@ -161,6 +166,106 @@ def test_repeats_are_scored_per_run_and_variance_reported():
     assert len(s["cases"]["GT-B"]) == 2
     assert s["aggregate"]["variance"]["unstable_cases"] == ["GT-B"]
     assert s["aggregate"]["golden"]["B"] is False  # golden must pass on every repeat
+
+
+def clean_output():
+    out = run_output()
+    a, b = out["cases"]
+    a["requirement_states"]["CHRONIC_CONDITION_CONTEXT"] = "FOUND"
+    a["brief_traceability"]["with_evidence"] = 4
+    a["reconstructed_episode_ids"].append("E0")
+    a["evidence"] = [out_ev("CLINICAL_NOTE", "N2", "EMERGENCY_CONTEXT"),
+                     out_ev("CLINICAL_NOTE", "N0", "CHRONIC_CONDITION_CONTEXT")]
+    b["outcome"], b["stop_reason"] = "HUMAN_REVIEW_REQUIRED", "EVIDENCE_PATHS_EXHAUSTED"
+    b["requirement_states"] = {}
+    out["screening"]["flagged_anchor_sets"] = [["E1", "E2"], ["F1", "F2"]]
+    return out
+
+
+def test_missing_failed_case_cannot_improve_accuracy_or_coverage():
+    out = clean_output()
+    out["cases"][0]["outcome"] = "HUMAN_REVIEW_REQUIRED"
+    before = score.score_run(out, GT)["aggregate"]
+    out["cases"] = out["cases"][1:]
+    after = score.score_run(out, GT)["aggregate"]
+    assert before["outcome_accuracy"] == after["outcome_accuracy"] == 0.5
+    assert after["evidence_coverage"] == 0.0 and after["episode_recall"] == 0.5
+    assert after["state_accuracy"] == 0.0
+    assert after["exceptions"]["fn"] == 2
+
+
+def test_declared_repeats_keep_completely_missing_repeat_in_denominator():
+    out = clean_output()
+    out["header"]["mode"] = "FULL"
+    out["header"]["config"] = {"repeats": 3}
+    s = score.score_run(out, GT)
+    assert s["aggregate"]["expected_runs"] == 6
+    assert s["aggregate"]["outcome_accuracy"] == pytest.approx(2 / 6)
+    assert len(s["aggregate"]["missing_runs"]) == 4
+    assert s["aggregate"]["golden"] == {"A": False, "B": False}
+
+
+def test_duplicate_run_cannot_inflate_accuracy():
+    out = clean_output()
+    out["cases"].append(out["cases"][0])
+    with pytest.raises(ValueError, match="duplicate run_index"):
+        score.score_run(out, GT)
+
+
+def test_non_golden_requirement_regression_is_detected():
+    gt = json.loads(json.dumps(GT))
+    gt[0]["golden_case"] = None
+    base_out = clean_output()
+    base = score.score_run(base_out, gt)
+    base_out["cases"][0]["requirement_states"]["CHRONIC_CONDITION_CONTEXT"] = "NOT_FOUND"
+    new = score.score_run(base_out, gt)
+    diff = score.compare(base, new)
+    assert diff["newly_failing"] == ["GT-A"]
+    assert any("newly failing" in e for e in score.regression_errors({"FULL_RULE_PLANNER": new},
+                                                                   {"FULL_RULE_PLANNER": diff}))
+
+
+def test_gate_rejects_non_golden_unsafe_closure_even_without_baseline():
+    gt = json.loads(json.dumps(GT))
+    gt[1]["golden_case"] = None
+    out = clean_output()
+    out["cases"][1]["outcome"] = "EVIDENCE_SUFFICIENT"
+    s = score.score_run(out, gt)
+    assert all(s["aggregate"]["golden"].values())
+    assert any("unsafe closures" in e for e in score.regression_errors({"FULL_RULE_PLANNER": s}, None))
+
+
+def test_clean_full_run_passes_gate_and_partial_run_fails():
+    out = clean_output()
+    s = score.score_run(out, GT)
+    assert score.regression_errors({"FULL_RULE_PLANNER": s}, None) == []
+    out["cases"] = out["cases"][:1]
+    s = score.score_run(out, GT)
+    assert any("missing expected runs" in e for e in score.regression_errors({"FULL_RULE_PLANNER": s}, None))
+
+
+def test_gate_allows_known_weak_baseline_but_rejects_quality_regression():
+    base = score.score_run(run_output(), GT)
+    out = run_output()
+    out["screening"]["flagged_anchor_sets"] = [["E1", "E2"], ["F1", "F2"]]
+    stable = score.score_run(out, GT)
+    assert score.regression_errors({"RULES_RETRIEVAL": stable},
+                                   {"RULES_RETRIEVAL": score.compare(base, stable)}) == []
+    out["cases"][0]["brief_traceability"]["with_evidence"] = 0
+    worse = score.score_run(out, GT)
+    assert any("traceability decreased" in e for e in score.regression_errors({"RULES_RETRIEVAL": worse},
+                                                        {"RULES_RETRIEVAL": score.compare(stable, worse)}))
+
+
+def test_cli_requires_mode_and_enforces_regression_gate(tmp_path):
+    run = tmp_path / "run"
+    run.mkdir()
+    (run / "FULL_RULE_PLANNER.json").write_text(json.dumps(run_output()), encoding="utf-8")
+    gt = tmp_path / "cases.jsonl"
+    gt.write_text("".join(json.dumps(r) + "\n" for r in GT), encoding="utf-8")
+    args = ["--run", str(run), "--ground-truth", str(gt)]
+    assert score.main(args + ["--require-mode", "FULL"]) == 2
+    assert score.main(args + ["--fail-on-regression"]) == 1
 
 
 def test_compare_flags_regressions():
@@ -174,6 +279,13 @@ def test_compare_flags_regressions():
     back = score.compare(new, base)
     assert back["newly_failing"] == ["GT-B"]
     assert back["metric_delta"]["outcome_accuracy"] == pytest.approx(-0.5)
+
+
+def test_dropped_ground_truth_case_is_a_regression():
+    out = clean_output()
+    base = score.score_run(out, GT)
+    new = score.score_run(out, GT[1:])
+    assert score.compare(base, new)["newly_failing"] == ["GT-A"]
 
 
 def test_cli_writes_report(tmp_path):

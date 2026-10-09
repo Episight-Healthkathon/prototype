@@ -1,0 +1,91 @@
+{
+  "case_id": "CASE-RA-56f37782",
+  "patient_id": "PAT-000009",
+  "episodes": [
+    {
+      "episode_id": "EPI-000019",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0003",
+        "name": "RS Sintetis Nusantara 03",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-03-13T15:00:00+07:00",
+      "end_at": "2026-03-15T10:00:00+07:00",
+      "length_of_stay_days": 2,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "A09",
+        "label": "Gastroenteritis and colitis of unspecified origin"
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000019",
+        "inacbg_code": "K-4-17-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000028",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000020",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0003",
+        "name": "RS Sintetis Nusantara 03",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-03-24T16:00:00+07:00",
+      "end_at": "2026-03-27T10:00:00+07:00",
+      "length_of_stay_days": 3,
+      "interval_from_previous_days": 9,
+      "primary_diagnosis": {
+        "code": "A09",
+        "label": "Gastroenteritis and colitis of unspecified origin"
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000020",
+        "inacbg_code": "K-4-17-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000029",
+          "note_type": "ADMISSION",
+          "title": "Catatan masuk",
+          "availability": "AVAILABLE"
+        },
+        {
+          "note_id": "NOTE-000030",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_30_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

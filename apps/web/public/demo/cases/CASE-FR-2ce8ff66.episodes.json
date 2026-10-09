@@ -1,0 +1,85 @@
+{
+  "case_id": "CASE-FR-2ce8ff66",
+  "patient_id": "PAT-000012",
+  "episodes": [
+    {
+      "episode_id": "EPI-000025",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0005",
+        "name": "RS Sintetis Nusantara 05",
+        "hospital_class": "C"
+      },
+      "start_at": "2026-05-02T09:00:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "M54.5",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000025",
+        "inacbg_code": "Q-5-35-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000037",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Kunjungan poli saraf",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000026",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0005",
+        "name": "RS Sintetis Nusantara 05",
+        "hospital_class": "C"
+      },
+      "start_at": "2026-05-07T09:00:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": 5,
+      "primary_diagnosis": {
+        "code": "M54.5",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000026",
+        "inacbg_code": "Q-5-35-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000038",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Kunjungan poli saraf",
+          "availability": "UNAVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_7_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

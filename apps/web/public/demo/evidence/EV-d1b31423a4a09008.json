@@ -1,0 +1,44 @@
+{
+  "evidence_id": "EV-d1b31423a4a09008",
+  "case_id": "CASE-FR-570a7ff4",
+  "run_id": "RUN-FIXTURE-FR-570a7ff4",
+  "episode_id": "EPI-000022",
+  "source_type": "EPISODE_RECORD",
+  "source_id": "EPI-000022",
+  "source_title": "Episode record EPI-000022",
+  "source_excerpt": "Planned 14.34 (procedure) performed in EPI-000022",
+  "field_path": "episodes.procedures",
+  "char_start": null,
+  "char_end": null,
+  "requirement_key": "SCHEDULE_CONSISTENCY",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": null,
+  "retrieved_by_tool": "compare_procedures",
+  "retrieval_reason": "Does the performed procedure match the documented plan? (requirement SCHEDULE_CONSISTENCY is open)",
+  "extraction_method": "STRUCTURED_FIELD",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 6,
+  "policy_version": null,
+  "source": {
+    "source_type": "EPISODE_RECORD",
+    "source_id": "EPI-000022",
+    "title": "Episode record EPI-000022",
+    "text": null,
+    "highlight": null,
+    "availability": null,
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": "episodes.procedures",
+    "value": [
+      {
+        "code": "14.34",
+        "performed_at": "2026-04-12T09:15:00+07:00"
+      }
+    ]
+  }
+}

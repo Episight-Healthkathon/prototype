@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-c4d20f87ab16a064",
+  "case_id": "CASE-RA-6b3ce4c9",
+  "run_id": "RUN-FIXTURE-RA-6b3ce4c9",
+  "episode_id": "EPI-000030",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000042",
+  "source_title": "Catatan penerimaan malam - EPI-000030",
+  "source_excerpt": "Ditangani segera di ruang resusitasi dengan dua jalur infus.",
+  "field_path": null,
+  "char_start": 128,
+  "char_end": 188,
+  "requirement_key": "EMERGENCY_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "EMERGENCY",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 5,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000042",
+    "title": "Catatan penerimaan malam - EPI-000030",
+    "text": "Pasien dibawa dengan ambulans setelah muntah darah dua kali di rumah, tampak pucat dan gelisah, nadi 128x/menit, TD 80/50 mmHg. Ditangani segera di ruang resusitasi dengan dua jalur infus.",
+    "highlight": {
+      "char_start": 128,
+      "char_end": 188
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-bde32c1757b354a0",
+  "case_id": "CASE-RA-0bbfc334",
+  "run_id": "RUN-FIXTURE-RA-0bbfc334",
+  "episode_id": "EPI-000003",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000005",
+  "source_title": "Ringkasan pulang - EPI-000003",
+  "source_excerpt": "Masuk melalui IGD dengan gagal jantung dekompensasi akut disertai edema paru akut.",
+  "field_path": null,
+  "char_start": 18,
+  "char_end": 100,
+  "requirement_key": "EMERGENCY_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "EMERGENCY",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 5,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000005",
+    "title": "Ringkasan pulang - EPI-000003",
+    "text": "Ringkasan pulang. Masuk melalui IGD dengan gagal jantung dekompensasi akut disertai edema paru akut. Perburukan dipicu infeksi saluran napas atas dan ketidakpatuhan pembatasan cairan. Pulang dalam kondisi stabil.",
+    "highlight": {
+      "char_start": 18,
+      "char_end": 100
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

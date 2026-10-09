@@ -1,0 +1,242 @@
+{
+  "brief_id": "BRF-FIXTURE-RA-0bbfc334",
+  "case_id": "CASE-RA-0bbfc334",
+  "run_id": "RUN-FIXTURE-RA-0bbfc334",
+  "generated_at": "2026-10-02T09:00:00+07:00",
+  "generator_version": "brief-template-1",
+  "progress_status": "BRIEF_READY",
+  "outcome": "EVIDENCE_SUFFICIENT",
+  "stop_reason": "SUFFICIENT_EVIDENCE",
+  "case_summary": [
+    {
+      "statement_id": "S1",
+      "text": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge: 2 episodes (6 d) at RS Sintetis Nusantara 01.",
+      "evidence_ids": [
+        "EV-2e5843f545b36fe7"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "S2",
+      "text": "Explaining context documented: emergency context, chronic condition, clinical justification.",
+      "evidence_ids": [
+        "EV-c2fe4fe21da7b76e",
+        "EV-8791834ff58cfc0b",
+        "EV-688ba3b2b3adbc67"
+      ],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT",
+        "CHRONIC_CONDITION_CONTEXT",
+        "CLINICAL_JUSTIFICATION"
+      ],
+      "material": true
+    }
+  ],
+  "risk_signal": {
+    "rule_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+    "rule_version": "1",
+    "description": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge",
+    "params": {
+      "threshold_days": 30,
+      "diagnosis_match": "EXACT"
+    },
+    "pairs": [
+      {
+        "from_episode_id": "EPI-000002",
+        "to_episode_id": "EPI-000003",
+        "interval_days": 6,
+        "matched": {
+          "same_patient": true,
+          "same_provider": true,
+          "same_primary_diagnosis": true,
+          "encounter_type": "INPATIENT"
+        }
+      }
+    ],
+    "disclaimer": "A risk signal starts an investigation. It is not a finding."
+  },
+  "episode_timeline": [
+    {
+      "episode_id": "EPI-000001",
+      "label": "Related outpatient visit: Congestive heart failure",
+      "start_at": "2026-02-16T09:30:00+07:00",
+      "end_at": null,
+      "interval_from_previous_days": null
+    },
+    {
+      "episode_id": "EPI-000002",
+      "label": "Index inpatient stay: Congestive heart failure",
+      "start_at": "2026-03-02T09:00:00+07:00",
+      "end_at": "2026-03-06T10:00:00+07:00",
+      "interval_from_previous_days": 14
+    },
+    {
+      "episode_id": "EPI-000003",
+      "label": "Repeat inpatient stay: Congestive heart failure",
+      "start_at": "2026-03-12T22:10:00+07:00",
+      "end_at": "2026-03-17T10:00:00+07:00",
+      "interval_from_previous_days": 6
+    }
+  ],
+  "supporting_risk_evidence": [
+    {
+      "statement_id": "R5",
+      "text": "Episode chain: “EPI-000003 started 6 day(s) after discharge of EPI-000002; same patient, same FKRTL, same primary diagnosis” (READMISSION_30D_SAME_PROVIDER_SAME_DX)",
+      "evidence_ids": [
+        "EV-2e5843f545b36fe7"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "R6",
+      "text": "Diagnosis: “I50.0 (EPI-000002) vs I50.0 (EPI-000003)” (EPI-000003)",
+      "evidence_ids": [
+        "EV-8b5f7d9439430344"
+      ],
+      "requirement_keys": [
+        "DIAGNOSIS_CONSISTENCY"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "R7",
+      "text": "Risk indicators in notes: “Keluhan serupa dengan perawatan bulan lalu, pencetus kali ini infeksi saluran napas dan asupan cairan berlebih.” (NOTE-000004)",
+      "evidence_ids": [
+        "EV-3b80e5d2c686946e"
+      ],
+      "requirement_keys": [
+        "RISK_INDICATORS_IN_NOTES"
+      ],
+      "material": true
+    }
+  ],
+  "explaining_context_evidence": [
+    {
+      "statement_id": "C8",
+      "text": "Emergency context: “Pasien diantar keluarga ke Instalasi Gawat Darurat pada malam hari dengan sesak napas hebat sejak sore, harus duduk untuk bernapas.” (NOTE-000003); “Kategori triase merah, langsung ditangani di ruang resusitasi.” (NOTE-000003); “Masuk melalui IGD dengan gagal jantung dekompensasi akut disertai edema paru akut.” (NOTE-000005)",
+      "evidence_ids": [
+        "EV-c2fe4fe21da7b76e",
+        "EV-9915db8b84126ffc",
+        "EV-bde32c1757b354a0"
+      ],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "C9",
+      "text": "Chronic condition: “Riwayat gagal jantung menahun sejak 2021 disertai hipertensi.” (NOTE-000001)",
+      "evidence_ids": [
+        "EV-8791834ff58cfc0b"
+      ],
+      "requirement_keys": [
+        "CHRONIC_CONDITION_CONTEXT"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "C10",
+      "text": "Clinical justification: “Masuk melalui IGD dengan gagal jantung dekompensasi akut disertai edema paru akut.” (NOTE-000005); “Perburukan dipicu infeksi saluran napas atas dan ketidakpatuhan pembatasan cairan.” (NOTE-000005)",
+      "evidence_ids": [
+        "EV-688ba3b2b3adbc67",
+        "EV-e28c333743543d4e"
+      ],
+      "requirement_keys": [
+        "CLINICAL_JUSTIFICATION"
+      ],
+      "material": true
+    }
+  ],
+  "policy_references": [
+    {
+      "evidence_id": "EV-5f494510ea75216c",
+      "policy_id": "POL-PMK26-2021-READMISI-01",
+      "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+      "section": "Readmisi: definisi",
+      "version": "Permenkes 26/2021",
+      "excerpt": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dari episode rawat inap sebelumnya dalam waktu kurang atau sama dengan 30 hari."
+    },
+    {
+      "evidence_id": "EV-e73cc56cda0ff762",
+      "policy_id": "POL-PMK26-2021-READMISI-02",
+      "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+      "section": "Readmisi: pengecualian",
+      "version": "Permenkes 26/2021",
+      "excerpt": "Kondisi yang dikecualikan dari readmisi yaitu sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. kunjungan pada FKRTL yang berbeda atau kelas FKRTL yang lebih tinggi."
+    }
+  ],
+  "remaining_gaps": [
+    {
+      "key": "PROCEDURE_RELATIONSHIP",
+      "question": "Are procedures repeated or related across episodes?",
+      "state": "NOT_FOUND",
+      "explanation": "No repeated or related therapeutic procedure (routine diagnostics excluded)."
+    },
+    {
+      "key": "SCHEDULED_PROCEDURE_CONTEXT",
+      "question": "Is a scheduled or staged procedure documented?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 4 available document(s)."
+    }
+  ],
+  "conflicts": [],
+  "uncertainty": [
+    {
+      "statement_id": "U3",
+      "text": "Provider context not assessed: same provider and class of care across episodes, no referral.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "PROVIDER_CONTEXT"
+      ],
+      "material": false
+    }
+  ],
+  "suggested_next_review": [
+    {
+      "statement_id": "N4",
+      "text": "Verify the documented emergency context, chronic condition, clinical justification against the source records.",
+      "evidence_ids": [
+        "EV-c2fe4fe21da7b76e",
+        "EV-9915db8b84126ffc",
+        "EV-bde32c1757b354a0",
+        "EV-8791834ff58cfc0b",
+        "EV-688ba3b2b3adbc67",
+        "EV-e28c333743543d4e"
+      ],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT",
+        "CHRONIC_CONDITION_CONTEXT",
+        "CLINICAL_JUSTIFICATION"
+      ],
+      "material": true
+    }
+  ],
+  "review_status": "PENDING_HUMAN_REVIEW",
+  "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+  "traceability": {
+    "material_statements": 9,
+    "with_evidence": 9
+  },
+  "provenance": {
+    "evidence_ids": [
+      "EV-2e5843f545b36fe7",
+      "EV-3b80e5d2c686946e",
+      "EV-5f494510ea75216c",
+      "EV-688ba3b2b3adbc67",
+      "EV-8791834ff58cfc0b",
+      "EV-8b5f7d9439430344",
+      "EV-9915db8b84126ffc",
+      "EV-bde32c1757b354a0",
+      "EV-c2fe4fe21da7b76e",
+      "EV-e28c333743543d4e",
+      "EV-e73cc56cda0ff762"
+    ]
+  }
+}

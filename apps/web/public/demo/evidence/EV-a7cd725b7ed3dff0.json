@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-a7cd725b7ed3dff0",
+  "case_id": "CASE-FR-570a7ff4",
+  "run_id": "RUN-FIXTURE-FR-570a7ff4",
+  "episode_id": null,
+  "source_type": "POLICY_SECTION",
+  "source_id": "POL-PMK26-2021-FRAGMENTASI-02",
+  "source_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan: Fragmentasi: pengecualian",
+  "source_excerpt": "Kondisi yang dikecualikan dari fragmentasi adalah sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. rangkaian tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. konsultasi hasil pemeriksaan penunjang yang tidak dapat dilakukan dalam satu episode.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 404,
+  "requirement_key": "APPLICABLE_POLICY",
+  "stance": "INFORMS",
+  "relevance_category": "NEUTRAL",
+  "exception_type": null,
+  "retrieved_by_tool": "retrieve_policy",
+  "retrieval_reason": "Which policy rules apply? (requirement APPLICABLE_POLICY is open)",
+  "extraction_method": "BM25_RETRIEVAL",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 12,
+  "policy_version": "Permenkes 26/2021",
+  "source": {
+    "source_type": "POLICY_SECTION",
+    "source_id": "POL-PMK26-2021-FRAGMENTASI-02",
+    "title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan: Fragmentasi: pengecualian",
+    "text": "Kondisi yang dikecualikan dari fragmentasi adalah sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. rangkaian tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. konsultasi hasil pemeriksaan penunjang yang tidak dapat dilakukan dalam satu episode.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 404
+    },
+    "availability": null,
+    "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+    "section": "Fragmentasi: pengecualian",
+    "version": "Permenkes 26/2021",
+    "effective_date": "2021-08-30",
+    "source_ref": "Permenkes No. 26 Tahun 2021, Lampiran, halaman 55, bagian E. Readmisi dan Fragmentasi. Transkripsi diverifikasi terhadap PDF resmi JDIH Kemenkes pada 2026-10-08; hanya spasi dan pemenggalan baris dinormalisasi.",
+    "source_url": "https://jdih.kemkes.go.id/storage/documents/pdfs/2021permenkes026.pdf#page=55",
+    "field_path": null,
+    "value": null
+  }
+}

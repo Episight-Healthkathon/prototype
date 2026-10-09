@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-9147c68665b2c1be",
+  "case_id": "CASE-RA-608764ca",
+  "run_id": "RUN-FIXTURE-RA-608764ca",
+  "episode_id": "EPI-000012",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000019",
+  "source_title": "Catatan triase IGD - EPI-000012",
+  "source_excerpt": "Pasien datang ke IGD tengah malam dengan demam 39,6 C, menggigil dan nyeri pinggang kiri.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 89,
+  "requirement_key": "EMERGENCY_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "EMERGENCY",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 5,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000019",
+    "title": "Catatan triase IGD - EPI-000012",
+    "text": "Pasien datang ke IGD tengah malam dengan demam 39,6 C, menggigil dan nyeri pinggang kiri. Tampak lemah, TD 90/60 mmHg. Kategori triase kuning-merah.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 89
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

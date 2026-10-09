@@ -1,0 +1,126 @@
+{
+  "case_id": "CASE-FR-83f41f66",
+  "patient_id": "PAT-000002",
+  "episodes": [
+    {
+      "episode_id": "EPI-000004",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0002",
+        "name": "RS Sintetis Nusantara 02",
+        "hospital_class": "C"
+      },
+      "start_at": "2026-04-06T08:30:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "K30",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000004",
+        "inacbg_code": "Q-5-44-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000006",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Kunjungan poli penyakit dalam",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000005",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0002",
+        "name": "RS Sintetis Nusantara 02",
+        "hospital_class": "C"
+      },
+      "start_at": "2026-04-09T09:15:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": 3,
+      "primary_diagnosis": {
+        "code": "K30",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000005",
+        "inacbg_code": "Q-5-44-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000007",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Kunjungan ulang poli penyakit dalam",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_7_DAYS"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000006",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0002",
+        "name": "RS Sintetis Nusantara 02",
+        "hospital_class": "C"
+      },
+      "start_at": "2026-04-13T10:00:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": 4,
+      "primary_diagnosis": {
+        "code": "K30",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000006",
+        "inacbg_code": "Q-5-44-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000008",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Kunjungan poli penyakit dalam",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_7_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

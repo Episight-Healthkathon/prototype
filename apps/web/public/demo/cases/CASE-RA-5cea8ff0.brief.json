@@ -1,0 +1,233 @@
+{
+  "brief_id": "BRF-FIXTURE-RA-5cea8ff0",
+  "case_id": "CASE-RA-5cea8ff0",
+  "run_id": "RUN-FIXTURE-RA-5cea8ff0",
+  "generated_at": "2026-10-02T09:00:00+07:00",
+  "generator_version": "brief-template-1",
+  "progress_status": "BRIEF_READY",
+  "outcome": "HUMAN_REVIEW_REQUIRED",
+  "stop_reason": "EVIDENCE_PATHS_EXHAUSTED",
+  "case_summary": [
+    {
+      "statement_id": "S1",
+      "text": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge: 3 episodes (12 d, 10 d) at RS Sintetis Nusantara 03.",
+      "evidence_ids": [
+        "EV-b73e4d49ad8665b5",
+        "EV-d09219c67c62db81"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "S2",
+      "text": "No explaining context was found in the available sources; the risk signal remains unresolved.",
+      "evidence_ids": [
+        "EV-b73e4d49ad8665b5",
+        "EV-d09219c67c62db81",
+        "EV-23cfc1a50fdf41b1",
+        "EV-23eeabf6a94a206a",
+        "EV-9ed43cde32cff6fd",
+        "EV-7e6ec71898820cfc"
+      ],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT",
+        "SCHEDULED_PROCEDURE_CONTEXT",
+        "CHRONIC_CONDITION_CONTEXT",
+        "CLINICAL_JUSTIFICATION"
+      ],
+      "material": true
+    }
+  ],
+  "risk_signal": {
+    "rule_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+    "rule_version": "1",
+    "description": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge",
+    "params": {
+      "threshold_days": 30,
+      "diagnosis_match": "EXACT"
+    },
+    "pairs": [
+      {
+        "from_episode_id": "EPI-000035",
+        "to_episode_id": "EPI-000036",
+        "interval_days": 12,
+        "matched": {
+          "same_patient": true,
+          "same_provider": true,
+          "same_primary_diagnosis": true,
+          "encounter_type": "INPATIENT"
+        }
+      },
+      {
+        "from_episode_id": "EPI-000036",
+        "to_episode_id": "EPI-000037",
+        "interval_days": 10,
+        "matched": {
+          "same_patient": true,
+          "same_provider": true,
+          "same_primary_diagnosis": true,
+          "encounter_type": "INPATIENT"
+        }
+      }
+    ],
+    "disclaimer": "A risk signal starts an investigation. It is not a finding."
+  },
+  "episode_timeline": [
+    {
+      "episode_id": "EPI-000035",
+      "label": "Index inpatient stay: E87.1",
+      "start_at": "2026-06-15T09:00:00+07:00",
+      "end_at": "2026-06-18T10:00:00+07:00",
+      "interval_from_previous_days": null
+    },
+    {
+      "episode_id": "EPI-000036",
+      "label": "Repeat inpatient stay: E87.1",
+      "start_at": "2026-06-30T10:00:00+07:00",
+      "end_at": "2026-07-03T10:00:00+07:00",
+      "interval_from_previous_days": 12
+    },
+    {
+      "episode_id": "EPI-000037",
+      "label": "Repeat inpatient stay: E87.1",
+      "start_at": "2026-07-13T11:00:00+07:00",
+      "end_at": "2026-07-16T10:00:00+07:00",
+      "interval_from_previous_days": 10
+    }
+  ],
+  "supporting_risk_evidence": [
+    {
+      "statement_id": "R5",
+      "text": "Episode chain: “EPI-000036 started 12 day(s) after discharge of EPI-000035; same patient, same FKRTL, same primary diagnosis” (READMISSION_30D_SAME_PROVIDER_SAME_DX); “EPI-000037 started 10 day(s) after discharge of EPI-000036; same patient, same FKRTL, same primary diagnosis” (READMISSION_30D_SAME_PROVIDER_SAME_DX)",
+      "evidence_ids": [
+        "EV-b73e4d49ad8665b5",
+        "EV-d09219c67c62db81"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "R6",
+      "text": "Diagnosis: “E87.1 (EPI-000035) vs E87.1 (EPI-000036)” (EPI-000036); “E87.1 (EPI-000036) vs E87.1 (EPI-000037)” (EPI-000037)",
+      "evidence_ids": [
+        "EV-23cfc1a50fdf41b1",
+        "EV-23eeabf6a94a206a"
+      ],
+      "requirement_keys": [
+        "DIAGNOSIS_CONSISTENCY"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "R7",
+      "text": "Risk indicators in notes: “Keluhan berulang seperti perawatan lalu.” (NOTE-000051); “Masuk lagi dengan lemas dan mual, natrium serum rendah, belum membaik sejak pulang.” (NOTE-000053)",
+      "evidence_ids": [
+        "EV-9ed43cde32cff6fd",
+        "EV-7e6ec71898820cfc"
+      ],
+      "requirement_keys": [
+        "RISK_INDICATORS_IN_NOTES"
+      ],
+      "material": true
+    }
+  ],
+  "explaining_context_evidence": [],
+  "policy_references": [
+    {
+      "evidence_id": "EV-c7e55eae123c4607",
+      "policy_id": "POL-PMK26-2021-READMISI-01",
+      "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+      "section": "Readmisi: definisi",
+      "version": "Permenkes 26/2021",
+      "excerpt": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dari episode rawat inap sebelumnya dalam waktu kurang atau sama dengan 30 hari."
+    },
+    {
+      "evidence_id": "EV-f8f7561a5bb97423",
+      "policy_id": "POL-PMK26-2021-READMISI-02",
+      "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+      "section": "Readmisi: pengecualian",
+      "version": "Permenkes 26/2021",
+      "excerpt": "Kondisi yang dikecualikan dari readmisi yaitu sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. kunjungan pada FKRTL yang berbeda atau kelas FKRTL yang lebih tinggi."
+    }
+  ],
+  "remaining_gaps": [
+    {
+      "key": "PROCEDURE_RELATIONSHIP",
+      "question": "Are procedures repeated or related across episodes?",
+      "state": "NOT_FOUND",
+      "explanation": "No procedures recorded in the anchor episodes."
+    },
+    {
+      "key": "EMERGENCY_CONTEXT",
+      "question": "Is there documented emergency context for the repeated care?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 4 available document(s)."
+    },
+    {
+      "key": "SCHEDULED_PROCEDURE_CONTEXT",
+      "question": "Is a scheduled or staged procedure documented?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 5 available document(s)."
+    },
+    {
+      "key": "CHRONIC_CONDITION_CONTEXT",
+      "question": "Is a relevant chronic condition documented?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 5 available document(s)."
+    },
+    {
+      "key": "CLINICAL_JUSTIFICATION",
+      "question": "Is there a documented clinical justification for the repeated care?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 4 available document(s)."
+    }
+  ],
+  "conflicts": [],
+  "uncertainty": [
+    {
+      "statement_id": "U3",
+      "text": "Provider context not assessed: same provider and class of care across episodes, no referral.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "PROVIDER_CONTEXT"
+      ],
+      "material": false
+    }
+  ],
+  "suggested_next_review": [
+    {
+      "statement_id": "N4",
+      "text": "Request a clinical justification for the repeated care from the provider.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT",
+        "SCHEDULED_PROCEDURE_CONTEXT",
+        "CHRONIC_CONDITION_CONTEXT",
+        "CLINICAL_JUSTIFICATION"
+      ],
+      "material": false
+    }
+  ],
+  "review_status": "PENDING_HUMAN_REVIEW",
+  "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+  "traceability": {
+    "material_statements": 5,
+    "with_evidence": 5
+  },
+  "provenance": {
+    "evidence_ids": [
+      "EV-23cfc1a50fdf41b1",
+      "EV-23eeabf6a94a206a",
+      "EV-7e6ec71898820cfc",
+      "EV-9ed43cde32cff6fd",
+      "EV-b73e4d49ad8665b5",
+      "EV-c7e55eae123c4607",
+      "EV-d09219c67c62db81",
+      "EV-f8f7561a5bb97423"
+    ]
+  }
+}

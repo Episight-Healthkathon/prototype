@@ -1,0 +1,97 @@
+{
+  "case_id": "CASE-FR-570a7ff4",
+  "patient_id": "PAT-000010",
+  "episodes": [
+    {
+      "episode_id": "EPI-000021",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0004",
+        "name": "RS Sintetis Nusantara 04",
+        "hospital_class": "A"
+      },
+      "start_at": "2026-04-07T08:30:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "E11.3",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [
+        {
+          "code": "14.34",
+          "label": null,
+          "performed_at": "2026-04-07T09:30:00+07:00"
+        }
+      ],
+      "claim": {
+        "claim_id": "CLM-000021",
+        "inacbg_code": "Q-5-42-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000031",
+          "note_type": "PROCEDURE_PLAN",
+          "title": "Rencana laser retina",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000022",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0004",
+        "name": "RS Sintetis Nusantara 04",
+        "hospital_class": "A"
+      },
+      "start_at": "2026-04-12T08:30:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": 5,
+      "primary_diagnosis": {
+        "code": "E11.3",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [
+        {
+          "code": "14.34",
+          "label": null,
+          "performed_at": "2026-04-12T09:15:00+07:00"
+        }
+      ],
+      "claim": {
+        "claim_id": "CLM-000022",
+        "inacbg_code": "Q-5-42-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000032",
+          "note_type": "PROCEDURE_REPORT",
+          "title": "Laporan laser retina",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_7_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

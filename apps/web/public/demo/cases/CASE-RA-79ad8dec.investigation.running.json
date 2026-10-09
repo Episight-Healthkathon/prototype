@@ -1,0 +1,440 @@
+{
+  "run": {
+    "run_id": "RUN-FIXTURE-RA-79ad8dec",
+    "mode": "FULL_RULE_PLANNER",
+    "run_status": "RUNNING",
+    "step": 3,
+    "max_steps": 12,
+    "started_at": "2026-10-02T09:00:00+07:00",
+    "finished_at": null,
+    "outcome": null,
+    "stop_reason": null
+  },
+  "state": {
+    "case_id": "CASE-RA-79ad8dec",
+    "run_id": "RUN-FIXTURE-RA-79ad8dec",
+    "signal_type": "READMISSION",
+    "related_episode_ids": [
+      "EPI-000023",
+      "EPI-000024"
+    ],
+    "known_facts": [
+      {
+        "fact_id": "F-EPISODE_RELATEDNESS",
+        "text": "2 anchor episodes chained (13 d); 0 related and 0 context episode(s) within 90 days.",
+        "evidence_ids": [
+          "EV-5268d19549263379"
+        ]
+      },
+      {
+        "fact_id": "F-DIAGNOSIS_CONSISTENCY",
+        "text": "Same primary diagnosis (I25.1); chronic-class code.",
+        "evidence_ids": [
+          "EV-c4a0b3f2d1f6e98d",
+          "EV-47d415a63fef3ef6"
+        ]
+      },
+      {
+        "fact_id": "F-PROCEDURE_RELATIONSHIP",
+        "text": "88.56 -> 36.07 (related).",
+        "evidence_ids": [
+          "EV-57477ea9a8750da9"
+        ]
+      }
+    ],
+    "supporting_risk_evidence": [
+      "EV-5268d19549263379",
+      "EV-c4a0b3f2d1f6e98d",
+      "EV-57477ea9a8750da9"
+    ],
+    "explaining_context_evidence": [],
+    "neutral_evidence": [
+      "EV-47d415a63fef3ef6"
+    ],
+    "requirements": [
+      {
+        "key": "EPISODE_RELATEDNESS",
+        "label": "Are the episodes actually related?",
+        "direction": "RISK",
+        "material": true,
+        "state": "FOUND",
+        "state_explanation": "2 anchor episodes chained (13 d); 0 related and 0 context episode(s) within 90 days.",
+        "coverage": {
+          "in_scope_sources": 1,
+          "searched_sources": 1,
+          "unavailable_sources": 0
+        },
+        "evidence_ids": [
+          "EV-5268d19549263379"
+        ],
+        "attempted_tools": [
+          "get_episode_history"
+        ],
+        "spawned_by": null
+      },
+      {
+        "key": "DIAGNOSIS_CONSISTENCY",
+        "label": "Are the diagnoses consistent across episodes?",
+        "direction": "RISK",
+        "material": true,
+        "state": "FOUND",
+        "state_explanation": "Same primary diagnosis (I25.1); chronic-class code.",
+        "coverage": {
+          "in_scope_sources": 1,
+          "searched_sources": 1,
+          "unavailable_sources": 0
+        },
+        "evidence_ids": [
+          "EV-c4a0b3f2d1f6e98d",
+          "EV-47d415a63fef3ef6"
+        ],
+        "attempted_tools": [
+          "compare_diagnosis"
+        ],
+        "spawned_by": null
+      },
+      {
+        "key": "PROCEDURE_RELATIONSHIP",
+        "label": "Are procedures repeated or related across episodes?",
+        "direction": "RISK",
+        "material": true,
+        "state": "FOUND",
+        "state_explanation": "88.56 -> 36.07 (related).",
+        "coverage": {
+          "in_scope_sources": 1,
+          "searched_sources": 1,
+          "unavailable_sources": 0
+        },
+        "evidence_ids": [
+          "EV-57477ea9a8750da9"
+        ],
+        "attempted_tools": [
+          "compare_procedures"
+        ],
+        "spawned_by": null
+      },
+      {
+        "key": "PROVIDER_CONTEXT",
+        "label": "Does provider context (class, referral) matter?",
+        "direction": "BACKGROUND",
+        "material": false,
+        "state": "SKIPPED",
+        "state_explanation": "Skipped as not material: same provider and class of care across episodes, no referral",
+        "coverage": {
+          "in_scope_sources": 1,
+          "searched_sources": 1,
+          "unavailable_sources": 0
+        },
+        "evidence_ids": [],
+        "attempted_tools": [],
+        "spawned_by": null
+      },
+      {
+        "key": "CLINICAL_DOCUMENT_AVAILABILITY",
+        "label": "Which clinical documents are available?",
+        "direction": "BACKGROUND",
+        "material": true,
+        "state": "OPEN",
+        "state_explanation": "Not assessed yet.",
+        "coverage": {
+          "in_scope_sources": 1,
+          "searched_sources": 0,
+          "unavailable_sources": 0
+        },
+        "evidence_ids": [],
+        "attempted_tools": [],
+        "spawned_by": null
+      },
+      {
+        "key": "EMERGENCY_CONTEXT",
+        "label": "Is there documented emergency context for the repeated care?",
+        "direction": "CONTEXT",
+        "material": true,
+        "state": "OPEN",
+        "state_explanation": "Not assessed yet.",
+        "coverage": {
+          "in_scope_sources": 2,
+          "searched_sources": 0,
+          "unavailable_sources": 0
+        },
+        "evidence_ids": [],
+        "attempted_tools": [],
+        "spawned_by": null
+      },
+      {
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "label": "Is a scheduled or staged procedure documented?",
+        "direction": "CONTEXT",
+        "material": true,
+        "state": "OPEN",
+        "state_explanation": "Not assessed yet.",
+        "coverage": {
+          "in_scope_sources": 4,
+          "searched_sources": 0,
+          "unavailable_sources": 0
+        },
+        "evidence_ids": [],
+        "attempted_tools": [],
+        "spawned_by": null
+      },
+      {
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "label": "Is a relevant chronic condition documented?",
+        "direction": "CONTEXT",
+        "material": true,
+        "state": "OPEN",
+        "state_explanation": "Not assessed yet.",
+        "coverage": {
+          "in_scope_sources": 4,
+          "searched_sources": 0,
+          "unavailable_sources": 0
+        },
+        "evidence_ids": [],
+        "attempted_tools": [],
+        "spawned_by": null
+      },
+      {
+        "key": "CLINICAL_JUSTIFICATION",
+        "label": "Is there a documented clinical justification for the repeated care?",
+        "direction": "CONTEXT",
+        "material": true,
+        "state": "OPEN",
+        "state_explanation": "Not assessed yet.",
+        "coverage": {
+          "in_scope_sources": 2,
+          "searched_sources": 0,
+          "unavailable_sources": 0
+        },
+        "evidence_ids": [],
+        "attempted_tools": [],
+        "spawned_by": null
+      },
+      {
+        "key": "RISK_INDICATORS_IN_NOTES",
+        "label": "Do notes indicate premature discharge, unresolved complaints or repeats without indication?",
+        "direction": "RISK",
+        "material": true,
+        "state": "OPEN",
+        "state_explanation": "Not assessed yet.",
+        "coverage": {
+          "in_scope_sources": 4,
+          "searched_sources": 0,
+          "unavailable_sources": 0
+        },
+        "evidence_ids": [],
+        "attempted_tools": [],
+        "spawned_by": null
+      },
+      {
+        "key": "APPLICABLE_POLICY",
+        "label": "Which policy rules apply?",
+        "direction": "POLICY",
+        "material": true,
+        "state": "OPEN",
+        "state_explanation": "Not assessed yet.",
+        "coverage": {
+          "in_scope_sources": 1,
+          "searched_sources": 0,
+          "unavailable_sources": 0
+        },
+        "evidence_ids": [],
+        "attempted_tools": [],
+        "spawned_by": null
+      }
+    ],
+    "missing_evidence": [],
+    "unresolved_questions": [
+      {
+        "key": "CLINICAL_DOCUMENT_AVAILABILITY",
+        "question": "Which clinical documents are available?",
+        "state": "OPEN"
+      },
+      {
+        "key": "EMERGENCY_CONTEXT",
+        "question": "Is there documented emergency context for the repeated care?",
+        "state": "OPEN"
+      },
+      {
+        "key": "SCHEDULED_PROCEDURE_CONTEXT",
+        "question": "Is a scheduled or staged procedure documented?",
+        "state": "OPEN"
+      },
+      {
+        "key": "CHRONIC_CONDITION_CONTEXT",
+        "question": "Is a relevant chronic condition documented?",
+        "state": "OPEN"
+      },
+      {
+        "key": "CLINICAL_JUSTIFICATION",
+        "question": "Is there a documented clinical justification for the repeated care?",
+        "state": "OPEN"
+      },
+      {
+        "key": "RISK_INDICATORS_IN_NOTES",
+        "question": "Do notes indicate premature discharge, unresolved complaints or repeats without indication?",
+        "state": "OPEN"
+      },
+      {
+        "key": "APPLICABLE_POLICY",
+        "question": "Which policy rules apply?",
+        "state": "OPEN"
+      }
+    ],
+    "tools_called": [
+      {
+        "step": 1,
+        "tool_name": "get_episode_history",
+        "tool_status": "OK"
+      },
+      {
+        "step": 2,
+        "tool_name": "compare_diagnosis",
+        "tool_status": "OK"
+      },
+      {
+        "step": 3,
+        "tool_name": "compare_procedures",
+        "tool_status": "OK"
+      }
+    ],
+    "next_action": null,
+    "investigation_step": 3,
+    "max_steps": 12,
+    "progress_status": "INVESTIGATING",
+    "outcome": null,
+    "stop_reason": null,
+    "priority_ranking": [
+      "PROCEDURE_RELATIONSHIP",
+      "CLINICAL_DOCUMENT_AVAILABILITY",
+      "APPLICABLE_POLICY"
+    ],
+    "updated_at": "2026-10-02T09:00:00+07:00"
+  },
+  "trail": [
+    {
+      "step": 1,
+      "tool_name": "get_episode_history",
+      "tool_label": "Reconstructing episode history",
+      "requirement_key": "EPISODE_RELATEDNESS",
+      "reason": "Are the episodes actually related? (requirement EPISODE_RELATEDNESS is open)",
+      "input_summary": {
+        "window_days": 90
+      },
+      "tool_status": "OK",
+      "evidence_ids": [
+        "EV-5268d19549263379"
+      ],
+      "requirement_updates": [
+        {
+          "key": "PROVIDER_CONTEXT",
+          "from": "OPEN",
+          "to": "SKIPPED"
+        },
+        {
+          "key": "EPISODE_RELATEDNESS",
+          "from": "OPEN",
+          "to": "FOUND"
+        }
+      ],
+      "planner": {
+        "source": "RULE",
+        "note": null,
+        "priority_ranking": [
+          "EPISODE_RELATEDNESS",
+          "DIAGNOSIS_CONSISTENCY",
+          "PROCEDURE_RELATIONSHIP",
+          "APPLICABLE_POLICY"
+        ],
+        "skipped_requirements": [
+          {
+            "key": "PROVIDER_CONTEXT",
+            "reason": "same provider and class of care across episodes, no referral"
+          }
+        ],
+        "validation_errors": []
+      },
+      "error": null,
+      "started_at": "2026-10-02T09:00:00+07:00",
+      "duration_ms": 1
+    },
+    {
+      "step": 2,
+      "tool_name": "compare_diagnosis",
+      "tool_label": "Comparing diagnoses",
+      "requirement_key": "DIAGNOSIS_CONSISTENCY",
+      "reason": "Are the diagnoses consistent across episodes? (requirement DIAGNOSIS_CONSISTENCY is open)",
+      "input_summary": {
+        "episode_ids": [
+          "EPI-000023",
+          "EPI-000024"
+        ]
+      },
+      "tool_status": "OK",
+      "evidence_ids": [
+        "EV-c4a0b3f2d1f6e98d",
+        "EV-47d415a63fef3ef6"
+      ],
+      "requirement_updates": [
+        {
+          "key": "DIAGNOSIS_CONSISTENCY",
+          "from": "OPEN",
+          "to": "FOUND"
+        }
+      ],
+      "planner": {
+        "source": "RULE",
+        "note": null,
+        "priority_ranking": [
+          "DIAGNOSIS_CONSISTENCY",
+          "PROCEDURE_RELATIONSHIP",
+          "CLINICAL_DOCUMENT_AVAILABILITY",
+          "APPLICABLE_POLICY"
+        ],
+        "skipped_requirements": [],
+        "validation_errors": []
+      },
+      "error": null,
+      "started_at": "2026-10-02T09:00:00+07:00",
+      "duration_ms": 1
+    },
+    {
+      "step": 3,
+      "tool_name": "compare_procedures",
+      "tool_label": "Comparing procedures",
+      "requirement_key": "PROCEDURE_RELATIONSHIP",
+      "reason": "Are procedures repeated or related across episodes? (requirement PROCEDURE_RELATIONSHIP is open)",
+      "input_summary": {
+        "episode_ids": [
+          "EPI-000023",
+          "EPI-000024"
+        ],
+        "check_plan": false
+      },
+      "tool_status": "OK",
+      "evidence_ids": [
+        "EV-57477ea9a8750da9"
+      ],
+      "requirement_updates": [
+        {
+          "key": "PROCEDURE_RELATIONSHIP",
+          "from": "OPEN",
+          "to": "FOUND"
+        }
+      ],
+      "planner": {
+        "source": "RULE",
+        "note": null,
+        "priority_ranking": [
+          "PROCEDURE_RELATIONSHIP",
+          "CLINICAL_DOCUMENT_AVAILABILITY",
+          "APPLICABLE_POLICY"
+        ],
+        "skipped_requirements": [],
+        "validation_errors": []
+      },
+      "error": null,
+      "started_at": "2026-10-02T09:00:00+07:00",
+      "duration_ms": 1
+    }
+  ]
+}

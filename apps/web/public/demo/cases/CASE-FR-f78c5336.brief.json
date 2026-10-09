@@ -1,0 +1,212 @@
+{
+  "brief_id": "BRF-FIXTURE-FR-f78c5336",
+  "case_id": "CASE-FR-f78c5336",
+  "run_id": "RUN-FIXTURE-FR-f78c5336",
+  "generated_at": "2026-10-02T09:00:00+07:00",
+  "generator_version": "brief-template-1",
+  "progress_status": "BRIEF_READY",
+  "outcome": "EVIDENCE_SUFFICIENT",
+  "stop_reason": "SUFFICIENT_EVIDENCE",
+  "case_summary": [
+    {
+      "statement_id": "S1",
+      "text": "Repeated outpatient visit at the same FKRTL with the same primary diagnosis within 7 days: 2 episodes (3 d) at RS Sintetis Nusantara 06.",
+      "evidence_ids": [
+        "EV-8211f89fcf8a3239"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "S2",
+      "text": "Explaining context documented: chronic condition.",
+      "evidence_ids": [
+        "EV-9beac84926fc37c3"
+      ],
+      "requirement_keys": [
+        "CHRONIC_CONDITION_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "risk_signal": {
+    "rule_id": "FRAGMENTATION_7D_SAME_PROVIDER_SAME_DX",
+    "rule_version": "1",
+    "description": "Repeated outpatient visit at the same FKRTL with the same primary diagnosis within 7 days",
+    "params": {
+      "threshold_days": 7,
+      "diagnosis_match": "EXACT"
+    },
+    "pairs": [
+      {
+        "from_episode_id": "EPI-000040",
+        "to_episode_id": "EPI-000041",
+        "interval_days": 3,
+        "matched": {
+          "same_patient": true,
+          "same_provider": true,
+          "same_primary_diagnosis": true,
+          "encounter_type": "OUTPATIENT"
+        }
+      }
+    ],
+    "disclaimer": "A risk signal starts an investigation. It is not a finding."
+  },
+  "episode_timeline": [
+    {
+      "episode_id": "EPI-000040",
+      "label": "Index outpatient visit: N18.5",
+      "start_at": "2026-07-18T07:00:00+07:00",
+      "end_at": null,
+      "interval_from_previous_days": null
+    },
+    {
+      "episode_id": "EPI-000041",
+      "label": "Repeat outpatient visit: N18.5",
+      "start_at": "2026-07-21T07:00:00+07:00",
+      "end_at": null,
+      "interval_from_previous_days": 3
+    }
+  ],
+  "supporting_risk_evidence": [
+    {
+      "statement_id": "R5",
+      "text": "Episode chain: “EPI-000041 started 3 day(s) after the previous visit of EPI-000040; same patient, same FKRTL, same primary diagnosis” (FRAGMENTATION_7D_SAME_PROVIDER_SAME_DX)",
+      "evidence_ids": [
+        "EV-8211f89fcf8a3239"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "R6",
+      "text": "Diagnosis: “N18.5 (EPI-000040) vs N18.5 (EPI-000041)” (EPI-000041)",
+      "evidence_ids": [
+        "EV-4146a027682a59ac"
+      ],
+      "requirement_keys": [
+        "DIAGNOSIS_CONSISTENCY"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "R7",
+      "text": "Procedures: “39.95 (EPI-000040) -> 39.95 (EPI-000041): repeated procedure (39.95)” (EPI-000041)",
+      "evidence_ids": [
+        "EV-7974badff8d3d1f4"
+      ],
+      "requirement_keys": [
+        "PROCEDURE_RELATIONSHIP"
+      ],
+      "material": true
+    }
+  ],
+  "explaining_context_evidence": [
+    {
+      "statement_id": "C8",
+      "text": "Chronic condition: “Hemodialisis rutin pada pasien CKD stadium 5, jadwal dua kali per minggu.” (NOTE-000059)",
+      "evidence_ids": [
+        "EV-9beac84926fc37c3"
+      ],
+      "requirement_keys": [
+        "CHRONIC_CONDITION_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "policy_references": [
+    {
+      "evidence_id": "EV-2b5d5e8a0a12628c",
+      "policy_id": "POL-PMK26-2021-FRAGMENTASI-01",
+      "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+      "section": "Fragmentasi: definisi",
+      "version": "Permenkes 26/2021",
+      "excerpt": "Fragmentasi adalah kunjungan rawat jalan berulang di FKRTL yang sama pada kasus dengan diagnosis yang sama dari episode rawat jalan sebelumnya dalam waktu kurang atau sama dengan 7 hari."
+    },
+    {
+      "evidence_id": "EV-1b50a85c02c03981",
+      "policy_id": "POL-PMK26-2021-FRAGMENTASI-02",
+      "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+      "section": "Fragmentasi: pengecualian",
+      "version": "Permenkes 26/2021",
+      "excerpt": "Kondisi yang dikecualikan dari fragmentasi adalah sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. rangkaian tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. konsultasi hasil pemeriksaan penunjang yang tidak dapat dilakukan dalam satu episode."
+    }
+  ],
+  "remaining_gaps": [
+    {
+      "key": "SCHEDULED_PROCEDURE_CONTEXT",
+      "question": "Is a scheduled or staged procedure documented?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 2 available document(s)."
+    },
+    {
+      "key": "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+      "question": "Was the repeat visit a consultation of supporting-examination results?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 1 available document(s)."
+    },
+    {
+      "key": "EMERGENCY_CONTEXT",
+      "question": "Is there documented emergency context for the repeated care?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 1 available document(s)."
+    },
+    {
+      "key": "CLINICAL_JUSTIFICATION",
+      "question": "Is there a documented clinical justification for the repeated care?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 1 available document(s)."
+    },
+    {
+      "key": "RISK_INDICATORS_IN_NOTES",
+      "question": "Do notes indicate premature discharge, unresolved complaints or repeats without indication?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 2 available document(s)."
+    }
+  ],
+  "conflicts": [],
+  "uncertainty": [
+    {
+      "statement_id": "U3",
+      "text": "Provider context not assessed: same provider and class of care across episodes, no referral.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "PROVIDER_CONTEXT"
+      ],
+      "material": false
+    }
+  ],
+  "suggested_next_review": [
+    {
+      "statement_id": "N4",
+      "text": "Verify the documented chronic condition against the source records.",
+      "evidence_ids": [
+        "EV-9beac84926fc37c3"
+      ],
+      "requirement_keys": [
+        "CHRONIC_CONDITION_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "review_status": "PENDING_HUMAN_REVIEW",
+  "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+  "traceability": {
+    "material_statements": 7,
+    "with_evidence": 7
+  },
+  "provenance": {
+    "evidence_ids": [
+      "EV-1b50a85c02c03981",
+      "EV-2b5d5e8a0a12628c",
+      "EV-4146a027682a59ac",
+      "EV-7974badff8d3d1f4",
+      "EV-8211f89fcf8a3239",
+      "EV-9beac84926fc37c3"
+    ]
+  }
+}

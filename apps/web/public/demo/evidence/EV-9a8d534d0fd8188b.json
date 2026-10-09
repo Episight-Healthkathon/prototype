@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-9a8d534d0fd8188b",
+  "case_id": "CASE-RA-49e2e3ed",
+  "run_id": "RUN-FIXTURE-RA-49e2e3ed",
+  "episode_id": "EPI-000032",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000045",
+  "source_title": "Catatan masuk - EPI-000032",
+  "source_excerpt": "Pasien datang sendiri dari poli bedah dan tidak dalam kondisi gawat darurat.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 76,
+  "requirement_key": "EMERGENCY_CONTEXT",
+  "stance": "NEGATES",
+  "relevance_category": "SUPPORTING_RISK",
+  "exception_type": "EMERGENCY",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 5,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000045",
+    "title": "Catatan masuk - EPI-000032",
+    "text": "Pasien datang sendiri dari poli bedah dan tidak dalam kondisi gawat darurat. Kemerahan dan bengkak tungkai kanan dengan keluhan serupa seperti perawatan sebelumnya, pasien meminta dirawat kembali.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 76
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

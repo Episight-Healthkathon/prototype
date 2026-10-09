@@ -1,0 +1,223 @@
+{
+  "brief_id": "BRF-FIXTURE-RA-d7840713",
+  "case_id": "CASE-RA-d7840713",
+  "run_id": "RUN-FIXTURE-RA-d7840713",
+  "generated_at": "2026-10-02T09:00:00+07:00",
+  "generator_version": "brief-template-1",
+  "progress_status": "BRIEF_READY",
+  "outcome": "EVIDENCE_SUFFICIENT",
+  "stop_reason": "SUFFICIENT_EVIDENCE",
+  "case_summary": [
+    {
+      "statement_id": "S1",
+      "text": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge: 2 episodes (14 d) at RS Sintetis Nusantara 03.",
+      "evidence_ids": [
+        "EV-bfc2059355da35f4"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "S2",
+      "text": "Explaining context documented: scheduled or staged procedure.",
+      "evidence_ids": [
+        "EV-5d923e336258d65c"
+      ],
+      "requirement_keys": [
+        "SCHEDULED_PROCEDURE_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "risk_signal": {
+    "rule_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+    "rule_version": "1",
+    "description": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge",
+    "params": {
+      "threshold_days": 30,
+      "diagnosis_match": "EXACT"
+    },
+    "pairs": [
+      {
+        "from_episode_id": "EPI-000007",
+        "to_episode_id": "EPI-000008",
+        "interval_days": 14,
+        "matched": {
+          "same_patient": true,
+          "same_provider": true,
+          "same_primary_diagnosis": true,
+          "encounter_type": "INPATIENT"
+        }
+      }
+    ],
+    "disclaimer": "A risk signal starts an investigation. It is not a finding."
+  },
+  "episode_timeline": [
+    {
+      "episode_id": "EPI-000007",
+      "label": "Index inpatient stay: Atherosclerotic heart disease",
+      "start_at": "2026-05-04T08:00:00+07:00",
+      "end_at": "2026-05-06T10:00:00+07:00",
+      "interval_from_previous_days": null
+    },
+    {
+      "episode_id": "EPI-000008",
+      "label": "Repeat inpatient stay: Atherosclerotic heart disease",
+      "start_at": "2026-05-20T07:30:00+07:00",
+      "end_at": "2026-05-22T10:00:00+07:00",
+      "interval_from_previous_days": 14
+    }
+  ],
+  "supporting_risk_evidence": [
+    {
+      "statement_id": "R5",
+      "text": "Episode chain: “EPI-000008 started 14 day(s) after discharge of EPI-000007; same patient, same FKRTL, same primary diagnosis” (READMISSION_30D_SAME_PROVIDER_SAME_DX)",
+      "evidence_ids": [
+        "EV-bfc2059355da35f4"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "R6",
+      "text": "Diagnosis: “I25.1 (EPI-000007) vs I25.1 (EPI-000008)” (EPI-000008)",
+      "evidence_ids": [
+        "EV-ca866f370e479d78"
+      ],
+      "requirement_keys": [
+        "DIAGNOSIS_CONSISTENCY"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "R7",
+      "text": "Procedures: “88.56 (EPI-000007) -> 36.06 (EPI-000008): related procedure (Insertion of non-drug-eluting coronary artery stent(s))” (EPI-000008)",
+      "evidence_ids": [
+        "EV-11c9eb6536c57ea1"
+      ],
+      "requirement_keys": [
+        "PROCEDURE_RELATIONSHIP"
+      ],
+      "material": true
+    }
+  ],
+  "explaining_context_evidence": [
+    {
+      "statement_id": "C8",
+      "text": "Scheduled or staged procedure: “Rencana tindakan: intervensi koroner perkutan bertahap, pemasangan stent LAD (ICD-9-CM 36.06) pada perawatan berikutnya sekitar dua minggu lagi untuk membatasi…” (NOTE-000010); “Pasien akan masuk kembali untuk PCI tahap II.” (NOTE-000011)",
+      "evidence_ids": [
+        "EV-5d923e336258d65c",
+        "EV-b1a59eda66401c51"
+      ],
+      "requirement_keys": [
+        "SCHEDULED_PROCEDURE_CONTEXT"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "C9",
+      "text": "Plan versus performed procedure: “Rencana tindakan: intervensi koroner perkutan bertahap, pemasangan stent LAD (ICD-9-CM 36.06) pada perawatan berikutnya sekitar dua minggu lagi untuk membatasi…” (NOTE-000010); “Planned 36.06 (Insertion of non-drug-eluting coronary artery stent(s)) performed in EPI-000008” (EPI-000008)",
+      "evidence_ids": [
+        "EV-af36aae65b1a5300",
+        "EV-ece9bdc137fc8175"
+      ],
+      "requirement_keys": [
+        "SCHEDULE_CONSISTENCY"
+      ],
+      "material": true
+    }
+  ],
+  "policy_references": [
+    {
+      "evidence_id": "EV-4f8228a85bf46617",
+      "policy_id": "POL-PMK26-2021-READMISI-01",
+      "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+      "section": "Readmisi: definisi",
+      "version": "Permenkes 26/2021",
+      "excerpt": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dari episode rawat inap sebelumnya dalam waktu kurang atau sama dengan 30 hari."
+    },
+    {
+      "evidence_id": "EV-cd90c13b4e70c109",
+      "policy_id": "POL-PMK26-2021-READMISI-02",
+      "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+      "section": "Readmisi: pengecualian",
+      "version": "Permenkes 26/2021",
+      "excerpt": "Kondisi yang dikecualikan dari readmisi yaitu sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. kunjungan pada FKRTL yang berbeda atau kelas FKRTL yang lebih tinggi."
+    }
+  ],
+  "remaining_gaps": [
+    {
+      "key": "EMERGENCY_CONTEXT",
+      "question": "Is there documented emergency context for the repeated care?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 2 available document(s)."
+    },
+    {
+      "key": "CHRONIC_CONDITION_CONTEXT",
+      "question": "Is a relevant chronic condition documented?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 5 available document(s)."
+    },
+    {
+      "key": "CLINICAL_JUSTIFICATION",
+      "question": "Is there a documented clinical justification for the repeated care?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 2 available document(s)."
+    },
+    {
+      "key": "RISK_INDICATORS_IN_NOTES",
+      "question": "Do notes indicate premature discharge, unresolved complaints or repeats without indication?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 5 available document(s)."
+    }
+  ],
+  "conflicts": [],
+  "uncertainty": [
+    {
+      "statement_id": "U3",
+      "text": "Provider context not assessed: same provider and class of care across episodes, no referral.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "PROVIDER_CONTEXT"
+      ],
+      "material": false
+    }
+  ],
+  "suggested_next_review": [
+    {
+      "statement_id": "N4",
+      "text": "Verify the documented scheduled or staged procedure against the source records.",
+      "evidence_ids": [
+        "EV-5d923e336258d65c",
+        "EV-b1a59eda66401c51"
+      ],
+      "requirement_keys": [
+        "SCHEDULED_PROCEDURE_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "review_status": "PENDING_HUMAN_REVIEW",
+  "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+  "traceability": {
+    "material_statements": 8,
+    "with_evidence": 8
+  },
+  "provenance": {
+    "evidence_ids": [
+      "EV-11c9eb6536c57ea1",
+      "EV-4f8228a85bf46617",
+      "EV-5d923e336258d65c",
+      "EV-af36aae65b1a5300",
+      "EV-b1a59eda66401c51",
+      "EV-bfc2059355da35f4",
+      "EV-ca866f370e479d78",
+      "EV-cd90c13b4e70c109",
+      "EV-ece9bdc137fc8175"
+    ]
+  }
+}

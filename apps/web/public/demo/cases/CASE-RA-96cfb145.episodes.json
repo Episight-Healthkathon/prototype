@@ -1,0 +1,91 @@
+{
+  "case_id": "CASE-RA-96cfb145",
+  "patient_id": "PAT-000006",
+  "episodes": [
+    {
+      "episode_id": "EPI-000013",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0004",
+        "name": "RS Sintetis Nusantara 04",
+        "hospital_class": "A"
+      },
+      "start_at": "2026-01-17T11:00:00+07:00",
+      "end_at": "2026-01-22T10:00:00+07:00",
+      "length_of_stay_days": 5,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "J44.1",
+        "label": "COPD with acute exacerbation"
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000013",
+        "inacbg_code": "J-4-17-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000021",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000014",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0004",
+        "name": "RS Sintetis Nusantara 04",
+        "hospital_class": "A"
+      },
+      "start_at": "2026-02-09T13:00:00+07:00",
+      "end_at": "2026-02-14T10:00:00+07:00",
+      "length_of_stay_days": 5,
+      "interval_from_previous_days": 18,
+      "primary_diagnosis": {
+        "code": "J44.1",
+        "label": "COPD with acute exacerbation"
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000014",
+        "inacbg_code": "J-4-17-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000022",
+          "note_type": "ADMISSION",
+          "title": "Catatan masuk",
+          "availability": "AVAILABLE"
+        },
+        {
+          "note_id": "NOTE-000023",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_30_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

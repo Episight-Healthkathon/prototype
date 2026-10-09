@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-8109ce7e2cfc7c32",
+  "case_id": "CASE-FR-d1179ea9",
+  "run_id": "RUN-FIXTURE-FR-d1179ea9",
+  "episode_id": "EPI-000018",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000027",
+  "source_title": "Catatan IGD - EPI-000018",
+  "source_excerpt": "Pasien datang ke UGD dini hari dengan serangan sesak berat, bicara terputus-putus, saturasi 88%.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 96,
+  "requirement_key": "EMERGENCY_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "EMERGENCY",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 8,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000027",
+    "title": "Catatan IGD - EPI-000018",
+    "text": "Pasien datang ke UGD dini hari dengan serangan sesak berat, bicara terputus-putus, saturasi 88%. Diberikan nebulisasi berulang dan steroid intravena, pulang setelah sesak mereda.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 96
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

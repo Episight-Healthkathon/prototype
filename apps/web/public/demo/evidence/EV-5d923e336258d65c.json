@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-5d923e336258d65c",
+  "case_id": "CASE-RA-d7840713",
+  "run_id": "RUN-FIXTURE-RA-d7840713",
+  "episode_id": "EPI-000007",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000010",
+  "source_title": "Rencana PCI bertahap - EPI-000007",
+  "source_excerpt": "Rencana tindakan: intervensi koroner perkutan bertahap, pemasangan stent LAD (ICD-9-CM 36.06) pada perawatan berikutnya sekitar dua minggu lagi untuk membatasi beban kontras pada ginjal.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 186,
+  "requirement_key": "SCHEDULED_PROCEDURE_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "SCHEDULED_PROCEDURE",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is a scheduled or staged procedure documented? (requirement SCHEDULED_PROCEDURE_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 6,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000010",
+    "title": "Rencana PCI bertahap - EPI-000007",
+    "text": "Rencana tindakan: intervensi koroner perkutan bertahap, pemasangan stent LAD (ICD-9-CM 36.06) pada perawatan berikutnya sekitar dua minggu lagi untuk membatasi beban kontras pada ginjal.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 186
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

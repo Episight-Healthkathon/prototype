@@ -1,0 +1,109 @@
+{
+  "case_id": "CASE-RA-79ad8dec",
+  "patient_id": "PAT-000011",
+  "episodes": [
+    {
+      "episode_id": "EPI-000023",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": "ELECTIVE",
+      "provider": {
+        "provider_id": "PRV-0004",
+        "name": "RS Sintetis Nusantara 04",
+        "hospital_class": "A"
+      },
+      "start_at": "2026-04-18T08:00:00+07:00",
+      "end_at": "2026-04-20T10:00:00+07:00",
+      "length_of_stay_days": 2,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "I25.1",
+        "label": "Atherosclerotic heart disease"
+      },
+      "secondary_diagnoses": [],
+      "procedures": [
+        {
+          "code": "88.56",
+          "label": "Coronary arteriography using two catheters",
+          "performed_at": "2026-04-18T10:00:00+07:00"
+        }
+      ],
+      "claim": {
+        "claim_id": "CLM-000023",
+        "inacbg_code": "I-4-10-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000033",
+          "note_type": "PROCEDURE_PLAN",
+          "title": "Rencana PCI",
+          "availability": "AVAILABLE"
+        },
+        {
+          "note_id": "NOTE-000034",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000024",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": "ELECTIVE",
+      "provider": {
+        "provider_id": "PRV-0004",
+        "name": "RS Sintetis Nusantara 04",
+        "hospital_class": "A"
+      },
+      "start_at": "2026-05-03T07:30:00+07:00",
+      "end_at": "2026-05-05T10:00:00+07:00",
+      "length_of_stay_days": 2,
+      "interval_from_previous_days": 13,
+      "primary_diagnosis": {
+        "code": "I25.1",
+        "label": "Atherosclerotic heart disease"
+      },
+      "secondary_diagnoses": [],
+      "procedures": [
+        {
+          "code": "36.07",
+          "label": "Insertion of drug-eluting coronary artery stent(s)",
+          "performed_at": "2026-05-03T09:30:00+07:00"
+        }
+      ],
+      "claim": {
+        "claim_id": "CLM-000024",
+        "inacbg_code": "I-4-10-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000035",
+          "note_type": "PROCEDURE_REPORT",
+          "title": "Laporan PCI",
+          "availability": "AVAILABLE"
+        },
+        {
+          "note_id": "NOTE-000036",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_30_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

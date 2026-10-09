@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-8341229c51f0b0ab",
+  "case_id": "CASE-RA-5bfa9633",
+  "run_id": "RUN-FIXTURE-RA-5bfa9633",
+  "episode_id": null,
+  "source_type": "POLICY_SECTION",
+  "source_id": "POL-PMK26-2021-READMISI-02",
+  "source_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan: Readmisi: pengecualian",
+  "source_excerpt": "Kondisi yang dikecualikan dari readmisi yaitu sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. kunjungan pada FKRTL yang berbeda atau kelas FKRTL yang lebih tinggi.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 374,
+  "requirement_key": "APPLICABLE_POLICY",
+  "stance": "INFORMS",
+  "relevance_category": "NEUTRAL",
+  "exception_type": null,
+  "retrieved_by_tool": "retrieve_policy",
+  "retrieval_reason": "Which policy rules apply? (requirement APPLICABLE_POLICY is open)",
+  "extraction_method": "BM25_RETRIEVAL",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 10,
+  "policy_version": "Permenkes 26/2021",
+  "source": {
+    "source_type": "POLICY_SECTION",
+    "source_id": "POL-PMK26-2021-READMISI-02",
+    "title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan: Readmisi: pengecualian",
+    "text": "Kondisi yang dikecualikan dari readmisi yaitu sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. kunjungan pada FKRTL yang berbeda atau kelas FKRTL yang lebih tinggi.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 374
+    },
+    "availability": null,
+    "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+    "section": "Readmisi: pengecualian",
+    "version": "Permenkes 26/2021",
+    "effective_date": "2021-08-30",
+    "source_ref": "Permenkes No. 26 Tahun 2021, Lampiran, halaman 55, bagian E. Readmisi dan Fragmentasi. Transkripsi diverifikasi terhadap PDF resmi JDIH Kemenkes pada 2026-10-08; hanya spasi dan pemenggalan baris dinormalisasi.",
+    "source_url": "https://jdih.kemkes.go.id/storage/documents/pdfs/2021permenkes026.pdf#page=55",
+    "field_path": null,
+    "value": null
+  }
+}

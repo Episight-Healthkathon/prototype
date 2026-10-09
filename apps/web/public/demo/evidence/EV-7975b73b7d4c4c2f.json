@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-7975b73b7d4c4c2f",
+  "case_id": "CASE-RA-5bfa9633",
+  "run_id": "RUN-FIXTURE-RA-5bfa9633",
+  "episode_id": "EPI-000039",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000056",
+  "source_title": "Catatan triase IGD - EPI-000039",
+  "source_excerpt": "Datang ke IGD menjelang subuh dengan nyeri dada berat saat istirahat, berkeringat dingin.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 89,
+  "requirement_key": "EMERGENCY_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "EMERGENCY",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 5,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000056",
+    "title": "Catatan triase IGD - EPI-000039",
+    "text": "Datang ke IGD menjelang subuh dengan nyeri dada berat saat istirahat, berkeringat dingin. EKG segera menunjukkan depresi segmen ST.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 89
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

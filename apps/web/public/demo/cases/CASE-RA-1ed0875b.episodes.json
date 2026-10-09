@@ -1,0 +1,95 @@
+{
+  "case_id": "CASE-RA-1ed0875b",
+  "patient_id": "PAT-000013",
+  "episodes": [
+    {
+      "episode_id": "EPI-000027",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0006",
+        "name": "RS Sintetis Nusantara 06",
+        "hospital_class": "D"
+      },
+      "start_at": "2026-05-08T13:00:00+07:00",
+      "end_at": "2026-05-14T10:00:00+07:00",
+      "length_of_stay_days": 6,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "I63.9",
+        "label": null
+      },
+      "secondary_diagnoses": [
+        {
+          "code": "I10",
+          "label": "Essential (primary) hypertension"
+        }
+      ],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000027",
+        "inacbg_code": "G-4-14-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000039",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000028",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0006",
+        "name": "RS Sintetis Nusantara 06",
+        "hospital_class": "D"
+      },
+      "start_at": "2026-05-30T10:00:00+07:00",
+      "end_at": "2026-06-04T10:00:00+07:00",
+      "length_of_stay_days": 5,
+      "interval_from_previous_days": 16,
+      "primary_diagnosis": {
+        "code": "I63.9",
+        "label": null
+      },
+      "secondary_diagnoses": [
+        {
+          "code": "I10",
+          "label": "Essential (primary) hypertension"
+        }
+      ],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000028",
+        "inacbg_code": "G-4-14-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000040",
+          "note_type": "PROGRESS",
+          "title": "Catatan perkembangan",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_30_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

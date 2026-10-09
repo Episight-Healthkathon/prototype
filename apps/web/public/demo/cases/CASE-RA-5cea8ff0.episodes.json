@@ -1,0 +1,138 @@
+{
+  "case_id": "CASE-RA-5cea8ff0",
+  "patient_id": "PAT-000017",
+  "episodes": [
+    {
+      "episode_id": "EPI-000035",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0003",
+        "name": "RS Sintetis Nusantara 03",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-06-15T09:00:00+07:00",
+      "end_at": "2026-06-18T10:00:00+07:00",
+      "length_of_stay_days": 3,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "E87.1",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000035",
+        "inacbg_code": "E-4-12-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000050",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000036",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0003",
+        "name": "RS Sintetis Nusantara 03",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-06-30T10:00:00+07:00",
+      "end_at": "2026-07-03T10:00:00+07:00",
+      "length_of_stay_days": 3,
+      "interval_from_previous_days": 12,
+      "primary_diagnosis": {
+        "code": "E87.1",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000036",
+        "inacbg_code": "E-4-12-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000051",
+          "note_type": "ADMISSION",
+          "title": "Catatan masuk",
+          "availability": "AVAILABLE"
+        },
+        {
+          "note_id": "NOTE-000052",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_30_DAYS"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000037",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0003",
+        "name": "RS Sintetis Nusantara 03",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-07-13T11:00:00+07:00",
+      "end_at": "2026-07-16T10:00:00+07:00",
+      "length_of_stay_days": 3,
+      "interval_from_previous_days": 10,
+      "primary_diagnosis": {
+        "code": "E87.1",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000037",
+        "inacbg_code": "E-4-12-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000053",
+          "note_type": "ADMISSION",
+          "title": "Catatan masuk",
+          "availability": "AVAILABLE"
+        },
+        {
+          "note_id": "NOTE-000054",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_30_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

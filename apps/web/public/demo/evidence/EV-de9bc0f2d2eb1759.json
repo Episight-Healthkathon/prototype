@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-de9bc0f2d2eb1759",
+  "case_id": "CASE-FR-570a7ff4",
+  "run_id": "RUN-FIXTURE-FR-570a7ff4",
+  "episode_id": "EPI-000022",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000032",
+  "source_title": "Laporan laser retina - EPI-000022",
+  "source_excerpt": "Sesi kedua laser fotokoagulasi retina mata kanan sesuai rencana, tanpa komplikasi.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 82,
+  "requirement_key": "SCHEDULED_PROCEDURE_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "SCHEDULED_PROCEDURE",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is a scheduled or staged procedure documented? (requirement SCHEDULED_PROCEDURE_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 5,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000032",
+    "title": "Laporan laser retina - EPI-000022",
+    "text": "Sesi kedua laser fotokoagulasi retina mata kanan sesuai rencana, tanpa komplikasi.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 82
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "case_id": "CASE-RA-609280ef",
+  "patient_id": "PAT-000004",
+  "episodes": [
+    {
+      "episode_id": "EPI-000009",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0001",
+        "name": "RS Sintetis Nusantara 01",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-06-01T14:00:00+07:00",
+      "end_at": "2026-06-05T10:00:00+07:00",
+      "length_of_stay_days": 4,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "J18.9",
+        "label": "Pneumonia, unspecified"
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000009",
+        "inacbg_code": "J-4-16-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000014",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000010",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0001",
+        "name": "RS Sintetis Nusantara 01",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-06-16T19:20:00+07:00",
+      "end_at": "2026-06-20T10:00:00+07:00",
+      "length_of_stay_days": 4,
+      "interval_from_previous_days": 11,
+      "primary_diagnosis": {
+        "code": "J18.9",
+        "label": "Pneumonia, unspecified"
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000010",
+        "inacbg_code": "J-4-16-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000015",
+          "note_type": "TRIAGE",
+          "title": "Catatan triase IGD",
+          "availability": "UNAVAILABLE"
+        },
+        {
+          "note_id": "NOTE-000016",
+          "note_type": "PROGRESS",
+          "title": "Catatan perkembangan",
+          "availability": "UNAVAILABLE"
+        },
+        {
+          "note_id": "NOTE-000017",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "RESTRICTED"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_30_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

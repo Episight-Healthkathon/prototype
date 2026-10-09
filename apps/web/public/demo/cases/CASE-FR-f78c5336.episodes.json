@@ -1,0 +1,97 @@
+{
+  "case_id": "CASE-FR-f78c5336",
+  "patient_id": "PAT-000019",
+  "episodes": [
+    {
+      "episode_id": "EPI-000040",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0006",
+        "name": "RS Sintetis Nusantara 06",
+        "hospital_class": "D"
+      },
+      "start_at": "2026-07-18T07:00:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "N18.5",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [
+        {
+          "code": "39.95",
+          "label": null,
+          "performed_at": null
+        }
+      ],
+      "claim": {
+        "claim_id": "CLM-000040",
+        "inacbg_code": "N-3-15-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000058",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Catatan hemodialisis",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000041",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0006",
+        "name": "RS Sintetis Nusantara 06",
+        "hospital_class": "D"
+      },
+      "start_at": "2026-07-21T07:00:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": 3,
+      "primary_diagnosis": {
+        "code": "N18.5",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [
+        {
+          "code": "39.95",
+          "label": null,
+          "performed_at": null
+        }
+      ],
+      "claim": {
+        "claim_id": "CLM-000041",
+        "inacbg_code": "N-3-15-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000059",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Catatan hemodialisis",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_7_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

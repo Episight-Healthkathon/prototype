@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-cbccc0bd3640d81e",
+  "case_id": "CASE-RA-49e2e3ed",
+  "run_id": "RUN-FIXTURE-RA-49e2e3ed",
+  "episode_id": "EPI-000032",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000045",
+  "source_title": "Catatan masuk - EPI-000032",
+  "source_excerpt": "Kemerahan dan bengkak tungkai kanan dengan keluhan serupa seperti perawatan sebelumnya, pasien meminta dirawat kembali.",
+  "field_path": null,
+  "char_start": 77,
+  "char_end": 196,
+  "requirement_key": "RISK_INDICATORS_IN_NOTES",
+  "stance": "AFFIRMS",
+  "relevance_category": "SUPPORTING_RISK",
+  "exception_type": null,
+  "retrieved_by_tool": "find_supporting_evidence",
+  "retrieval_reason": "Do notes indicate premature discharge, unresolved complaints or repeats without indication? (requirement RISK_INDICATORS_IN_NOTES is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 9,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000045",
+    "title": "Catatan masuk - EPI-000032",
+    "text": "Pasien datang sendiri dari poli bedah dan tidak dalam kondisi gawat darurat. Kemerahan dan bengkak tungkai kanan dengan keluhan serupa seperti perawatan sebelumnya, pasien meminta dirawat kembali.",
+    "highlight": {
+      "char_start": 77,
+      "char_end": 196
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

@@ -1,0 +1,341 @@
+{
+  "contract_version": "1",
+  "dataset_version": "v0.1.0",
+  "corpus_version": "pc-0.1.1",
+  "generated_by": "uv run episight export-contract (apps/api)",
+  "investigation_mode": "FULL_RULE_PLANNER",
+  "note": "Official synthetic v0.1.0; real deterministic engine output. Demo playback is not a new API run.",
+  "cases_list": "cases.list.json",
+  "cases": {
+    "CASE-FR-4cf97d96": {
+      "detail": "cases/CASE-FR-4cf97d96.detail.json",
+      "episodes": "cases/CASE-FR-4cf97d96.episodes.json",
+      "investigation_running": "cases/CASE-FR-4cf97d96.investigation.running.json",
+      "investigation_completed": "cases/CASE-FR-4cf97d96.investigation.completed.json",
+      "evidence": "cases/CASE-FR-4cf97d96.evidence.json",
+      "brief": "cases/CASE-FR-4cf97d96.brief.json",
+      "evidence_details": [
+        "evidence/EV-1919bf8b94c71c3e.json",
+        "evidence/EV-b0c919d22898ae9b.json",
+        "evidence/EV-318de79e1f5ebd07.json",
+        "evidence/EV-71d0c0a6d0c595b8.json"
+      ]
+    },
+    "CASE-FR-f78c5336": {
+      "detail": "cases/CASE-FR-f78c5336.detail.json",
+      "episodes": "cases/CASE-FR-f78c5336.episodes.json",
+      "investigation_running": "cases/CASE-FR-f78c5336.investigation.running.json",
+      "investigation_completed": "cases/CASE-FR-f78c5336.investigation.completed.json",
+      "evidence": "cases/CASE-FR-f78c5336.evidence.json",
+      "brief": "cases/CASE-FR-f78c5336.brief.json",
+      "evidence_details": [
+        "evidence/EV-8211f89fcf8a3239.json",
+        "evidence/EV-4146a027682a59ac.json",
+        "evidence/EV-e366a77939728c38.json",
+        "evidence/EV-7974badff8d3d1f4.json",
+        "evidence/EV-9beac84926fc37c3.json",
+        "evidence/EV-1b50a85c02c03981.json",
+        "evidence/EV-2b5d5e8a0a12628c.json"
+      ]
+    },
+    "CASE-RA-608764ca": {
+      "detail": "cases/CASE-RA-608764ca.detail.json",
+      "episodes": "cases/CASE-RA-608764ca.episodes.json",
+      "investigation_running": "cases/CASE-RA-608764ca.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-608764ca.investigation.completed.json",
+      "evidence": "cases/CASE-RA-608764ca.evidence.json",
+      "brief": "cases/CASE-RA-608764ca.brief.json",
+      "evidence_details": [
+        "evidence/EV-ae08ed09bcf89623.json",
+        "evidence/EV-c18d229bcd149e4a.json",
+        "evidence/EV-3da865f6be584bb6.json",
+        "evidence/EV-8b9d16a009180d56.json",
+        "evidence/EV-9147c68665b2c1be.json",
+        "evidence/EV-e850a2a760b55d22.json"
+      ]
+    },
+    "CASE-RA-5bfa9633": {
+      "detail": "cases/CASE-RA-5bfa9633.detail.json",
+      "episodes": "cases/CASE-RA-5bfa9633.episodes.json",
+      "investigation_running": "cases/CASE-RA-5bfa9633.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-5bfa9633.investigation.completed.json",
+      "evidence": "cases/CASE-RA-5bfa9633.evidence.json",
+      "brief": "cases/CASE-RA-5bfa9633.brief.json",
+      "evidence_details": [
+        "evidence/EV-c07fc6a89d11afaa.json",
+        "evidence/EV-57bfed865cf4edcc.json",
+        "evidence/EV-7975b73b7d4c4c2f.json",
+        "evidence/EV-1d3781c357e9a7c0.json",
+        "evidence/EV-8341229c51f0b0ab.json"
+      ]
+    },
+    "CASE-RA-5cea8ff0": {
+      "detail": "cases/CASE-RA-5cea8ff0.detail.json",
+      "episodes": "cases/CASE-RA-5cea8ff0.episodes.json",
+      "investigation_running": "cases/CASE-RA-5cea8ff0.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-5cea8ff0.investigation.completed.json",
+      "evidence": "cases/CASE-RA-5cea8ff0.evidence.json",
+      "brief": "cases/CASE-RA-5cea8ff0.brief.json",
+      "evidence_details": [
+        "evidence/EV-b73e4d49ad8665b5.json",
+        "evidence/EV-d09219c67c62db81.json",
+        "evidence/EV-23cfc1a50fdf41b1.json",
+        "evidence/EV-23eeabf6a94a206a.json",
+        "evidence/EV-7e6ec71898820cfc.json",
+        "evidence/EV-9ed43cde32cff6fd.json",
+        "evidence/EV-c7e55eae123c4607.json",
+        "evidence/EV-f8f7561a5bb97423.json"
+      ]
+    },
+    "CASE-RA-2110d2a5": {
+      "detail": "cases/CASE-RA-2110d2a5.detail.json",
+      "episodes": "cases/CASE-RA-2110d2a5.episodes.json",
+      "investigation_running": "cases/CASE-RA-2110d2a5.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-2110d2a5.investigation.completed.json",
+      "evidence": "cases/CASE-RA-2110d2a5.evidence.json",
+      "brief": "cases/CASE-RA-2110d2a5.brief.json",
+      "evidence_details": [
+        "evidence/EV-9f5a9f5e9c9039b0.json",
+        "evidence/EV-8ec203a9ff62814b.json",
+        "evidence/EV-62d158d778d4df2d.json",
+        "evidence/EV-89849e87b8c25357.json"
+      ]
+    },
+    "CASE-RA-609280ef": {
+      "detail": "cases/CASE-RA-609280ef.detail.json",
+      "episodes": "cases/CASE-RA-609280ef.episodes.json",
+      "investigation_running": "cases/CASE-RA-609280ef.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-609280ef.investigation.completed.json",
+      "evidence": "cases/CASE-RA-609280ef.evidence.json",
+      "brief": "cases/CASE-RA-609280ef.brief.json",
+      "evidence_details": [
+        "evidence/EV-fcfe0959181e0d58.json",
+        "evidence/EV-79b1b8c21ab59d49.json",
+        "evidence/EV-2dcb60315be030dd.json",
+        "evidence/EV-cb9e3606b7ea5968.json"
+      ]
+    },
+    "CASE-RA-49e2e3ed": {
+      "detail": "cases/CASE-RA-49e2e3ed.detail.json",
+      "episodes": "cases/CASE-RA-49e2e3ed.episodes.json",
+      "investigation_running": "cases/CASE-RA-49e2e3ed.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-49e2e3ed.investigation.completed.json",
+      "evidence": "cases/CASE-RA-49e2e3ed.evidence.json",
+      "brief": "cases/CASE-RA-49e2e3ed.brief.json",
+      "evidence_details": [
+        "evidence/EV-1b5e9539d8763900.json",
+        "evidence/EV-152fc9abaa66bbd2.json",
+        "evidence/EV-9a8d534d0fd8188b.json",
+        "evidence/EV-cbccc0bd3640d81e.json",
+        "evidence/EV-2028d1e5407eece5.json",
+        "evidence/EV-9c9ef99ae1996260.json"
+      ]
+    },
+    "CASE-RA-6b3ce4c9": {
+      "detail": "cases/CASE-RA-6b3ce4c9.detail.json",
+      "episodes": "cases/CASE-RA-6b3ce4c9.episodes.json",
+      "investigation_running": "cases/CASE-RA-6b3ce4c9.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-6b3ce4c9.investigation.completed.json",
+      "evidence": "cases/CASE-RA-6b3ce4c9.evidence.json",
+      "brief": "cases/CASE-RA-6b3ce4c9.brief.json",
+      "evidence_details": [
+        "evidence/EV-6a9a9ae95b44663f.json",
+        "evidence/EV-38f6bb8c30a988d5.json",
+        "evidence/EV-c4d20f87ab16a064.json",
+        "evidence/EV-5f0a09947fe4740b.json",
+        "evidence/EV-8a6a5aef6ee99afc.json"
+      ]
+    },
+    "CASE-RA-1ed0875b": {
+      "detail": "cases/CASE-RA-1ed0875b.detail.json",
+      "episodes": "cases/CASE-RA-1ed0875b.episodes.json",
+      "investigation_running": "cases/CASE-RA-1ed0875b.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-1ed0875b.investigation.completed.json",
+      "evidence": "cases/CASE-RA-1ed0875b.evidence.json",
+      "brief": "cases/CASE-RA-1ed0875b.brief.json",
+      "evidence_details": [
+        "evidence/EV-c9e6b6f797b75770.json",
+        "evidence/EV-466c6372abb8565c.json",
+        "evidence/EV-834ba4c06acd8ae2.json",
+        "evidence/EV-a306986e3a50cfe1.json"
+      ]
+    },
+    "CASE-RA-d7840713": {
+      "detail": "cases/CASE-RA-d7840713.detail.json",
+      "episodes": "cases/CASE-RA-d7840713.episodes.json",
+      "investigation_running": "cases/CASE-RA-d7840713.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-d7840713.investigation.completed.json",
+      "evidence": "cases/CASE-RA-d7840713.evidence.json",
+      "brief": "cases/CASE-RA-d7840713.brief.json",
+      "evidence_details": [
+        "evidence/EV-bfc2059355da35f4.json",
+        "evidence/EV-8f60433030120d7e.json",
+        "evidence/EV-ca866f370e479d78.json",
+        "evidence/EV-11c9eb6536c57ea1.json",
+        "evidence/EV-5d923e336258d65c.json",
+        "evidence/EV-b1a59eda66401c51.json",
+        "evidence/EV-af36aae65b1a5300.json",
+        "evidence/EV-ece9bdc137fc8175.json",
+        "evidence/EV-4f8228a85bf46617.json",
+        "evidence/EV-cd90c13b4e70c109.json"
+      ]
+    },
+    "CASE-FR-2ce8ff66": {
+      "detail": "cases/CASE-FR-2ce8ff66.detail.json",
+      "episodes": "cases/CASE-FR-2ce8ff66.episodes.json",
+      "investigation_running": "cases/CASE-FR-2ce8ff66.investigation.running.json",
+      "investigation_completed": "cases/CASE-FR-2ce8ff66.investigation.completed.json",
+      "evidence": "cases/CASE-FR-2ce8ff66.evidence.json",
+      "brief": "cases/CASE-FR-2ce8ff66.brief.json",
+      "evidence_details": [
+        "evidence/EV-41c05230b6e0dd0b.json",
+        "evidence/EV-987fc0ed97252d3f.json",
+        "evidence/EV-2e282e769f70cf93.json",
+        "evidence/EV-83cf2d69b8323706.json"
+      ]
+    },
+    "CASE-RA-79ad8dec": {
+      "detail": "cases/CASE-RA-79ad8dec.detail.json",
+      "episodes": "cases/CASE-RA-79ad8dec.episodes.json",
+      "investigation_running": "cases/CASE-RA-79ad8dec.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-79ad8dec.investigation.completed.json",
+      "evidence": "cases/CASE-RA-79ad8dec.evidence.json",
+      "brief": "cases/CASE-RA-79ad8dec.brief.json",
+      "evidence_details": [
+        "evidence/EV-5268d19549263379.json",
+        "evidence/EV-47d415a63fef3ef6.json",
+        "evidence/EV-c4a0b3f2d1f6e98d.json",
+        "evidence/EV-57477ea9a8750da9.json",
+        "evidence/EV-03342e7ade938d76.json",
+        "evidence/EV-17abbd75bdbc6622.json",
+        "evidence/EV-aa91fed7522b8ab1.json"
+      ]
+    },
+    "CASE-FR-570a7ff4": {
+      "detail": "cases/CASE-FR-570a7ff4.detail.json",
+      "episodes": "cases/CASE-FR-570a7ff4.episodes.json",
+      "investigation_running": "cases/CASE-FR-570a7ff4.investigation.running.json",
+      "investigation_completed": "cases/CASE-FR-570a7ff4.investigation.completed.json",
+      "evidence": "cases/CASE-FR-570a7ff4.evidence.json",
+      "brief": "cases/CASE-FR-570a7ff4.brief.json",
+      "evidence_details": [
+        "evidence/EV-9e61788ac93dc28e.json",
+        "evidence/EV-438ce0ac6a5344fe.json",
+        "evidence/EV-922a1abe06a427af.json",
+        "evidence/EV-cadb28485fa31c0b.json",
+        "evidence/EV-de9bc0f2d2eb1759.json",
+        "evidence/EV-dec06b986d405587.json",
+        "evidence/EV-1a04835915206bdd.json",
+        "evidence/EV-d1b31423a4a09008.json",
+        "evidence/EV-679813e7e3b4d52f.json",
+        "evidence/EV-a7cd725b7ed3dff0.json"
+      ]
+    },
+    "CASE-FR-83f41f66": {
+      "detail": "cases/CASE-FR-83f41f66.detail.json",
+      "episodes": "cases/CASE-FR-83f41f66.episodes.json",
+      "investigation_running": "cases/CASE-FR-83f41f66.investigation.running.json",
+      "investigation_completed": "cases/CASE-FR-83f41f66.investigation.completed.json",
+      "evidence": "cases/CASE-FR-83f41f66.evidence.json",
+      "brief": "cases/CASE-FR-83f41f66.brief.json",
+      "evidence_details": [
+        "evidence/EV-b448538e66c42721.json",
+        "evidence/EV-cf4216b14041b151.json",
+        "evidence/EV-58b56b29035e4bc0.json",
+        "evidence/EV-935e2a37b659cdb8.json",
+        "evidence/EV-132beb092ec95ef4.json",
+        "evidence/EV-977921a9c4a6803d.json",
+        "evidence/EV-0247f8759759c58a.json",
+        "evidence/EV-2847c5caf709ec44.json"
+      ]
+    },
+    "CASE-RA-56f37782": {
+      "detail": "cases/CASE-RA-56f37782.detail.json",
+      "episodes": "cases/CASE-RA-56f37782.episodes.json",
+      "investigation_running": "cases/CASE-RA-56f37782.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-56f37782.investigation.completed.json",
+      "evidence": "cases/CASE-RA-56f37782.evidence.json",
+      "brief": "cases/CASE-RA-56f37782.brief.json",
+      "evidence_details": [
+        "evidence/EV-c2a5293f695e50b7.json",
+        "evidence/EV-a2107f5e4eceb5ae.json",
+        "evidence/EV-3f74e7478da74f91.json",
+        "evidence/EV-4fb7224a780a77d3.json",
+        "evidence/EV-e00803c6520acba1.json",
+        "evidence/EV-3477144d763db433.json",
+        "evidence/EV-842f70e8215d52c7.json"
+      ]
+    },
+    "CASE-FR-d1179ea9": {
+      "detail": "cases/CASE-FR-d1179ea9.detail.json",
+      "episodes": "cases/CASE-FR-d1179ea9.episodes.json",
+      "investigation_running": "cases/CASE-FR-d1179ea9.investigation.running.json",
+      "investigation_completed": "cases/CASE-FR-d1179ea9.investigation.completed.json",
+      "evidence": "cases/CASE-FR-d1179ea9.evidence.json",
+      "brief": "cases/CASE-FR-d1179ea9.brief.json",
+      "evidence_details": [
+        "evidence/EV-f4f8dad372e84c3c.json",
+        "evidence/EV-60dc5c519a8de181.json",
+        "evidence/EV-d6707d5add133efc.json",
+        "evidence/EV-8109ce7e2cfc7c32.json",
+        "evidence/EV-94b9d3c1f5259619.json",
+        "evidence/EV-f52a8f36063f009f.json"
+      ]
+    },
+    "CASE-RA-0bbfc334": {
+      "detail": "cases/CASE-RA-0bbfc334.detail.json",
+      "episodes": "cases/CASE-RA-0bbfc334.episodes.json",
+      "investigation_running": "cases/CASE-RA-0bbfc334.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-0bbfc334.investigation.completed.json",
+      "evidence": "cases/CASE-RA-0bbfc334.evidence.json",
+      "brief": "cases/CASE-RA-0bbfc334.brief.json",
+      "evidence_details": [
+        "evidence/EV-2e5843f545b36fe7.json",
+        "evidence/EV-a7370fbd94538854.json",
+        "evidence/EV-8b5f7d9439430344.json",
+        "evidence/EV-f7759ca96bb49f93.json",
+        "evidence/EV-9915db8b84126ffc.json",
+        "evidence/EV-bde32c1757b354a0.json",
+        "evidence/EV-c2fe4fe21da7b76e.json",
+        "evidence/EV-8791834ff58cfc0b.json",
+        "evidence/EV-688ba3b2b3adbc67.json",
+        "evidence/EV-e28c333743543d4e.json",
+        "evidence/EV-3b80e5d2c686946e.json",
+        "evidence/EV-5f494510ea75216c.json",
+        "evidence/EV-e73cc56cda0ff762.json"
+      ]
+    },
+    "CASE-FR-0ab8ad0b": {
+      "detail": "cases/CASE-FR-0ab8ad0b.detail.json",
+      "episodes": "cases/CASE-FR-0ab8ad0b.episodes.json",
+      "investigation_running": "cases/CASE-FR-0ab8ad0b.investigation.running.json",
+      "investigation_completed": "cases/CASE-FR-0ab8ad0b.investigation.completed.json",
+      "evidence": "cases/CASE-FR-0ab8ad0b.evidence.json",
+      "brief": "cases/CASE-FR-0ab8ad0b.brief.json",
+      "evidence_details": [
+        "evidence/EV-4398cc89ba89fdcb.json",
+        "evidence/EV-69ac9ae9798a5cd3.json",
+        "evidence/EV-5a14e6231cae5828.json",
+        "evidence/EV-39e76d280ac7ba47.json",
+        "evidence/EV-856680b76bda5696.json"
+      ]
+    },
+    "CASE-RA-96cfb145": {
+      "detail": "cases/CASE-RA-96cfb145.detail.json",
+      "episodes": "cases/CASE-RA-96cfb145.episodes.json",
+      "investigation_running": "cases/CASE-RA-96cfb145.investigation.running.json",
+      "investigation_completed": "cases/CASE-RA-96cfb145.investigation.completed.json",
+      "evidence": "cases/CASE-RA-96cfb145.evidence.json",
+      "brief": "cases/CASE-RA-96cfb145.brief.json",
+      "evidence_details": [
+        "evidence/EV-d1f0a0b0eec5179d.json",
+        "evidence/EV-3aa4ded85f3d50e8.json",
+        "evidence/EV-fb3acf477f7cb2db.json",
+        "evidence/EV-3709a755078b4b80.json",
+        "evidence/EV-c8c03d796136443d.json",
+        "evidence/EV-402a95f3c90e5239.json",
+        "evidence/EV-c35e7d6732aa0c06.json"
+      ]
+    }
+  }
+}

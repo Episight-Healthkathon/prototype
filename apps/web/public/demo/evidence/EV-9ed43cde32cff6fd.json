@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-9ed43cde32cff6fd",
+  "case_id": "CASE-RA-5cea8ff0",
+  "run_id": "RUN-FIXTURE-RA-5cea8ff0",
+  "episode_id": "EPI-000036",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000051",
+  "source_title": "Catatan masuk - EPI-000036",
+  "source_excerpt": "Keluhan berulang seperti perawatan lalu.",
+  "field_path": null,
+  "char_start": 59,
+  "char_end": 99,
+  "requirement_key": "RISK_INDICATORS_IN_NOTES",
+  "stance": "AFFIRMS",
+  "relevance_category": "SUPPORTING_RISK",
+  "exception_type": null,
+  "retrieved_by_tool": "find_supporting_evidence",
+  "retrieval_reason": "Do notes indicate premature discharge, unresolved complaints or repeats without indication? (requirement RISK_INDICATORS_IN_NOTES is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 9,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000051",
+    "title": "Catatan masuk - EPI-000036",
+    "text": "Pasien dirawat kembali dengan lemas, natrium serum rendah. Keluhan berulang seperti perawatan lalu.",
+    "highlight": {
+      "char_start": 59,
+      "char_end": 99
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

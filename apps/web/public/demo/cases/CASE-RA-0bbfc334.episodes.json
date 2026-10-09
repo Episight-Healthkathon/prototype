@@ -1,0 +1,170 @@
+{
+  "case_id": "CASE-RA-0bbfc334",
+  "patient_id": "PAT-000001",
+  "episodes": [
+    {
+      "episode_id": "EPI-000001",
+      "role": "RELATED",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0001",
+        "name": "RS Sintetis Nusantara 01",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-02-16T09:30:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "I50.0",
+        "label": "Congestive heart failure"
+      },
+      "secondary_diagnoses": [
+        {
+          "code": "I10",
+          "label": "Essential (primary) hypertension"
+        }
+      ],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000001",
+        "inacbg_code": "I-4-12-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000001",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Kunjungan poli jantung",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "SAME_PROVIDER",
+        "WITHIN_90_DAYS"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000002",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0001",
+        "name": "RS Sintetis Nusantara 01",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-03-02T09:00:00+07:00",
+      "end_at": "2026-03-06T10:00:00+07:00",
+      "length_of_stay_days": 4,
+      "interval_from_previous_days": 14,
+      "primary_diagnosis": {
+        "code": "I50.0",
+        "label": "Congestive heart failure"
+      },
+      "secondary_diagnoses": [
+        {
+          "code": "I10",
+          "label": "Essential (primary) hypertension"
+        }
+      ],
+      "procedures": [
+        {
+          "code": "89.52",
+          "label": "Electrocardiogram",
+          "performed_at": null
+        },
+        {
+          "code": "87.44",
+          "label": "Routine chest x-ray",
+          "performed_at": null
+        }
+      ],
+      "claim": {
+        "claim_id": "CLM-000002",
+        "inacbg_code": "I-4-12-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000002",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000003",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0001",
+        "name": "RS Sintetis Nusantara 01",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-03-12T22:10:00+07:00",
+      "end_at": "2026-03-17T10:00:00+07:00",
+      "length_of_stay_days": 5,
+      "interval_from_previous_days": 6,
+      "primary_diagnosis": {
+        "code": "I50.0",
+        "label": "Congestive heart failure"
+      },
+      "secondary_diagnoses": [
+        {
+          "code": "I10",
+          "label": "Essential (primary) hypertension"
+        }
+      ],
+      "procedures": [
+        {
+          "code": "89.52",
+          "label": "Electrocardiogram",
+          "performed_at": null
+        }
+      ],
+      "claim": {
+        "claim_id": "CLM-000003",
+        "inacbg_code": "I-4-12-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000003",
+          "note_type": "TRIAGE",
+          "title": "Catatan triase IGD",
+          "availability": "AVAILABLE"
+        },
+        {
+          "note_id": "NOTE-000004",
+          "note_type": "PROGRESS",
+          "title": "Catatan perkembangan",
+          "availability": "AVAILABLE"
+        },
+        {
+          "note_id": "NOTE-000005",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_30_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-8b9d16a009180d56",
+  "case_id": "CASE-RA-608764ca",
+  "run_id": "RUN-FIXTURE-RA-608764ca",
+  "episode_id": "EPI-000012",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000020",
+  "source_title": "Ringkasan pulang - EPI-000012",
+  "source_excerpt": "Saat masuk tidak dalam kondisi gawat darurat.",
+  "field_path": null,
+  "char_start": 132,
+  "char_end": 177,
+  "requirement_key": "EMERGENCY_CONTEXT",
+  "stance": "NEGATES",
+  "relevance_category": "SUPPORTING_RISK",
+  "exception_type": "EMERGENCY",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is there documented emergency context for the repeated care? (requirement EMERGENCY_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 5,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000020",
+    "title": "Ringkasan pulang - EPI-000012",
+    "text": "Ringkasan pulang. Pasien menjalani admisi elektif untuk evaluasi infeksi saluran kemih berulang dan pemberian antibiotik intravena. Saat masuk tidak dalam kondisi gawat darurat.",
+    "highlight": {
+      "char_start": 132,
+      "char_end": 177
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

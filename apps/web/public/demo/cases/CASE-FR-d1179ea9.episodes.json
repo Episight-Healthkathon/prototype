@@ -1,0 +1,85 @@
+{
+  "case_id": "CASE-FR-d1179ea9",
+  "patient_id": "PAT-000008",
+  "episodes": [
+    {
+      "episode_id": "EPI-000017",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0006",
+        "name": "RS Sintetis Nusantara 06",
+        "hospital_class": "D"
+      },
+      "start_at": "2026-03-10T10:00:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "J45.9",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000017",
+        "inacbg_code": "Q-5-18-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000026",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Kunjungan poli paru",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000018",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0006",
+        "name": "RS Sintetis Nusantara 06",
+        "hospital_class": "D"
+      },
+      "start_at": "2026-03-14T02:40:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": 4,
+      "primary_diagnosis": {
+        "code": "J45.9",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000018",
+        "inacbg_code": "Q-5-18-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000027",
+          "note_type": "TRIAGE",
+          "title": "Catatan IGD",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_7_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

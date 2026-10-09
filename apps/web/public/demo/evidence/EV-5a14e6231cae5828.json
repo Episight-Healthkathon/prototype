@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-5a14e6231cae5828",
+  "case_id": "CASE-FR-0ab8ad0b",
+  "run_id": "RUN-FIXTURE-FR-0ab8ad0b",
+  "episode_id": "EPI-000016",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000025",
+  "source_title": "Kontrol poli penyakit dalam - EPI-000016",
+  "source_excerpt": "Pasien kembali membawa hasil laboratorium yang diminta: feritin dan saturasi transferin rendah.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 95,
+  "requirement_key": "SUPPORTING_EXAM_FOLLOWUP_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "SUPPORTING_EXAM_FOLLOWUP",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Was the repeat visit a consultation of supporting-examination results? (requirement SUPPORTING_EXAM_FOLLOWUP_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 6,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000025",
+    "title": "Kontrol poli penyakit dalam - EPI-000016",
+    "text": "Pasien kembali membawa hasil laboratorium yang diminta: feritin dan saturasi transferin rendah. Diagnosis anemia defisiensi besi, terapi besi oral dimulai.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 95
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

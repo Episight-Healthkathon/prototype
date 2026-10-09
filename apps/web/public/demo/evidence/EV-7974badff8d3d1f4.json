@@ -1,0 +1,44 @@
+{
+  "evidence_id": "EV-7974badff8d3d1f4",
+  "case_id": "CASE-FR-f78c5336",
+  "run_id": "RUN-FIXTURE-FR-f78c5336",
+  "episode_id": "EPI-000041",
+  "source_type": "EPISODE_RECORD",
+  "source_id": "EPI-000041",
+  "source_title": "Episode record EPI-000041",
+  "source_excerpt": "39.95 (EPI-000040) -> 39.95 (EPI-000041): repeated procedure (39.95)",
+  "field_path": "episodes.procedures",
+  "char_start": null,
+  "char_end": null,
+  "requirement_key": "PROCEDURE_RELATIONSHIP",
+  "stance": "AFFIRMS",
+  "relevance_category": "SUPPORTING_RISK",
+  "exception_type": null,
+  "retrieved_by_tool": "compare_procedures",
+  "retrieval_reason": "Are procedures repeated or related across episodes? (requirement PROCEDURE_RELATIONSHIP is open)",
+  "extraction_method": "STRUCTURED_FIELD",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 3,
+  "policy_version": null,
+  "source": {
+    "source_type": "EPISODE_RECORD",
+    "source_id": "EPI-000041",
+    "title": "Episode record EPI-000041",
+    "text": null,
+    "highlight": null,
+    "availability": null,
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": "episodes.procedures",
+    "value": [
+      {
+        "code": "39.95",
+        "performed_at": null
+      }
+    ]
+  }
+}

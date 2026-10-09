@@ -1,0 +1,44 @@
+{
+  "evidence_id": "EV-57477ea9a8750da9",
+  "case_id": "CASE-RA-79ad8dec",
+  "run_id": "RUN-FIXTURE-RA-79ad8dec",
+  "episode_id": "EPI-000024",
+  "source_type": "EPISODE_RECORD",
+  "source_id": "EPI-000024",
+  "source_title": "Episode record EPI-000024",
+  "source_excerpt": "88.56 (EPI-000023) -> 36.07 (EPI-000024): related procedure (Insertion of drug-eluting coronary artery stent(s))",
+  "field_path": "episodes.procedures",
+  "char_start": null,
+  "char_end": null,
+  "requirement_key": "PROCEDURE_RELATIONSHIP",
+  "stance": "AFFIRMS",
+  "relevance_category": "SUPPORTING_RISK",
+  "exception_type": null,
+  "retrieved_by_tool": "compare_procedures",
+  "retrieval_reason": "Are procedures repeated or related across episodes? (requirement PROCEDURE_RELATIONSHIP is open)",
+  "extraction_method": "STRUCTURED_FIELD",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 3,
+  "policy_version": null,
+  "source": {
+    "source_type": "EPISODE_RECORD",
+    "source_id": "EPI-000024",
+    "title": "Episode record EPI-000024",
+    "text": null,
+    "highlight": null,
+    "availability": null,
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": "episodes.procedures",
+    "value": [
+      {
+        "code": "36.07",
+        "performed_at": "2026-05-03T09:30:00+07:00"
+      }
+    ]
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "case_id": "CASE-FR-0ab8ad0b",
+  "patient_id": "PAT-000007",
+  "episodes": [
+    {
+      "episode_id": "EPI-000015",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0005",
+        "name": "RS Sintetis Nusantara 05",
+        "hospital_class": "C"
+      },
+      "start_at": "2026-02-11T09:00:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "D50.9",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000015",
+        "inacbg_code": "Q-5-30-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000024",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Kunjungan poli penyakit dalam",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000016",
+      "role": "ANCHOR",
+      "encounter_type": "OUTPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0005",
+        "name": "RS Sintetis Nusantara 05",
+        "hospital_class": "C"
+      },
+      "start_at": "2026-02-18T09:00:00+07:00",
+      "end_at": null,
+      "length_of_stay_days": null,
+      "interval_from_previous_days": 7,
+      "primary_diagnosis": {
+        "code": "D50.9",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000016",
+        "inacbg_code": "Q-5-30-0",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000025",
+          "note_type": "OUTPATIENT_VISIT",
+          "title": "Kontrol poli penyakit dalam",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_7_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

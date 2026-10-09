@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-9beac84926fc37c3",
+  "case_id": "CASE-FR-f78c5336",
+  "run_id": "RUN-FIXTURE-FR-f78c5336",
+  "episode_id": "EPI-000041",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000059",
+  "source_title": "Catatan hemodialisis - EPI-000041",
+  "source_excerpt": "Hemodialisis rutin pada pasien CKD stadium 5, jadwal dua kali per minggu.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 73,
+  "requirement_key": "CHRONIC_CONDITION_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "CHRONIC",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is a relevant chronic condition documented? (requirement CHRONIC_CONDITION_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 7,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000059",
+    "title": "Catatan hemodialisis - EPI-000041",
+    "text": "Hemodialisis rutin pada pasien CKD stadium 5, jadwal dua kali per minggu. Ultrafiltrasi 2 liter, stabil.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 73
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

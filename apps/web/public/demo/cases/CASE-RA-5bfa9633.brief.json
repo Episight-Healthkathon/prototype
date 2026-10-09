@@ -1,0 +1,200 @@
+{
+  "brief_id": "BRF-FIXTURE-RA-5bfa9633",
+  "case_id": "CASE-RA-5bfa9633",
+  "run_id": "RUN-FIXTURE-RA-5bfa9633",
+  "generated_at": "2026-10-02T09:00:00+07:00",
+  "generator_version": "brief-template-1",
+  "progress_status": "BRIEF_READY",
+  "outcome": "EVIDENCE_SUFFICIENT",
+  "stop_reason": "SUFFICIENT_EVIDENCE",
+  "case_summary": [
+    {
+      "statement_id": "S1",
+      "text": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge: 2 episodes (30 d) at RS Sintetis Nusantara 05.",
+      "evidence_ids": [
+        "EV-c07fc6a89d11afaa"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "S2",
+      "text": "Explaining context documented: emergency context.",
+      "evidence_ids": [
+        "EV-7975b73b7d4c4c2f"
+      ],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "risk_signal": {
+    "rule_id": "READMISSION_30D_SAME_PROVIDER_SAME_DX",
+    "rule_version": "1",
+    "description": "Repeated inpatient stay at the same FKRTL with the same primary diagnosis within 30 days of discharge",
+    "params": {
+      "threshold_days": 30,
+      "diagnosis_match": "EXACT"
+    },
+    "pairs": [
+      {
+        "from_episode_id": "EPI-000038",
+        "to_episode_id": "EPI-000039",
+        "interval_days": 30,
+        "matched": {
+          "same_patient": true,
+          "same_provider": true,
+          "same_primary_diagnosis": true,
+          "encounter_type": "INPATIENT"
+        }
+      }
+    ],
+    "disclaimer": "A risk signal starts an investigation. It is not a finding."
+  },
+  "episode_timeline": [
+    {
+      "episode_id": "EPI-000038",
+      "label": "Index inpatient stay: I20.0",
+      "start_at": "2026-06-20T09:00:00+07:00",
+      "end_at": "2026-06-24T10:00:00+07:00",
+      "interval_from_previous_days": null
+    },
+    {
+      "episode_id": "EPI-000039",
+      "label": "Repeat inpatient stay: I20.0",
+      "start_at": "2026-07-24T05:50:00+07:00",
+      "end_at": "2026-07-28T10:00:00+07:00",
+      "interval_from_previous_days": 30
+    }
+  ],
+  "supporting_risk_evidence": [
+    {
+      "statement_id": "R5",
+      "text": "Episode chain: “EPI-000039 started 30 day(s) after discharge of EPI-000038; same patient, same FKRTL, same primary diagnosis” (READMISSION_30D_SAME_PROVIDER_SAME_DX)",
+      "evidence_ids": [
+        "EV-c07fc6a89d11afaa"
+      ],
+      "requirement_keys": [
+        "EPISODE_RELATEDNESS"
+      ],
+      "material": true
+    },
+    {
+      "statement_id": "R6",
+      "text": "Diagnosis: “I20.0 (EPI-000038) vs I20.0 (EPI-000039)” (EPI-000039)",
+      "evidence_ids": [
+        "EV-57bfed865cf4edcc"
+      ],
+      "requirement_keys": [
+        "DIAGNOSIS_CONSISTENCY"
+      ],
+      "material": true
+    }
+  ],
+  "explaining_context_evidence": [
+    {
+      "statement_id": "C7",
+      "text": "Emergency context: “Datang ke IGD menjelang subuh dengan nyeri dada berat saat istirahat, berkeringat dingin.” (NOTE-000056)",
+      "evidence_ids": [
+        "EV-7975b73b7d4c4c2f"
+      ],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "policy_references": [
+    {
+      "evidence_id": "EV-1d3781c357e9a7c0",
+      "policy_id": "POL-PMK26-2021-READMISI-01",
+      "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+      "section": "Readmisi: definisi",
+      "version": "Permenkes 26/2021",
+      "excerpt": "Readmisi adalah kunjungan rawat inap berulang di FKRTL yang sama dengan diagnosis utama yang sama dari episode rawat inap sebelumnya dalam waktu kurang atau sama dengan 30 hari."
+    },
+    {
+      "evidence_id": "EV-8341229c51f0b0ab",
+      "policy_id": "POL-PMK26-2021-READMISI-02",
+      "document_title": "Peraturan Menteri Kesehatan Nomor 26 Tahun 2021 tentang Pedoman Indonesian Case Base Groups (INA-CBG) dalam Pelaksanaan Jaminan Kesehatan",
+      "section": "Readmisi: pengecualian",
+      "version": "Permenkes 26/2021",
+      "excerpt": "Kondisi yang dikecualikan dari readmisi yaitu sebagai berikut: a. dalam kondisi kegawatdaruratan sesuai regulasi yang berlaku; b. penyakit kronis; c. tindakan/prosedur/post prosedur yang terjadwal oleh dokter/fasilitas kesehatan sesuai indikasi medis dan tidak dapat dilakukan dalam satu episode; atau d. kunjungan pada FKRTL yang berbeda atau kelas FKRTL yang lebih tinggi."
+    }
+  ],
+  "remaining_gaps": [
+    {
+      "key": "PROCEDURE_RELATIONSHIP",
+      "question": "Are procedures repeated or related across episodes?",
+      "state": "NOT_FOUND",
+      "explanation": "No procedures recorded in the anchor episodes."
+    },
+    {
+      "key": "SCHEDULED_PROCEDURE_CONTEXT",
+      "question": "Is a scheduled or staged procedure documented?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 3 available document(s)."
+    },
+    {
+      "key": "CHRONIC_CONDITION_CONTEXT",
+      "question": "Is a relevant chronic condition documented?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 3 available document(s)."
+    },
+    {
+      "key": "CLINICAL_JUSTIFICATION",
+      "question": "Is there a documented clinical justification for the repeated care?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 2 available document(s)."
+    },
+    {
+      "key": "RISK_INDICATORS_IN_NOTES",
+      "question": "Do notes indicate premature discharge, unresolved complaints or repeats without indication?",
+      "state": "NOT_FOUND",
+      "explanation": "Not found in available sources; read all 3 available document(s)."
+    }
+  ],
+  "conflicts": [],
+  "uncertainty": [
+    {
+      "statement_id": "U3",
+      "text": "Provider context not assessed: same provider and class of care across episodes, no referral.",
+      "evidence_ids": [],
+      "requirement_keys": [
+        "PROVIDER_CONTEXT"
+      ],
+      "material": false
+    }
+  ],
+  "suggested_next_review": [
+    {
+      "statement_id": "N4",
+      "text": "Verify the documented emergency context against the source records.",
+      "evidence_ids": [
+        "EV-7975b73b7d4c4c2f"
+      ],
+      "requirement_keys": [
+        "EMERGENCY_CONTEXT"
+      ],
+      "material": true
+    }
+  ],
+  "review_status": "PENDING_HUMAN_REVIEW",
+  "human_decision_notice": "EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions. The reviewer decides.",
+  "traceability": {
+    "material_statements": 6,
+    "with_evidence": 6
+  },
+  "provenance": {
+    "evidence_ids": [
+      "EV-1d3781c357e9a7c0",
+      "EV-57bfed865cf4edcc",
+      "EV-7975b73b7d4c4c2f",
+      "EV-8341229c51f0b0ab",
+      "EV-c07fc6a89d11afaa"
+    ]
+  }
+}

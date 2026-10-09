@@ -17,6 +17,20 @@ Design docs: [architecture](docs/architecture.md) · [decisions](docs/decisions.
 | `data/` | Person 3 | Official synthetic dataset, policy corpus, ground truth (never ingested) |
 | `evaluation/` | Person 3 | Benchmark harness and metrics |
 
+## Frontend quick start
+
+```powershell
+pnpm install
+pnpm dev
+```
+
+Open <http://127.0.0.1:3001>. Includes the landing page, case queue, episode timeline,
+investigation workspace, reviewer brief and source drawer. Choose **API lokal** for
+the real backend or **Demo offline** for official synthetic engine snapshots.
+
+See [frontend setup](apps/web/README.md) and [Person 2 handoff](docs/PERSON_2_HANDOFF.md)
+for the isolated demo database, golden scenarios and checks.
+
 ## Backend quick start
 
 Prerequisites: Docker, [uv](https://docs.astral.sh/uv/), and Node + pnpm (only for regenerating TS types).

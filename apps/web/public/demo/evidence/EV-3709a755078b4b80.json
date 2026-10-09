@@ -1,0 +1,42 @@
+{
+  "evidence_id": "EV-3709a755078b4b80",
+  "case_id": "CASE-RA-96cfb145",
+  "run_id": "RUN-FIXTURE-RA-96cfb145",
+  "episode_id": "EPI-000014",
+  "source_type": "CLINICAL_NOTE",
+  "source_id": "NOTE-000022",
+  "source_title": "Catatan masuk - EPI-000014",
+  "source_excerpt": "Pasien PPOK lama dengan sesak bertambah dan dahak purulen sejak 3 hari.",
+  "field_path": null,
+  "char_start": 0,
+  "char_end": 71,
+  "requirement_key": "CHRONIC_CONDITION_CONTEXT",
+  "stance": "AFFIRMS",
+  "relevance_category": "EXPLAINING_CONTEXT",
+  "exception_type": "CHRONIC",
+  "retrieved_by_tool": "find_exception_evidence",
+  "retrieval_reason": "Is a relevant chronic condition documented? (requirement CHRONIC_CONDITION_CONTEXT is open)",
+  "extraction_method": "RULE_MATCH",
+  "retrieved_at": "2026-10-02T09:00:00+07:00",
+  "investigation_step": 7,
+  "policy_version": null,
+  "source": {
+    "source_type": "CLINICAL_NOTE",
+    "source_id": "NOTE-000022",
+    "title": "Catatan masuk - EPI-000014",
+    "text": "Pasien PPOK lama dengan sesak bertambah dan dahak purulen sejak 3 hari. Riwayat merokok 30 tahun, memakai inhaler tiotropium.",
+    "highlight": {
+      "char_start": 0,
+      "char_end": 71
+    },
+    "availability": "AVAILABLE",
+    "document_title": null,
+    "section": null,
+    "version": null,
+    "effective_date": null,
+    "source_ref": null,
+    "source_url": null,
+    "field_path": null,
+    "value": null
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "case_id": "CASE-RA-2110d2a5",
+  "patient_id": "PAT-000016",
+  "episodes": [
+    {
+      "episode_id": "EPI-000033",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": null,
+      "provider": {
+        "provider_id": "PRV-0003",
+        "name": "RS Sintetis Nusantara 03",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-06-04T12:00:00+07:00",
+      "end_at": "2026-06-08T10:00:00+07:00",
+      "length_of_stay_days": 4,
+      "interval_from_previous_days": null,
+      "primary_diagnosis": {
+        "code": "A91",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000033",
+        "inacbg_code": "A-4-14-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000047",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "INDEX_EPISODE"
+      ],
+      "evidence_ids": []
+    },
+    {
+      "episode_id": "EPI-000034",
+      "role": "ANCHOR",
+      "encounter_type": "INPATIENT",
+      "admission_type": "EMERGENCY",
+      "provider": {
+        "provider_id": "PRV-0003",
+        "name": "RS Sintetis Nusantara 03",
+        "hospital_class": "B"
+      },
+      "start_at": "2026-06-18T14:00:00+07:00",
+      "end_at": "2026-06-21T10:00:00+07:00",
+      "length_of_stay_days": 3,
+      "interval_from_previous_days": 10,
+      "primary_diagnosis": {
+        "code": "A91",
+        "label": null
+      },
+      "secondary_diagnoses": [],
+      "procedures": [],
+      "claim": {
+        "claim_id": "CLM-000034",
+        "inacbg_code": "A-4-14-I",
+        "claim_status": "SUBMITTED"
+      },
+      "documents": [
+        {
+          "note_id": "NOTE-000048",
+          "note_type": "ADMISSION",
+          "title": "Catatan masuk",
+          "availability": "AVAILABLE"
+        },
+        {
+          "note_id": "NOTE-000049",
+          "note_type": "DISCHARGE_SUMMARY",
+          "title": "Ringkasan pulang",
+          "availability": "AVAILABLE"
+        }
+      ],
+      "relation_reasons": [
+        "SAME_PATIENT",
+        "SAME_PROVIDER",
+        "SAME_PRIMARY_DIAGNOSIS",
+        "WITHIN_30_DAYS"
+      ],
+      "evidence_ids": []
+    }
+  ]
+}

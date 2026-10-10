@@ -1,4 +1,8 @@
-import type { Requirement, SignalType } from "@episight/shared-types";
+import type { Evidence, Requirement, SignalType } from "@episight/shared-types";
+
+export function countEvidenceSources(evidence: Evidence[]) {
+  return new Set(evidence.map((e) => `${e.source_type}:${e.source_id}`)).size;
+}
 
 export type ReviewView = "overview" | "workspace" | "evidence" | "brief";
 export function parseReviewView(value?: string | null): ReviewView {
@@ -10,7 +14,18 @@ export function parseReviewView(value?: string | null): ReviewView {
 export function reviewPriorities(requirements: Requirement[]) {
   // NOT_FOUND is a completed search, but may still require human review;
   // FOUND records evidence and does not establish that a claim is valid.
-  return requirements.filter((r) => r.material && r.state !== "FOUND");
+  const order: Record<Requirement["state"], number> = {
+    CONFLICTING: 0,
+    UNAVAILABLE: 1,
+    FAILED: 2,
+    OPEN: 3,
+    SKIPPED: 4,
+    NOT_FOUND: 5,
+    FOUND: 6,
+  };
+  return requirements
+    .filter((r) => r.material && r.state !== "FOUND")
+    .sort((a, b) => order[a.state] - order[b.state]);
 }
 
 // Participant Guide Healthkathon 2026, page 6. Competition context,

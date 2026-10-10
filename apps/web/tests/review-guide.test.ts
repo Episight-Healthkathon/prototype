@@ -1,7 +1,13 @@
 import { describe, expect, it } from "vitest";
-import type { Requirement } from "@episight/shared-types";
+import type {
+  Evidence,
+  EvidenceList,
+  Requirement,
+} from "@episight/shared-types";
+import { readFileSync } from "node:fs";
 import {
   parseReviewView,
+  countEvidenceSources,
   reviewGuide,
   reviewPriorities,
 } from "@/lib/review-guide";
@@ -60,11 +66,49 @@ describe("guided review", () => {
       reviewPriorities(states.map((state) => requirement(state))).map(
         (r) => r.state,
       ),
-    ).toEqual(states);
+    ).toEqual([
+      "CONFLICTING",
+      "UNAVAILABLE",
+      "FAILED",
+      "OPEN",
+      "SKIPPED",
+      "NOT_FOUND",
+    ]);
   });
   it("does not report documented evidence or optional checks as material gaps", () => {
     expect(
       reviewPriorities([requirement("FOUND"), requirement("OPEN", false)]),
     ).toEqual([]);
+  });
+  it("counts unique sources rather than evidence statements", () => {
+    const data = JSON.parse(
+      readFileSync(
+        new URL(
+          "../public/demo/cases/CASE-FR-4cf97d96.evidence.json",
+          import.meta.url,
+        ),
+        "utf8",
+      ),
+    ) as EvidenceList;
+    const risk = data.items.filter(
+      (e) => e.relevance_category === "SUPPORTING_RISK",
+    );
+    expect(countEvidenceSources(risk)).toBe(2);
+    expect(
+      countEvidenceSources([
+        ...risk,
+        { ...risk[0], evidence_id: "duplicate-statement" } as Evidence,
+      ]),
+    ).toBe(2);
+    expect(
+      countEvidenceSources(
+        data.items.filter((e) => e.relevance_category === "EXPLAINING_CONTEXT"),
+      ),
+    ).toBe(0);
+  });
+  it("puts conflicting evidence first without mutating input requirements", () => {
+    const input = [requirement("NOT_FOUND"), requirement("CONFLICTING")];
+    expect(reviewPriorities(input)[0].state).toBe("CONFLICTING");
+    expect(input[0].state).toBe("NOT_FOUND");
   });
 });

@@ -42,12 +42,8 @@ import {
   useResource,
 } from "./system";
 import { date, humanNotice, label } from "@/lib/labels";
-import {
-  parseReviewView,
-  reviewGuide,
-  reviewPriorities,
-  type ReviewView,
-} from "@/lib/review-guide";
+import { ReviewSummaryCard } from "./review-summary";
+import { parseReviewView, type ReviewView } from "@/lib/review-guide";
 type View = ReviewView;
 function useInvestigation(id: string, runId: string, revision: number) {
   const { api, mode } = useApp();
@@ -399,25 +395,16 @@ export function CaseWorkspace({
             <>
               {view === "workspace" ? (
                 <>
-                  <ReviewSummary
+                  <ReviewSummaryCard
                     c={c}
                     investigation={inv.data}
                     evidence={ev.data?.items || []}
                     evidenceLoading={ev.loading}
                     evidenceError={!!ev.error}
-                    brief={
-                      !brief.loading && !brief.error ? brief.data || null : null
-                    }
+                    evidenceTotal={ev.data?.total}
                     onBrief={() => navigate("brief")}
                     onEvidence={() => navigate("evidence")}
                   />
-                  <button
-                    className="button secondary"
-                    onClick={() => navigate("evidence")}
-                  >
-                    Periksa seluruh bukti dan pertanyaan{" "}
-                    <IconArrowRight size={18} />
-                  </button>
                 </>
               ) : (
                 <>
@@ -772,147 +759,6 @@ function Workspace({
         )}
       </div>
     </div>
-  );
-}
-function ReviewSummary({
-  c,
-  investigation,
-  evidence,
-  evidenceLoading,
-  evidenceError,
-  brief,
-  onBrief,
-  onEvidence,
-}: {
-  c: CaseDetail;
-  investigation: InvestigationView;
-  evidence: Evidence[];
-  evidenceLoading: boolean;
-  evidenceError: boolean;
-  brief: InvestigationBrief | null;
-  onBrief: () => void;
-  onEvidence: () => void;
-}) {
-  const st = investigation.state;
-  const priorities = reviewPriorities(st.requirements);
-  const completed = investigation.run.run_status === "COMPLETED";
-  const failed = investigation.run.run_status === "FAILED";
-  const guide = reviewGuide[c.signal_type];
-  return (
-    <section
-      className="review-summary panel"
-      aria-labelledby="review-summary-heading"
-    >
-      <div className="panel-heading">
-        <h2 id="review-summary-heading">
-          Apa yang perlu diperiksa berikutnya?
-        </h2>
-        <span>
-          {completed
-            ? "Pemeriksaan mesin selesai · belum diputuskan reviewer"
-            : failed
-              ? "Pemeriksaan gagal"
-              : "Pemeriksaan berlangsung"}
-        </span>
-      </div>
-      <p>{guide.question}</p>
-      <div className="review-evidence-groups">
-        {(
-          [
-            { category: "SUPPORTING_RISK", title: "Bukti pendukung sinyal" },
-            {
-              category: "EXPLAINING_CONTEXT",
-              title: "Alasan medis / konteks penjelas",
-            },
-          ] as const
-        ).map((group) => {
-          const items = evidence.filter(
-            (e) => e.relevance_category === group.category,
-          );
-          return (
-            <div key={group.category}>
-              <h3>{group.title}</h3>
-              {evidenceLoading ? (
-                <p>Memuat bukti run ini…</p>
-              ) : evidenceError ? (
-                <p>
-                  Bukti belum dapat dimuat. Buka detail bukti untuk mencoba
-                  lagi.
-                </p>
-              ) : items.length ? (
-                <>
-                  <p>
-                    {items.length} sumber tercatat. Periksa isinya di detail
-                    bukti.
-                  </p>
-                </>
-              ) : (
-                <p>
-                  Belum ada sumber pada kategori ini. Ini tidak membuktikan
-                  bahwa risiko atau alasan medis tidak ada.
-                </p>
-              )}
-            </div>
-          );
-        })}
-      </div>
-      <div className="review-question">
-        <strong>
-          {failed
-            ? "Pemeriksaan gagal: hasil belum dapat dinilai"
-            : completed
-              ? "Langkah berikutnya untuk reviewer"
-              : "Pemeriksaan masih berjalan"}
-        </strong>
-        <p>
-          {failed
-            ? "Periksa jejak aksi dan kondisi layanan, lalu jalankan ulang investigasi."
-            : completed
-              ? "Tinjau hubungan episode, alasan medis, dan kebijakan. Bukti cukup berarti siap ditinjau, bukan klaim otomatis sah atau terbukti fraud."
-              : st.next_action
-                ? `${st.next_action.tool_label}: ${st.next_action.reason}`
-                : "Pantau pemeriksaan sumber di workspace. Ringkasan ini belum merupakan hasil akhir."}
-        </p>
-      </div>
-      {priorities.length > 0 ? (
-        <div className="review-priorities">
-          <h3>Perlu perhatian ({priorities.length} pemeriksaan penting)</h3>
-          {priorities.slice(0, 3).map((r) => (
-            <div key={r.key}>
-              <strong>{r.label}</strong>
-              <Badge value={r.state} />
-            </div>
-          ))}
-          <button className="text-link" onClick={onEvidence}>
-            {priorities.length > 3
-              ? `Lihat seluruh ${priorities.length} pemeriksaan dan penjelasannya`
-              : "Lihat penjelasan dan sumber terkait"}
-            <IconArrowRight size={16} />
-          </button>
-          <p className="small-muted">
-            Tidak ditemukan berarti pencarian selesai tanpa temuan; sumber tidak
-            tersedia berarti belum dapat dinilai. Keduanya tidak membuktikan
-            tidak adanya kondisi klinis.
-          </p>
-        </div>
-      ) : (
-        <p>
-          Belum ada kekurangan bukti penting yang tercatat. Reviewer tetap perlu
-          menilai bukti dan kebijakan.
-        </p>
-      )}
-      {completed && brief && (
-        <>
-          <Statements
-            items={brief.suggested_next_review.slice(0, 1)}
-            empty="Tinjau sumber pada brief untuk menentukan tindak lanjut."
-          />
-          <button className="button secondary" onClick={onBrief}>
-            Tinjau reviewer brief <IconArrowRight size={18} />
-          </button>
-        </>
-      )}
-    </section>
   );
 }
 function RequirementRow({ requirement: r }: { requirement: Requirement }) {

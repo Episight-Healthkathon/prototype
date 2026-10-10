@@ -87,6 +87,16 @@ function useInvestigation(id: string, runId: string, revision: number) {
 }
 export function CaseWorkspace({
   id,
+  initialView,
+}: {
+  id: string;
+  initialView?: string;
+}) {
+  const { mode } = useApp();
+  return <CaseWorkspaceSession key={mode} id={id} initialView={initialView} />;
+}
+function CaseWorkspaceSession({
+  id,
   initialView = "overview",
 }: {
   id: string;

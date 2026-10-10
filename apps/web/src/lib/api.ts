@@ -218,10 +218,38 @@ export function createApi(mode: DataMode) {
     },
     investigation,
     evidence: async (id: string, runId?: string): Promise<EvidenceList> => {
-      if (live)
-        return request(
+      if (live) {
+        const first = await request<EvidenceList>(
           `${base(id)}/evidence?limit=200${runId ? `&run_id=${encodeURIComponent(runId)}` : ""}`,
         );
+        const items = [...first.items];
+        const pinnedRun = runId || first.items[0]?.run_id;
+        let offset = first.offset + first.items.length;
+        while (offset < first.total) {
+          if (!pinnedRun || !first.items.length)
+            throw new ApiFailure(
+              0,
+              "PAGINATION_ERROR",
+              "Daftar bukti belum lengkap. Coba muat ulang.",
+            );
+          const page = await request<EvidenceList>(
+            `${base(id)}/evidence?limit=200&offset=${offset}&run_id=${encodeURIComponent(pinnedRun)}`,
+          );
+          const known = new Set(items.map((e) => e.evidence_id));
+          const additional = page.items.filter(
+            (e) => !known.has(e.evidence_id) && e.run_id === pinnedRun,
+          );
+          if (!additional.length)
+            throw new ApiFailure(
+              0,
+              "PAGINATION_ERROR",
+              "Daftar bukti belum lengkap. Coba muat ulang.",
+            );
+          items.push(...additional);
+          offset += page.items.length;
+        }
+        return { ...first, items, limit: items.length };
+      }
       if (!active(id)) return { items: [], total: 0, limit: 200, offset: 0 };
       const list = await fixture<EvidenceList>(`${base(id)}.evidence.json`);
       const view = await investigation(id);

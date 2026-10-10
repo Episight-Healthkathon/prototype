@@ -1,4 +1,15 @@
-import type { Evidence, Requirement, SignalType } from "@episight/shared-types";
+import type {
+  Evidence,
+  Requirement,
+  RunSummary,
+  SignalType,
+} from "@episight/shared-types";
+
+export function orderedRuns(items: RunSummary[]) {
+  return [...items].sort(
+    (a, b) => Date.parse(b.started_at) - Date.parse(a.started_at),
+  );
+}
 
 export function countEvidenceSources(evidence: Evidence[]) {
   return new Set(evidence.map((e) => `${e.source_type}:${e.source_id}`)).size;

@@ -9,7 +9,6 @@ import {
   IconCheck,
   IconChevronDown,
   IconFileText,
-  IconHistory,
   IconPlayerPlay,
   IconPrinter,
   IconRefresh,
@@ -43,6 +42,7 @@ import {
 } from "./system";
 import { date, humanNotice, label } from "@/lib/labels";
 import { ReviewSummaryCard } from "./review-summary";
+import { RunHistory } from "./run-history";
 import { parseReviewView, type ReviewView } from "@/lib/review-guide";
 type View = ReviewView;
 function useInvestigation(id: string, runId: string, revision: number) {
@@ -175,11 +175,15 @@ export function CaseWorkspace({
   const c = detail.data;
   if (!c) return null;
   // A selected run may have a null outcome; never inherit a newer run's result.
-  const runState = view !== "overview" ? inv.data?.state : null;
-  const activeOutcome = runState ? runState.outcome : c.outcome;
-  const activeProgress = runState
-    ? runState.progress_status
-    : c.progress_status;
+  const runState = inv.data?.state;
+  const activeOutcome = runId
+    ? runState?.outcome
+    : runState
+      ? runState.outcome
+      : c.outcome;
+  const activeProgress = runId
+    ? runState?.progress_status
+    : runState?.progress_status || c.progress_status;
   return (
     <>
       <Link href="/cases" className="back-link">
@@ -203,13 +207,50 @@ export function CaseWorkspace({
             pemicu · interval minimum {c.min_interval_days} hari
           </p>
         </div>
-        <div className="case-status">
-          <Badge
-            value={
-              running && view !== "overview" ? "INVESTIGATING" : activeProgress
-            }
+        <div className="case-header-actions">
+          <RunHistory
+            items={runs.data?.items || []}
+            loading={runs.loading}
+            error={runs.error}
+            retry={runs.reload}
+            selectedId={runId}
+            onSelect={(selectedId) => {
+              setRunId(selectedId);
+              navigate("workspace");
+            }}
           />
-          {activeOutcome && <Badge value={activeOutcome} />}
+          {mode === "demo" && (
+            <details className="demo-settings review-disclosure">
+              <summary>Pengaturan demo</summary>
+              <p>Ulangi pemutaran pemeriksaan yang sudah direkam.</p>
+              <button
+                className="button secondary compact"
+                disabled={starting || running || !!runId || !inv.data}
+                onClick={() => start(true)}
+              >
+                <IconRefresh size={16} className={starting ? "spin" : ""} />
+                {starting ? "Memulai…" : "Putar ulang demo"}
+              </button>
+              {runId && (
+                <p>Kembali ke pemeriksaan terbaru untuk memutar ulang.</p>
+              )}
+              {!inv.data && (
+                <p>
+                  Mulai investigasi dari Ringkasan pemeriksaan terlebih dahulu.
+                </p>
+              )}
+            </details>
+          )}
+          <div className="case-status">
+            <Badge
+              value={
+                running && view !== "overview"
+                  ? "INVESTIGATING"
+                  : activeProgress
+              }
+            />
+            {activeOutcome && <Badge value={activeOutcome} />}
+          </div>
         </div>
       </div>
       <Notice>{humanNotice}</Notice>
@@ -240,11 +281,23 @@ export function CaseWorkspace({
           </button>
         ))}
       </nav>
-      {runId && view !== "overview" && (
-        <Notice>
-          Run yang dipilih: <span className="mono">{runId}</span>. Bukti dan
-          brief mengikuti run ini.
-        </Notice>
+      {runId && (
+        <div className="historical-notice" role="status">
+          <div>
+            <strong>Melihat pemeriksaan sebelumnya</strong>
+            <span className="mono">{runId}</span>
+            <p>
+              Bukti dan ringkasan mengikuti pemeriksaan ini, bukan hasil
+              terbaru.
+            </p>
+          </div>
+          <button
+            className="button secondary compact"
+            onClick={() => setRunId("")}
+          >
+            Kembali ke hasil terbaru <IconArrowRight size={16} />
+          </button>
+        </div>
       )}
       {startError && (
         <div className="inline-error" role="alert">
@@ -328,7 +381,7 @@ export function CaseWorkspace({
                   </label>
                 </details>
               )}
-              {!running && (
+              {!running && !(mode === "demo" && completed) && (
                 <button
                   disabled={starting || !!runId}
                   className={`button ${completed ? "secondary" : ""}`}
@@ -358,35 +411,6 @@ export function CaseWorkspace({
               {running && <Badge value={inv.data?.run.run_status} />}
             </div>
           </div>
-          {runs.data && runs.data.items.length > 0 && (
-            <details className="review-disclosure">
-              <summary>Riwayat pemeriksaan ({runs.data.items.length})</summary>
-              <div className="run-history">
-                <IconHistory size={17} />
-                <label>
-                  Pemeriksaan sebelumnya
-                  <select
-                    value={runId}
-                    onChange={(e) => setRunId(e.target.value)}
-                  >
-                    <option value="">Pemeriksaan terbaru</option>
-                    {runs.data.items.map((r) => (
-                      <option value={r.run_id} key={r.run_id}>
-                        {date(r.started_at, true)} · {label(r.mode)} ·{" "}
-                        {label(r.run_status)}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                {runId && (
-                  <span>
-                    Menampilkan run yang dipilih. Pilih run terbaru untuk
-                    memulai ulang.
-                  </span>
-                )}
-              </div>
-            </details>
-          )}
           {inv.loading ? (
             <Loading label="Memuat state investigasi…" />
           ) : inv.error ? (

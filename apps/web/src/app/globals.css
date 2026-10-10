@@ -14,6 +14,116 @@
   --radius: 14px;
   --shadow: 0 14px 45px rgba(31, 67, 101, 0.09);
 }
+.case-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 12px;
+  max-width: 45%;
+}
+.case-header-actions .case-status {
+  width: 100%;
+}
+.demo-settings.review-disclosure {
+  margin: 0;
+  padding: 10px 14px;
+  max-width: 280px;
+}
+.demo-settings > summary {
+  font-size: 12px;
+}
+.demo-settings p {
+  font-size: 12px;
+  margin: 12px 0;
+}
+.historical-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 20px;
+  background: var(--pale-blue);
+  border-radius: var(--radius);
+  margin: 18px 0;
+}
+.historical-notice strong {
+  display: block;
+  font-size: 13px;
+}
+.historical-notice .mono {
+  display: block;
+  font-size: 10px;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.historical-notice p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.history-drawer-body {
+  padding: 24px;
+}
+.history-cards {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  display: grid;
+  gap: 16px;
+}
+.history-cards li {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.history-cards .selected-history {
+  border-color: var(--blue);
+  background: var(--pale-blue);
+}
+.history-card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.history-card-heading strong {
+  font-size: 13px;
+}
+.history-card-heading span {
+  font-size: 10px;
+  color: var(--teal);
+}
+.history-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.history-cards p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 10px 0 4px;
+}
+.history-cards small {
+  display: block;
+  font-size: 10px;
+  overflow-wrap: anywhere;
+  margin-bottom: 16px;
+}
+@media (max-width: 700px) {
+  .case-header-actions {
+    max-width: 100%;
+    justify-content: flex-start;
+  }
+  .case-header-actions .case-status {
+    align-items: flex-start;
+  }
+  .historical-notice {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 .exam-summary {
   background: white;
   border: 1px solid var(--line);

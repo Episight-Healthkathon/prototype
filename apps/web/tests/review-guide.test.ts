@@ -3,11 +3,13 @@ import type {
   Evidence,
   EvidenceList,
   Requirement,
+  RunSummary,
 } from "@episight/shared-types";
 import { readFileSync } from "node:fs";
 import {
   parseReviewView,
   countEvidenceSources,
+  orderedRuns,
   reviewGuide,
   reviewPriorities,
 } from "@/lib/review-guide";
@@ -35,6 +37,19 @@ function requirement(
 }
 
 describe("guided review", () => {
+  it("orders history newest first without changing the original list", () => {
+    const earlier = {
+      run_id: "old",
+      started_at: "2026-10-01T10:00:00+07:00",
+    } as RunSummary;
+    const latest = {
+      run_id: "new",
+      started_at: "2026-10-02T10:00:00+07:00",
+    } as RunSummary;
+    const input = [earlier, latest];
+    expect(orderedRuns(input).map((r) => r.run_id)).toEqual(["new", "old"]);
+    expect(input[0].run_id).toBe("old");
+  });
   it("supports direct links and back navigation to each review stage", () => {
     for (const view of [
       "overview",

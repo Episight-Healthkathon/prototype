@@ -42,6 +42,7 @@ import {
   useResource,
 } from "./system";
 import { date, humanNotice, label } from "@/lib/labels";
+import { reviewGuide } from "@/lib/review-guide";
 type View = "overview" | "workspace" | "brief";
 function useInvestigation(id: string, runId: string, revision: number) {
   const { api, mode } = useApp();
@@ -257,6 +258,7 @@ export function CaseWorkspace({
       {view === "overview" ? (
         <>
           <Overview c={c} />
+          <ModusContext c={c} />
           {timeline.loading ? (
             <Loading />
           ) : timeline.error ? (
@@ -482,6 +484,38 @@ function Overview({ c }: { c: CaseDetail }) {
 }
 function IconGitBranchLocal() {
   return <IconTimeline size={25} className="section-icon" />;
+}
+function ModusContext({ c }: { c: CaseDetail }) {
+  const guide = reviewGuide[c.signal_type];
+  return (
+    <section className="review-guide panel" aria-labelledby="modus-heading">
+      <div className="panel-heading">
+        <h2 id="modus-heading">Kaitan dengan modus yang ditinjau</h2>
+        <span>Konteks panduan lomba</span>
+      </div>
+      <h3>{guide.title}</h3>
+      <p>{guide.definition}</p>
+      <p className="small-muted">Participant Guide Healthkathon 2026 · halaman 6 · kategori Fasilitas Kesehatan. Definisi ini tidak menggantikan kebijakan klaim yang berlaku.</p>
+      <div className="review-question">
+        <strong>Pertanyaan untuk reviewer</strong>
+        <p>{guide.question}</p>
+      </div>
+      <h3>Pasangan episode pemicu</h3>
+      {c.signal.pairs.length ? (
+        <ul className="signal-pairs">
+          {c.signal.pairs.map((pair) => (
+            <li key={`${pair.from_episode_id}:${pair.to_episode_id}`}>
+              <span className="mono">{pair.from_episode_id}</span>
+              <IconArrowRight size={16} aria-hidden="true" />
+              <span className="mono">{pair.to_episode_id}</span>
+              <span>{pair.interval_days} hari</span>
+            </li>
+          ))}
+        </ul>
+      ) : <p>Pasangan pemicu belum tersedia.</p>}
+      <p className="small-muted">Kesamaan diagnosis dan interval adalah pemicu screening. Tetap periksa keterkaitan episode, alasan medis, dan ketentuan paket sebelum menilai potensi pelanggaran.</p>
+    </section>
+  );
 }
 function Timeline({ timeline }: { timeline: EpisodeTimeline }) {
   const [expanded, setExpanded] = useState<string[]>([]);

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   IconArrowLeft,
@@ -43,7 +43,12 @@ import {
 import { date, humanNotice, label } from "@/lib/labels";
 import { ReviewSummaryCard } from "./review-summary";
 import { RunHistory } from "./run-history";
-import { parseReviewView, type ReviewView } from "@/lib/review-guide";
+import { EvidenceBrowser } from "./evidence-browser";
+import {
+  parseReviewView,
+  reviewPriorities,
+  type ReviewView,
+} from "@/lib/review-guide";
 type View = ReviewView;
 function useInvestigation(id: string, runId: string, revision: number) {
   const { api, mode } = useApp();
@@ -327,12 +332,21 @@ function CaseWorkspaceSession({
             <summary>
               Lihat timeline lengkap ({c.episode_count} episode pemicu)
             </summary>
+            {runId && (
+              <p className="small-muted">
+                Timeline ini menunjukkan konteks kasus saat ini, bukan snapshot
+                pemeriksaan lama. Bukti pemeriksaan yang dipilih tersedia di
+                Detail bukti.
+              </p>
+            )}
             {timeline.loading ? (
               <Loading />
             ) : timeline.error ? (
               <ErrorState error={timeline.error} retry={timeline.reload} />
             ) : (
-              timeline.data && <Timeline timeline={timeline.data} />
+              timeline.data && (
+                <Timeline timeline={timeline.data} showEvidenceLinks={!runId} />
+              )
             )}
           </details>
           <div className="section-action">
@@ -577,7 +591,13 @@ function Overview({ c }: { c: CaseDetail }) {
 function IconGitBranchLocal() {
   return <IconTimeline size={25} className="section-icon" />;
 }
-function Timeline({ timeline }: { timeline: EpisodeTimeline }) {
+function Timeline({
+  timeline,
+  showEvidenceLinks,
+}: {
+  timeline: EpisodeTimeline;
+  showEvidenceLinks: boolean;
+}) {
   const [expanded, setExpanded] = useState<string[]>([]);
   const toggle = (id: string) =>
     setExpanded((v) =>
@@ -710,7 +730,7 @@ function Timeline({ timeline }: { timeline: EpisodeTimeline }) {
                   ) : (
                     <p>Tidak ada dokumen klinis tercatat.</p>
                   )}
-                  {e.evidence_ids.length > 0 && (
+                  {showEvidenceLinks && e.evidence_ids.length > 0 && (
                     <EvidenceLinks ids={e.evidence_ids} />
                   )}
                 </div>
@@ -747,51 +767,43 @@ function Workspace({
   evidence: Evidence[];
 }) {
   const st = investigation.state;
+  const priorities = reviewPriorities(st.requirements);
+  const ordered = [
+    ...priorities,
+    ...st.requirements.filter((r) => !r.material || r.state === "FOUND"),
+  ];
+  const scoped = evidence.filter((e) => e.run_id === investigation.run.run_id);
   return (
-    <div className="workspace-grid">
-      <div>
-        <section className="panel">
-          <div className="panel-heading">
-            <h2>Pertanyaan dan bukti yang belum lengkap</h2>
-            <span>{st.requirements.length} pemeriksaan</span>
-          </div>
-          <div className="requirements">
-            {st.requirements.map((r) => (
-              <RequirementRow key={r.key} requirement={r} />
-            ))}
-          </div>
-        </section>
-        {st.next_action && (
-          <section className="next-action">
-            <IconArrowRight size={22} />
-            <div>
-              <h3>Pemeriksaan berikutnya</h3>
-              <strong>{st.next_action.tool_label}</strong>
-              <p>{st.next_action.reason}</p>
-            </div>
-          </section>
-        )}
-      </div>
-      <div>
-        <section className="panel">
-          <div className="panel-heading">
-            <h2>Bukti yang ditemukan</h2>
-            <span>{evidence.length} sumber</span>
-          </div>
-          <EvidenceLedger evidence={evidence} />
-        </section>
-        {st.known_facts.length > 0 && (
-          <section className="panel known-facts">
-            <h3>Fakta yang diketahui</h3>
+    <div className="review-evidence-workspace">
+      <EvidenceBrowser evidence={scoped} />
+      <details className="review-disclosure">
+        <summary>
+          Pertanyaan pemeriksaan · {priorities.length} pemeriksaan penting perlu
+          perhatian
+        </summary>
+        <p className="small-muted">
+          Konflik dan sumber yang tidak tersedia ditampilkan lebih dahulu.
+          Setiap status memiliki penjelasan dan cakupan pencarian.
+        </p>
+        <div className="requirements">
+          {ordered.map((r) => (
+            <RequirementRow key={r.key} requirement={r} />
+          ))}
+        </div>
+      </details>
+      {st.known_facts.length > 0 && (
+        <details className="review-disclosure">
+          <summary>Fakta terdokumentasi ({st.known_facts.length})</summary>
+          <div className="documented-facts">
             {st.known_facts.map((f) => (
               <div key={f.fact_id}>
                 <p>{f.text}</p>
                 <EvidenceLinks ids={f.evidence_ids} />
               </div>
             ))}
-          </section>
-        )}
-      </div>
+          </div>
+        </details>
+      )}
     </div>
   );
 }
@@ -804,9 +816,9 @@ function RequirementRow({ requirement: r }: { requirement: Requirement }) {
             {r.direction === "CONTEXT"
               ? "Konteks penjelas"
               : label(r.direction)}
-            {r.material ? " · material" : " · tambahan"}
+            {r.material ? " · penting" : " · tambahan"}
           </span>
-          <strong>{r.label}</strong>
+          <strong>{label(r.key)}</strong>
         </span>
         <Badge value={r.state} />
         <IconChevronDown size={17} />
@@ -842,67 +854,6 @@ function RequirementRow({ requirement: r }: { requirement: Requirement }) {
         )}
       </div>
     </details>
-  );
-}
-function EvidenceLedger({ evidence }: { evidence: Evidence[] }) {
-  const { openEvidence } = useApp();
-  const [category, setCategory] = useState("ALL");
-  const categories = useMemo(
-    () => Array.from(new Set(evidence.map((e) => e.relevance_category))),
-    [evidence],
-  );
-  const filtered = evidence.filter(
-    (e) => category === "ALL" || e.relevance_category === category,
-  );
-  return (
-    <>
-      <div className="ledger-filter">
-        <label>
-          Kategori
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="ALL">Semua bukti</option>
-            {categories.map((c) => (
-              <option key={c} value={c}>
-                {label(c)}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-      {filtered.length ? (
-        <div className="evidence-ledger">
-          {filtered.map((e) => (
-            <button
-              className="evidence-item"
-              key={e.evidence_id}
-              onClick={() => openEvidence(e.evidence_id)}
-            >
-              <div>
-                <span className="evidence-category">
-                  {label(e.relevance_category)}
-                </span>
-                <IconArrowUpRight size={17} />
-              </div>
-              <strong>{e.source_title}</strong>
-              <p>{e.source_excerpt}</p>
-              <div>
-                <span>
-                  {label(e.source_type)} · langkah {e.investigation_step}
-                </span>
-                <Badge value={e.stance} />
-              </div>
-            </button>
-          ))}
-        </div>
-      ) : (
-        <Empty title="Belum ada bukti pada kategori ini">
-          <p>Bukti akan muncul setelah pemeriksaan sumber.</p>
-        </Empty>
-      )}
-    </>
   );
 }
 function ActionTrail({ investigation }: { investigation: InvestigationView }) {

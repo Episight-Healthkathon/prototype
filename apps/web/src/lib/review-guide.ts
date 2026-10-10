@@ -14,6 +14,13 @@ export function orderedRuns(items: RunSummary[]) {
 export function countEvidenceSources(evidence: Evidence[]) {
   return new Set(evidence.map((e) => `${e.source_type}:${e.source_id}`)).size;
 }
+export type EvidenceFilter = "ALL" | "SIGNAL" | "CONTEXT" | "POLICY" | "OTHER";
+export function evidenceGroup(e: Evidence): Exclude<EvidenceFilter, "ALL"> {
+  if (e.source_type === "POLICY_SECTION") return "POLICY";
+  if (e.relevance_category === "SUPPORTING_RISK") return "SIGNAL";
+  if (e.relevance_category === "EXPLAINING_CONTEXT") return "CONTEXT";
+  return "OTHER";
+}
 
 export type ReviewView = "overview" | "workspace" | "evidence" | "brief";
 export function parseReviewView(value?: string | null): ReviewView {

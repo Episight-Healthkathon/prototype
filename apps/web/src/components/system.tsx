@@ -379,7 +379,6 @@ function EvidenceDrawer({
                   <Badge value={ev.source_type} />
                   <Badge value={ev.stance} />
                   <h2>{ev.source_title}</h2>
-                  <span className="mono">{ev.source_id}</span>
                 </div>
                 <section className="source-section">
                   <h3>Kutipan yang digunakan</h3>
@@ -424,8 +423,8 @@ function EvidenceDrawer({
                     </a>
                   )}
                 </section>
-                <section className="source-section">
-                  <h3>Provenance</h3>
+                <details className="source-section source-provenance">
+                  <summary>Detail sumber dan asal data</summary>
                   <dl className="metadata">
                     <dt>Evidence ID</dt>
                     <dd className="mono">{ev.evidence_id}</dd>
@@ -462,7 +461,7 @@ function EvidenceDrawer({
                   </dl>
                   <h4>Alasan pencarian</h4>
                   <p>{ev.retrieval_reason}</p>
-                </section>
+                </details>
               </>
             )
           )}

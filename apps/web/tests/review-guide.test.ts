@@ -10,6 +10,7 @@ import {
   parseReviewView,
   countEvidenceSources,
   orderedRuns,
+  evidenceGroup,
   reviewGuide,
   reviewPriorities,
 } from "@/lib/review-guide";
@@ -37,6 +38,37 @@ function requirement(
 }
 
 describe("guided review", () => {
+  it("partitions every demo evidence entry without hiding policy or neutral sources", () => {
+    const queue = JSON.parse(
+      readFileSync(
+        new URL("../public/demo/cases.list.json", import.meta.url),
+        "utf8",
+      ),
+    ) as { items: { case_id: string }[] };
+    for (const c of queue.items) {
+      const data = JSON.parse(
+        readFileSync(
+          new URL(
+            `../public/demo/cases/${c.case_id}.evidence.json`,
+            import.meta.url,
+          ),
+          "utf8",
+        ),
+      ) as EvidenceList;
+      for (const e of data.items)
+        expect(["SIGNAL", "CONTEXT", "POLICY", "OTHER"]).toContain(
+          evidenceGroup(e),
+        );
+      expect(
+        data.items
+          .filter((e) => e.source_type === "POLICY_SECTION")
+          .every((e) => evidenceGroup(e) === "POLICY"),
+      ).toBe(true);
+      expect(data.items.map((e) => evidenceGroup(e))).toHaveLength(
+        data.items.length,
+      );
+    }
+  });
   it("orders history newest first without changing the original list", () => {
     const earlier = {
       run_id: "old",

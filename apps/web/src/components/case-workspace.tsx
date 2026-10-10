@@ -264,16 +264,6 @@ export function CaseWorkspace({
       {view === "overview" ? (
         <>
           <Overview c={c} />
-          <details className="review-disclosure context-disclosure">
-            <summary>
-              <span>
-                Kaitan modus dan episode pemicu
-                <small>Pahami apa yang perlu dinilai pada kasus ini</small>
-              </span>
-              <IconChevronDown size={20} aria-hidden="true" />
-            </summary>
-            <ModusContext c={c} />
-          </details>
           <details className="review-disclosure">
             <summary>
               Lihat timeline lengkap ({c.episode_count} episode pemicu)
@@ -565,65 +555,6 @@ function Overview({ c }: { c: CaseDetail }) {
 }
 function IconGitBranchLocal() {
   return <IconTimeline size={25} className="section-icon" />;
-}
-function ModusContext({ c }: { c: CaseDetail }) {
-  const guide = reviewGuide[c.signal_type];
-  return (
-    <section className="modus-context" aria-labelledby="modus-heading">
-      <div className="modus-context-grid">
-        <div className="modus-definition">
-          <span className="context-eyebrow">MODUS YANG DITINJAU</span>
-          <h2 id="modus-heading">{guide.title}</h2>
-          <p>{guide.definition}</p>
-          <div className="modus-question">
-            <IconSearch size={20} aria-hidden="true" />
-            <div>
-              <h3>Pertanyaan untuk reviewer</h3>
-              <p>{guide.question}</p>
-            </div>
-          </div>
-        </div>
-        <div className="modus-episodes">
-          <span className="context-eyebrow">EPISODE PEMICU</span>
-          <h3>{c.signal.pairs.length} pasangan untuk dibandingkan</h3>
-          {c.signal.pairs.length ? (
-            <ul className="context-pairs">
-              {c.signal.pairs.map((pair) => (
-                <li key={`${pair.from_episode_id}:${pair.to_episode_id}`}>
-                  <div className="context-pair-flow">
-                    <div>
-                      <span>Episode awal</span>
-                      <strong className="mono">{pair.from_episode_id}</strong>
-                    </div>
-                    <IconArrowRight size={18} aria-hidden="true" />
-                    <div>
-                      <span>Episode berikutnya</span>
-                      <strong className="mono">{pair.to_episode_id}</strong>
-                    </div>
-                  </div>
-                  <span className="context-interval">
-                    <IconCalendar size={15} aria-hidden="true" />
-                    Interval {pair.interval_days} hari
-                  </span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>Pasangan pemicu belum tersedia.</p>
-          )}
-          <p className="context-caption">
-            Bandingkan diagnosis, tindakan, dan alasan medis melalui timeline di
-            bawah.
-          </p>
-        </div>
-      </div>
-      <footer className="modus-reference">
-        Participant Guide Healthkathon 2026 · halaman 6 · Fasilitas Kesehatan.
-        Definisi modus adalah konteks peninjauan, bukan pengganti kebijakan
-        klaim.
-      </footer>
-    </section>
-  );
 }
 function Timeline({ timeline }: { timeline: EpisodeTimeline }) {
   const [expanded, setExpanded] = useState<string[]>([]);

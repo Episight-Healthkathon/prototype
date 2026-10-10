@@ -17,6 +17,39 @@
 .review-guide {
   margin: 24px 0;
 }
+.review-summary {
+  margin: 20px 0;
+}
+.review-evidence-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.review-evidence-groups > div {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  min-width: 0;
+}
+.review-evidence-groups h3,
+.review-priorities h3 {
+  margin-bottom: 12px;
+}
+.review-priorities > div {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.review-priorities .badge {
+  margin-left: 8px;
+}
+.review-priorities p {
+  margin: 8px 0;
+}
+@media (max-width: 700px) {
+  .review-evidence-groups {
+    grid-template-columns: 1fr;
+  }
+}
 .review-guide h3 {
   margin-bottom: 12px;
 }

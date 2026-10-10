@@ -42,7 +42,7 @@ import {
   useResource,
 } from "./system";
 import { date, humanNotice, label } from "@/lib/labels";
-import { reviewGuide } from "@/lib/review-guide";
+import { reviewGuide, reviewPriorities } from "@/lib/review-guide";
 type View = "overview" | "workspace" | "brief";
 function useInvestigation(id: string, runId: string, revision: number) {
   const { api, mode } = useApp();
@@ -216,6 +216,12 @@ export function CaseWorkspace({
         </div>
       </div>
       <Notice>{humanNotice}</Notice>
+      <p className="small-muted">
+        Data sintetis · prototype.{" "}
+        {mode === "demo"
+          ? "Demo offline memutar hasil yang sudah direkam, tanpa eksekusi AI baru."
+          : "API lokal menjalankan backend pada data simulasi, bukan data peserta JKN nyata."}
+      </p>
       <nav className="case-tabs" aria-label="Tahap review kasus">
         {(
           [
@@ -374,6 +380,17 @@ export function CaseWorkspace({
           ) : inv.data ? (
             <>
               <RunProgress run={inv.data.run} />
+              <ReviewSummary
+                c={c}
+                investigation={inv.data}
+                evidence={ev.data?.items || []}
+                evidenceLoading={ev.loading}
+                evidenceError={!!ev.error}
+                brief={
+                  !brief.loading && !brief.error ? brief.data || null : null
+                }
+                onBrief={() => navigate("brief")}
+              />
               <Workspace
                 investigation={inv.data}
                 evidence={ev.data?.items || []}
@@ -495,7 +512,10 @@ function ModusContext({ c }: { c: CaseDetail }) {
       </div>
       <h3>{guide.title}</h3>
       <p>{guide.definition}</p>
-      <p className="small-muted">Participant Guide Healthkathon 2026 · halaman 6 · kategori Fasilitas Kesehatan. Definisi ini tidak menggantikan kebijakan klaim yang berlaku.</p>
+      <p className="small-muted">
+        Participant Guide Healthkathon 2026 · halaman 6 · kategori Fasilitas
+        Kesehatan. Definisi ini tidak menggantikan kebijakan klaim yang berlaku.
+      </p>
       <div className="review-question">
         <strong>Pertanyaan untuk reviewer</strong>
         <p>{guide.question}</p>
@@ -512,8 +532,14 @@ function ModusContext({ c }: { c: CaseDetail }) {
             </li>
           ))}
         </ul>
-      ) : <p>Pasangan pemicu belum tersedia.</p>}
-      <p className="small-muted">Kesamaan diagnosis dan interval adalah pemicu screening. Tetap periksa keterkaitan episode, alasan medis, dan ketentuan paket sebelum menilai potensi pelanggaran.</p>
+      ) : (
+        <p>Pasangan pemicu belum tersedia.</p>
+      )}
+      <p className="small-muted">
+        Kesamaan diagnosis dan interval adalah pemicu screening. Tetap periksa
+        keterkaitan episode, alasan medis, dan ketentuan paket sebelum menilai
+        potensi pelanggaran.
+      </p>
     </section>
   );
 }
@@ -733,6 +759,138 @@ function Workspace({
         )}
       </div>
     </div>
+  );
+}
+function ReviewSummary({
+  c,
+  investigation,
+  evidence,
+  evidenceLoading,
+  evidenceError,
+  brief,
+  onBrief,
+}: {
+  c: CaseDetail;
+  investigation: InvestigationView;
+  evidence: Evidence[];
+  evidenceLoading: boolean;
+  evidenceError: boolean;
+  brief: InvestigationBrief | null;
+  onBrief: () => void;
+}) {
+  const st = investigation.state;
+  const priorities = reviewPriorities(st.requirements);
+  const completed = investigation.run.run_status === "COMPLETED";
+  const failed = investigation.run.run_status === "FAILED";
+  const guide = reviewGuide[c.signal_type];
+  return (
+    <section
+      className="review-summary panel"
+      aria-labelledby="review-summary-heading"
+    >
+      <div className="panel-heading">
+        <h2 id="review-summary-heading">Ringkasan untuk melanjutkan review</h2>
+        <span>Data sintetis · prototype</span>
+      </div>
+      <p>
+        <strong>{guide.title}</strong> · {guide.question}
+      </p>
+      <div className="review-evidence-groups">
+        {(
+          [
+            { category: "SUPPORTING_RISK", title: "Bukti pendukung sinyal" },
+            {
+              category: "EXPLAINING_CONTEXT",
+              title: "Alasan medis / konteks penjelas",
+            },
+          ] as const
+        ).map((group) => {
+          const items = evidence.filter(
+            (e) => e.relevance_category === group.category,
+          );
+          return (
+            <div key={group.category}>
+              <h3>{group.title}</h3>
+              {evidenceLoading ? (
+                <p>Memuat bukti run ini…</p>
+              ) : evidenceError ? (
+                <p>
+                  Bukti belum dapat dimuat. Coba muat ulang daftar bukti di
+                  bawah.
+                </p>
+              ) : items.length ? (
+                <>
+                  <p>
+                    {items.length} sumber dalam daftar bukti run ini. Buka
+                    sumber untuk memeriksa isi dan sikap pernyataannya.
+                  </p>
+                  <EvidenceLinks ids={items.map((e) => e.evidence_id)} />
+                </>
+              ) : (
+                <p>
+                  Belum ada sumber pada kategori ini. Ini tidak membuktikan
+                  bahwa risiko atau alasan medis tidak ada.
+                </p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div className="review-question">
+        <strong>
+          {failed
+            ? "Run gagal: hasil belum dapat dinilai"
+            : completed
+              ? "Langkah berikutnya untuk reviewer"
+              : "Pemeriksaan masih berjalan"}
+        </strong>
+        <p>
+          {failed
+            ? "Periksa jejak aksi dan kondisi layanan, lalu jalankan ulang investigasi."
+            : completed
+              ? "Tinjau hubungan episode, alasan medis, dan kebijakan. Bukti cukup berarti siap ditinjau, bukan klaim otomatis sah atau terbukti fraud."
+              : st.next_action
+                ? `${st.next_action.tool_label}: ${st.next_action.reason}`
+                : "Pantau pemeriksaan sumber di workspace. Ringkasan ini belum merupakan hasil akhir."}
+        </p>
+      </div>
+      {priorities.length > 0 ? (
+        <div className="review-priorities">
+          <h3>Pemeriksaan material yang perlu perhatian</h3>
+          {priorities.map((r) => (
+            <div key={r.key}>
+              <strong>{r.label}</strong>
+              <Badge value={r.state} />
+              <p>{r.state_explanation}</p>
+              {r.evidence_ids.length > 0 && (
+                <EvidenceLinks ids={r.evidence_ids} />
+              )}
+            </div>
+          ))}
+          <p className="small-muted">
+            Tidak ditemukan berarti pencarian selesai tanpa temuan; sumber tidak
+            tersedia berarti belum dapat dinilai. Keduanya tidak membuktikan
+            tidak adanya kondisi klinis.
+          </p>
+        </div>
+      ) : (
+        <p>
+          Belum ada gap material tercatat pada state ini. Reviewer tetap perlu
+          menilai bukti dan kebijakan.
+        </p>
+      )}
+      {completed && brief && (
+        <>
+          <Statements
+            items={brief.suggested_next_review}
+            empty="Tinjau sumber pada brief untuk menentukan tindak lanjut."
+          />
+          <button className="button secondary" onClick={onBrief}>
+            Tinjau reviewer brief <IconArrowRight size={18} />
+          </button>
+        </>
+      )}
+    </section>
   );
 }
 function RequirementRow({ requirement: r }: { requirement: Requirement }) {

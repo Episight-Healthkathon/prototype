@@ -31,7 +31,7 @@ export default function Guide() {
               Kunjungan berulang belum membuktikan pelanggaran. Alasan medis dan
               ketentuan episode tetap perlu diperiksa.
             </p>
-            <span>Data sintetis · keputusan tetap pada reviewer</span>
+            <span>Keputusan tetap pada reviewer</span>
           </aside>
         </section>
         <section aria-labelledby="guide-steps">

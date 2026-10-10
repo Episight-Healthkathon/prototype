@@ -217,12 +217,6 @@ export function CaseWorkspace({
         </div>
       </div>
       <Notice>{humanNotice}</Notice>
-      <p className="small-muted">
-        Data sintetis · prototype.{" "}
-        {mode === "demo"
-          ? "Demo offline memutar hasil yang sudah direkam, tanpa eksekusi AI baru."
-          : "API lokal menjalankan backend pada data simulasi, bukan data peserta JKN nyata."}
-      </p>
       <nav className="case-tabs" aria-label="Tahap review kasus">
         {(
           [
@@ -311,9 +305,9 @@ export function CaseWorkspace({
                   : "Detail bukti dan pertanyaan"}
               </h2>
               <p>
-                {mode === "demo"
-                  ? "Demo memutar pemeriksaan yang sudah direkam."
-                  : "Hasil pemeriksaan diperbarui otomatis. Keputusan tetap memerlukan reviewer."}
+                {view === "workspace"
+                  ? "Lihat temuan utama dan pemeriksaan yang perlu perhatian."
+                  : "Telusuri sumber dan pertanyaan pemeriksaan secara lengkap."}
               </p>
             </div>
             <div className="run-controls">

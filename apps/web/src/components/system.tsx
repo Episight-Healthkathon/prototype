@@ -317,15 +317,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
           <ModeControl />
         </header>
-        <div className="environment">
-          <IconDatabase size={15} />
-          <span>
-            Data sintetis · bukan data pasien JKN asli
-            {mode === "demo"
-              ? " · hasil engine diputar sebagai demo, bukan run API baru"
-              : ""}
-          </span>
-        </div>
         {healthError && mode === "live" && (
           <div className="api-banner" role="alert">
             API belum siap. Jalankan backend, lalu periksa ulang koneksi. Mode

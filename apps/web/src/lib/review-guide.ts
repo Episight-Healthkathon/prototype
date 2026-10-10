@@ -1,5 +1,12 @@
 import type { Requirement, SignalType } from "@episight/shared-types";
 
+export type ReviewView = "overview" | "workspace" | "evidence" | "brief";
+export function parseReviewView(value?: string | null): ReviewView {
+  return value === "workspace" || value === "evidence" || value === "brief"
+    ? value
+    : "overview";
+}
+
 export function reviewPriorities(requirements: Requirement[]) {
   // NOT_FOUND is a completed search, but may still require human review;
   // FOUND records evidence and does not establish that a claim is valid.

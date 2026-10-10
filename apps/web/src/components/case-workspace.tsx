@@ -42,8 +42,13 @@ import {
   useResource,
 } from "./system";
 import { date, humanNotice, label } from "@/lib/labels";
-import { reviewGuide, reviewPriorities } from "@/lib/review-guide";
-type View = "overview" | "workspace" | "brief";
+import {
+  parseReviewView,
+  reviewGuide,
+  reviewPriorities,
+  type ReviewView,
+} from "@/lib/review-guide";
+type View = ReviewView;
 function useInvestigation(id: string, runId: string, revision: number) {
   const { api, mode } = useApp();
   const [data, setData] = useState<InvestigationView | null>(null),
@@ -92,11 +97,7 @@ export function CaseWorkspace({
   initialView?: string;
 }) {
   const { api, mode } = useApp();
-  const [view, setView] = useState<View>(
-      ["overview", "workspace", "brief"].includes(initialView)
-        ? (initialView as View)
-        : "overview",
-    ),
+  const [view, setView] = useState<View>(parseReviewView(initialView)),
     [revision, setRevision] = useState(0),
     [runId, setRunId] = useState(""),
     [starting, setStarting] = useState(false),
@@ -122,12 +123,12 @@ export function CaseWorkspace({
   const runs = useResource(() => api.runs(id), `runs:${key}`);
   const navigate = (v: View) => {
     setView(v);
-    window.history.replaceState(null, "", `?view=${v}`);
+    if (v !== view) window.history.pushState(null, "", `?view=${v}`);
   };
   useEffect(() => {
     const pop = () => {
       const v = new URLSearchParams(window.location.search).get("view");
-      setView(v === "workspace" || v === "brief" ? v : "overview");
+      setView(parseReviewView(v));
     };
     window.addEventListener("popstate", pop);
     return () => window.removeEventListener("popstate", pop);
@@ -225,9 +226,14 @@ export function CaseWorkspace({
       <nav className="case-tabs" aria-label="Tahap review kasus">
         {(
           [
-            { id: "overview", title: "Konteks & timeline", icon: IconTimeline },
-            { id: "workspace", title: "Investigasi", icon: IconSearch },
-            { id: "brief", title: "Reviewer brief", icon: IconFileText },
+            { id: "overview", title: "1. Konteks kasus", icon: IconTimeline },
+            {
+              id: "workspace",
+              title: "2. Ringkasan pemeriksaan",
+              icon: IconSearch,
+            },
+            { id: "evidence", title: "3. Detail bukti", icon: IconSearch },
+            { id: "brief", title: "4. Ringkasan akhir", icon: IconFileText },
           ] as const
         ).map((t) => (
           <button
@@ -264,14 +270,22 @@ export function CaseWorkspace({
       {view === "overview" ? (
         <>
           <Overview c={c} />
-          <ModusContext c={c} />
-          {timeline.loading ? (
-            <Loading />
-          ) : timeline.error ? (
-            <ErrorState error={timeline.error} retry={timeline.reload} />
-          ) : (
-            timeline.data && <Timeline timeline={timeline.data} />
-          )}
+          <details className="review-disclosure">
+            <summary>Pelajari kaitan dengan modus dan pasangan pemicu</summary>
+            <ModusContext c={c} />
+          </details>
+          <details className="review-disclosure">
+            <summary>
+              Lihat timeline lengkap ({c.episode_count} episode pemicu)
+            </summary>
+            {timeline.loading ? (
+              <Loading />
+            ) : timeline.error ? (
+              <ErrorState error={timeline.error} retry={timeline.reload} />
+            ) : (
+              timeline.data && <Timeline timeline={timeline.data} />
+            )}
+          </details>
           <div className="section-action">
             <p>
               {completed
@@ -287,35 +301,46 @@ export function CaseWorkspace({
             </button>
           </div>
         </>
-      ) : view === "workspace" ? (
+      ) : view === "workspace" || view === "evidence" ? (
         <>
           <div className="run-toolbar">
             <div>
-              <h2>Workspace investigasi</h2>
+              <h2>
+                {view === "workspace"
+                  ? "Ringkasan pemeriksaan"
+                  : "Detail bukti dan pertanyaan"}
+              </h2>
               <p>
                 {mode === "demo"
-                  ? "Pemutaran hasil engine aturan + retrieval; tidak menjalankan AI atau API baru."
-                  : "Pemeriksaan berjalan di backend. State diperbarui melalui polling."}
+                  ? "Demo memutar pemeriksaan yang sudah direkam."
+                  : "Hasil pemeriksaan diperbarui otomatis. Keputusan tetap memerlukan reviewer."}
               </p>
             </div>
             <div className="run-controls">
               {mode === "live" && !running && (
-                <label>
-                  Mode
-                  <select
-                    value={investigationMode}
-                    onChange={(e) =>
-                      setInvestigationMode(e.target.value as InvestigationMode)
-                    }
-                  >
-                    <option value="FULL_RULE_PLANNER">
-                      Aturan + retrieval
-                    </option>
-                    <option value="FULL">Planner AI + fallback</option>
-                    <option value="RULES_RETRIEVAL">Aturan + kebijakan</option>
-                    <option value="RULES_ONLY">Aturan saja</option>
-                  </select>
-                </label>
+                <details className="review-disclosure compact-options">
+                  <summary>Pengaturan lanjutan</summary>
+                  <label>
+                    Metode pemeriksaan
+                    <select
+                      value={investigationMode}
+                      onChange={(e) =>
+                        setInvestigationMode(
+                          e.target.value as InvestigationMode,
+                        )
+                      }
+                    >
+                      <option value="FULL_RULE_PLANNER">
+                        Aturan + retrieval
+                      </option>
+                      <option value="FULL">Planner AI + fallback</option>
+                      <option value="RULES_RETRIEVAL">
+                        Aturan + kebijakan
+                      </option>
+                      <option value="RULES_ONLY">Aturan saja</option>
+                    </select>
+                  </label>
+                </details>
               )}
               {!running && (
                 <button
@@ -348,30 +373,33 @@ export function CaseWorkspace({
             </div>
           </div>
           {runs.data && runs.data.items.length > 0 && (
-            <div className="run-history">
-              <IconHistory size={17} />
-              <label>
-                Riwayat run
-                <select
-                  value={runId}
-                  onChange={(e) => setRunId(e.target.value)}
-                >
-                  <option value="">Run terbaru</option>
-                  {runs.data.items.map((r) => (
-                    <option value={r.run_id} key={r.run_id}>
-                      {date(r.started_at, true)} · {label(r.mode)} ·{" "}
-                      {label(r.run_status)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              {runId && (
-                <span>
-                  Menampilkan run yang dipilih. Pilih run terbaru untuk memulai
-                  ulang.
-                </span>
-              )}
-            </div>
+            <details className="review-disclosure">
+              <summary>Riwayat pemeriksaan ({runs.data.items.length})</summary>
+              <div className="run-history">
+                <IconHistory size={17} />
+                <label>
+                  Pemeriksaan sebelumnya
+                  <select
+                    value={runId}
+                    onChange={(e) => setRunId(e.target.value)}
+                  >
+                    <option value="">Pemeriksaan terbaru</option>
+                    {runs.data.items.map((r) => (
+                      <option value={r.run_id} key={r.run_id}>
+                        {date(r.started_at, true)} · {label(r.mode)} ·{" "}
+                        {label(r.run_status)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {runId && (
+                  <span>
+                    Menampilkan run yang dipilih. Pilih run terbaru untuk
+                    memulai ulang.
+                  </span>
+                )}
+              </div>
+            </details>
           )}
           {inv.loading ? (
             <Loading label="Memuat state investigasi…" />
@@ -379,34 +407,64 @@ export function CaseWorkspace({
             <ErrorState error={inv.error} retry={refresh} />
           ) : inv.data ? (
             <>
-              <RunProgress run={inv.data.run} />
-              <ReviewSummary
-                c={c}
-                investigation={inv.data}
-                evidence={ev.data?.items || []}
-                evidenceLoading={ev.loading}
-                evidenceError={!!ev.error}
-                brief={
-                  !brief.loading && !brief.error ? brief.data || null : null
-                }
-                onBrief={() => navigate("brief")}
-              />
-              <Workspace
-                investigation={inv.data}
-                evidence={ev.data?.items || []}
-              />
-              {ev.error && <ErrorState error={ev.error} retry={ev.reload} />}
-              <ActionTrail investigation={inv.data} />
-              {completed && (
-                <div className="section-action">
-                  <span>
-                    Investigasi berhenti: {label(inv.data.state.stop_reason)}.
-                  </span>
-                  <button className="button" onClick={() => navigate("brief")}>
-                    Buka brief
+              {view === "workspace" ? (
+                <>
+                  <ReviewSummary
+                    c={c}
+                    investigation={inv.data}
+                    evidence={ev.data?.items || []}
+                    evidenceLoading={ev.loading}
+                    evidenceError={!!ev.error}
+                    brief={
+                      !brief.loading && !brief.error ? brief.data || null : null
+                    }
+                    onBrief={() => navigate("brief")}
+                    onEvidence={() => navigate("evidence")}
+                  />
+                  <button
+                    className="button secondary"
+                    onClick={() => navigate("evidence")}
+                  >
+                    Periksa seluruh bukti dan pertanyaan{" "}
                     <IconArrowRight size={18} />
                   </button>
-                </div>
+                </>
+              ) : (
+                <>
+                  {ev.loading ? (
+                    <Loading label="Memuat bukti pemeriksaan…" />
+                  ) : ev.error ? (
+                    <ErrorState error={ev.error} retry={ev.reload} />
+                  ) : (
+                    <Workspace
+                      investigation={inv.data}
+                      evidence={ev.data?.items || []}
+                    />
+                  )}
+                  <details className="review-disclosure">
+                    <summary>
+                      Detail teknis dan jejak pemeriksaan (
+                      {inv.data.trail.length} aksi)
+                    </summary>
+                    <RunProgress run={inv.data.run} />
+                    <ActionTrail investigation={inv.data} />
+                  </details>
+                  {completed && (
+                    <div className="section-action">
+                      <span>
+                        Investigasi berhenti:{" "}
+                        {label(inv.data.state.stop_reason)}.
+                      </span>
+                      <button
+                        className="button"
+                        onClick={() => navigate("brief")}
+                      >
+                        Buka brief
+                        <IconArrowRight size={18} />
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
               {inv.data.run.run_status === "FAILED" && (
                 <div className="inline-error" role="alert">
@@ -718,7 +776,7 @@ function Workspace({
       <div>
         <section className="panel">
           <div className="panel-heading">
-            <h2>Pertanyaan & evidence gap</h2>
+            <h2>Pertanyaan dan bukti yang belum lengkap</h2>
             <span>{st.requirements.length} pemeriksaan</span>
           </div>
           <div className="requirements">
@@ -769,6 +827,7 @@ function ReviewSummary({
   evidenceError,
   brief,
   onBrief,
+  onEvidence,
 }: {
   c: CaseDetail;
   investigation: InvestigationView;
@@ -777,6 +836,7 @@ function ReviewSummary({
   evidenceError: boolean;
   brief: InvestigationBrief | null;
   onBrief: () => void;
+  onEvidence: () => void;
 }) {
   const st = investigation.state;
   const priorities = reviewPriorities(st.requirements);
@@ -789,12 +849,18 @@ function ReviewSummary({
       aria-labelledby="review-summary-heading"
     >
       <div className="panel-heading">
-        <h2 id="review-summary-heading">Ringkasan untuk melanjutkan review</h2>
-        <span>Data sintetis · prototype</span>
+        <h2 id="review-summary-heading">
+          Apa yang perlu diperiksa berikutnya?
+        </h2>
+        <span>
+          {completed
+            ? "Pemeriksaan mesin selesai · belum diputuskan reviewer"
+            : failed
+              ? "Pemeriksaan gagal"
+              : "Pemeriksaan berlangsung"}
+        </span>
       </div>
-      <p>
-        <strong>{guide.title}</strong> · {guide.question}
-      </p>
+      <p>{guide.question}</p>
       <div className="review-evidence-groups">
         {(
           [
@@ -815,16 +881,15 @@ function ReviewSummary({
                 <p>Memuat bukti run ini…</p>
               ) : evidenceError ? (
                 <p>
-                  Bukti belum dapat dimuat. Coba muat ulang daftar bukti di
-                  bawah.
+                  Bukti belum dapat dimuat. Buka detail bukti untuk mencoba
+                  lagi.
                 </p>
               ) : items.length ? (
                 <>
                   <p>
-                    {items.length} sumber dalam daftar bukti run ini. Buka
-                    sumber untuk memeriksa isi dan sikap pernyataannya.
+                    {items.length} sumber tercatat. Periksa isinya di detail
+                    bukti.
                   </p>
-                  <EvidenceLinks ids={items.map((e) => e.evidence_id)} />
                 </>
               ) : (
                 <p>
@@ -839,7 +904,7 @@ function ReviewSummary({
       <div className="review-question">
         <strong>
           {failed
-            ? "Run gagal: hasil belum dapat dinilai"
+            ? "Pemeriksaan gagal: hasil belum dapat dinilai"
             : completed
               ? "Langkah berikutnya untuk reviewer"
               : "Pemeriksaan masih berjalan"}
@@ -856,17 +921,19 @@ function ReviewSummary({
       </div>
       {priorities.length > 0 ? (
         <div className="review-priorities">
-          <h3>Pemeriksaan material yang perlu perhatian</h3>
-          {priorities.map((r) => (
+          <h3>Perlu perhatian ({priorities.length} pemeriksaan penting)</h3>
+          {priorities.slice(0, 3).map((r) => (
             <div key={r.key}>
               <strong>{r.label}</strong>
               <Badge value={r.state} />
-              <p>{r.state_explanation}</p>
-              {r.evidence_ids.length > 0 && (
-                <EvidenceLinks ids={r.evidence_ids} />
-              )}
             </div>
           ))}
+          <button className="text-link" onClick={onEvidence}>
+            {priorities.length > 3
+              ? `Lihat seluruh ${priorities.length} pemeriksaan dan penjelasannya`
+              : "Lihat penjelasan dan sumber terkait"}
+            <IconArrowRight size={16} />
+          </button>
           <p className="small-muted">
             Tidak ditemukan berarti pencarian selesai tanpa temuan; sumber tidak
             tersedia berarti belum dapat dinilai. Keduanya tidak membuktikan
@@ -875,14 +942,14 @@ function ReviewSummary({
         </div>
       ) : (
         <p>
-          Belum ada gap material tercatat pada state ini. Reviewer tetap perlu
+          Belum ada kekurangan bukti penting yang tercatat. Reviewer tetap perlu
           menilai bukti dan kebijakan.
         </p>
       )}
       {completed && brief && (
         <>
           <Statements
-            items={brief.suggested_next_review}
+            items={brief.suggested_next_review.slice(0, 1)}
             empty="Tinjau sumber pada brief untuk menentukan tindak lanjut."
           />
           <button className="button secondary" onClick={onBrief}>

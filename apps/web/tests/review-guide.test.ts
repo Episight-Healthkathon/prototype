@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 import type { Requirement } from "@episight/shared-types";
-import { reviewGuide, reviewPriorities } from "@/lib/review-guide";
+import {
+  parseReviewView,
+  reviewGuide,
+  reviewPriorities,
+} from "@/lib/review-guide";
 
 function requirement(
   state: Requirement["state"],
@@ -25,6 +29,18 @@ function requirement(
 }
 
 describe("guided review", () => {
+  it("supports direct links and back navigation to each review stage", () => {
+    for (const view of [
+      "overview",
+      "workspace",
+      "evidence",
+      "brief",
+    ] as const) {
+      expect(parseReviewView(view)).toBe(view);
+    }
+    expect(parseReviewView("unknown")).toBe("overview");
+    expect(parseReviewView(null)).toBe("overview");
+  });
   it("maps each signal to its specific competition definition", () => {
     expect(reviewGuide.READMISSION.title).toContain("16");
     expect(reviewGuide.READMISSION.definition).toContain("satu episode");

@@ -264,8 +264,14 @@ export function CaseWorkspace({
       {view === "overview" ? (
         <>
           <Overview c={c} />
-          <details className="review-disclosure">
-            <summary>Pelajari kaitan dengan modus dan pasangan pemicu</summary>
+          <details className="review-disclosure context-disclosure">
+            <summary>
+              <span>
+                Kaitan modus dan episode pemicu
+                <small>Pahami apa yang perlu dinilai pada kasus ini</small>
+              </span>
+              <IconChevronDown size={20} aria-hidden="true" />
+            </summary>
             <ModusContext c={c} />
           </details>
           <details className="review-disclosure">
@@ -506,7 +512,13 @@ function Overview({ c }: { c: CaseDetail }) {
       <div>
         <IconGitBranchLocal />
         <h2>Mengapa kasus ini ditandai?</h2>
-        <p>{c.signal.description}</p>
+        <p>
+          {c.signal_type === "READMISSION"
+            ? "Admisi rawat inap berulang"
+            : "Kunjungan rawat jalan berulang"}{" "}
+          pada pasien dan fasilitas yang sama, dengan diagnosis utama sama
+          persis dalam {c.signal.params.threshold_days} hari.
+        </p>
         <div className="signal-criteria">
           <span>
             <IconCheck size={16} />
@@ -557,41 +569,59 @@ function IconGitBranchLocal() {
 function ModusContext({ c }: { c: CaseDetail }) {
   const guide = reviewGuide[c.signal_type];
   return (
-    <section className="review-guide panel" aria-labelledby="modus-heading">
-      <div className="panel-heading">
-        <h2 id="modus-heading">Kaitan dengan modus yang ditinjau</h2>
-        <span>Konteks panduan lomba</span>
+    <section className="modus-context" aria-labelledby="modus-heading">
+      <div className="modus-context-grid">
+        <div className="modus-definition">
+          <span className="context-eyebrow">MODUS YANG DITINJAU</span>
+          <h2 id="modus-heading">{guide.title}</h2>
+          <p>{guide.definition}</p>
+          <div className="modus-question">
+            <IconSearch size={20} aria-hidden="true" />
+            <div>
+              <h3>Pertanyaan untuk reviewer</h3>
+              <p>{guide.question}</p>
+            </div>
+          </div>
+        </div>
+        <div className="modus-episodes">
+          <span className="context-eyebrow">EPISODE PEMICU</span>
+          <h3>{c.signal.pairs.length} pasangan untuk dibandingkan</h3>
+          {c.signal.pairs.length ? (
+            <ul className="context-pairs">
+              {c.signal.pairs.map((pair) => (
+                <li key={`${pair.from_episode_id}:${pair.to_episode_id}`}>
+                  <div className="context-pair-flow">
+                    <div>
+                      <span>Episode awal</span>
+                      <strong className="mono">{pair.from_episode_id}</strong>
+                    </div>
+                    <IconArrowRight size={18} aria-hidden="true" />
+                    <div>
+                      <span>Episode berikutnya</span>
+                      <strong className="mono">{pair.to_episode_id}</strong>
+                    </div>
+                  </div>
+                  <span className="context-interval">
+                    <IconCalendar size={15} aria-hidden="true" />
+                    Interval {pair.interval_days} hari
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Pasangan pemicu belum tersedia.</p>
+          )}
+          <p className="context-caption">
+            Bandingkan diagnosis, tindakan, dan alasan medis melalui timeline di
+            bawah.
+          </p>
+        </div>
       </div>
-      <h3>{guide.title}</h3>
-      <p>{guide.definition}</p>
-      <p className="small-muted">
-        Participant Guide Healthkathon 2026 · halaman 6 · kategori Fasilitas
-        Kesehatan. Definisi ini tidak menggantikan kebijakan klaim yang berlaku.
-      </p>
-      <div className="review-question">
-        <strong>Pertanyaan untuk reviewer</strong>
-        <p>{guide.question}</p>
-      </div>
-      <h3>Pasangan episode pemicu</h3>
-      {c.signal.pairs.length ? (
-        <ul className="signal-pairs">
-          {c.signal.pairs.map((pair) => (
-            <li key={`${pair.from_episode_id}:${pair.to_episode_id}`}>
-              <span className="mono">{pair.from_episode_id}</span>
-              <IconArrowRight size={16} aria-hidden="true" />
-              <span className="mono">{pair.to_episode_id}</span>
-              <span>{pair.interval_days} hari</span>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Pasangan pemicu belum tersedia.</p>
-      )}
-      <p className="small-muted">
-        Kesamaan diagnosis dan interval adalah pemicu screening. Tetap periksa
-        keterkaitan episode, alasan medis, dan ketentuan paket sebelum menilai
-        potensi pelanggaran.
-      </p>
+      <footer className="modus-reference">
+        Participant Guide Healthkathon 2026 · halaman 6 · Fasilitas Kesehatan.
+        Definisi modus adalah konteks peninjauan, bukan pengganti kebijakan
+        klaim.
+      </footer>
     </section>
   );
 }

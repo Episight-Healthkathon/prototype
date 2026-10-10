@@ -18,7 +18,6 @@ import {
   IconDatabase,
   IconExternalLink,
   IconFileText,
-  IconHome,
   IconLayoutList,
   IconLoader2,
   IconRefresh,
@@ -293,10 +292,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <IconLayoutList size={20} />
             Antrean kasus
             <IconChevronRight size={16} />
-          </Link>
-          <Link href="/">
-            <IconHome size={20} />
-            Tentang EPISIGHT
           </Link>
           <Link href="/guide" className={path === "/guide" ? "active" : ""}>
             <IconFileText size={20} />

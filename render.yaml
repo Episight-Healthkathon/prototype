@@ -4,6 +4,7 @@ services:
     name: episight-api
     runtime: docker
     plan: free
+    region: singapore # same region as the Neon database
     dockerfilePath: ./apps/api/Dockerfile
     dockerContext: ./apps/api
     healthCheckPath: /api/v1/health

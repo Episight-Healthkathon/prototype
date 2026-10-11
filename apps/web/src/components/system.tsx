@@ -18,7 +18,6 @@ import {
   IconDatabase,
   IconExternalLink,
   IconFileText,
-  IconHome,
   IconLayoutList,
   IconLoader2,
   IconRefresh,
@@ -294,10 +293,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             Antrean kasus
             <IconChevronRight size={16} />
           </Link>
-          <Link href="/">
-            <IconHome size={20} />
-            Tentang EPISIGHT
-          </Link>
           <Link href="/guide" className={path === "/guide" ? "active" : ""}>
             <IconFileText size={20} />
             Panduan review
@@ -322,15 +317,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
           <ModeControl />
         </header>
-        <div className="environment">
-          <IconDatabase size={15} />
-          <span>
-            Data sintetis · bukan data pasien JKN asli
-            {mode === "demo"
-              ? " · hasil engine diputar sebagai demo, bukan run API baru"
-              : ""}
-          </span>
-        </div>
         {healthError && mode === "live" && (
           <div className="api-banner" role="alert">
             API belum siap. Jalankan backend, lalu periksa ulang koneksi. Mode
@@ -393,7 +379,6 @@ function EvidenceDrawer({
                   <Badge value={ev.source_type} />
                   <Badge value={ev.stance} />
                   <h2>{ev.source_title}</h2>
-                  <span className="mono">{ev.source_id}</span>
                 </div>
                 <section className="source-section">
                   <h3>Kutipan yang digunakan</h3>
@@ -438,8 +423,8 @@ function EvidenceDrawer({
                     </a>
                   )}
                 </section>
-                <section className="source-section">
-                  <h3>Provenance</h3>
+                <details className="source-section source-provenance">
+                  <summary>Detail sumber dan asal data</summary>
                   <dl className="metadata">
                     <dt>Evidence ID</dt>
                     <dd className="mono">{ev.evidence_id}</dd>
@@ -476,7 +461,7 @@ function EvidenceDrawer({
                   </dl>
                   <h4>Alasan pencarian</h4>
                   <p>{ev.retrieval_reason}</p>
-                </section>
+                </details>
               </>
             )
           )}

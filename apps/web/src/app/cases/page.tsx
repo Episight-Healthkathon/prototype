@@ -21,6 +21,10 @@ import {
 import { date, humanNotice } from "@/lib/labels";
 import type { Query } from "@/lib/api";
 export default function Queue() {
+  const { mode } = useApp();
+  return <QueueSession key={mode} />;
+}
+function QueueSession() {
   const { api, mode } = useApp();
   const [search, setSearch] = useState(""),
     [q, setQ] = useState(""),

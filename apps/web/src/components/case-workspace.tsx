@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   IconArrowLeft,
@@ -9,7 +9,6 @@ import {
   IconCheck,
   IconChevronDown,
   IconFileText,
-  IconHistory,
   IconPlayerPlay,
   IconPrinter,
   IconRefresh,
@@ -42,7 +41,15 @@ import {
   useResource,
 } from "./system";
 import { date, humanNotice, label } from "@/lib/labels";
-type View = "overview" | "workspace" | "brief";
+import { ReviewSummaryCard } from "./review-summary";
+import { RunHistory } from "./run-history";
+import { EvidenceBrowser } from "./evidence-browser";
+import {
+  parseReviewView,
+  reviewPriorities,
+  type ReviewView,
+} from "@/lib/review-guide";
+type View = ReviewView;
 function useInvestigation(id: string, runId: string, revision: number) {
   const { api, mode } = useApp();
   const [data, setData] = useState<InvestigationView | null>(null),
@@ -85,17 +92,23 @@ function useInvestigation(id: string, runId: string, revision: number) {
 }
 export function CaseWorkspace({
   id,
+  initialView,
+}: {
+  id: string;
+  initialView?: string;
+}) {
+  const { mode } = useApp();
+  return <CaseWorkspaceSession key={mode} id={id} initialView={initialView} />;
+}
+function CaseWorkspaceSession({
+  id,
   initialView = "overview",
 }: {
   id: string;
   initialView?: string;
 }) {
   const { api, mode } = useApp();
-  const [view, setView] = useState<View>(
-      ["overview", "workspace", "brief"].includes(initialView)
-        ? (initialView as View)
-        : "overview",
-    ),
+  const [view, setView] = useState<View>(parseReviewView(initialView)),
     [revision, setRevision] = useState(0),
     [runId, setRunId] = useState(""),
     [starting, setStarting] = useState(false),
@@ -121,12 +134,12 @@ export function CaseWorkspace({
   const runs = useResource(() => api.runs(id), `runs:${key}`);
   const navigate = (v: View) => {
     setView(v);
-    window.history.replaceState(null, "", `?view=${v}`);
+    if (v !== view) window.history.pushState(null, "", `?view=${v}`);
   };
   useEffect(() => {
     const pop = () => {
       const v = new URLSearchParams(window.location.search).get("view");
-      setView(v === "workspace" || v === "brief" ? v : "overview");
+      setView(parseReviewView(v));
     };
     window.addEventListener("popstate", pop);
     return () => window.removeEventListener("popstate", pop);
@@ -177,11 +190,15 @@ export function CaseWorkspace({
   const c = detail.data;
   if (!c) return null;
   // A selected run may have a null outcome; never inherit a newer run's result.
-  const runState = view !== "overview" ? inv.data?.state : null;
-  const activeOutcome = runState ? runState.outcome : c.outcome;
-  const activeProgress = runState
-    ? runState.progress_status
-    : c.progress_status;
+  const runState = inv.data?.state;
+  const activeOutcome = runId
+    ? runState?.outcome
+    : runState
+      ? runState.outcome
+      : c.outcome;
+  const activeProgress = runId
+    ? runState?.progress_status
+    : runState?.progress_status || c.progress_status;
   return (
     <>
       <Link href="/cases" className="back-link">
@@ -205,22 +222,64 @@ export function CaseWorkspace({
             pemicu · interval minimum {c.min_interval_days} hari
           </p>
         </div>
-        <div className="case-status">
-          <Badge
-            value={
-              running && view !== "overview" ? "INVESTIGATING" : activeProgress
-            }
+        <div className="case-header-actions">
+          <RunHistory
+            items={runs.data?.items || []}
+            loading={runs.loading}
+            error={runs.error}
+            retry={runs.reload}
+            selectedId={runId}
+            onSelect={(selectedId) => {
+              setRunId(selectedId);
+              navigate("workspace");
+            }}
           />
-          {activeOutcome && <Badge value={activeOutcome} />}
+          {mode === "demo" && (
+            <details className="demo-settings review-disclosure">
+              <summary>Pengaturan demo</summary>
+              <p>Ulangi pemutaran pemeriksaan yang sudah direkam.</p>
+              <button
+                className="button secondary compact"
+                disabled={starting || running || !!runId || !inv.data}
+                onClick={() => start(true)}
+              >
+                <IconRefresh size={16} className={starting ? "spin" : ""} />
+                {starting ? "Memulai…" : "Putar ulang demo"}
+              </button>
+              {runId && (
+                <p>Kembali ke pemeriksaan terbaru untuk memutar ulang.</p>
+              )}
+              {!inv.data && (
+                <p>
+                  Mulai investigasi dari Ringkasan pemeriksaan terlebih dahulu.
+                </p>
+              )}
+            </details>
+          )}
+          <div className="case-status">
+            <Badge
+              value={
+                running && view !== "overview"
+                  ? "INVESTIGATING"
+                  : activeProgress
+              }
+            />
+            {activeOutcome && <Badge value={activeOutcome} />}
+          </div>
         </div>
       </div>
       <Notice>{humanNotice}</Notice>
       <nav className="case-tabs" aria-label="Tahap review kasus">
         {(
           [
-            { id: "overview", title: "Konteks & timeline", icon: IconTimeline },
-            { id: "workspace", title: "Investigasi", icon: IconSearch },
-            { id: "brief", title: "Reviewer brief", icon: IconFileText },
+            { id: "overview", title: "1. Konteks kasus", icon: IconTimeline },
+            {
+              id: "workspace",
+              title: "2. Ringkasan pemeriksaan",
+              icon: IconSearch,
+            },
+            { id: "evidence", title: "3. Detail bukti", icon: IconSearch },
+            { id: "brief", title: "4. Ringkasan akhir", icon: IconFileText },
           ] as const
         ).map((t) => (
           <button
@@ -237,11 +296,23 @@ export function CaseWorkspace({
           </button>
         ))}
       </nav>
-      {runId && view !== "overview" && (
-        <Notice>
-          Run yang dipilih: <span className="mono">{runId}</span>. Bukti dan
-          brief mengikuti run ini.
-        </Notice>
+      {runId && (
+        <div className="historical-notice" role="status">
+          <div>
+            <strong>Melihat pemeriksaan sebelumnya</strong>
+            <span className="mono">{runId}</span>
+            <p>
+              Bukti dan ringkasan mengikuti pemeriksaan ini, bukan hasil
+              terbaru.
+            </p>
+          </div>
+          <button
+            className="button secondary compact"
+            onClick={() => setRunId("")}
+          >
+            Kembali ke hasil terbaru <IconArrowRight size={16} />
+          </button>
+        </div>
       )}
       {startError && (
         <div className="inline-error" role="alert">
@@ -257,13 +328,27 @@ export function CaseWorkspace({
       {view === "overview" ? (
         <>
           <Overview c={c} />
-          {timeline.loading ? (
-            <Loading />
-          ) : timeline.error ? (
-            <ErrorState error={timeline.error} retry={timeline.reload} />
-          ) : (
-            timeline.data && <Timeline timeline={timeline.data} />
-          )}
+          <details className="review-disclosure">
+            <summary>
+              Lihat timeline lengkap ({c.episode_count} episode pemicu)
+            </summary>
+            {runId && (
+              <p className="small-muted">
+                Timeline ini menunjukkan konteks kasus saat ini, bukan snapshot
+                pemeriksaan lama. Bukti pemeriksaan yang dipilih tersedia di
+                Detail bukti.
+              </p>
+            )}
+            {timeline.loading ? (
+              <Loading />
+            ) : timeline.error ? (
+              <ErrorState error={timeline.error} retry={timeline.reload} />
+            ) : (
+              timeline.data && (
+                <Timeline timeline={timeline.data} showEvidenceLinks={!runId} />
+              )
+            )}
+          </details>
           <div className="section-action">
             <p>
               {completed
@@ -279,37 +364,48 @@ export function CaseWorkspace({
             </button>
           </div>
         </>
-      ) : view === "workspace" ? (
+      ) : view === "workspace" || view === "evidence" ? (
         <>
           <div className="run-toolbar">
             <div>
-              <h2>Workspace investigasi</h2>
+              <h2>
+                {view === "workspace"
+                  ? "Ringkasan pemeriksaan"
+                  : "Detail bukti dan pertanyaan"}
+              </h2>
               <p>
-                {mode === "demo"
-                  ? "Pemutaran hasil engine aturan + retrieval; tidak menjalankan AI atau API baru."
-                  : "Pemeriksaan berjalan di backend. State diperbarui melalui polling."}
+                {view === "workspace"
+                  ? "Lihat temuan utama dan pemeriksaan yang perlu perhatian."
+                  : "Telusuri sumber dan pertanyaan pemeriksaan secara lengkap."}
               </p>
             </div>
             <div className="run-controls">
               {mode === "live" && !running && (
-                <label>
-                  Mode
-                  <select
-                    value={investigationMode}
-                    onChange={(e) =>
-                      setInvestigationMode(e.target.value as InvestigationMode)
-                    }
-                  >
-                    <option value="FULL_RULE_PLANNER">
-                      Aturan + retrieval
-                    </option>
-                    <option value="FULL">Planner AI + fallback</option>
-                    <option value="RULES_RETRIEVAL">Aturan + kebijakan</option>
-                    <option value="RULES_ONLY">Aturan saja</option>
-                  </select>
-                </label>
+                <details className="review-disclosure compact-options">
+                  <summary>Pengaturan lanjutan</summary>
+                  <label>
+                    Metode pemeriksaan
+                    <select
+                      value={investigationMode}
+                      onChange={(e) =>
+                        setInvestigationMode(
+                          e.target.value as InvestigationMode,
+                        )
+                      }
+                    >
+                      <option value="FULL_RULE_PLANNER">
+                        Aturan + retrieval
+                      </option>
+                      <option value="FULL">Planner AI + fallback</option>
+                      <option value="RULES_RETRIEVAL">
+                        Aturan + kebijakan
+                      </option>
+                      <option value="RULES_ONLY">Aturan saja</option>
+                    </select>
+                  </label>
+                </details>
               )}
-              {!running && (
+              {!running && !(mode === "demo" && completed) && (
                 <button
                   disabled={starting || !!runId}
                   className={`button ${completed ? "secondary" : ""}`}
@@ -339,55 +435,61 @@ export function CaseWorkspace({
               {running && <Badge value={inv.data?.run.run_status} />}
             </div>
           </div>
-          {runs.data && runs.data.items.length > 0 && (
-            <div className="run-history">
-              <IconHistory size={17} />
-              <label>
-                Riwayat run
-                <select
-                  value={runId}
-                  onChange={(e) => setRunId(e.target.value)}
-                >
-                  <option value="">Run terbaru</option>
-                  {runs.data.items.map((r) => (
-                    <option value={r.run_id} key={r.run_id}>
-                      {date(r.started_at, true)} · {label(r.mode)} ·{" "}
-                      {label(r.run_status)}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              {runId && (
-                <span>
-                  Menampilkan run yang dipilih. Pilih run terbaru untuk memulai
-                  ulang.
-                </span>
-              )}
-            </div>
-          )}
           {inv.loading ? (
             <Loading label="Memuat state investigasi…" />
           ) : inv.error ? (
             <ErrorState error={inv.error} retry={refresh} />
           ) : inv.data ? (
             <>
-              <RunProgress run={inv.data.run} />
-              <Workspace
-                investigation={inv.data}
-                evidence={ev.data?.items || []}
-              />
-              {ev.error && <ErrorState error={ev.error} retry={ev.reload} />}
-              <ActionTrail investigation={inv.data} />
-              {completed && (
-                <div className="section-action">
-                  <span>
-                    Investigasi berhenti: {label(inv.data.state.stop_reason)}.
-                  </span>
-                  <button className="button" onClick={() => navigate("brief")}>
-                    Buka brief
-                    <IconArrowRight size={18} />
-                  </button>
-                </div>
+              {view === "workspace" ? (
+                <>
+                  <ReviewSummaryCard
+                    c={c}
+                    investigation={inv.data}
+                    evidence={ev.data?.items || []}
+                    evidenceLoading={ev.loading}
+                    evidenceError={!!ev.error}
+                    evidenceTotal={ev.data?.total}
+                    onBrief={() => navigate("brief")}
+                    onEvidence={() => navigate("evidence")}
+                  />
+                </>
+              ) : (
+                <>
+                  {ev.loading ? (
+                    <Loading label="Memuat bukti pemeriksaan…" />
+                  ) : ev.error ? (
+                    <ErrorState error={ev.error} retry={ev.reload} />
+                  ) : (
+                    <Workspace
+                      investigation={inv.data}
+                      evidence={ev.data?.items || []}
+                    />
+                  )}
+                  <details className="review-disclosure">
+                    <summary>
+                      Detail teknis dan jejak pemeriksaan (
+                      {inv.data.trail.length} aksi)
+                    </summary>
+                    <RunProgress run={inv.data.run} />
+                    <ActionTrail investigation={inv.data} />
+                  </details>
+                  {completed && (
+                    <div className="section-action">
+                      <span>
+                        Investigasi berhenti:{" "}
+                        {label(inv.data.state.stop_reason)}.
+                      </span>
+                      <button
+                        className="button"
+                        onClick={() => navigate("brief")}
+                      >
+                        Buka brief
+                        <IconArrowRight size={18} />
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
               {inv.data.run.run_status === "FAILED" && (
                 <div className="inline-error" role="alert">
@@ -435,7 +537,13 @@ function Overview({ c }: { c: CaseDetail }) {
       <div>
         <IconGitBranchLocal />
         <h2>Mengapa kasus ini ditandai?</h2>
-        <p>{c.signal.description}</p>
+        <p>
+          {c.signal_type === "READMISSION"
+            ? "Admisi rawat inap berulang"
+            : "Kunjungan rawat jalan berulang"}{" "}
+          pada pasien dan fasilitas yang sama, dengan diagnosis utama sama
+          persis dalam {c.signal.params.threshold_days} hari.
+        </p>
         <div className="signal-criteria">
           <span>
             <IconCheck size={16} />
@@ -483,7 +591,13 @@ function Overview({ c }: { c: CaseDetail }) {
 function IconGitBranchLocal() {
   return <IconTimeline size={25} className="section-icon" />;
 }
-function Timeline({ timeline }: { timeline: EpisodeTimeline }) {
+function Timeline({
+  timeline,
+  showEvidenceLinks,
+}: {
+  timeline: EpisodeTimeline;
+  showEvidenceLinks: boolean;
+}) {
   const [expanded, setExpanded] = useState<string[]>([]);
   const toggle = (id: string) =>
     setExpanded((v) =>
@@ -616,7 +730,7 @@ function Timeline({ timeline }: { timeline: EpisodeTimeline }) {
                   ) : (
                     <p>Tidak ada dokumen klinis tercatat.</p>
                   )}
-                  {e.evidence_ids.length > 0 && (
+                  {showEvidenceLinks && e.evidence_ids.length > 0 && (
                     <EvidenceLinks ids={e.evidence_ids} />
                   )}
                 </div>
@@ -653,51 +767,43 @@ function Workspace({
   evidence: Evidence[];
 }) {
   const st = investigation.state;
+  const priorities = reviewPriorities(st.requirements);
+  const ordered = [
+    ...priorities,
+    ...st.requirements.filter((r) => !r.material || r.state === "FOUND"),
+  ];
+  const scoped = evidence.filter((e) => e.run_id === investigation.run.run_id);
   return (
-    <div className="workspace-grid">
-      <div>
-        <section className="panel">
-          <div className="panel-heading">
-            <h2>Pertanyaan & evidence gap</h2>
-            <span>{st.requirements.length} pemeriksaan</span>
-          </div>
-          <div className="requirements">
-            {st.requirements.map((r) => (
-              <RequirementRow key={r.key} requirement={r} />
-            ))}
-          </div>
-        </section>
-        {st.next_action && (
-          <section className="next-action">
-            <IconArrowRight size={22} />
-            <div>
-              <h3>Pemeriksaan berikutnya</h3>
-              <strong>{st.next_action.tool_label}</strong>
-              <p>{st.next_action.reason}</p>
-            </div>
-          </section>
-        )}
-      </div>
-      <div>
-        <section className="panel">
-          <div className="panel-heading">
-            <h2>Bukti yang ditemukan</h2>
-            <span>{evidence.length} sumber</span>
-          </div>
-          <EvidenceLedger evidence={evidence} />
-        </section>
-        {st.known_facts.length > 0 && (
-          <section className="panel known-facts">
-            <h3>Fakta yang diketahui</h3>
+    <div className="review-evidence-workspace">
+      <EvidenceBrowser evidence={scoped} />
+      <details className="review-disclosure">
+        <summary>
+          Pertanyaan pemeriksaan · {priorities.length} pemeriksaan penting perlu
+          perhatian
+        </summary>
+        <p className="small-muted">
+          Konflik dan sumber yang tidak tersedia ditampilkan lebih dahulu.
+          Setiap status memiliki penjelasan dan cakupan pencarian.
+        </p>
+        <div className="requirements">
+          {ordered.map((r) => (
+            <RequirementRow key={r.key} requirement={r} />
+          ))}
+        </div>
+      </details>
+      {st.known_facts.length > 0 && (
+        <details className="review-disclosure">
+          <summary>Fakta terdokumentasi ({st.known_facts.length})</summary>
+          <div className="documented-facts">
             {st.known_facts.map((f) => (
               <div key={f.fact_id}>
                 <p>{f.text}</p>
                 <EvidenceLinks ids={f.evidence_ids} />
               </div>
             ))}
-          </section>
-        )}
-      </div>
+          </div>
+        </details>
+      )}
     </div>
   );
 }
@@ -710,9 +816,9 @@ function RequirementRow({ requirement: r }: { requirement: Requirement }) {
             {r.direction === "CONTEXT"
               ? "Konteks penjelas"
               : label(r.direction)}
-            {r.material ? " · material" : " · tambahan"}
+            {r.material ? " · penting" : " · tambahan"}
           </span>
-          <strong>{r.label}</strong>
+          <strong>{label(r.key)}</strong>
         </span>
         <Badge value={r.state} />
         <IconChevronDown size={17} />
@@ -748,67 +854,6 @@ function RequirementRow({ requirement: r }: { requirement: Requirement }) {
         )}
       </div>
     </details>
-  );
-}
-function EvidenceLedger({ evidence }: { evidence: Evidence[] }) {
-  const { openEvidence } = useApp();
-  const [category, setCategory] = useState("ALL");
-  const categories = useMemo(
-    () => Array.from(new Set(evidence.map((e) => e.relevance_category))),
-    [evidence],
-  );
-  const filtered = evidence.filter(
-    (e) => category === "ALL" || e.relevance_category === category,
-  );
-  return (
-    <>
-      <div className="ledger-filter">
-        <label>
-          Kategori
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="ALL">Semua bukti</option>
-            {categories.map((c) => (
-              <option key={c} value={c}>
-                {label(c)}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-      {filtered.length ? (
-        <div className="evidence-ledger">
-          {filtered.map((e) => (
-            <button
-              className="evidence-item"
-              key={e.evidence_id}
-              onClick={() => openEvidence(e.evidence_id)}
-            >
-              <div>
-                <span className="evidence-category">
-                  {label(e.relevance_category)}
-                </span>
-                <IconArrowUpRight size={17} />
-              </div>
-              <strong>{e.source_title}</strong>
-              <p>{e.source_excerpt}</p>
-              <div>
-                <span>
-                  {label(e.source_type)} · langkah {e.investigation_step}
-                </span>
-                <Badge value={e.stance} />
-              </div>
-            </button>
-          ))}
-        </div>
-      ) : (
-        <Empty title="Belum ada bukti pada kategori ini">
-          <p>Bukti akan muncul setelah pemeriksaan sumber.</p>
-        </Empty>
-      )}
-    </>
   );
 }
 function ActionTrail({ investigation }: { investigation: InvestigationView }) {

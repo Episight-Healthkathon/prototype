@@ -94,6 +94,72 @@ describe("reviewer data invariants", () => {
     ).toBe("");
   });
 });
+describe("live evidence pagination", () => {
+  afterEach(() => vi.unstubAllGlobals());
+  it("fetches remaining evidence and pins later pages to the same run", async () => {
+    const evidence = fixture<EvidenceList>(
+      `cases/${scenarios[0].id}.evidence.json`,
+    ).items[0];
+    const fetcher = vi
+      .fn()
+      .mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            items: [evidence],
+            total: 2,
+            limit: 200,
+            offset: 0,
+          }),
+        ),
+      )
+      .mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({
+            items: [{ ...evidence, evidence_id: "second" }],
+            total: 2,
+            limit: 200,
+            offset: 1,
+          }),
+        ),
+      );
+    vi.stubGlobal("fetch", fetcher);
+    const result = await createApi("live").evidence("test-case");
+    expect(result.items).toHaveLength(2);
+    expect(fetcher.mock.calls[1][0]).toContain("offset=1");
+    expect(fetcher.mock.calls[1][0]).toContain(
+      `run_id=${encodeURIComponent(evidence.run_id)}`,
+    );
+  });
+  it("fails explicitly if a subsequent page is empty instead of hiding missing evidence", async () => {
+    const evidence = fixture<EvidenceList>(
+      `cases/${scenarios[0].id}.evidence.json`,
+    ).items[0];
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValueOnce(
+          new Response(
+            JSON.stringify({
+              items: [evidence],
+              total: 2,
+              limit: 200,
+              offset: 0,
+            }),
+          ),
+        )
+        .mockResolvedValueOnce(
+          new Response(
+            JSON.stringify({ items: [], total: 2, limit: 200, offset: 1 }),
+          ),
+        ),
+    );
+    await expect(createApi("live").evidence("test-case")).rejects.toMatchObject(
+      { code: "PAGINATION_ERROR" },
+    );
+  });
+});
+
 describe("offline investigation playback", () => {
   beforeEach(() => {
     const storage = new Map<string, string>();

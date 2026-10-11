@@ -1,0 +1,22 @@
+# Render Blueprint for the EPISIGHT API (docs/deployment.md). The web app deploys on Vercel; the database is Neon.
+services:
+  - type: web
+    name: episight-api
+    runtime: docker
+    plan: free
+    region: singapore # same region as the Neon database
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: ./apps/api
+    healthCheckPath: /api/v1/health
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - apps/api/**
+    envVars:
+      - key: EPISIGHT_DATABASE_URL
+        sync: false # paste the Neon connection string in the Render dashboard
+      - key: EPISIGHT_ENV
+        value: prod
+      # No paid model calls from a public URL. See docs/deployment.md before enabling the AI planner.
+      - key: EPISIGHT_LLM_PROVIDER
+        value: none

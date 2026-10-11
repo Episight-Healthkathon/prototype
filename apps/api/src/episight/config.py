@@ -1,5 +1,6 @@
 from functools import lru_cache
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -12,6 +13,15 @@ class Settings(BaseSettings):
     database_url: str = "postgresql+psycopg://episight:episight@localhost:5433/episight"
     cors_origins: list[str] = ["http://localhost:3000"]
     log_level: str = "INFO"
+
+    @field_validator("database_url")
+    @classmethod
+    def _use_psycopg_driver(cls, url: str) -> str:
+        # Managed Postgres hosts (Neon, Render, Railway) hand out postgres:// URLs; we ship psycopg 3 only.
+        for scheme in ("postgres://", "postgresql://"):
+            if url.startswith(scheme):
+                return "postgresql+psycopg://" + url.removeprefix(scheme)
+        return url
 
 
 @lru_cache

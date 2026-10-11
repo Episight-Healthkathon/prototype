@@ -5,7 +5,8 @@ built for BPJS Kesehatan Healthkathon 2026. **Synthetic data only.** A risk sign
 it is never a verdict. EPISIGHT does not determine fraud, approve or reject claims, or make payment decisions.
 
 Design docs: [architecture](docs/architecture.md) · [decisions](docs/decisions.md) ·
-[data contract](docs/data-contract.md) · [API contract](docs/api-contract.md) · [plan](docs/development-plan.md)
+[data contract](docs/data-contract.md) · [API contract](docs/api-contract.md) · [plan](docs/development-plan.md) ·
+[deployment](docs/deployment.md)
 
 ## Repository layout
 

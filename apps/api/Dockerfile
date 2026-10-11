@@ -9,7 +9,8 @@ ENV UV_COMPILE_BYTECODE=1 \
     UV_PYTHON_DOWNLOADS=never \
     PYTHONUNBUFFERED=1
 
-WORKDIR /app
+# Mirror the repo layout: cli.py derives REPO_ROOT from its own path (apps/api -> repo root).
+WORKDIR /app/apps/api
 
 # Dependencies first so code changes reuse the cached layer.
 COPY pyproject.toml uv.lock ./
@@ -23,7 +24,7 @@ RUN uv sync --locked --no-dev
 RUN useradd --create-home --uid 10001 app && chown -R app /app
 USER app
 
-ENV PATH="/app/.venv/bin:$PATH" \
+ENV PATH="/app/apps/api/.venv/bin:$PATH" \
     EPISIGHT_ENV=prod \
     PORT=8000
 EXPOSE 8000
